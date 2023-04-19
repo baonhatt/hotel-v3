@@ -1,0 +1,122 @@
+<header class="header-style-01">
+
+  <nav class="navbar navbar-area navbar-border navbar-padding navbar-expand-lg">
+    <div class="container custom-container-one nav-container">
+      <div class="logo-wrapper">
+        <a href="index.html" class="logo">
+          <img src="assets/img/logo.png" alt="">
+        </a>
+      </div>
+      <div class="responsive-mobile-menu d-lg-none">
+        <a href="javascript:void(0)" class="click-nav-right-icon">
+          <i class="las la-ellipsis-v"></i>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#hotel_booking_menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="hotel_booking_menu">
+        <ul class="navbar-nav">
+          <li class=" current-menu-item"><a routerLink="/home">Home</a></li>
+          <li><a routerLink="/about"> About </a></li>
+          <li><a routerLink="/checkout"> Checkout </a></li>
+          <li><a routerLink="/room-listing"> Room </a></li>
+
+          <li><a routerLink="/blogs" >Blog</a></li>
+
+
+          <li><a routerLink="/contact"> Contact Us </a></li>
+        </ul>
+      </div>
+      <div class="navbar-right-flex">
+
+      </div>
+      <div class="navbar-right-content show-nav-content">
+        <div class="single-right-content">
+          <div class="navbar-right-flex">
+
+
+            <div class="btn-wrapper">
+              <div class="notification_wrap">
+                <div class="notification_icon">
+                  <i class="fa-sharp fa-solid fa-bell"></i>
+                </div>
+                <div class="dropdown">
+                  <div class="notify_item">
+                    <div class="notify_img">
+                      <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="profile_pic" style="width: 50px">
+                    </div>
+                    <div class="notify_info">
+                      <p>Alex commented on<span>Timeline Share</span></p>
+                      <span class="notify_time">10 minutes ago</span>
+                    </div>
+                  </div>
+                  <div class="notify_item">
+                    <div class="notify_img">
+                      <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="profile_pic" style="width: 50px">
+                    </div>
+                    <div class="notify_info">
+                      <p>Ben hur commented on your<span>Timeline Share</span></p>
+                      <span class="notify_time">55 minutes ago</span>
+                    </div>
+                  </div>
+                  <div class="notify_item">
+                    <div class="notify_img">
+                      <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="profile_pic" style="width: 50px">
+                    </div>
+                    <div class="notify_info">
+                      <p>Meryn trant liked your<span>Cover Picture</span></p>
+                      <span class="notify_time">2 hours ago</span>
+                    </div>
+                  </div>
+                  <div class="notify_item">
+                    <div class="notify_img">
+                      <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="profile_pic" style="width: 50px">
+                    </div>
+                    <div class="notify_info">
+                      <p>John wick commented on your<span>Profile Picture</span></p>
+                      <span class="notify_time">6 hours ago</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="isLoggedIn(); then loggedInUser; else loginButton"></div>
+            <ng-template #loggedInUser>
+              <span>
+                <div class="navbar-author">
+                  <div class="navbar-author-flex">
+                    <div class="navbar-author-thumb">
+                      <img class="profile-img" src="{{userProfile.image}}" alt="img">
+                    </div>
+                    <div class="navbar-author-name">
+                      <h6 class="navbar-author-name-title">{{ getLoggedInUser() }} </h6>
+                    </div>
+                  </div>
+                  <div class="navbar-author-wrapper">
+                    <div class="navbar-author-wrapper-list">
+                      <a [routerLink]="['/user-profile']" class="navbar-author-wrapper-list-item"> My Profile </a>
+                      <a href="login.html" class="navbar-author-wrapper-list-item"> Sign In </a>
+                      <span class="navbar-author-wrapper-list-item" (click)="logout()"> Log Out </span>
+                    </div>
+                  </div>
+                </div>
+              </span>
+            </ng-template>
+            <ng-template #loginButton>
+
+              <div class="navbar-right-btn">
+                <a routerLink="/login"> Log In </a>
+              </div>
+              <div class="btn-wrapper">
+                <a routerLink="/signup"  class="cmn-btn btn-bg-1 radius-10"> Sign Up </a>
+              </div>
+            </ng-template>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+</header>
