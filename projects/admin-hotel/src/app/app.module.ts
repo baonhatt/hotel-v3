@@ -19,12 +19,14 @@ import { CustomerComponent } from './components/components/customer/customer.com
 import { RoomComponent } from './components/components/room/room.component';
 import { AddbookingComponent } from './components/addbooking/addbooking.component';
 import { LoginAdminComponent } from './components/login-admin/login-admin.component';
-import { SignupAdminComponent } from './components/signup-admin/signup-admin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgToastModule } from 'ng-angular-popup';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
 import { StorageService } from './_service/storage.service';
+import { LoadingInterceptor } from 'src/app/loading.interceptor';
+import { AuthGuard } from './_helper/http.guard';
+import { AuthTokenInterceptor } from './_helper/http.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +39,6 @@ import { StorageService } from './_service/storage.service';
     RoomComponent,
     AddbookingComponent,
     LoginAdminComponent,
-    SignupAdminComponent,
 
   ],
   imports: [
@@ -62,8 +63,20 @@ import { StorageService } from './_service/storage.service';
     HttpClientModule
 
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers:
+  [
+    { provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
+      multi: true
+    },
+    [AuthGuard],
+    [
+      {
+        provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+      }
+    ]
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
 

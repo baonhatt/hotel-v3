@@ -58,11 +58,11 @@ export class LoginAdminComponent implements OnInit {
 
         var token = response as TokenModel;
         localStorage.setItem('token', JSON.stringify(token));
-        this.route.navigate(['dashboard']);
         localStorage.setItem("firstLogin", "");
         this.userProfile = this.auth.userProfile;
         this.loading = true;
-
+        // window.location.reload();
+        this.route.navigate(['dashboard']);
       },
       (err) => {
         this.toast.error({
@@ -74,7 +74,9 @@ export class LoginAdminComponent implements OnInit {
     );
   }
 
+showpass(){
 
+}
   getUserData(){
       window.self.close();
   }

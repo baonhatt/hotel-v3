@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Room } from '../models/room.model';
+import { Room, addRoom } from '../models/room.model';
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment.development';
 import { Blog } from '../models/blog.model';
@@ -23,7 +23,9 @@ export class ApiService {
     // return this.http.get<Room[]>(environment.BASE_URL_API + '/user/room/get-all');
     return this.http.get<Room[]>(this.baseUrl1);
   }
-
+  postRoom(room: addRoom) {
+    return this.http.post<Room>(this.baseUrl1, room);
+  }
   deleteRoom(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl1}/${id}`);
   }
@@ -40,9 +42,7 @@ export class ApiService {
     return this.http.get<Blog>(`${this.apiBlog}/${id}`).pipe()
   }
 
-  postRoom(_room: Room) {
-    return this.http.post<Room>(environment.BASE_URL_API + '/user/room/get-by-id', _room);
-  }
+
 
   // deleteRoom(id: string) {
   //   return this.http.delete(environment.BASE_URL_API + '/user/room/delete-by-id' + id);

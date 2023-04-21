@@ -6,7 +6,6 @@ import { CustomerComponent } from '../../../admin-hotel/src/app/components/compo
 import { RoomComponent } from './components/components/room/room.component';
 import { AddbookingComponent } from './components/addbooking/addbooking.component';
 import { LoginAdminComponent } from './components/login-admin/login-admin.component';
-import { SignupAdminComponent } from './components/signup-admin/signup-admin.component';
 import { WrapcontentComponent } from './components/wrapcontent/wrapcontent.component';
 import { AuthGuard } from './_helper/http.guard';
 AuthGuard
@@ -20,8 +19,17 @@ const routes: Routes = [
     },
     // canActivate: [AuthGuard]
   },
-  {path: 'dashboard', component: LayoutpageComponent},
-  {path: 'booking', component: BookingComponent},
+  {
+    path: 'dashboard',
+    component: LayoutpageComponent,
+    data: {
+      requiredAuth: false
+    },
+    // canActivate: [AuthGuard]
+  },
+  { path: 'login', loadChildren: () => import('../../admin/admin.module').then(m => m.AdminModule) },
+  { path: 'dashboard', loadChildren: () => import('../../dashboard/dashboard.module').then(m => m.DashboardModule) },
+  {path: 'room', component: RoomComponent},
   {path: 'add-booking', component: AddbookingComponent},
   {path: 'customer', component: CustomerComponent},
 ];
