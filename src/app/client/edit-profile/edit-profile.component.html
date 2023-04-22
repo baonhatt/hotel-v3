@@ -47,8 +47,7 @@
                           <div class="btn btn-primary btn-rounded">
                             <label class="form-label text-white m-1" for="customFile2">Choose file</label>
                             <span style="color:red;" *ngIf="message">{{message}}</span>
-                            <input type="file" class="form-control d-none" accept='image/*' #file (change)="uploadFile(file.files)"
-                              formControlName="Image" id="customFile2" />
+                            <input type="file" class="form-control d-none" accept='image/*' #file (change)="uploadFile(file.files)" id="customFile2" />
 
                             </div>
                         </div>
@@ -58,8 +57,7 @@
                   <div class="dashboard-flex-input">
                     <div class="dashboard-input mt-4">
                       <label class="label-title"> Address </label>
-                      <input type="text" class="form--control" formControlName="Address" placeholder="Address"
-                        [value]="userProfile.address">
+                      <input type="text" class="form--control" formControlName="Address" placeholder="Address">
                     </div>
                   </div>
                   <div class="dashboard-flex-input">
@@ -71,8 +69,7 @@
                   <div class="dashboard-flex-input">
                     <div class="dashboard-input mt-4">
                       <label class="label-title"> CMND </label>
-                      <input type="text" class="form--control" formControlName="CMND" placeholder="ID Card"
-                        [value]="userProfile.cmnd ">
+                      <input type="text" class="form--control" formControlName="CMND" placeholder="ID Card">
                     </div>
                   </div>
                   <div class="dashboard-flex-input">

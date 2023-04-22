@@ -64,20 +64,30 @@ export class EditProfileComponent implements OnInit {
   getUserProfile() : void{
     this.userService.getUserProfile().subscribe((res) => {
       this.userProfile = res;
+      this.updateProfile.controls['Address'].setValue(this.userProfile.address);
+      this.updateProfile.controls['PhoneNumber'].setValue(this.userProfile.phoneNumber);
+      this.updateProfile.controls['CMND'].setValue(this.userProfile.cmnd);
     })
   }
 
   updateUserProfile(updateProfile: FormGroup){
-    let fileToUpload = <File>this.files[0];
+    let fileToUpload;
     const formData = new FormData();
-    formData.append('Image', fileToUpload, fileToUpload.name);
+    if(this.files == null)
+    {
+      fileToUpload = "";
+      formData.append('Image', fileToUpload);
+    }else{
+      fileToUpload = <File>this.files[0];
+      formData.append('Image', fileToUpload, fileToUpload.name);
+    }
     formData.append('Address', this.updateProfile.controls['Address'].value);
     formData.append('PhoneNumber', this.updateProfile.controls['PhoneNumber'].value);
     formData.append('CMND', this.updateProfile.controls['CMND'].value);
-    this.http.post<any>(environment.BASE_URL_API + `/user/user-profile/update`, formData )
+    this.http.patch<any>(environment.BASE_URL_API + `/user/user-profile/update`, formData )
     .subscribe((res) =>{
       this.toast.success({
-        detail: res
+        detail: res.message
       });
     }, err => {
       this.toast.error({
@@ -88,9 +98,6 @@ export class EditProfileComponent implements OnInit {
 
   OnSubmit(){
     this.loading = true;
-    console.log(this.updateProfile);
-    console.log("Đã submit");
-
     this.updateUserProfile(this.updateProfile);
   }
 
