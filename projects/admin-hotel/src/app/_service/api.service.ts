@@ -16,22 +16,22 @@ export class ApiService {
   user: any;
   room: any;
   blog: any;
-  apiRoom = 'http://webhotel1-dev.eba-9v28ppea.ap-south-1.elasticbeanstalk.com/user/room/get-all';
+  apiRoom = 'https://webhotel.click/user/room/get-all';
   apiBlog = 'http://localhost:3000/blog';
   private baseUrl1 = 'http://localhost:3000/rooms';
   getRooms() {
     // return this.http.get<Room[]>(environment.BASE_URL_API + '/user/room/get-all');
-    return this.http.get<Room[]>(this.baseUrl1);
+    return this.http.get<Room[]>(this.apiRoom);
   }
   postRoom(room: addRoom) {
-    return this.http.post<Room>(this.baseUrl1, room);
+    return this.http.post<Room>('https://webhotel.click/v2/admin/room/create', room);
   }
-  deleteRoom(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl1}/${id}`);
+  deleteRoom(id: string): Observable<any> {
+    return this.http.delete(`https://webhotel.click/v2/admin/room/delete/?id=${id}`);
   }
   getRoomDetail(id: string): Observable<Room>{
-    // const url = `${environment.BASE_URL_API}/user/room/get-by-id?id=${id}`;
-    const url = `http://localhost:3000/rooms/${id}`;
+    const url = `${environment.BASE_URL_API}/user/room/get-by-id?id=${id}`;
+    // const url = `http://localhost:3000/rooms/${id}`;
     return this.http.get<Room>(url);
   }
 

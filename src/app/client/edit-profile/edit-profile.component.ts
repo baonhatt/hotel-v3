@@ -68,22 +68,29 @@ export class EditProfileComponent implements OnInit {
   }
 
   updateUserProfile(updateProfile: FormGroup){
-    let fileToUpload = <File>this.files[0];
+    let fileToUpload 
     const formData = new FormData();
-    formData.append('Image', fileToUpload, fileToUpload.name);
-    formData.append('Address', this.updateProfile.controls['Address'].value);
-    formData.append('PhoneNumber', this.updateProfile.controls['PhoneNumber'].value);
-    formData.append('CMND', this.updateProfile.controls['CMND'].value);
-    this.http.post<any>(environment.BASE_URL_API + `/user/user-profile/update`, formData )
-    .subscribe((res) =>{
-      this.toast.success({
-        detail: res
+    if( this.files !== null){
+        fileToUpload = <File>this.files[0];
+        formData.append('Image', fileToUpload, fileToUpload.name);
+      }else{
+        formData.append('Image', "");
+
+      }
+
+      formData.append('Address', this.updateProfile.controls['Address'].value);
+      formData.append('PhoneNumber', this.updateProfile.controls['PhoneNumber'].value);
+      formData.append('CMND', this.updateProfile.controls['CMND'].value);
+      this.http.patch<any>('https://webhotel.click/user/user-profile/update', formData )
+      .subscribe((res) =>{
+        this.toast.success({
+          detail: res
+        });
+      }, err => {
+        this.toast.error({
+          detail: err
+        });
       });
-    }, err => {
-      this.toast.error({
-        detail: err
-      });
-    });
   }
 
   OnSubmit(){

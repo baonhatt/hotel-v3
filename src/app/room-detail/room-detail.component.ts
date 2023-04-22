@@ -11,7 +11,7 @@ import { ApiService } from '../_service/api.service';
 export class RoomDetailComponent implements OnInit {
 
   // @Input() room!: Room;
-  room!: any;
+  room!: Room;
   roomId!: any;
   constructor(private route: ActivatedRoute, private apiService: ApiService){}
   isHomePageLoaded = false;

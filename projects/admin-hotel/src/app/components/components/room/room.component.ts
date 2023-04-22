@@ -12,7 +12,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class RoomComponent implements OnInit {
   isDeleting = false;
   @Input() room: addRoom;
-  rooms: Room[] ;
+  rooms: any[] = [];
   roomtoDisplay!: addRoom[] ;
   id!: number;
   roomForm!: FormGroup;
@@ -107,11 +107,12 @@ export class RoomComponent implements OnInit {
     // this.userForm.reset();
   }
 
-  deleteRoom(id: any) {
+  deleteRoom(id: string) {
     this.api.deleteRoom(id).subscribe({
       next: (res) => {
-        alert('Employee deleted!');
+        alert('Room deleted!');
         this.getRooms();
+
       },
       error: console.log,
     });

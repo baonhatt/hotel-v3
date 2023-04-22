@@ -11,4 +11,5 @@ export class Room {
   peopleNumber!: string
   numberOfBed!: string
   starAmount!: number
+  roomPictures!: string
 }
