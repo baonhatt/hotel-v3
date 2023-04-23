@@ -3,6 +3,8 @@ import { Room, addRoom } from '../../../models/room.model';
 import { ApiService } from '../../../_service/api.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-room',
@@ -11,12 +13,19 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 })
 export class RoomComponent implements OnInit {
   isDeleting = false;
+
+  selectedImage!: File;
+
   @Input() room: addRoom;
   rooms: any[] = [];
-  roomtoDisplay!: addRoom[] ;
+  roomtoDisplay!: addRoom[];
   id!: number;
   roomForm!: FormGroup;
   inputValue: any;
+  active = [
+    'true',
+    'false'
+  ]
   roomOption = [
     'Single',
     'Deluxe',
@@ -34,60 +43,57 @@ export class RoomComponent implements OnInit {
   constructor(private roomService: ApiService,
     private router: Router,
     private api: ApiService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private http: HttpClient
   ) {
-    this.roomForm = this.fb.group({ });
     this.rooms = []
     this.room = {
-      roomTypeName: '',
-      name: '',
-      roomPicture: '',
-      description:'',
-      rating: '',
-      currentPrice: 0,
-      discountPrice: 0,
-      peopleNumber: '',
-      numberOfBed: '',
-      starAmount: 0,
+      NumberOfBed:  0,
+      RoomPicture:  '',
+      RoomNumber:  '',
+      Name:  '',
+      IsActive:  '',
+      RoomTypeId:  '',
+      CurrentPrice:  '',
+      PeopleNumber:  '',
+      Description:  '',
     }
     this.roomtoDisplay = this.rooms
   }
 
+
+  onImageSelected(event: any) {
+    this.selectedImage = event.target.files[0];
+  }
   ngOnInit(): void {
     this.roomForm = this.fb.group({
-      roomTypeName: this.fb.control(''),
-      name: this.fb.control(''),
-      roomPicture: this.fb.control(''),
-      isActive: this.fb.control(''),
-      rating: this.fb.control(''),
-      currentPrice: this.fb.control(''),
-      discountPrice: this.fb.control(''),
-      peopleNumber: this.fb.control(''),
-      numberOfBed: this.fb.control(''),
-      starAmount: this.fb.control(''),
+      NumberOfBed: [''],
+      RoomPicture: [''],
+      RoomNumber: [''],
+      Name: [''],
+      IsActive: [''],
+      RoomTypeId: [''],
+      CurrentPrice: [''],
+      PeopleNumber: [''],
+      Description: ['']
     });
+
+
 
 
     this.getRooms();
   }
 
-  addRoom(){
-    let room: addRoom = {
-      roomTypeName: this.roomOption[parseInt(this.RoomTypeName.value)],
-      name: this.Name.value,
-      roomPicture: this.RoomPicture.value,
-      rating: this.Rating.value,
-      currentPrice: this.CurrentPrice.value,
-      description: this.Description.value,
-      discountPrice: this.DiscountPrice.value,
-      peopleNumber: this.PeopleNumber.value,
-      numberOfBed: this.Bednums[parseInt(this.NumberOfBed.value)],
-      starAmount: this.StarAmount.value,
-      // img: this.Img.value
-    };
-    this.api.postRoom(room).subscribe((res) => {
+  addRoom(_roomForm: FormGroup){
+
+    this.http.post<any>(`https://webhotel.click/v2/admin/room/create`, this.roomForm.value).subscribe(res => {
+      alert("Create an account successfully!");
       this.rooms.unshift(res);
-    });
+    }, _err => {
+      alert('Something was wrong');
+
+    })
+
   }
   getRooms() {
     this.roomService.getRooms().subscribe((res: any) => {
@@ -100,7 +106,7 @@ export class RoomComponent implements OnInit {
     })
   }
   routePage() {
-    this.router.navigate(['/room-detail/{{room.id}}'])
+    this.router.navigate(['/room-detail/{{room.id}}']);
   }
 
   reset() {
@@ -108,8 +114,17 @@ export class RoomComponent implements OnInit {
   }
 
   deleteRoom(id: string) {
+    if(confirm('Are you want to delete this room?')){
+    //   this.rooms.forEach((value, index) =>{
+    //     if(value.id == parseInt(id)){
+    //       this.api.deleteRoom(id).subscribe((res) =>{
+    //         this.rooms.splice(index, 1)
+    //       });
+    //     }
+    //   });
+    // }
     this.api.deleteRoom(id).subscribe({
-      next: (res) => {
+      next: (_res) => {
         alert('Room deleted!');
         this.getRooms();
 
@@ -117,39 +132,5 @@ export class RoomComponent implements OnInit {
       error: console.log,
     });
   }
-
-  public get RoomTypeName(): FormControl {
-    return this.roomForm.get('roomTypeName') as FormControl;
   }
-  public get Name(): FormControl {
-    return this.roomForm.get('name') as FormControl;
-  }
-  public get RoomPicture(): FormControl {
-    return this.roomForm.get('roomPicture') as FormControl;
-  }
-  public get Description(): FormControl {
-    return this.roomForm.get('description') as FormControl;
-  }
-  public get IsActive(): FormControl {
-    return this.roomForm.get('isActive') as FormControl;
-  }
-  public get Rating(): FormControl {
-    return this.roomForm.get('rating') as FormControl;
-  }
-  public get CurrentPrice(): FormControl {
-    return this.roomForm.get('currentPrice') as FormControl;
-  }
-  public get PeopleNumber(): FormControl {
-    return this.roomForm.get('peopleNumber') as FormControl;
-  }
-  public get NumberOfBed(): FormControl {
-    return this.roomForm.get('numberOfBed') as FormControl;
-  }
-  public get StarAmount(): FormControl {
-    return this.roomForm.get('starAmount') as FormControl;
-  }
-  public get DiscountPrice(): FormControl {
-    return this.roomForm.get('discountPrice') as FormControl;
-  }
-
 }

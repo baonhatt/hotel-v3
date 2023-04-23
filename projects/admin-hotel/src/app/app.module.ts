@@ -27,6 +27,7 @@ import { StorageService } from './_service/storage.service';
 import { LoadingInterceptor } from 'src/app/loading.interceptor';
 import { AuthGuard } from './_helper/http.guard';
 import { AuthTokenInterceptor } from './_helper/http.interceptor';
+import { PageErrorComponent } from './page-error/page-error.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +40,7 @@ import { AuthTokenInterceptor } from './_helper/http.interceptor';
     RoomComponent,
     AddbookingComponent,
     LoginAdminComponent,
+    PageErrorComponent,
 
   ],
   imports: [
