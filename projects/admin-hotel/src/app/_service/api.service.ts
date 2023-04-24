@@ -19,13 +19,13 @@ export class ApiService {
   apiRoom = 'https://webhotel.click/user/room/get-all';
   apiBlog = 'http://localhost:3000/blog';
   private baseUrl1 = 'http://localhost:3000/rooms';
+
+  ////////////////////////////////////// Room API
   getRooms() {
     return this.http.get<Room[]>(environment.BASE_URL_API + '/user/room/get-all');
-    // return this.http.get<Room[]>(this.baseUrl1);
+
   }
-  // postRoom(room: addRoom) {
-  //   return this.http.post<any>(this.baseUrl1, room);
-  // }
+
   postRoom(room: addRoom) {
     return this.http.post<any>('https://webhotel.click/v2/admin/room/create', room );
   }
@@ -39,6 +39,24 @@ export class ApiService {
     // const url = `http://localhost:3000/rooms/${id}`;
     return this.http.get<Room>(url);
   }
+  searchRoom(query: string): Observable<any>{
+    return this.http.get<Room[]>(`${environment.BASE_URL_API}/api/Room/getAllBy${query}`)
+  }
+
+  bookRoom(startDate: Data, enDate: Data, roomId: string, numberOfDays: number): Observable<any>{
+
+    const data = {
+         start_date: startDate,
+         end_date: enDate,
+         room_id: roomId,
+         number_of_days: numberOfDays
+       };
+       return this.http.post(environment.BASE_URL_API + '', data);
+
+     }
+
+  /////////////////////////////////////////// Blog API
+
 
   getBlogs(){
     return this.http.get<Blog[]>(this.apiBlog);
@@ -49,27 +67,13 @@ export class ApiService {
 
 
 
-  // deleteRoom(id: string) {
-  //   return this.http.delete(environment.BASE_URL_API + '/user/room/delete-by-id' + id);
-  // }
-  searchRoom(query: string): Observable<any>{
-    return this.http.get<Room[]>(`${environment.BASE_URL_API}/api/Room/getAllBy${query}`)
-  }
+////////////////////////////////////////////////// User API
+
   getUser() {
     this.user = this.auth.userProfile
     return this.user
   }
 
 
-  bookRoom(startDate: Data, enDate: Data, roomId: string, numberOfDays: number): Observable<any>{
 
- const data = {
-      start_date: startDate,
-      end_date: enDate,
-      room_id: roomId,
-      number_of_days: numberOfDays
-    };
-    return this.http.post(environment.BASE_URL_API + '', data);
-
-  }
 }

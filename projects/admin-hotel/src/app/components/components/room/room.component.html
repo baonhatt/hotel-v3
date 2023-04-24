@@ -108,7 +108,7 @@
 
                         <td class="table-action">
                           <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                          <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                          <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"
                            class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
                           <a href="javascript:void(0);" (click)="deleteRoom(room.id)" class="action-icon"> <i
                               class="mdi mdi-delete"></i></a>
@@ -135,7 +135,7 @@
 
 
 
-<!-- Modal create ROOM -->
+<!-- Modal CREATE ROOM -->
 
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -152,6 +152,142 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h3 class="page-title mt-5">Add Room</h3>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <form [formGroup]="roomForm" >
+                  <div class="row formtype">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Room Name</label>
+                        <input type="text" class="form-control"   formControlName="Name">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Room Number</label>
+                        <input type="text" class="form-control"  formControlName="RoomNumber">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Active</label>
+                        <select class="form-control"    formControlName="IsActive" id="sel1" name="sellist1">
+                          <option>Select</option>
+                          <option *ngFor="let option of active; let i = index;" value="{{i}}">
+                            {{option | titlecase}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Non</label>
+                        <select class="form-control" id="sel2" name="sellist1">
+                          <option>Select</option>
+                          <option>AC</option>
+                          <option>NON-AC</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Food</label>
+                        <select class="form-control" id="sel3" name="sellist1">
+                          <option>Select</option>
+                          <option>Free Breakfast</option>
+                          <option>Free Lunch</option>
+                          <option>Free Dinner</option>
+                          <option>Free Breakfast & Dinner</option>
+                          <option>Free Welcome Drink</option>
+                          <option>No Free Food</option>
+                        </select>
+                      </div>
+                    </div> -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Bed Count</label>
+                        <select class="form-control" id="sel" name="sellist1"   formControlName="NumberOfBed">
+                          <option>Select</option>
+                          <option *ngFor="let option of Bednums; let i = index;" value="{{i}}">
+                            {{option | titlecase}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Charges For cancellation</label>
+                        <select class="form-control" id="sel4" name="sellist1">
+                          <option>Select</option>
+                          <option>Free</option>
+                          <option>5% Before 24Hours</option>
+                          <option>No Cancellation Allow</option>
+                        </select>
+                      </div>
+                    </div> -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Price</label>
+                        <input type="text"     formControlName="CurrentPrice" class="form-control" id="usr">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Discount </label>
+                        <input type="text" class="form-control"    formControlName="discountPrice" id="usr1">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>File Upload</label>
+                        <div class="form-group mb-3">
+                          <input type="text" id="image" class="form--control" formControlName="RoomPicture"  name="image" >
+                         </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" rows="5" id="comment" name="text"  formControlName="Description"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" (click)="addRoom(roomForm)"  class="btn btn-primary">Add</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal EDIT ROOM -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="  page-wrapper">
+          <div class="content container-fluid">
+            <div class="page-header">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="page-title mt-5">Edit Room</h3>
                 </div>
               </div>
             </div>

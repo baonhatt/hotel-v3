@@ -39,6 +39,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 
 import { AboutComponent } from './about/about.component';
 import { LeftContentComponent } from './client/dashboard/left-content/left-content.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +63,7 @@ import { LeftContentComponent } from './client/dashboard/left-content/left-conte
     CheckoutComponent,
     AboutComponent,
     LeftContentComponent,
+    SearchResultComponent,
 
   ],
   imports: [

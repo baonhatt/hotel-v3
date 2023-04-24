@@ -20,6 +20,7 @@ import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AboutComponent } from './about/about.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -50,6 +51,14 @@ const routes: Routes = [
   {
     path: 'room-detail/:id',
     component: RoomDetailComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'room-result',
+    component: SearchResultComponent,
     data: {
       requiredAuth: false
     },
