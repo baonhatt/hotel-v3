@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Room } from '../models/room.model';
+import { Room, addRoom } from '../models/room.model';
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment.development';
 import { Blog } from '../models/blog.model';
@@ -14,22 +14,29 @@ import { Data } from '@angular/router';
 export class ApiService {
   constructor(private http: HttpClient ,private auth: AuthService) {}
   user: any;
-  room: any;
+  room!: addRoom;
   blog: any;
-  apiRoom = 'http://webhotel1-dev.eba-9v28ppea.ap-south-1.elasticbeanstalk.com/user/room/get-all';
+  apiRoom = 'https://webhotel.click/user/room/get-all';
   apiBlog = 'http://localhost:3000/blog';
   private baseUrl1 = 'http://localhost:3000/rooms';
   getRooms() {
-    // return this.http.get<Room[]>(environment.BASE_URL_API + '/user/room/get-all');
-    return this.http.get<Room[]>(this.baseUrl1);
+    return this.http.get<Room[]>(environment.BASE_URL_API + '/user/room/get-all');
+    // return this.http.get<Room[]>(this.baseUrl1);
+  }
+  // postRoom(room: addRoom) {
+  //   return this.http.post<any>(this.baseUrl1, room);
+  // }
+  postRoom(room: addRoom) {
+    return this.http.post<any>('https://webhotel.click/v2/admin/room/create', room );
+  }
+  deleteRoom(id: string): Observable<any> {
+    return this.http.delete(`https://webhotel.click/v2/admin/room/delete/?id=${id}`);
+    // return this.http.delete(`http://localhost:3000/rooms/${id}`);
   }
 
-  deleteRoom(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl1}/${id}`);
-  }
   getRoomDetail(id: string): Observable<Room>{
-    // const url = `${environment.BASE_URL_API}/user/room/get-by-id?id=${id}`;
-    const url = `http://localhost:3000/rooms/${id}`;
+    const url = `${environment.BASE_URL_API}/user/room/get-by-id?id=${id}`;
+    // const url = `http://localhost:3000/rooms/${id}`;
     return this.http.get<Room>(url);
   }
 
@@ -40,9 +47,7 @@ export class ApiService {
     return this.http.get<Blog>(`${this.apiBlog}/${id}`).pipe()
   }
 
-  postRoom(_room: Room) {
-    return this.http.post<Room>(environment.BASE_URL_API + '/user/room/get-by-id', _room);
-  }
+
 
   // deleteRoom(id: string) {
   //   return this.http.delete(environment.BASE_URL_API + '/user/room/delete-by-id' + id);

@@ -53,7 +53,6 @@ export class AuthTokenInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log(error.status);
         if (error.status === 401) {
           this.router.navigate(['login']);
           return this.handle401Error(authReq, next);

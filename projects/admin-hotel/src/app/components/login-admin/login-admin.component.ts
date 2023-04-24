@@ -53,28 +53,28 @@ export class LoginAdminComponent implements OnInit {
   login() {
     const email = this.loginForm?.get('email')?.value;
     const password = this.loginForm?.get('password')?.value;
+
     this.auth.login(email, password).subscribe(
       (response) => {
+          var token = response as TokenModel;
+          localStorage.setItem('token', JSON.stringify(token));
+          localStorage.setItem("firstLogin", "");
+          this.userProfile = this.auth.userProfile;
+          this.loading = true;
+          // window.location.reload();
+          this.route.navigate(['dashboard']);
 
-        var token = response as TokenModel;
-        localStorage.setItem('token', JSON.stringify(token));
-        this.route.navigate(['dashboard']);
-        localStorage.setItem("firstLogin", "");
-        this.userProfile = this.auth.userProfile;
-        this.loading = true;
 
-      },
-      (err) => {
-        this.toast.error({
-          detail: 'Error Message',
-          summary: 'Something was wrong !',
-          duration: 5000,
-        });
+        },
+        (err) => {
+          alert("Your account not have permission!")
       }
     );
   }
 
+showpass(){
 
+}
   getUserData(){
       window.self.close();
   }

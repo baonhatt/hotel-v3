@@ -6,9 +6,9 @@ import { CustomerComponent } from '../../../admin-hotel/src/app/components/compo
 import { RoomComponent } from './components/components/room/room.component';
 import { AddbookingComponent } from './components/addbooking/addbooking.component';
 import { LoginAdminComponent } from './components/login-admin/login-admin.component';
-import { SignupAdminComponent } from './components/signup-admin/signup-admin.component';
 import { WrapcontentComponent } from './components/wrapcontent/wrapcontent.component';
 import { AuthGuard } from './_helper/http.guard';
+import { PageErrorComponent } from './page-error/page-error.component';
 AuthGuard
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -20,10 +20,27 @@ const routes: Routes = [
     },
     // canActivate: [AuthGuard]
   },
-  {path: 'dashboard', component: LayoutpageComponent},
-  {path: 'booking', component: BookingComponent},
-  {path: 'add-booking', component: AddbookingComponent},
-  {path: 'customer', component: CustomerComponent},
+  {
+    path: 'dashboard',
+    component: LayoutpageComponent,
+    data: {
+      requiredAuth: true
+    },
+    canActivate: [AuthGuard]
+  },
+  { path: 'login', loadChildren: () => import('../../admin/admin.module').then(m => m.AdminModule) },
+  { path: 'dashboard', loadChildren: () => import('../../dashboard/dashboard.module').then(m => m.DashboardModule) },
+  { path: 'room', component: RoomComponent},
+  { path: 'booking', component: BookingComponent},
+  { path: 'customer', component: CustomerComponent},
+  {
+    path: '**',
+    component: PageErrorComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

@@ -35,7 +35,6 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem('firstLogin') == "") {
-      console.log(123);
       setTimeout(() => {
         this.toast.success({
           detail: 'Welcome you !',

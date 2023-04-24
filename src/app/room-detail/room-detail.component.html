@@ -7,11 +7,10 @@
         <div class="details-left-wrapper" >
           <div class="details-contents bg-white radius-10"  >
             <div class="details-contents-header" >
-              <div class="details-contents-thumb details-contents-main-thumb bg-image"
-                >
-                <img src="{{room.roomPicture}}" alt="Room Image">
+                <img [src]="room.roomPicture" alt="Room Image">
               </div>
-              <div class="row mt-5">
+            <div class="details-contents-header" >
+              <div class="row mt-2 slider">
                 <div class="col-11 ">
                   <div class="global-slick-init attraction-slider nav-style-one nav-color-two slider-inner-margin"
                     data-infinite="true" data-arrows="true" data-dots="false" data-slidesToShow="4" data-swipeToSlide="true"
@@ -67,7 +66,10 @@
                   </div>
                 </div>
               </div>
-            </div>
+
+              </div>
+
+
             <div class="hotel-view-contents">
               <div class="hotel-view-contents-header">
                 <span class="hotel-view-contents-review"> <i class="las la-star"></i> {{room.rating}} <span
@@ -376,6 +378,5 @@
       </div>
     </div>
   </div>
-</div>
 <app-footer></app-footer>
 <script type='text/javascript' defer src='https://bytesed.com/wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.7.3' id='wpcf7-recaptcha-js'></script>

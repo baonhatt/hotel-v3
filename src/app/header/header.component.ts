@@ -15,8 +15,9 @@ export class HeaderComponent {
   userProfile = new userProfile;
   constructor(private auth: AuthService, private fb: FormBuilder, private apiServe: ApiService, private userService: UserService){}
   ngOnInit(): void {
-
-    this.getUserProfile()
+    if(this.auth.isLoggedIn()){
+      this.getUserProfile();
+    }
   }
 
   getUserProfile() : any{
@@ -25,7 +26,7 @@ export class HeaderComponent {
     })
   }
 
-  
+
   isLoggedIn() {
     return this.auth.isLoggedIn();
   }

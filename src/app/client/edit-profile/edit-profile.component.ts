@@ -89,12 +89,8 @@ export class EditProfileComponent implements OnInit {
       this.toast.success({
         detail: res.message
       });
-    }, err => {
-      this.toast.error({
-        detail: err
-      });
     });
-  }
+  };
 
   OnSubmit(){
     this.loading = true;
