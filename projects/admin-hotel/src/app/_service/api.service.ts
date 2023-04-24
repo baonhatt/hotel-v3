@@ -23,7 +23,6 @@ export class ApiService {
   ////////////////////////////////////// Room API
   getRooms() {
     return this.http.get<Room[]>(environment.BASE_URL_API + '/user/room/get-all');
-
   }
 
   postRoom(room: addRoom) {

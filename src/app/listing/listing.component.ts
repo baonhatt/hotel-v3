@@ -10,9 +10,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./listing.component.scss']
 })
 export class ListingComponent implements OnInit {
-
   rooms: Room[] = [];
-
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
   constructor( private roomService: ApiService,
     private router: Router){
 
@@ -30,5 +32,13 @@ export class ListingComponent implements OnInit {
   routePage(){
     this.router.navigate(['/room-detail/{{room.id}}'])
   }
-
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getRooms();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getRooms();
+  }
 }

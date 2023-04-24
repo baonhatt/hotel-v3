@@ -12,7 +12,7 @@
       "status": 1,
       "rating": 3.5,
       "discountPrice": 10,
-      "currentPrice": 200000
+      "currentPrice": 13234325235
     },
     {
       "id": 4,
@@ -42,6 +42,8 @@
       "discountPrice": 10,
       "currentPrice": 665000
     },
+
+
     {
       "id": 6,
       "isActive": false,
@@ -57,9 +59,9 @@
       "currentPrice": 900000
     },
     {
-      "id": 6,
+      "id": 7,
       "isActive": true,
-      "roomTypeName": "Single",
+      "roomTypeName": "Queen",
       "numberOfBed": 2,
       "name": "King Suite Room",
       "RoomNumber": 1,
@@ -69,6 +71,90 @@
       "rating": 3.4,
       "discountPrice": 10,
       "currentPrice": 900000
+    },
+    {
+      "id": 8,
+      "isActive": true,
+      "roomTypeName": "Queen",
+      "numberOfBed": 2,
+      "name": "King Suite Room",
+      "RoomNumber": 1,
+      "roomPicture": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+      "discription": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back.He lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him.So many legs pitifully thin compared with the size of the rest of him waved about helplessly as he looked What's happened to me.",
+      "status": 1,
+      "rating": 3.4,
+      "discountPrice": 10,
+      "currentPrice": 100000000
+    },
+    {
+      "id": 9,
+      "isActive": true,
+      "roomTypeName": "Queen",
+      "numberOfBed": 2,
+      "name": "King Suite Room",
+      "RoomNumber": 1,
+      "roomPicture": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+      "discription": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back.He lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him.So many legs pitifully thin compared with the size of the rest of him waved about helplessly as he looked What's happened to me.",
+      "status": 1,
+      "rating": 3.4,
+      "discountPrice": 10,
+      "currentPrice": 100000000
+    },
+    {
+      "id": 9,
+      "isActive": true,
+      "roomTypeName": "Queen",
+      "numberOfBed": 2,
+      "name": "King Suite Room",
+      "RoomNumber": 1,
+      "roomPicture": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+      "discription": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back.He lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him.So many legs pitifully thin compared with the size of the rest of him waved about helplessly as he looked What's happened to me.",
+      "status": 1,
+      "rating": 3.4,
+      "discountPrice": 10,
+      "currentPrice": 100000000
+    },
+    {
+      "id": 9,
+      "isActive": true,
+      "roomTypeName": "Queen",
+      "numberOfBed": 2,
+      "name": "King Suite Room",
+      "RoomNumber": 1,
+      "roomPicture": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+      "discription": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back.He lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him.So many legs pitifully thin compared with the size of the rest of him waved about helplessly as he looked What's happened to me.",
+      "status": 1,
+      "rating": 3.4,
+      "discountPrice": 10,
+      "currentPrice": 100000000
+    },
+    {
+      "id": 9,
+      "isActive": true,
+      "roomTypeName": "Queen",
+      "numberOfBed": 2,
+      "name": "King Suite Room",
+      "RoomNumber": 1,
+      "roomPicture": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+      "discription": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back.He lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him.So many legs pitifully thin compared with the size of the rest of him waved about helplessly as he looked What's happened to me.",
+      "status": 1,
+      "rating": 3.4,
+      "discountPrice": 10,
+      "currentPrice": 100000000
+    },
+    {
+      "id": 9,
+      "isActive": true,
+      "roomTypeName": "Queen2",
+      "numberOfBed": 2,
+      "name": "King Suite Room",
+      "RoomNumber": 1,
+      "roomPicture": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+      "discription": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back.He lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him.So many legs pitifully thin compared with the size of the rest of him waved about helplessly as he looked What's happened to me.",
+      "status": 1,
+      "rating": 3.4,
+      "discountPrice": 10,
+      "currentPrice": 100000000
     }
   ],
   "blog": [
