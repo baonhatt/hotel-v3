@@ -174,11 +174,10 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Active</label>
-                        <select class="form-control"    formControlName="IsActive" id="sel1" name="sellist1">
+                        <select class="form-control" formControlName="IsActive" id="IsActive" name="IsActive">
                           <option>Select</option>
-                          <option *ngFor="let option of active; let i = index;" value="{{i}}">
-                            {{option | titlecase}}
-                          </option>
+                          <option [ngValue]="true">True</option>
+                          <option [ngValue]="false">False</option>
                         </select>
                       </div>
                     </div>
@@ -217,6 +216,17 @@
                         </select>
                       </div>
                     </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>People Count</label>
+                        <select class="form-control" id="sel" name="sellist1"   formControlName="PeopleNumber">
+                          <option>Select</option>
+                          <option *ngFor="let option of Bednums; let i = index;" value="{{i}}">
+                            {{option | titlecase}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
                     <!-- <div class="col-md-4">
                       <div class="form-group">
                         <label>Charges For cancellation</label>
@@ -231,20 +241,34 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Price</label>
-                        <input type="text"     formControlName="CurrentPrice" class="form-control" id="usr">
+                        <input type="text" formControlName="CurrentPrice" class="form-control" id="CurrentPrice">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>RoomTypeId</label>
+                        <input type="text" formControlName="RoomTypeId" class="form-control" id="RoomTypeId">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Discount </label>
-                        <input type="text" class="form-control"    formControlName="discountPrice" id="usr1">
+                        <input type="text" class="form-control" formControlName="discountPrice" id="discountPrice">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>File Upload</label>
                         <div class="form-group mb-3">
-                          <input type="text" id="image" class="form--control" formControlName="RoomPicture"  name="image" >
+                          <input type="file" id="RoomPicture" class="form--control" formControlName="RoomPicture"  name="RoomPicture" accept='image/*' #file (change)="uploadFile(file.files)">
+                         </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>File Upload</label>
+                        <div class="form-group mb-3">
+                          <input type="text" id="RoomPictures" class="form--control" formControlName="RoomPictures"  name="RoomPictures" accept='image/*' #file (change)="uploadFile(file.files)">
                          </div>
                       </div>
                     </div>
@@ -310,11 +334,10 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Active</label>
-                        <select class="form-control"    formControlName="IsActive" id="sel1" name="sellist1">
+                        <select class="form-control" formControlName="IsActive" id="sel1" name="sellist1">
                           <option>Select</option>
-                          <option *ngFor="let option of active; let i = index;" value="{{i}}">
-                            {{option | titlecase}}
-                          </option>
+                          <option [ngValue]="true">True</option>
+                          <option [ngValue]="false">False</option>
                         </select>
                       </div>
                     </div>

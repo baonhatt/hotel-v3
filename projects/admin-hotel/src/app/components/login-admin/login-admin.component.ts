@@ -57,7 +57,7 @@ export class LoginAdminComponent implements OnInit {
     this.auth.login(email, password).subscribe(
       (response) => {
           var token = response as TokenModel;
-          localStorage.setItem('token', JSON.stringify(token));
+          localStorage.setItem('token_admin', JSON.stringify(token));
           localStorage.setItem("firstLogin", "");
           this.userProfile = this.auth.userProfile;
           this.loading = true;

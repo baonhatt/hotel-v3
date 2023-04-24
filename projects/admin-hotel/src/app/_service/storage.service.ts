@@ -5,7 +5,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
 import { TokenModel } from './token.model';
 
-const TOKEN = 'token';
+const TOKEN = 'token_admin';
 
 @Injectable({
   providedIn: 'root',

@@ -72,7 +72,7 @@ export class AuthService implements OnInit{
   }
   logout(): void {
     // Xóa thông tin người dùng khỏi localStorage hoặc sessionStorage khi đăng xuất
-    localStorage.removeItem('token');
+    localStorage.removeItem('token_admin');
   }
 
   isLoggedIn(): boolean {
@@ -83,7 +83,7 @@ export class AuthService implements OnInit{
 
   getLoggedInUser(): any {
     // Lấy thông tin người dùng đã đăng nhập từ localStorage hoặc sessionStorage
-    var token = localStorage.getItem('token');
+    var token = localStorage.getItem('token_admin');
     if (token) {
       var tokenModel = JSON.parse(token) as TokenModel;
       var claims = JSON.stringify(this.jwtService.decodeToken(tokenModel.accessToken));
@@ -94,7 +94,7 @@ export class AuthService implements OnInit{
   }
 
   public checkAccessTokenAndRefresh(): { status: "", token: "" } {
-    const localStorageTokens = localStorage.getItem('token');
+    const localStorageTokens = localStorage.getItem('token_admin');
     var check = true;
     if (localStorageTokens) {
       var token = JSON.parse(localStorageTokens) as TokenModel;
@@ -102,7 +102,7 @@ export class AuthService implements OnInit{
       if (isTokenExpired) {
         this.refreshToken(token).subscribe(
           (tokenNew: TokenModel) => {
-            localStorage.setItem('token', JSON.stringify(tokenNew));
+            localStorage.setItem('token_admin', JSON.stringify(tokenNew));
             return Object({
               status: check,
               token: tokenNew,

@@ -3,7 +3,7 @@ import { Room, addRoom } from '../../../models/room.model';
 import { ApiService } from '../../../_service/api.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -13,8 +13,11 @@ import { Observable } from 'rxjs';
 })
 export class RoomComponent implements OnInit {
   isDeleting = false;
-
-  selectedImage!: File;
+  image : any;
+  images : any;
+  message: any;
+  imagePath : any;
+  imgURL: any;
 
   @Input() room: addRoom;
   rooms: any[] = [];
@@ -22,10 +25,6 @@ export class RoomComponent implements OnInit {
   id!: number;
   roomForm!: FormGroup;
   inputValue: any;
-  active = [
-    'true',
-    'false'
-  ]
   roomOption = [
     'Single',
     'Deluxe',
@@ -62,36 +61,67 @@ export class RoomComponent implements OnInit {
   }
 
 
-  onImageSelected(event: any) {
-    this.selectedImage = event.target.files[0];
+  uploadFile = (files : any) => {
+    if (files.length === 0){
+      return;
+    }
+    if(files.length === 1)
+    {
+      this.image = files;
+      var mimeType = files[0].type;
+      if (mimeType.match(/image\/*/) == null) {
+        this.message = "Only images are supported.";
+        return;
+      }
+      var reader = new FileReader();
+      this.imagePath = files;
+      reader.readAsDataURL(files[0]);
+      reader.onload = (_event) => {
+        this.imgURL = reader.result;
+      }
+    }
   }
   ngOnInit(): void {
     this.roomForm = this.fb.group({
-      NumberOfBed: [''],
-      RoomPicture: [''],
       RoomNumber: [''],
       Name: [''],
       IsActive: [''],
-      RoomTypeId: [''],
+      Description: [''],
       CurrentPrice: [''],
+      RoomPicture: [''],
+      RoomPictures: [''],
       PeopleNumber: [''],
-      Description: ['']
+      NumberOfBed: [''],
+      RoomTypeId: [''],
     });
-
-
-
-
     this.getRooms();
   }
 
   addRoom(_roomForm: FormGroup){
-
-    this.http.post<any>(`https://webhotel.click/v2/admin/room/create`, this.roomForm.value).subscribe(res => {
+    let fileToUpload;
+    const formData = new FormData();
+    if(this.image == null)
+    {
+      fileToUpload = "";
+      formData.append('RoomPicture', fileToUpload);
+    }else{
+      fileToUpload = <File>this.image[0];
+      formData.append('RoomPicture', fileToUpload, fileToUpload.name);
+    }
+    formData.append('RoomNumber', _roomForm.controls['RoomNumber'].value);
+    formData.append('Name', _roomForm.controls['Name'].value);
+    formData.append('IsActive', _roomForm.controls['IsActive'].value);
+    formData.append('Description', _roomForm.controls['Description'].value);
+    formData.append('CurrentPrice', _roomForm.controls['CurrentPrice'].value);
+    formData.append('RoomPictures', "");
+    formData.append('PeopleNumber', _roomForm.controls['PeopleNumber'].value);
+    formData.append('NumberOfBed', _roomForm.controls['NumberOfBed'].value);
+    formData.append('RoomTypeId', _roomForm.controls['RoomTypeId'].value);
+    this.http.post<any>(`https://webhotel.click/v2/admin/room/create`, formData).subscribe(res => {
       alert("Create an account successfully!");
       this.rooms.unshift(res);
     }, _err => {
-      alert('Something was wrong');
-
+      alert(_err);
     })
 
   }

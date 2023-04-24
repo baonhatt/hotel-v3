@@ -38,7 +38,7 @@ export class HeaderComponent {
 
   logout(): void {
     // Xóa thông tin người dùng khỏi localStorage hoặc sessionStorage khi đăng xuất
-    localStorage.removeItem('token');
+    localStorage.removeItem('token_admin');
     this.route.navigate(['/login'])
   }
 
