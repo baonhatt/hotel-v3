@@ -18,9 +18,10 @@ export class ApiService {
   blog: any;
   apiRoom = 'https://webhotel.click/user/room/get-all';
   apiBlog = 'http://localhost:3000/blog';
+  apiRoomm = 'http://localhost:3000/rooms';
   getRooms() {
     // return this.http.get<Room[]>(environment.BASE_URL_API + '/user/room/get-all');
-    return this.http.get<Room[]>(this.apiRoom);
+    return this.http.get<Room[]>(this.apiRoomm);
   }
   getBlogs(){
     return this.http.get<Blog[]>(this.apiBlog);
