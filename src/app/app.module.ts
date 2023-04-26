@@ -36,11 +36,11 @@ import { IconModule } from '@coreui/icons-angular';
 import { BlogsComponent } from './blogs/blogs.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-
 import { AboutComponent } from './about/about.component';
 import { LeftContentComponent } from './client/dashboard/left-content/left-content.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { BellNotifComponent } from './bell-notif/bell-notif.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +65,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AboutComponent,
     LeftContentComponent,
     SearchResultComponent,
-
+    BellNotifComponent,
   ],
   imports: [
     NgxPaginationModule,
