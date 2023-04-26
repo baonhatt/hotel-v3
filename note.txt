@@ -1,0 +1,19 @@
+1, cài thử viện @microsoft/signalr lên mạng kiếm cách cài npm
+2, ko nên copy folder bell-notif vì mắc công đi gắn module, nên gõ lệnh ng g c bell-notif, xong copy code qua
+3, copy đoạn code này bỏ vào cuối cùng của file index nằm sau thẻ <script src="assets/scripts.js"></script>
+<script>
+  $("body").on('click', '#notification_icon', function () {
+    let dropdown = $(".navbar-right-content .notifications").hasClass("active");
+    if (dropdown) {
+      $(".navbar-right-content .notifications").removeClass("active");
+    } else {
+      $(".navbar-right-content .notifications").addClass("active");
+    }
+  });
+  $(document).on("click", function (e) {
+    if ($(e.target).closest(".js-notifications").length == 0 && $(e.target.parentElement).closest(".btn-nof").length == 0) {
+      $(".navbar-right-content .notifications").removeClass("active");
+    }
+  });
+</script>
+4, chạy thử, lỗi đỏ cứ kệ nếu console.log hiện connected là ok và chỗ icon chuông hiện số 5 bấm vô mở thông báo là dc
