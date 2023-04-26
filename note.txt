@@ -16,4 +16,12 @@
     }
   });
 </script>
-4, chạy thử, lỗi đỏ cứ kệ nếu console.log hiện connected là ok và chỗ icon chuông hiện số 5 bấm vô mở thông báo là dc
+4, Vào trong file header xoá thông báo đi add <app-bell-notif></app-bell-notif> vào như bên dưới
+<div class="navbar-right-flex">
+
+  <app-bell-notif></app-bell-notif>
+
+  <div *ngIf="isLoggedIn(); then loggedInUser; else loginButton"></div>
+  <ng-template #loggedInUser>
+
+5, chạy thử, lỗi đỏ cứ kệ nếu console.log hiện connected là ok và chỗ icon chuông hiện số 5 bấm vô mở thông báo là dc
