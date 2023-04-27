@@ -5,7 +5,11 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+interface RoomType {
+  id: number;
+  typeName: string;
+  maxPerson: number;
+}
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
@@ -23,15 +27,10 @@ export class RoomComponent implements OnInit {
   rooms: any[] = [];
   roomtoDisplay!: addRoom[];
   id!: number;
+  typeId!: number;
   roomForm!: FormGroup;
   inputValue: any;
-  roomOption = [
-    'Single',
-    'Deluxe',
-    'Double',
-    'Quad',
-    'King',
-  ];
+  roomTypes:  RoomType[] = []
   Bednums = [
     '1',
     '2',
@@ -82,6 +81,12 @@ export class RoomComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+
+    this.api.getRoomTypeId().subscribe((data: any)=>{
+      this.roomTypes = data.roomTypes;
+      this.typeId = data.roomTypes.id
+      });
+
     this.roomForm = this.fb.group({
       RoomNumber: [''],
       Name: [''],
@@ -93,10 +98,21 @@ export class RoomComponent implements OnInit {
       PeopleNumber: [''],
       NumberOfBed: [''],
       RoomTypeId: [''],
+      selectedRoomTypeId: ['']
     });
     this.getRooms();
-  }
+    this.getRoomtype()
 
+  }
+  getRoomtype(): Promise<number> {
+    return new Promise((resolve, reject) => {
+      this.api.getRoomTypeId().subscribe((data: any) => {
+        this.roomTypes = data.roomTypes;
+        this.typeId = data.roomTypes.id;
+        resolve(this.typeId);
+      }, reject);
+    });
+  }
   addRoom(_roomForm: FormGroup){
     let fileToUpload;
     const formData = new FormData();
@@ -116,7 +132,7 @@ export class RoomComponent implements OnInit {
     formData.append('RoomPictures', "");
     formData.append('PeopleNumber', _roomForm.controls['PeopleNumber'].value);
     formData.append('NumberOfBed', _roomForm.controls['NumberOfBed'].value);
-    formData.append('RoomTypeId', _roomForm.controls['RoomTypeId'].value);
+    formData.append('RoomTypeId', _roomForm.controls['selectedRoomTypeId'].value);
     this.http.post<any>(`https://webhotel.click/v2/admin/room/create`, formData).subscribe(res => {
       alert("Create an account successfully!");
       this.rooms.unshift(res);

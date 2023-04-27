@@ -44,8 +44,13 @@
 
             <div class="banner-location-single-contents">
               <span class="banner-location-single-contents-subtitle"> Check In </span>
-              <ejs-datepicker class="datepicker"  >
-            </ejs-datepicker>
+
+              <mat-form-field appearance="fill">
+                <input matInput [matDatepicker]="picker2"
+                       [formControl]="serializedDate">
+                <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
             </div>
           </div>
         </div>
@@ -55,8 +60,12 @@
             <div class="banner-location-single-contents">
               <span class="banner-location-single-contents-subtitle"> Check Out </span>
               <div class="banner-location-single-contents-dropdown custom-select">
-                <ejs-datepicker class="datepicker"  >
-            </ejs-datepicker>
+                <mat-form-field appearance="fill">
+                  <input matInput [matDatepicker]="picker3"
+                         [formControl]="serializedDate">
+                  <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+                  <mat-datepicker #picker3></mat-datepicker>
+                </mat-form-field>
               </div>
             </div>
           </div>
@@ -66,12 +75,12 @@
 
             <div class="banner-location-single-contents">
               <span class="banner-location-single-contents-subtitle"> Person </span>
-              <div class="banner-location-single-contents-dropdown custom-select">
-                <select class="js-select-room select-style-two" name="state">
-                  <option value="">Select number of people</option>
-                  <option *ngFor="let maxPerson" [value]="maxPerson">{{maxPerson}}</option>
-                </select>
-              </div>
+              <mat-form-field appearance="fill">
+                <mat-label>Person</mat-label>
+                <mat-select >
+                  *ngFor="let item of datasearch.slice(0, maxPerson)" [value]="item">{{maxPerson}}>
+                </mat-select>
+              </mat-form-field>
             </div>
           </div>
         </div>
@@ -82,12 +91,19 @@
             </div>
             <div class="banner-location-single-contents">
               <span class="banner-location-single-contents-subtitle"> Room Type </span>
-              <div class="banner-location-single-contents-dropdown custom-select">
+              <!-- <div class="banner-location-single-contents-dropdown custom-select">
                 <select class="js-select-room" name="roomType" [(ngModel)]="selectedRoomType">
                   <option value="">Select a room type</option>
                   <option *ngFor="let roomType of roomTypes" [value]="roomType.id">{{roomType.typeName}}</option>
                   </select>
-              </div>
+              </div> -->
+              <mat-form-field appearance="fill">
+                <mat-label>Room Type</mat-label>
+                <mat-select>
+                  <mat-option *ngFor="let roomType of roomTypes"  value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
             </div>
           </div>
         </div>

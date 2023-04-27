@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment.development';
 import { Blog } from '../models/blog.model';
 import { User } from './user.model';
 import { Data } from '@angular/router';
+import { Search } from 'src/app/models/search.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +27,15 @@ export class ApiService {
 
   }
 
+
+  getRoomTypeId(): Observable<Search[]>{
+    return this.http.get<Search[]>(environment.BASE_URL_API + '/user/search-room')
+  }
   postRoom(room: addRoom) {
     return this.http.post<any>('https://webhotel.click/v2/admin/room/create', room );
   }
   deleteRoom(id: string): Observable<any> {
-    return this.http.delete(`https://webhotel.click/v2/admin/room/delete/?id=${id}`);
+    return this.http.get(`https://webhotel.click/v2/admin/room/delete/?id=${id}`);
     // return this.http.delete(`http://localhost:3000/rooms/${id}`);
   }
 

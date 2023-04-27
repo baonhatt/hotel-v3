@@ -19,7 +19,7 @@ export class BellNotifComponent implements OnInit {
     if (this.storage.isLoggedIn()) {
       var hubConnection: HubConnection;
       hubConnection = new signalR.HubConnectionBuilder()
-        .withUrl('https://localhost:7103/hub', this.hubOptions)
+        .withUrl('https://webhotel.click/hub', this.hubOptions)
         .build();
       hubConnection
         .start()

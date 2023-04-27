@@ -21,7 +21,6 @@ import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AboutComponent } from './about/about.component';
 import { SearchResultComponent } from './search-result/search-result.component';
-
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {

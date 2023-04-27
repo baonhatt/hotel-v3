@@ -29,7 +29,7 @@ export class AuthService implements OnInit{
       password: password,
     };
     return this.http.post<any>('https://webhotel.click/v2/admin/login', body).pipe(
-      tap((response) => {
+      tap((response: TokenModel) => {
 
 
         let token = response as TokenModel;

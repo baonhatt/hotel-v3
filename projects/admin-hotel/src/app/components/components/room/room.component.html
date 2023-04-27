@@ -208,7 +208,7 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Bed Count</label>
-                        <select class="form-control" id="sel" name="sellist1"   formControlName="NumberOfBed">
+                        <select class="form-control" id="sel" name="sellist1"  formControlName="NumberOfBed">
                           <option>Select</option>
                           <option *ngFor="let option of Bednums; let i = index;" value="{{i}}">
                             {{option | titlecase}}
@@ -247,7 +247,12 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>RoomTypeId</label>
-                        <input type="text" formControlName="RoomTypeId" class="form-control" id="RoomTypeId">
+                        <select class="form-control" id="RoomTypeId"   formControlName="selectedRoomTypeId">
+                          <option>Select</option>
+                          <option *ngFor="let roomType of roomTypes"  value="{{roomType.id}}">
+                            {{roomType.typeName}}
+                          </option>
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-4">

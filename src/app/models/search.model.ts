@@ -1,4 +1,5 @@
 export class Search {
   id!: number;
-  typeName!: string
+  typeName!: string;
+  maxPerson!: number;
 }

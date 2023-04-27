@@ -40,9 +40,18 @@ import { AboutComponent } from './about/about.component';
 import { LeftContentComponent } from './client/dashboard/left-content/left-content.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { BellNotifComponent } from './bell-notif/bell-notif.component';
-import * as signalR from '@microsoft/signalr';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import {MatSelectModule} from '@angular/material/select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,8 +80,20 @@ import * as signalR from '@microsoft/signalr';
 
   ],
   imports: [
-     DatePickerModule,
-
+    MatSelectModule,
+    BrowserAnimationsModule,
+    MatNativeDateModule,
+    MatSlideToggleModule,
+    MatIconModule,
+    FormsModule,
+    MatNativeDateModule,
+    MatDialogModule,
+    MatButtonToggleModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
     NgxPaginationModule,
     BrowserModule,
     NgToastModule,
@@ -88,10 +109,10 @@ import * as signalR from '@microsoft/signalr';
     FormsModule,
     ReactiveFormsModule,
     JwtModule.forRoot({
-      jwtOptionsProvider:{
-        provide:JWT_OPTIONS,
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
         useFactory: jwtOptionsFactor,
-        deps:[StorageService]
+        deps: [StorageService]
       }
     }),
     AlertModule,
@@ -99,32 +120,33 @@ import * as signalR from '@microsoft/signalr';
 
   ],
   providers:
-  [
-    { provide: HTTP_INTERCEPTORS,
-      useClass: AuthTokenInterceptor,
-      multi: true
-    },
-    [AuthGuard],
     [
       {
-        provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
-      }
-    ]
-  ],
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthTokenInterceptor,
+        multi: true
+      },
+      [AuthGuard],
+      [
+        {
+          provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+        }
+      ]
+    ],
   bootstrap: [AppComponent],
 })
 
 export class AppModule { }
 
-export function jwtOptionsFactor(storage:StorageService){
+export function jwtOptionsFactor(storage: StorageService) {
   return {
-    tokenGetter:() => {
+    tokenGetter: () => {
       console.log("Đã add authen");
 
       return storage.getAccessToken();
     },
-    allowedDomains:["https://webhotel.click"],
-    disallowedRoutes:[
+    allowedDomains: ["https://webhotel.click"],
+    disallowedRoutes: [
       "https://webhotel.click/user/login",
       "https://webhotel.click/user/token/refresh"
     ],

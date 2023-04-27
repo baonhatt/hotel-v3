@@ -6,6 +6,8 @@ import { AuthService } from '../_service/auth.service';
 import { ApiService } from '../_service/api.service';
 import { Room } from '../models/room.model';
 import { Blog } from '../models/blog.model';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Search } from '../models/search.model';
 
 const today = new Date();
 const month = today.getMonth();
@@ -13,6 +15,7 @@ const year = today.getFullYear();
 interface RoomType {
   id: number;
   typeName: string;
+  maxPerson: number;
 }
 
 @Component({
@@ -21,19 +24,18 @@ interface RoomType {
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
-  query!: string;
-  results!: any[];
   rooms: Room[];
   blogs: Blog[];
-  roomtoDisplay!: Room[]
-  blogtoDisplay!: Blog[]
-
-  maxPerson: number[] = [1,2,3,4,5];
+  roomtoDisplay!: Room[];
+  blogtoDisplay!: Blog[];
+  maxPerson!: any;
+  datasearch!: number[];
   maxPrice = null;
   selectedRoomType = '';
   selectedServiceAttach = '';
   roomTypes:  RoomType[] = []
   serviceAttachs = [];
+  array!: number[];
   constructor(
     private http: HttpClient,
     private toast: NgToastService,
@@ -46,10 +48,11 @@ export class HomepageComponent implements OnInit {
     this.blogtoDisplay = this.blogs;
   }
 
-
+  date = new FormControl(new Date());
+  serializedDate = new FormControl(new Date().toISOString());
   ngOnInit(): void {
 
-    this.apiService.searchRoom().subscribe((data: any) => {
+    this.apiService.searchRoom().subscribe((data: any)=> {
       this.maxPerson = data.maxPerson;
       this.maxPrice = data.maxPrice;
       this.roomTypes = data.roomTypes;
