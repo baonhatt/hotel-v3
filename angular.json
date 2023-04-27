@@ -227,7 +227,7 @@
               "projects/admin-hotel/src/assets"
             ],
             "styles": [
-              "projects/admin-hotel/src/styles.css"
+              "projects/admin-hotel/src/styles.scss"
             ],
             "scripts": []
           },
@@ -289,7 +289,7 @@
               "projects/admin-hotel/src/assets"
             ],
             "styles": [
-              "projects/admin-hotel/src/styles.css"
+              "projects/admin-hotel/src/styles.scss"
             ],
             "scripts": []
           }

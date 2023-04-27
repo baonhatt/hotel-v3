@@ -17,6 +17,7 @@ import { AuthService } from '../_service/auth.service';
 import { TokenModel } from '../_service/token.model';
 import { NgToastService } from 'ng-angular-popup';
 import { environment } from '../../environments/environment.development';
+import { HomepageComponent } from '../homepage/homepage.component';
 // import { AuthinterceptorInterceptor } from '../shared/auth/authinterceptor.interceptor';
 
 @Component({
@@ -32,7 +33,6 @@ export class LoginComponent implements OnInit {
   loading = false;
   loginForm!: FormGroup;
   data: any;
-  userProfile: any;
   get f() {
     return this.loginForm.controls;
   }
@@ -40,8 +40,7 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private fb: FormBuilder,
     private route: Router,
-    private toast: NgToastService,
-    private http: HttpClient
+    private toast: NgToastService
   ) {}
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -67,29 +66,30 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm?.get('password')?.value;
     this.auth.login(email, password).subscribe(
       (response) => {
-
+        console.log(response);
+        this.toast.success({
+          detail: 'Welcome you !',
+          summary: "Login successfull",
+          duration: 500000,
+        });
         var token = response as TokenModel;
         localStorage.setItem('token', JSON.stringify(token));
-        this.route.navigate(['home']);
-        localStorage.setItem("firstLogin", "");
-        this.userProfile = this.auth.userProfile;
+        this.route.navigateByUrl('/home');
         this.loading = true;
-        window.location.reload();
-
       },
       (err) => {
-        this.toast.error({
-          detail: 'Error Message',
-          summary: 'Something was wrong !',
-          duration: 5000,
-        });
+        err
+        // this.toast.error({
+        //   detail: 'Error Message',
+        //   summary: err.message,
+        //   duration: 5000,
+        // });
       }
     );
   }
 
-
-  getUserData(){
-      window.self.close();
+  getUserData() {
+    window.self.close();
   }
   onSubmit() {
     this.submitted = true;
@@ -102,4 +102,3 @@ export class LoginComponent implements OnInit {
     this.login();
   }
 }
-

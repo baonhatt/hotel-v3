@@ -17,12 +17,9 @@ import { User } from '../_service/user.model';
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router, private storage: StorageService) {}
-
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-
-
   ):
     | boolean
     | UrlTree
@@ -45,7 +42,5 @@ export class AuthGuard implements CanActivate {
       }
       return true;
     }
-
-
   }
 }

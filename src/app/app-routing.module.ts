@@ -21,6 +21,8 @@ import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AboutComponent } from './about/about.component';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -181,7 +183,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [ RouterModule.forRoot(routes, {
+    // onSameUrlNavigation: 'ignore',
+    onSameUrlNavigation: 'reload'
+  }) ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

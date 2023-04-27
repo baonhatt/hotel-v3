@@ -89,7 +89,7 @@
                         <a href="#" class="text-muted" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                           <i class="ti ti-dots fs-5"></i>
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                           <li>
                             <a class="dropdown-item d-flex align-items-center gap-3" href="#"><i
                                 class="fs-4 ti ti-plus"></i>Add</a>
@@ -119,8 +119,6 @@
   </div>
 </div>
 <!-- Modal CREATE ROOM -->
-
-
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -158,41 +156,17 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Active</label>
-                        <select class="form-control" formControlName="IsActive" id="IsActive" name="IsActive">
+                        <select class="form-select mr-sm-2" formControlName="IsActive" id="IsActive" name="IsActive">
                           <option>Select</option>
                           <option [ngValue]="true">True</option>
                           <option [ngValue]="false">False</option>
                         </select>
                       </div>
                     </div>
-                    <!-- <div class="col-md-4">
-                      <div class="form-group">
-                        <label>Non</label>
-                        <select class="form-control" id="sel2" name="sellist1">
-                          <option>Select</option>
-                          <option>AC</option>
-                          <option>NON-AC</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label>Food</label>
-                        <select class="form-control" id="sel3" name="sellist1">
-                          <option>Select</option>
-                          <option>Free Breakfast</option>
-                          <option>Free Lunch</option>
-                          <option>Free Dinner</option>
-                          <option>Free Breakfast & Dinner</option>
-                          <option>Free Welcome Drink</option>
-                          <option>No Free Food</option>
-                        </select>
-                      </div>
-                    </div> -->
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Bed Count</label>
-                        <select class="form-control" id="sel" name="sellist1"  formControlName="NumberOfBed">
+                        <select class="form-select mr-sm-2" id="sel" name="sellist1"  formControlName="NumberOfBed">
                           <option>Select</option>
                           <option *ngFor="let option of Bednums; let i = index;" value="{{i}}">
                             {{option | titlecase}}
@@ -203,7 +177,7 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>People Count</label>
-                        <select class="form-control" id="sel" name="sellist1"   formControlName="PeopleNumber">
+                        <select class="form-select mr-sm-2" id="sel" name="sellist1"   formControlName="PeopleNumber">
                           <option>Select</option>
                           <option *ngFor="let option of Bednums; let i = index;" value="{{i}}">
                             {{option | titlecase}}
@@ -211,17 +185,6 @@
                         </select>
                       </div>
                     </div>
-                    <!-- <div class="col-md-4">
-                      <div class="form-group">
-                        <label>Charges For cancellation</label>
-                        <select class="form-control" id="sel4" name="sellist1">
-                          <option>Select</option>
-                          <option>Free</option>
-                          <option>5% Before 24Hours</option>
-                          <option>No Cancellation Allow</option>
-                        </select>
-                      </div>
-                    </div> -->
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Price</label>
@@ -231,7 +194,7 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>RoomTypeId</label>
-                        <select class="form-control" id="RoomTypeId"   formControlName="selectedRoomTypeId">
+                        <select class="form-select mr-sm-2" id="RoomTypeId"   formControlName="selectedRoomTypeId">
                           <option>Select</option>
                           <option *ngFor="let roomType of roomTypes"  value="{{roomType.id}}">
                             {{roomType.typeName}}
@@ -249,7 +212,7 @@
                       <div class="form-group">
                         <label>File Upload</label>
                         <div class="form-group mb-3">
-                          <input type="file" id="RoomPicture" class="form--control" formControlName="RoomPicture"  name="RoomPicture" accept='image/*' #file (change)="uploadFile(file.files)">
+                          <input type="file" id="formFile" class="form-control" formControlName="RoomPicture"  name="RoomPicture" accept='image/*' #file (change)="uploadFile(file.files)">
                          </div>
                       </div>
                     </div>
@@ -257,7 +220,7 @@
                       <div class="form-group">
                         <label>File Upload</label>
                         <div class="form-group mb-3">
-                          <input type="text" id="RoomPictures" class="form--control" formControlName="RoomPictures"  name="RoomPictures" accept='image/*' #file (change)="uploadFile(file.files)">
+                          <input type="file" id="formFile" class="form-control" formControlName="RoomPictures"  name="RoomPictures" accept='image/*' #file (change)="uploadFile(file.files)">
                          </div>
                       </div>
                     </div>
@@ -282,9 +245,6 @@
     </div>
   </div>
 </div>
-
-
-
 <!-- Modal EDIT ROOM -->
 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">

@@ -29,15 +29,17 @@ export class AuthService implements OnInit{
       password: password,
     };
     return this.http.post<any>(environment.BASE_URL_API + '/user/login', body).pipe(
-      tap((response) => {
-
-
-        let token = response as TokenModel;
-        this.storage.setToken(token);
-        var claims = JSON.stringify(this.jwtService.decodeToken(token.accessToken));
-        var userInfo = JSON.parse(claims.replaceAll("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/","")) as User;
-        this.userProfile.next(userInfo);
-        return true;
+      tap({
+          next: (response) => {
+            let token = response as TokenModel;
+            this.storage.setToken(token);
+            var claims = JSON.stringify(this.jwtService.decodeToken(token.accessToken));
+            var userInfo = JSON.parse(claims.replaceAll("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/","")) as User;
+            this.userProfile.next(userInfo);
+          },
+          error: (err) => {
+            this.toast.error({ detail: "Error Message", summary: err.error.message, duration: 5000 });
+          },
       }),
       catchError((error) => {
         error.
@@ -150,6 +152,4 @@ export class AuthService implements OnInit{
     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
     return daysDiff;
   }
-
-
 }

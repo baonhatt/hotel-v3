@@ -28,6 +28,7 @@ import { LoadingInterceptor } from 'src/app/loading.interceptor';
 import { AuthGuard } from './_helper/http.guard';
 import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { PageErrorComponent } from './page-error/page-error.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import { PageErrorComponent } from './page-error/page-error.component';
     AddbookingComponent,
     LoginAdminComponent,
     PageErrorComponent,
+    SpinnerComponent,
 
   ],
   imports: [

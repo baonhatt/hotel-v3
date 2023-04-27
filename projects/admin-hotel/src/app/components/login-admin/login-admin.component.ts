@@ -63,8 +63,6 @@ export class LoginAdminComponent implements OnInit {
           this.loading = true;
           // window.location.reload();
           this.route.navigate(['dashboard']);
-
-
         },
         (err) => {
           alert("Your account not have permission!")

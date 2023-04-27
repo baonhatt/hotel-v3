@@ -14,7 +14,6 @@ export class BlogsComponent implements OnInit {
   constructor(private apiService: ApiService){}
 
   ngOnInit(): void {
-
     this.getBlogs();
   }
   getBlogs(){
