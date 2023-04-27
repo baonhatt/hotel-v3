@@ -18,7 +18,6 @@ import { RoomDetailComponent } from './room-detail/room-detail.component';
 import { FooterComponent } from './footer/footer.component';
 import { StorageService } from './_service/storage.service';
 import { EmailValidatorDirective } from './_shared/validator/email-validators.directive';
-import {  ValidatorFn, AbstractControl } from '@angular/forms';
 import { NgToastModule } from 'ng-angular-popup';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { ProfileComponent } from './client/profile/profile.component';
@@ -41,6 +40,9 @@ import { AboutComponent } from './about/about.component';
 import { LeftContentComponent } from './client/dashboard/left-content/left-content.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { BellNotifComponent } from './bell-notif/bell-notif.component';
+import * as signalR from '@microsoft/signalr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,9 +67,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AboutComponent,
     LeftContentComponent,
     SearchResultComponent,
+    BellNotifComponent,
 
   ],
   imports: [
+     DatePickerModule,
+
     NgxPaginationModule,
     BrowserModule,
     NgToastModule,

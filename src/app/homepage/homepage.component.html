@@ -41,54 +41,35 @@
 
         <div class="banner-location-single">
           <div class="banner-location-single-flex">
-            <div class="banner-location-single-icon">
-              <i class="las la-calendar"></i>
-            </div>
+
             <div class="banner-location-single-contents">
               <span class="banner-location-single-contents-subtitle"> Check In </span>
-              <div class="banner-location-single-contents-dropdown custom-select">
-                <select class="js-select select-style-two" name="state">
-                  <option value="1">20 Jun 2022</option>
-                  <option value="2">21 Jun 2022</option>
-                  <option value="3">22 Jun 2022</option>
-                  <option value="4">23 Jun 2022</option>
-                </select>
-
-              </div>
+              <ejs-datepicker class="datepicker"  >
+            </ejs-datepicker>
             </div>
           </div>
         </div>
         <div class="banner-location-single">
           <div class="banner-location-single-flex">
-            <div class="banner-location-single-icon">
-              <i class="las la-calendar"></i>
-            </div>
+
             <div class="banner-location-single-contents">
               <span class="banner-location-single-contents-subtitle"> Check Out </span>
               <div class="banner-location-single-contents-dropdown custom-select">
-                <select class="js-select select-style-two" name="state">
-                  <option value="1">20 Jul 2022</option>
-                  <option value="2">21 Jul 2022</option>
-                  <option value="3">22 Jul 2022</option>
-                  <option value="4">23 Jul 2022</option>
-                </select>
+                <ejs-datepicker class="datepicker"  >
+            </ejs-datepicker>
               </div>
             </div>
           </div>
         </div>
         <div class="banner-location-single">
           <div class="banner-location-single-flex">
-            <div class="banner-location-single-icon">
-              <i class="las la-user-friends"></i>
-            </div>
+
             <div class="banner-location-single-contents">
               <span class="banner-location-single-contents-subtitle"> Person </span>
               <div class="banner-location-single-contents-dropdown custom-select">
-                <select class="js-select select-style-two" name="state">
-                  <option value="1">2 People</option>
-                  <option value="2">3 People</option>
-                  <option value="3">4 People</option>
-                  <option value="4">5 People</option>
+                <select class="js-select-room select-style-two" name="state">
+                  <option value="">Select number of people</option>
+                  <option *ngFor="let maxPerson" [value]="maxPerson">{{maxPerson}}</option>
                 </select>
               </div>
             </div>
@@ -100,14 +81,12 @@
               <i class="las la-user-friends"></i>
             </div>
             <div class="banner-location-single-contents">
-              <span class="banner-location-single-contents-subtitle"> Children </span>
+              <span class="banner-location-single-contents-subtitle"> Room Type </span>
               <div class="banner-location-single-contents-dropdown custom-select">
-                <select class="js-select select-style-two" name="state">
-                  <option value="1">2 Children</option>
-                  <option value="2">3 Children</option>
-                  <option value="3">4 Children</option>
-                  <option value="4">5 Children</option>
-                </select>
+                <select class="js-select-room" name="roomType" [(ngModel)]="selectedRoomType">
+                  <option value="">Select a room type</option>
+                  <option *ngFor="let roomType of roomTypes" [value]="roomType.id">{{roomType.typeName}}</option>
+                  </select>
               </div>
             </div>
           </div>
@@ -623,11 +602,12 @@
       <h2 class="title"> Latest News </h2>
       <div class="section-title-line"> </div>
     </div>
-    <div class="row gy-4 mt-4"  >
-      <div class="col-xxl-4 col-lg-4 col-md-6"  *ngFor="let b of blogs;let i=index;" >
-        <div class="single-blog blog-two"  >
+    <div class="row gy-4 mt-4">
+      <div class="col-xxl-4 col-lg-4 col-md-6" *ngFor="let b of blogs;let i=index;">
+        <div class="single-blog blog-two">
           <div class="single-blog-thumbs">
-            <a (click)="navigateToPage('/blog-detail/{{b.id}}')"> <img class="lazyloads" src="{{b.imgTitle}}" alt="ImgeTitle">
+            <a (click)="navigateToPage('/blog-detail/{{b.id}}')"> <img class="lazyloads" src="{{b.imgTitle}}"
+                alt="ImgeTitle">
             </a>
             <div class="single-blog-thumbs-date">
               <a href="javascript:void(0)"> <span class="date"> {{b.postDate}} </span> <span class="month"> Jun
@@ -642,7 +622,8 @@
               <span class="single-blog-contents-tags-item"> <a href="javascript:void(0)"> 22 Comments
                 </a> </span>
             </div>
-            <h4 class="single-blog-contents-title mt-3"> <a (click)="navigateToPage('/blog-detail/{{b.id}}')">{{b.discription}} </a> </h4>
+            <h4 class="single-blog-contents-title mt-3"> <a
+                (click)="navigateToPage('/blog-detail/{{b.id}}')">{{b.discription}} </a> </h4>
           </div>
         </div>
       </div>

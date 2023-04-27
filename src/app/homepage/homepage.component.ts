@@ -7,6 +7,13 @@ import { ApiService } from '../_service/api.service';
 import { Room } from '../models/room.model';
 import { Blog } from '../models/blog.model';
 
+const today = new Date();
+const month = today.getMonth();
+const year = today.getFullYear();
+interface RoomType {
+  id: number;
+  typeName: string;
+}
 
 @Component({
   selector: 'app-homepage',
@@ -20,6 +27,13 @@ export class HomepageComponent implements OnInit {
   blogs: Blog[];
   roomtoDisplay!: Room[]
   blogtoDisplay!: Blog[]
+
+  maxPerson: number[] = [1,2,3,4,5];
+  maxPrice = null;
+  selectedRoomType = '';
+  selectedServiceAttach = '';
+  roomTypes:  RoomType[] = []
+  serviceAttachs = [];
   constructor(
     private http: HttpClient,
     private toast: NgToastService,
@@ -34,6 +48,14 @@ export class HomepageComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.apiService.searchRoom().subscribe((data: any) => {
+      this.maxPerson = data.maxPerson;
+      this.maxPrice = data.maxPrice;
+      this.roomTypes = data.roomTypes;
+      this.serviceAttachs = data.serviceAttachs;
+    });
+
     if (localStorage.getItem('firstLogin') == "") {
       setTimeout(() => {
         this.toast.success({
@@ -46,7 +68,7 @@ export class HomepageComponent implements OnInit {
     }
 
 
-    this.apiService.getRooms().subscribe((res) => {
+    this.apiService.getRooms().subscribe((res: any) => {
       for (let r of res) {
         this.rooms.unshift(r);
       }
@@ -54,7 +76,7 @@ export class HomepageComponent implements OnInit {
     });
 
 
-    this.apiService.getBlogs().subscribe((res) => {
+    this.apiService.getBlogs().subscribe((res: any) => {
       for (let b of res) {
         this.blogs.unshift(b);
       }
@@ -67,18 +89,18 @@ export class HomepageComponent implements OnInit {
     window.scrollTo(0, 0);
   }
 
-  seachRoom(event: any) {
-    let filteredRooms: Room[] = [];
+  // seachRoom(event: any) {
+  //   let filteredRooms: Room[] = [];
 
-    if (event === '') {
-      this.roomtoDisplay = this.rooms;
-    } else {
-      filteredRooms = this.rooms.filter((val, index) => {
-        let targetKey =  val.name.toLowerCase() + val.currentPrice.toString()
-        let searchKey = event.toLowerCase();
-        return targetKey.includes(searchKey);
-      });
-      this.roomtoDisplay = filteredRooms;
-    }
-  }
+  //   if (event === '') {
+  //     this.roomtoDisplay = this.rooms;
+  //   } else {
+  //     filteredRooms = this.rooms.filter((val, index) => {
+  //       let targetKey =  val.name.toLowerCase() + val.currentPrice.toString()
+  //       let searchKey = event.toLowerCase();
+  //       return targetKey.includes(searchKey);
+  //     });
+  //     this.roomtoDisplay = filteredRooms;
+  //   }
+  // }
 }

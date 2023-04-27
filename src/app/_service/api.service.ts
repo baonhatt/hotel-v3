@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment.development';
 import { Blog } from '../models/blog.model';
 import { User } from './user.model';
 import { Data } from '@angular/router';
+import { Search } from '../models/search.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,12 @@ export class ApiService {
   user: any;
   room: any;
   blog: any;
-  apiRoom = 'https://webhotel.click/user/room/get-all';
+  apiRooms = 'https://webhotel.click/user/room/get-all';
   apiBlog = 'http://localhost:3000/blog';
   apiRoomm = 'http://localhost:3000/rooms';
   getRooms() {
     // return this.http.get<Room[]>(environment.BASE_URL_API + '/user/room/get-all');
-    return this.http.get<Room[]>(this.apiRoomm);
+    return this.http.get<Room[]>(this.apiRooms);
   }
   getBlogs(){
     return this.http.get<Blog[]>(this.apiBlog);
@@ -45,8 +46,8 @@ export class ApiService {
   deleteRoom(id: string) {
     return this.http.delete(environment.BASE_URL_API + '/user/room/delete-by-id' + id);
   }
-  searchRoom(query: string): Observable<any>{
-    return this.http.get<Room[]>(`${environment.BASE_URL_API}/api/Room/getAllBy${query}`)
+  searchRoom(): Observable<Search[]>{
+    return this.http.get<Search[]>(environment.BASE_URL_API + '/user/search-room')
   }
   getUser() {
     this.user = this.auth.userProfile
