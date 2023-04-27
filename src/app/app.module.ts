@@ -52,6 +52,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {MatSelectModule} from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatOption } from '@angular/material/core';
+import {  NO_ERRORS_SCHEMA } from '@angular/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,6 +83,8 @@ import {MatSelectModule} from '@angular/material/select';
 
   ],
   imports: [
+
+    MatOptionModule,
     MatSelectModule,
     BrowserAnimationsModule,
     MatNativeDateModule,
@@ -134,6 +139,9 @@ import {MatSelectModule} from '@angular/material/select';
       ]
     ],
   bootstrap: [AppComponent],
+  schemas: [
+    NO_ERRORS_SCHEMA
+  ],
 })
 
 export class AppModule { }

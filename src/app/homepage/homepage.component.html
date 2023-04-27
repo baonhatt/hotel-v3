@@ -74,11 +74,10 @@
           <div class="banner-location-single-flex">
 
             <div class="banner-location-single-contents">
-              <span class="banner-location-single-contents-subtitle"> Person </span>
+              <span class="banner-location-single-contents-subtitle" > Person </span>
               <mat-form-field appearance="fill">
-                <mat-label>Person</mat-label>
-                <mat-select >
-                  *ngFor="let item of datasearch.slice(0, maxPerson)" [value]="item">{{maxPerson}}>
+                <mat-select [(ngModel)]="selectedPersonCount" >
+                 <mat-option  *ngFor="let i of maxPersonArray" [value]="i" >{{i}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>

@@ -36,6 +36,7 @@ export class HomepageComponent implements OnInit {
   roomTypes:  RoomType[] = []
   serviceAttachs = [];
   array!: number[];
+  selectedPersonCount: number = 1;
   constructor(
     private http: HttpClient,
     private toast: NgToastService,
@@ -57,6 +58,7 @@ export class HomepageComponent implements OnInit {
       this.maxPrice = data.maxPrice;
       this.roomTypes = data.roomTypes;
       this.serviceAttachs = data.serviceAttachs;
+
     });
 
     if (localStorage.getItem('firstLogin') == "") {
@@ -71,12 +73,12 @@ export class HomepageComponent implements OnInit {
     }
 
 
-    this.apiService.getRooms().subscribe((res: any) => {
-      for (let r of res) {
-        this.rooms.unshift(r);
-      }
-      this.roomtoDisplay = this.rooms ;
-    });
+    // this.apiService.getRooms().subscribe((res: any) => {
+    //   for (let r of res) {
+    //     this.rooms.unshift(r);
+    //   }
+    //   this.roomtoDisplay = this.rooms ;
+    // });
 
 
     this.apiService.getBlogs().subscribe((res: any) => {
@@ -86,7 +88,17 @@ export class HomepageComponent implements OnInit {
       this.blogtoDisplay = this.blogs ;
     });
 
+    this.sortMaxPersonArrayDescending();
+
   }
+  sortMaxPersonArrayDescending() {
+    this.maxPersonArray.sort((a, b) => a - b);
+  }
+
+  get maxPersonArray(): number[] {
+    return Array.from({length: this.maxPerson}, (_, i) => this.maxPerson - i);
+  }
+
   navigateToPage(url: string) {
     window.location.href = url;
     window.scrollTo(0, 0);

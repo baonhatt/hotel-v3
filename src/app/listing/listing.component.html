@@ -25,55 +25,45 @@
 
         <div class="banner-location-single">
           <div class="banner-location-single-flex">
-            <div class="banner-location-single-icon">
-              <i class="las la-calendar"></i>
-            </div>
+
             <div class="banner-location-single-contents">
               <span class="banner-location-single-contents-subtitle"> Check In </span>
-              <div class="banner-location-single-contents-dropdown custom-select">
-                <select class="js-select select-style-two" name="state">
-                  <option value="1">20 Jun 2022</option>
-                  <option value="2">21 Jun 2022</option>
-                  <option value="3">22 Jun 2022</option>
-                  <option value="4">23 Jun 2022</option>
-                </select>
-              </div>
+
+              <mat-form-field appearance="fill">
+                <input matInput [matDatepicker]="picker2"
+                       [formControl]="serializedDate">
+                <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
             </div>
           </div>
         </div>
         <div class="banner-location-single">
           <div class="banner-location-single-flex">
-            <div class="banner-location-single-icon">
-              <i class="las la-calendar"></i>
-            </div>
+
             <div class="banner-location-single-contents">
               <span class="banner-location-single-contents-subtitle"> Check Out </span>
               <div class="banner-location-single-contents-dropdown custom-select">
-                <select class="js-select select-style-two" name="state">
-                  <option value="1">20 Jul 2022</option>
-                  <option value="2">21 Jul 2022</option>
-                  <option value="3">22 Jul 2022</option>
-                  <option value="4">23 Jul 2022</option>
-                </select>
+                <mat-form-field appearance="fill">
+                  <input matInput [matDatepicker]="picker3"
+                         [formControl]="serializedDate">
+                  <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+                  <mat-datepicker #picker3></mat-datepicker>
+                </mat-form-field>
               </div>
             </div>
           </div>
         </div>
         <div class="banner-location-single">
           <div class="banner-location-single-flex">
-            <div class="banner-location-single-icon">
-              <i class="las la-user-friends"></i>
-            </div>
+
             <div class="banner-location-single-contents">
               <span class="banner-location-single-contents-subtitle"> Person </span>
-              <div class="banner-location-single-contents-dropdown custom-select">
-                <select class="js-select select-style-two" name="state">
-                  <option value="1">2 People</option>
-                  <option value="2">3 People</option>
-                  <option value="3">4 People</option>
-                  <option value="4">5 People</option>
-                </select>
-              </div>
+              <mat-form-field appearance="fill">
+                <mat-select [(ngModel)]="selectedPersonCount" >
+                 <mat-option  *ngFor="let i of maxPersonArray" [value]="i" >{{i}}</mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
           </div>
         </div>
@@ -83,117 +73,65 @@
               <i class="las la-user-friends"></i>
             </div>
             <div class="banner-location-single-contents">
-              <span class="banner-location-single-contents-subtitle"> Children </span>
-              <div class="banner-location-single-contents-dropdown custom-select">
-                <select class="js-select select-style-two" name="state">
-                  <option value="1">2 Children</option>
-                  <option value="2">3 Children</option>
-                  <option value="3">4 Children</option>
-                  <option value="4">5 Children</option>
-                </select>
-              </div>
+              <span class="banner-location-single-contents-subtitle"> Room Type </span>
+              <!-- <div class="banner-location-single-contents-dropdown custom-select">
+                <select class="js-select-room" name="roomType" [(ngModel)]="selectedRoomType">
+                  <option value="">Select a room type</option>
+                  <option *ngFor="let roomType of roomTypes" [value]="roomType.id">{{roomType.typeName}}</option>
+                  </select>
+              </div> -->
+              <mat-form-field appearance="fill">
+                <mat-label>Room Type</mat-label>
+                <mat-select>
+                  <mat-option *ngFor="let roomType of roomTypes"  value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
             </div>
           </div>
         </div>
         <div class="banner-location-single-search">
           <div class="search-suggestions-wrapper">
             <div class="search-click-icon">
-              <i class="las la-search"></i>
+              <i routerLink="/room-result" class="las la-search"></i>
             </div>
-            <div class="search-show">
+            <!-- <div class="search-show">
               <div class="search-show-inner">
                 <form action="#">
                   <div class="search-show-form">
                     <input autocomplete="off" class="form--control" id="search_form_input" type="text"
-                      placeholder="Search here....">
-                    <button type="submit"> <i class="las la-search"></i> </button>
+                      placeholder="Search here...."
+                      (input)="seachRoom(searchInput.value)" #searchInput
+                      >
+                    <button type="submit" > <i class="las la-search"></i> </button>
                     <span class="suggestions-icon-close"> <i class="las la-times"></i> </span>
                   </div>
                   <div class="search-product" id="search_suggestions_wrap">
-                    <div class="search-product-inner">
-                      <h6 class="search-product-title">Product Suggestions</h6>
-                      <ul class="search-product-list mt-4">
-                        <li class="search-product-list-item">
-                          <a href="javascript:void(0)" class="search-product-list-link">
-                            <div class="search-product-list-image"><img src="assets/img/search_suggestion/s1.jpg"
-                                alt="img"></div>
+                    <h6 class="search-product-title">Product Suggestions</h6>
+                    <div class="search-product-inner" *ngFor="let r of roomtoDisplay; let i = index;">
+                      <ul class="search-product-list-item">
+                        <a href="javascript:void(0)" class="search-product-list-link" routerLink="/room-detail">
+                            <div class="search-product-list-image"><img
+                                    src= {{r.roomPicture}} alt="img">
+                            </div>
                             <div class="search-product-list-info">
-                              <div class="search-product-list-info-top">
-                                <h6 class="earch-product-list-info-title"> Apple Original Air pod Collection for most
-                                  popular and best price item in market </h6>
-                              </div>
-                              <div class="search-product-list-info-price mt-2">
-                                <div class="search-product-list-info-price-through">
-                                  <span class="flash-price"> $330.00 </span>
-                                  <span class="old-price"> $300.00 </span>
+                                <div class="search-product-list-info-top">
+                                    <h6 class="earch-product-list-info-title"> {{r.name}}</h6>
                                 </div>
-                              </div>
+                                <div class="search-product-list-info-price mt-2">
+                                    <div class="search-product-list-info-price-through">
+                                        <span class="main-price fw-500 color-light"> {{r.currentPrice}}</span>
+                                        <span class="stock-out"> Discount:{{r.discountPrice}} </span>
+                                    </div>
+                                </div>
                             </div>
-                          </a>
-                        </li>
-                        <li class="search-product-list-item">
-                          <a href="javascript:void(0)" class="search-product-list-link">
-                            <div class="search-product-list-image"><img src="assets/img/search_suggestion/s2.jpg"
-                                alt="img"></div>
-                            <div class="search-product-list-info">
-                              <div class="search-product-list-info-top">
-                                <h6 class="earch-product-list-info-title"> Apple Original Airpod Collection </h6>
-                              </div>
-                              <div class="search-product-list-info-price mt-2">
-                                <span class="main-price fw-500 color-light">$269.00</span>
-                              </div>
-                            </div>
-                          </a>
-                        </li>
-                        <li class="search-product-list-item">
-                          <a href="javascript:void(0)" class="search-product-list-link">
-                            <div class="search-product-list-image"><img src="assets/img/search_suggestion/s3.jpg"
-                                alt="img"></div>
-                            <div class="search-product-list-info">
-                              <div class="search-product-list-info-top">
-                                <h6 class="earch-product-list-info-title"> Apple Original Airpod Collection </h6>
-                              </div>
-                              <div class="search-product-list-info-price mt-2">
-                                <span class="main-price fw-500 color-light">$499.00</span>
-                                <span class="stock-out"> Stock Out </span>
-                              </div>
-                            </div>
-                          </a>
-                        </li>
-                        <li class="search-product-list-item">
-                          <a href="javascript:void(0)" class="search-product-list-link">
-                            <div class="search-product-list-image"><img src="assets/img/search_suggestion/s4.jpg"
-                                alt="img"></div>
-                            <div class="search-product-list-info">
-                              <div class="search-product-list-info-top">
-                                <h6 class="earch-product-list-info-title"> Apple Original Airpod Collection </h6>
-                              </div>
-                              <div class="search-product-list-info-price mt-2">
-                                <span class="main-price fw-500 color-light">$499.00</span>
-                              </div>
-                            </div>
-                          </a>
-                        </li>
-                        <li class="search-product-list-item">
-                          <a href="javascript:void(0)" class="search-product-list-link">
-                            <div class="search-product-list-image"><img src="assets/img/search_suggestion/s5.jpg"
-                                alt="img"></div>
-                            <div class="search-product-list-info">
-                              <div class="search-product-list-info-top">
-                                <h6 class="earch-product-list-info-title"> Apple Original Airpod Collection </h6>
-                              </div>
-                              <div class="search-product-list-info-price mt-2">
-                                <span class="main-price fw-500 color-light">$499.00</span>
-                              </div>
-                            </div>
-                          </a>
-                        </li>
-                      </ul>
+                        </a>
+                    </ul>
                     </div>
                   </div>
                 </form>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="search-suggestion-overlay"></div>
         </div>
@@ -317,12 +255,7 @@
         </div>
         <div id="tab-grid" class="tab-content-item active mt-4"  >
           <div class="row gy-4">
-            <div class="col-md-6" *ngFor="let room of rooms  | paginate
-            : {
-                itemsPerPage: tableSize,
-                currentPage: page,
-                totalItems: count
-              }; let i = index; ">
+            <div class="col-md-6" *ngFor="let room of rooms; let i = index;">
               <div class="hotel-view bg-white radius-20">
                 <a routerLink="/room-detail/{{room.id}}"  class="hotel-view-thumb hotel-view-grid-thumb bg-image"
                  ><img src="{{room.roomPicture}}" alt="Room Image">
@@ -389,7 +322,7 @@
           </div>
           <div class="row mt-5">
             <div class="col">
-              <!-- <div class="pagination-wrapper">
+              <div class="pagination-wrapper">
                 <ul class="pagination-list list-style-none">
                   <li class="pagination-list-item-prev">
                     <a href="javascript:void(0)" class="pagination-list-item-button"> Prev </a>
@@ -413,14 +346,7 @@
                     <a href="javascript:void(0)" class="pagination-list-item-button"> Next </a>
                   </li>
                 </ul>
-              </div> -->
-              <pagination-controls class="pagination-wrapper"
-              previousLabel="Prev"
-              nextLabel="Next"
-              (pageChange)="onTableDataChange($event)"
-            >
-
-            </pagination-controls>
+              </div>
             </div>
           </div>
         </div>
@@ -638,37 +564,33 @@
             </div>
           </div>
           <div class="row mt-5">
-            <!-- <div class="col">
+            <div class="col">
               <div class="pagination-wrapper">
-                <pagination-controls (pageChange)="p = $event" class="float-right">
-
-                  <ul class="pagination-list list-style-none">
-                    <li class="pagination-list-item-prev">
-                      <a href="javascript:void(0)" class="pagination-list-item-button"> Prev </a>
-                    </li>
-                    <li class="pagination-list-item">
-                      <a href="javascript:void(0)" class="pagination-list-item-link"> 1 </a>
-                    </li>
-                    <li class="pagination-list-item active">
-                      <a href="javascript:void(0)" class="pagination-list-item-link"> 2 </a>
-                    </li>
-                    <li class="pagination-list-item">
-                      <a href="javascript:void(0)" class="pagination-list-item-link"> 3 </a>
-                    </li>
-                    <li class="pagination-list-item">
-                      <a href="javascript:void(0)" class="pagination-list-item-link"> 4 </a>
-                    </li>
-                    <li class="pagination-list-item">
-                      <a href="javascript:void(0)" class="pagination-list-item-link"> 5 </a>
-                    </li>
-                    <li class="pagination-list-item-next">
-                      <a href="javascript:void(0)" class="pagination-list-item-button"> Next </a>
-                    </li>
-                  </ul>
-                </pagination-controls>
+                <ul class="pagination-list list-style-none">
+                  <li class="pagination-list-item-prev">
+                    <a href="javascript:void(0)" class="pagination-list-item-button"> Prev </a>
+                  </li>
+                  <li class="pagination-list-item">
+                    <a href="javascript:void(0)" class="pagination-list-item-link"> 1 </a>
+                  </li>
+                  <li class="pagination-list-item active">
+                    <a href="javascript:void(0)" class="pagination-list-item-link"> 2 </a>
+                  </li>
+                  <li class="pagination-list-item">
+                    <a href="javascript:void(0)" class="pagination-list-item-link"> 3 </a>
+                  </li>
+                  <li class="pagination-list-item">
+                    <a href="javascript:void(0)" class="pagination-list-item-link"> 4 </a>
+                  </li>
+                  <li class="pagination-list-item">
+                    <a href="javascript:void(0)" class="pagination-list-item-link"> 5 </a>
+                  </li>
+                  <li class="pagination-list-item-next">
+                    <a href="javascript:void(0)" class="pagination-list-item-button"> Next </a>
+                  </li>
+                </ul>
               </div>
-            </div> -->
-
+            </div>
           </div>
         </div>
       </div>
