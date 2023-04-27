@@ -136,6 +136,7 @@ export class RoomComponent implements OnInit {
     this.http.post<any>(`https://webhotel.click/v2/admin/room/create`, formData).subscribe(res => {
       alert("Create an account successfully!");
       this.rooms.unshift(res);
+      this.getRooms()
     }, _err => {
       alert(_err);
     })

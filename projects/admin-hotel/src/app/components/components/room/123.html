@@ -1,0 +1,435 @@
+
+
+
+<div class="wrapper">
+  <app-sidebar></app-sidebar>
+
+  <div class="content-page">
+    <div class="content">
+      <app-header></app-header>
+      <div class="container-fluid">
+
+        <div class="row">
+          <div class="col-12">
+            <div class="page-title-box">
+              <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                  <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+                  <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
+                  <li class="breadcrumb-item active">Products</li>
+                </ol>
+              </div>
+              <h4 class="page-title">Products</h4>
+            </div>
+          </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="row mb-2">
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                      class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Products</button>
+                  </div>
+                  <div class="col-sm-8">
+                    <div class="text-sm-end">
+                      <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog-outline"></i></button>
+                      <button type="button" class="btn btn-light mb-2 me-1">Import</button>
+                      <button type="button" class="btn btn-light mb-2">Export</button>
+                    </div>
+                  </div><!-- end col-->
+                </div>
+
+                <div class="table-responsive">
+                  <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
+                    <thead class="table-light">
+                      <tr>
+                        <th class="all" style="width: 20px;">
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="customCheck1">
+                            <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                          </div>
+                        </th>
+                        <th class="all">Room</th>
+                        <th>Room Type</th>
+                        <th>Added Date</th>
+                        <th>Price</th>
+                        <th>Number of Bed</th>
+                        <th>Status</th>
+                        <th style="width: 135px;">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let room of rooms; let i = index;">
+                      <tr *ngIf="room">
+                        <td>
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="customCheck2">
+                            <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                          </div>
+                        </td>
+                        <td>
+                          <img src="{{room.roomPicture}}" alt="contact-img" title="contact-img" class="rounded me-3"
+                            height="48">
+                          <p class="m-0 d-inline-block align-middle font-16">
+                            <a href="apps-ecommerce-products-details.html" class="text-body">{{room.name}}</a>
+                            <br>
+                            <span class="text-warning mdi mdi-star"></span>
+                            <span class="text-warning mdi mdi-star"></span>
+                            <span class="text-warning mdi mdi-star"></span>
+                            <span class="text-warning mdi mdi-star"></span>
+                            <span class="text-warning mdi mdi-star"></span>
+                          </p>
+                        </td>
+                        <td>
+                          {{room.name}}
+                        </td>
+                        <td>
+                          09/12/2018
+                        </td>
+                        <td>
+                          {{room.currentPrice}}
+                        </td>
+
+                        <td>
+                          {{room.numberOfBed}}
+                        </td>
+                        <td>
+                          <div *ngIf="room.isActive; else inactiveBadge">
+                            <span class="badge bg-success">Active</span>
+                          </div>
+
+                          <ng-template #inactiveBadge>
+                            <span class="badge bg-danger">Inactive</span>
+                          </ng-template>
+                        </td>
+
+                        <td class="table-action">
+                          <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
+                          <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"
+                           class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                          <a href="javascript:void(0);" (click)="deleteRoom(room.id)" class="action-icon"> <i
+                              class="mdi mdi-delete"></i></a>
+                        </td>
+                        <div *ngIf="!room">
+                          Room not found.
+                        </div>
+                      </tr>
+
+
+                    </tbody>
+                  </table>
+                </div>
+              </div> <!-- end card-body-->
+            </div> <!-- end card-->
+          </div> <!-- end col -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal CREATE ROOM -->
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="  page-wrapper">
+          <div class="content container-fluid">
+            <div class="page-header">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="page-title mt-5">Add Room</h3>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <form [formGroup]="roomForm" >
+                  <div class="row formtype">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Room Name</label>
+                        <input type="text" class="form-control"   formControlName="Name">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Room Number</label>
+                        <input type="text" class="form-control"  formControlName="RoomNumber">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Active</label>
+                        <select class="form-control" formControlName="IsActive" id="IsActive" name="IsActive">
+                          <option>Select</option>
+                          <option [ngValue]="true">True</option>
+                          <option [ngValue]="false">False</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Non</label>
+                        <select class="form-control" id="sel2" name="sellist1">
+                          <option>Select</option>
+                          <option>AC</option>
+                          <option>NON-AC</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Food</label>
+                        <select class="form-control" id="sel3" name="sellist1">
+                          <option>Select</option>
+                          <option>Free Breakfast</option>
+                          <option>Free Lunch</option>
+                          <option>Free Dinner</option>
+                          <option>Free Breakfast & Dinner</option>
+                          <option>Free Welcome Drink</option>
+                          <option>No Free Food</option>
+                        </select>
+                      </div>
+                    </div> -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Bed Count</label>
+                        <select class="form-control" id="sel" name="sellist1"  formControlName="NumberOfBed">
+                          <option>Select</option>
+                          <option *ngFor="let option of Bednums; let i = index;" value="{{i}}">
+                            {{option | titlecase}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>People Count</label>
+                        <select class="form-control" id="sel" name="sellist1"   formControlName="PeopleNumber">
+                          <option>Select</option>
+                          <option *ngFor="let option of Bednums; let i = index;" value="{{i}}">
+                            {{option | titlecase}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Charges For cancellation</label>
+                        <select class="form-control" id="sel4" name="sellist1">
+                          <option>Select</option>
+                          <option>Free</option>
+                          <option>5% Before 24Hours</option>
+                          <option>No Cancellation Allow</option>
+                        </select>
+                      </div>
+                    </div> -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Price</label>
+                        <input type="text" formControlName="CurrentPrice" class="form-control" id="CurrentPrice">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>RoomTypeId</label>
+                        <select class="form-control" id="RoomTypeId"   formControlName="selectedRoomTypeId">
+                          <option>Select</option>
+                          <option *ngFor="let roomType of roomTypes"  value="{{roomType.id}}">
+                            {{roomType.typeName}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Discount </label>
+                        <input type="text" class="form-control" formControlName="discountPrice" id="discountPrice">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>File Upload</label>
+                        <div class="form-group mb-3">
+                          <input type="file" id="RoomPicture" class="form--control" formControlName="RoomPicture"  name="RoomPicture" accept='image/*' #file (change)="uploadFile(file.files)">
+                         </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>File Upload</label>
+                        <div class="form-group mb-3">
+                          <input type="text" id="RoomPictures" class="form--control" formControlName="RoomPictures"  name="RoomPictures" accept='image/*' #file (change)="uploadFile(file.files)">
+                         </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" rows="5" id="comment" name="text"  formControlName="Description"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" (click)="addRoom(roomForm)"  class="btn btn-primary">Add</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal EDIT ROOM -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="  page-wrapper">
+          <div class="content container-fluid">
+            <div class="page-header">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="page-title mt-5">Edit Room</h3>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <form [formGroup]="roomForm" >
+                  <div class="row formtype">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Room Name</label>
+                        <input type="text" class="form-control"   formControlName="Name">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Room Number</label>
+                        <input type="text" class="form-control"  formControlName="RoomNumber">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Active</label>
+                        <select class="form-control" formControlName="IsActive" id="sel1" name="sellist1">
+                          <option>Select</option>
+                          <option [ngValue]="true">True</option>
+                          <option [ngValue]="false">False</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Non</label>
+                        <select class="form-control" id="sel2" name="sellist1">
+                          <option>Select</option>
+                          <option>AC</option>
+                          <option>NON-AC</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Food</label>
+                        <select class="form-control" id="sel3" name="sellist1">
+                          <option>Select</option>
+                          <option>Free Breakfast</option>
+                          <option>Free Lunch</option>
+                          <option>Free Dinner</option>
+                          <option>Free Breakfast & Dinner</option>
+                          <option>Free Welcome Drink</option>
+                          <option>No Free Food</option>
+                        </select>
+                      </div>
+                    </div> -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Bed Count</label>
+                        <select class="form-control" id="sel" name="sellist1"   formControlName="NumberOfBed">
+                          <option>Select</option>
+                          <option *ngFor="let option of Bednums; let i = index;" value="{{i}}">
+                            {{option | titlecase}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Charges For cancellation</label>
+                        <select class="form-control" id="sel4" name="sellist1">
+                          <option>Select</option>
+                          <option>Free</option>
+                          <option>5% Before 24Hours</option>
+                          <option>No Cancellation Allow</option>
+                        </select>
+                      </div>
+                    </div> -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Price</label>
+                        <input type="text"     formControlName="CurrentPrice" class="form-control" id="usr">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Discount </label>
+                        <input type="text" class="form-control"    formControlName="discountPrice" id="usr1">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>File Upload</label>
+                        <div class="form-group mb-3">
+                          <input type="text" id="image" class="form--control" formControlName="RoomPicture"  name="image" >
+                         </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" rows="5" id="comment" name="text"  formControlName="Description"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" (click)="addRoom(roomForm)"  class="btn btn-primary">Add</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,141 +1,125 @@
-
-
-
-<div class="wrapper">
-  <app-sidebar></app-sidebar>
-
-  <div class="content-page">
-    <div class="content">
-      <app-header></app-header>
-      <div class="container-fluid">
-
-        <div class="row">
-          <div class="col-12">
-            <div class="page-title-box">
-              <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
-                  <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
-                  <li class="breadcrumb-item active">Products</li>
-                </ol>
-              </div>
-              <h4 class="page-title">Products</h4>
-            </div>
-          </div>
-        </div>
-        <!-- end page title -->
-
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-body">
-                <div class="row mb-2">
-                  <div class="col-sm-4">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                      class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Products</button>
-                  </div>
-                  <div class="col-sm-8">
-                    <div class="text-sm-end">
-                      <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog-outline"></i></button>
-                      <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                      <button type="button" class="btn btn-light mb-2">Export</button>
-                    </div>
-                  </div><!-- end col-->
-                </div>
-
-                <div class="table-responsive">
-                  <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
-                    <thead class="table-light">
-                      <tr>
-                        <th class="all" style="width: 20px;">
-                          <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="customCheck1">
-                            <label class="form-check-label" for="customCheck1">&nbsp;</label>
-                          </div>
-                        </th>
-                        <th class="all">Room</th>
-                        <th>Room Type</th>
-                        <th>Added Date</th>
-                        <th>Price</th>
-                        <th>Number of Bed</th>
-                        <th>Status</th>
-                        <th style="width: 135px;">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody *ngFor="let room of rooms; let i = index;">
-                      <tr *ngIf="room">
-                        <td>
-                          <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="customCheck2">
-                            <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                          </div>
-                        </td>
-                        <td>
-                          <img src="{{room.roomPicture}}" alt="contact-img" title="contact-img" class="rounded me-3"
-                            height="48">
-                          <p class="m-0 d-inline-block align-middle font-16">
-                            <a href="apps-ecommerce-products-details.html" class="text-body">{{room.name}}</a>
-                            <br>
-                            <span class="text-warning mdi mdi-star"></span>
-                            <span class="text-warning mdi mdi-star"></span>
-                            <span class="text-warning mdi mdi-star"></span>
-                            <span class="text-warning mdi mdi-star"></span>
-                            <span class="text-warning mdi mdi-star"></span>
-                          </p>
-                        </td>
-                        <td>
-                          {{room.name}}
-                        </td>
-                        <td>
-                          09/12/2018
-                        </td>
-                        <td>
-                          {{room.currentPrice}}
-                        </td>
-
-                        <td>
-                          {{room.numberOfBed}}
-                        </td>
-                        <td>
-                          <div *ngIf="room.isActive; else inactiveBadge">
-                            <span class="badge bg-success">Active</span>
-                          </div>
-
-                          <ng-template #inactiveBadge>
-                            <span class="badge bg-danger">Inactive</span>
-                          </ng-template>
-                        </td>
-
-                        <td class="table-action">
-                          <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                          <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"
-                           class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                          <a href="javascript:void(0);" (click)="deleteRoom(room.id)" class="action-icon"> <i
-                              class="mdi mdi-delete"></i></a>
-                        </td>
-                        <div *ngIf="!room">
-                          Room not found.
-                        </div>
-                      </tr>
-
-
-                    </tbody>
-                  </table>
-                </div>
-              </div> <!-- end card-body-->
-            </div> <!-- end card-->
-          </div> <!-- end col -->
-        </div>
-
+<app-sidebar></app-sidebar>
+<div class="body-wrapper">
+  <app-header></app-header>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h4 class="page-title">Products</h4>
       </div>
+    </div>
+    <!-- end page title -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-2">
+              <div class="col-sm-4">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                  class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Products</button>
+              </div>
+              <div class="col-sm-8">
+                <div class="text-sm-end">
+                  <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog-outline"></i></button>
+                  <button type="button" class="btn btn-light mb-2 me-1">Import</button>
+                  <button type="button" class="btn btn-light mb-2">Export</button>
+                </div>
+              </div><!-- end col-->
+            </div>
+
+            <div class="table-responsive">
+              <table class="table border customize-table mb-0 align-middle">
+                <thead class="text-dark fs-4">
+                  <tr>
+                    <th class="all" style="width: 20px;">
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="customCheck1">
+                        <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                      </div>
+                    </th>
+                    <th class="all">Room Name</th>
+                    <th>Room Type</th>
+                    <th>Price</th>
+                    <th>Discount price</th>
+                    <th>Simple Bed</th>
+                    <th>Double Bed</th>
+                    <th>Status</th>
+                    <th style="width: 135px;">Action</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let room of rooms; let i = index;">
+                  <tr *ngIf="room">
+                    <td>
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="customCheck2">
+                        <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="m-0 d-inline-block align-middle font-16">
+                        <a href="apps-ecommerce-products-details.html" class="text-body fw-semibold">{{room.name}}</a>
+                        <br>
+                        <i class="ti ti-star text-warning"></i>
+                        <i class="ti ti-star text-warning"></i>
+                        <i class="ti ti-star text-warning"></i>
+                      </p>
+                    </td>
+                    <td>{{room.roomTypeName}}</td>
+                    <td>
+                      {{room.currentPrice}}
+                    </td>
+                    <td>
+                      {{room.discountPrice == null?0:room.discountPrice}}
+                    </td>
+                    <td>
+                      {{room.numberOfSimpleBed}}
+                    </td>
+                    <td>
+                      {{room.numberOfDoubleBed}}
+                    </td>
+                    <td>
+                      <div *ngIf="room.isActive; else inactiveBadge">
+                        <span class="badge bg-light-success text-success fw-semibold fs-2 gap-1 d-inline-flex align-items-center"><i class="ti ti-circle fs-3"></i>active</span>
+                      </div>
+                      <ng-template #inactiveBadge>
+                        <span class="badge bg-light text-dark fw-semibold fs-2 gap-1 d-inline-flex align-items-center"><i class="ti ti-clock-hour-4 fs-3"></i>close</span>
+                      </ng-template>
+                    </td>
+                    <td>
+                      <div class="dropdown dropstart">
+                        <a href="#" class="text-muted" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="ti ti-dots fs-5"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
+                          <li>
+                            <a class="dropdown-item d-flex align-items-center gap-3" href="#"><i
+                                class="fs-4 ti ti-plus"></i>Add</a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item d-flex align-items-center gap-3" href="#" data-bs-toggle="modal"
+                              data-bs-target="#staticBackdrop2"><i class="fs-4 ti ti-edit"></i>Edit</a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item d-flex align-items-center gap-3" href="#" (click)="deleteRoom(room.id)"><i
+                                class="fs-4 ti ti-trash"></i>Delete</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </td>
+                    <div *ngIf="!room">
+                      Room not found.
+                    </div>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div> <!-- end card-body-->
+        </div> <!-- end card-->
+      </div> <!-- end col -->
     </div>
   </div>
 </div>
-
-
-
-
 <!-- Modal CREATE ROOM -->
+
 
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
