@@ -22,11 +22,12 @@ import { NgToastModule } from 'ng-angular-popup';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
 import { StorageService } from './_service/storage.service';
-import { LoadingInterceptor } from 'src/app/loading.interceptor';
+import { LoadingInterceptor } from './_helper/loading.interceptor';
 import { AuthGuard } from './_helper/http.guard';
 import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { PageErrorComponent } from './page-error/page-error.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,13 +67,16 @@ import { SpinnerComponent } from './spinner/spinner.component';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true },
     [AuthGuard],
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoadingInterceptor,
-      multi: true,
-    },
+    [
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: LoadingInterceptor,
+        multi: true,
+      },
+    ],
   ],
   bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class AppModule {}
 
@@ -86,6 +90,6 @@ export function jwtOptionsFactor(storage: StorageService) {
     disallowedRoutes: [
       'https://webhotel.click/user/login',
       'https://webhotel.click/user/token/refresh',
-    ]
+    ],
   };
 }
