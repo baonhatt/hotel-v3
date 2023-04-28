@@ -8,6 +8,8 @@ import { StorageService } from './storage.service';
 import { NgToastService } from 'ng-angular-popup'
 import { environment } from '../../environments/environment.development';
 // import { TranslateService } from "@ngx-translate/core";
+import { filter } from 'rxjs/operators';
+import { NavigationEnd, Router } from '@angular/router';
 export const JWT_NAME = 'blog-token';
 
 @Injectable({
@@ -18,7 +20,7 @@ export class AuthService implements OnInit{
   isHomePageLoaded = false;
   email: any;
   jwtService: JwtHelperService = new JwtHelperService();
-  constructor(private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService, private toast: NgToastService) { }
+  constructor(private http: HttpClient, private router: Router, private storage: StorageService, private jwtHelper: JwtHelperService, private toast: NgToastService) { }
   ngOnInit(): void {
     this.loadPage()
   }
@@ -47,6 +49,13 @@ export class AuthService implements OnInit{
         return of(false);
       }),
     );
+  }
+  reloadOnNavigation() {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        window.location.reload();
+      });
   }
   loadPage(){
     if(!sessionStorage.getItem('isPageReloaded')){

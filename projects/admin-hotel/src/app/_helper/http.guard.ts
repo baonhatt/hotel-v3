@@ -11,7 +11,6 @@ import {
 import { Observable } from 'rxjs';
 import { AuthService } from '../_service/auth.service';
 import { StorageService } from '../_service/storage.service';
-import { User } from '../_service/user.model';
 
 
 @Injectable()

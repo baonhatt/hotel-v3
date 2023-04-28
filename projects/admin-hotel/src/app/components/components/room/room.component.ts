@@ -58,6 +58,26 @@ export class RoomComponent implements OnInit {
     }
     this.roomtoDisplay = this.rooms
   }
+  uploadFileDetail= (files : any) => {
+    if (files.length === 0){
+      return;
+    }
+    if(files.length > 0)
+    {
+      this.images = files;
+      // var mimeType = files[0].type;
+      // if (mimeType.match(/image\/*/) == null) {
+      //   this.message = "Only images are supported.";
+      //   return;
+      // }
+      // var reader = new FileReader();
+      // this.imagePath = files;
+      // reader.readAsDataURL(files[0]);
+      // reader.onload = (_event) => {
+      //   this.imgURL = reader.result;
+      // }
+    }
+  }
 
 
   uploadFile = (files : any) => {
@@ -115,6 +135,7 @@ export class RoomComponent implements OnInit {
   }
   addRoom(_roomForm: FormGroup){
     let fileToUpload;
+    let fileToUploads;
     const formData = new FormData();
     if(this.image == null)
     {
@@ -123,6 +144,17 @@ export class RoomComponent implements OnInit {
     }else{
       fileToUpload = <File>this.image[0];
       formData.append('RoomPicture', fileToUpload, fileToUpload.name);
+    }
+    if(this.images == null)
+    {
+      fileToUploads = "";
+      formData.append('RoomPicture', fileToUploads);
+    }else{
+      fileToUploads = <File[]>this.images;
+      fileToUploads.forEach((file)=>
+      {
+        formData.append('RoomPictures', file,file.name);
+      });
     }
     formData.append('RoomNumber', _roomForm.controls['RoomNumber'].value);
     formData.append('Name', _roomForm.controls['Name'].value);

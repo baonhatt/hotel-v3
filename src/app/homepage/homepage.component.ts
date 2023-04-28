@@ -38,6 +38,7 @@ export class HomepageComponent implements OnInit {
   roomTypes: RoomType[] = [];
   serviceAttachs = [];
   array!: number[];
+  selectedPersonCount: number = 1;
   constructor(
     private http: HttpClient,
     private toast: NgToastService,
@@ -58,19 +59,36 @@ export class HomepageComponent implements OnInit {
       this.maxPrice = data.maxPrice;
       this.roomTypes = data.roomTypes;
       this.serviceAttachs = data.serviceAttachs;
+
     });
+
+    if (localStorage.getItem('firstLogin') == "") {
+      setTimeout(() => {
+        this.toast.success({
+          detail: 'Welcome you !',
+          summary: "Đăng nhập thành công!",
+          duration: 5000,
+        });
+        localStorage.removeItem("firstLogin");
+      }, 500);
+    }
+
+
     this.apiService.getRooms().subscribe((res: any) => {
       for (let r of res) {
         this.rooms.unshift(r);
       }
-      this.roomtoDisplay = this.rooms;
+      this.roomtoDisplay = this.rooms ;
     });
+
+
     this.apiService.getBlogs().subscribe((res: any) => {
       for (let b of res) {
         this.blogs.unshift(b);
       }
       this.blogtoDisplay = this.blogs;
     });
+
   }
 
   navigateToPage(url: string) {
