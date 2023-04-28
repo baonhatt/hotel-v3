@@ -46,8 +46,7 @@
               <span class="banner-location-single-contents-subtitle"> Check In </span>
 
               <mat-form-field appearance="fill">
-                <input matInput [matDatepicker]="picker2"
-                       [formControl]="serializedDate">
+                <input matInput [matDatepicker]="picker2" [formControl]="serializedDate">
                 <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
@@ -61,8 +60,7 @@
               <span class="banner-location-single-contents-subtitle"> Check Out </span>
               <div class="banner-location-single-contents-dropdown custom-select">
                 <mat-form-field appearance="fill">
-                  <input matInput [matDatepicker]="picker3"
-                         [formControl]="serializedDate">
+                  <input matInput [matDatepicker]="picker3" [formControl]="serializedDate">
                   <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
                   <mat-datepicker #picker3></mat-datepicker>
                 </mat-form-field>
@@ -74,10 +72,10 @@
           <div class="banner-location-single-flex">
 
             <div class="banner-location-single-contents">
-              <span class="banner-location-single-contents-subtitle" > Person </span>
+              <span class="banner-location-single-contents-subtitle"> Person </span>
               <mat-form-field appearance="fill">
-                <mat-select [(ngModel)]="selectedPersonCount" >
-                 <mat-option  *ngFor="let i of maxPersonArray" [value]="i" >{{i}}</mat-option>
+                <mat-select [(ngModel)]="selectedPersonCount">
+                  <mat-option *ngFor="let i of maxPersonArray" [value]="maxPersonArray.length + 1 - i">{{maxPersonArray.length + 1 - i}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -90,16 +88,10 @@
             </div>
             <div class="banner-location-single-contents">
               <span class="banner-location-single-contents-subtitle"> Room Type </span>
-              <!-- <div class="banner-location-single-contents-dropdown custom-select">
-                <select class="js-select-room" name="roomType" [(ngModel)]="selectedRoomType">
-                  <option value="">Select a room type</option>
-                  <option *ngFor="let roomType of roomTypes" [value]="roomType.id">{{roomType.typeName}}</option>
-                  </select>
-              </div> -->
               <mat-form-field appearance="fill">
                 <mat-label>Room Type</mat-label>
                 <mat-select>
-                  <mat-option *ngFor="let roomType of roomTypes"  value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
+                  <mat-option *ngFor="let roomType of roomTypes" value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
                 </mat-select>
               </mat-form-field>
 
@@ -224,17 +216,17 @@
     </div>
     <div class="row mt-5">
       <div class="col-12">
-        <div class="global-slick-init attraction-slider nav-style-one nav-color-two slider-inner-margin"
-          data-infinite="true" data-arrows="true" data-dots="false" data-slidesToShow="4" data-swipeToSlide="true"
-          data-autoplay="true" data-autoplaySpeed="2500"
+        <div class="global-slick-init attraction-slider nav-style-one nav-color-two slider-inner-margin" data-infinite="true"
+          data-arrows="true" data-dots="false" data-slidesToShow="4" data-swipeToSlide="true" data-autoplay="true"
+          data-autoplaySpeed="2500"
           data-prevArrow='<div class="prev-icon radius-parcent-50"><i class="las la-angle-left"></i></div>'
           data-nextArrow='<div class="next-icon radius-parcent-50"><i class="las la-angle-right"></i></div>'
           data-responsive='[{"breakpoint": 1400,"settings": {"slidesToShow": 4}},{"breakpoint": 1200,"settings": {"slidesToShow": 3}},{"breakpoint": 992,"settings": {"slidesToShow": 3}},{"breakpoint": 768,"settings": {"slidesToShow": 2}},{"breakpoint": 576, "settings": {"slidesToShow": 1} }]'>
           <div class="attraction-item">
             <div class="single-attraction-two radius-20">
               <div class="single-attraction-two-thumb">
-                <a href="assets/img/attraction/a5.jpg" class="gallery-popup"> <img src="assets/img/attraction/a5.jpg"
-                    alt="img"> </a>
+                <a href="assets/img/attraction/a5.jpg" class="gallery-popup"> <img src="assets/img/attraction/a5.jpg" alt="img">
+                </a>
               </div>
               <div class="single-attraction-two-contents">
                 <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html">
@@ -247,8 +239,8 @@
           <div class="attraction-item">
             <div class="single-attraction-two radius-20">
               <div class="single-attraction-two-thumb">
-                <a href="assets/img/attraction/a6.jpg" class="gallery-popup"> <img src="assets/img/attraction/a6.jpg"
-                    alt="img"> </a>
+                <a href="assets/img/attraction/a6.jpg" class="gallery-popup"> <img src="assets/img/attraction/a6.jpg" alt="img">
+                </a>
               </div>
               <div class="single-attraction-two-contents">
                 <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html">
@@ -261,8 +253,8 @@
           <div class="attraction-item">
             <div class="single-attraction-two radius-20">
               <div class="single-attraction-two-thumb">
-                <a href="assets/img/attraction/a7.jpg" class="gallery-popup"> <img src="assets/img/attraction/a7.jpg"
-                    alt="img"> </a>
+                <a href="assets/img/attraction/a7.jpg" class="gallery-popup"> <img src="assets/img/attraction/a7.jpg" alt="img">
+                </a>
               </div>
               <div class="single-attraction-two-contents">
                 <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html">
@@ -275,8 +267,8 @@
           <div class="attraction-item">
             <div class="single-attraction-two radius-20">
               <div class="single-attraction-two-thumb">
-                <a href="assets/img/attraction/a8.jpg" class="gallery-popup"> <img src="assets/img/attraction/a8.jpg"
-                    alt="img"> </a>
+                <a href="assets/img/attraction/a8.jpg" class="gallery-popup"> <img src="assets/img/attraction/a8.jpg" alt="img">
+                </a>
               </div>
               <div class="single-attraction-two-contents">
                 <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Arc
@@ -289,8 +281,8 @@
           <div class="attraction-item">
             <div class="single-attraction-two radius-20">
               <div class="single-attraction-two-thumb">
-                <a href="assets/img/attraction/a6.jpg" class="gallery-popup"> <img src="assets/img/attraction/a6.jpg"
-                    alt="img"> </a>
+                <a href="assets/img/attraction/a6.jpg" class="gallery-popup"> <img src="assets/img/attraction/a6.jpg" alt="img">
+                </a>
               </div>
               <div class="single-attraction-two-contents">
                 <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html">
@@ -315,9 +307,9 @@
     </div>
     <div class="row mt-5">
       <div class="col-12">
-        <div class="global-slick-init guest-two-slider nav-style-one slider-inner-margin"
-          data-appendArrows=".append-attraction" data-infinite="true" data-arrows="true" data-dots="false"
-          data-slidesToShow="3" data-swipeToSlide="true" data-autoplay="true" data-autoplaySpeed="2500"
+        <div class="global-slick-init guest-two-slider nav-style-one slider-inner-margin" data-appendArrows=".append-attraction"
+          data-infinite="true" data-arrows="true" data-dots="false" data-slidesToShow="3" data-swipeToSlide="true"
+          data-autoplay="true" data-autoplaySpeed="2500"
           data-prevArrow='<div class="prev-icon radius-parcent-50"><i class="las la-angle-left"></i></div>'
           data-nextArrow='<div class="next-icon radius-parcent-50"><i class="las la-angle-right"></i></div>'
           data-responsive='[{"breakpoint": 1400,"settings": {"slidesToShow": 3}},{"breakpoint": 1200,"settings": {"slidesToShow": 3}},{"breakpoint": 992,"settings": {"slidesToShow": 2}},{"breakpoint": 576, "settings": {"slidesToShow": 1} }]'>
@@ -422,8 +414,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl1.jpg" class="gallery-popup-two"> <img
-                src="assets/img/single-page/cl1.jpg" alt="img"> </a>
+            <a href="assets/img/single-page/cl1.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl1.jpg"
+                alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Eiffel Tower
@@ -434,8 +426,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl2.jpg" class="gallery-popup-two"> <img
-                src="assets/img/single-page/cl2.jpg" alt="img"> </a>
+            <a href="assets/img/single-page/cl2.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl2.jpg"
+                alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Disneyland
@@ -446,8 +438,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl3.jpg" class="gallery-popup-two"> <img
-                src="assets/img/single-page/cl3.jpg" alt="img"> </a>
+            <a href="assets/img/single-page/cl3.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl3.jpg"
+                alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Palace de
@@ -458,8 +450,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl4.jpg" class="gallery-popup-two"> <img
-                src="assets/img/single-page/cl4.jpg" alt="img"> </a>
+            <a href="assets/img/single-page/cl4.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl4.jpg"
+                alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Arc de
@@ -470,8 +462,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl5.jpg" class="gallery-popup-two"> <img
-                src="assets/img/single-page/cl5.jpg" alt="img"> </a>
+            <a href="assets/img/single-page/cl5.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl5.jpg"
+                alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Disneyland
@@ -482,8 +474,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl6.jpg" class="gallery-popup-two"> <img
-                src="assets/img/single-page/cl6.jpg" alt="img"> </a>
+            <a href="assets/img/single-page/cl6.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl6.jpg"
+                alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Disneyland
@@ -494,8 +486,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl7.jpg" class="gallery-popup-two"> <img
-                src="assets/img/single-page/cl7.jpg" alt="img"> </a>
+            <a href="assets/img/single-page/cl7.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl7.jpg"
+                alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Disneyland
@@ -506,8 +498,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl8.jpg" class="gallery-popup-two"> <img
-                src="assets/img/single-page/cl8.jpg" alt="img"> </a>
+            <a href="assets/img/single-page/cl8.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl8.jpg"
+                alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Disneyland
@@ -621,8 +613,7 @@
       <div class="col-xxl-4 col-lg-4 col-md-6" *ngFor="let b of blogs;let i=index;">
         <div class="single-blog blog-two">
           <div class="single-blog-thumbs">
-            <a (click)="navigateToPage('/blog-detail/{{b.id}}')"> <img class="lazyloads" src="{{b.imgTitle}}"
-                alt="ImgeTitle">
+            <a (click)="navigateToPage('/blog-detail/{{b.id}}')"> <img class="lazyloads" src="{{b.imgTitle}}" alt="ImgeTitle">
             </a>
             <div class="single-blog-thumbs-date">
               <a href="javascript:void(0)"> <span class="date"> {{b.postDate}} </span> <span class="month"> Jun
@@ -637,8 +628,8 @@
               <span class="single-blog-contents-tags-item"> <a href="javascript:void(0)"> 22 Comments
                 </a> </span>
             </div>
-            <h4 class="single-blog-contents-title mt-3"> <a
-                (click)="navigateToPage('/blog-detail/{{b.id}}')">{{b.discription}} </a> </h4>
+            <h4 class="single-blog-contents-title mt-3"> <a (click)="navigateToPage('/blog-detail/{{b.id}}')">{{b.discription}}
+              </a> </h4>
           </div>
         </div>
       </div>
@@ -697,12 +688,12 @@
     </div>
   </div>
 </div>
-<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-<script src="assets/js/jquery-3.6.0.min.js"></script>
+<!-- <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="assets/js/jquery-3.6.0.min.js"></script> -->
 <app-footer></app-footer>
-<script type='text/javascript' defer
+<!-- <script type='text/javascript' defer
   src='https://bytesed.com/wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.7.3'
   id='wpcf7-recaptcha-js'></script>
 <script type="text/javascript">
 
-</script>
+</script> -->

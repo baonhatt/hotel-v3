@@ -72,7 +72,7 @@
 
             <div class="hotel-view-contents">
               <div class="hotel-view-contents-header">
-                <span class="hotel-view-contents-review"> <i class="las la-star"></i> {{room.rating}} <span
+                <span class="hotel-view-contents-review"> <i class="las la-star"></i> {{room.starSum}} <span
                     class="hotel-view-contents-review-count"> (380) </span> </span>
                 <h3 class="hotel-view-contents-title"> {{room.roomTypeName}} </h3>
                 <div class="hotel-view-contents-location mt-2">
@@ -114,7 +114,7 @@
                 <div class="hotel-view-contents-bottom-flex">
                   <div class="hotel-view-contents-bottom-contents">
                     <h4 class="hotel-view-contents-bottom-title"> {{room.currentPrice}} <sub>/Night</sub> </h4>
-                    <p class="hotel-view-contents-bottom-para"> ({{room.peopleNumber}} Persons, {{room.numberOfBed}} Beds, 4 Nights) </p>
+                    <p class="hotel-view-contents-bottom-para"> ({{room.peopleNumber}} Persons, {{room.numberOfSimpleBed}} Beds, 4 Nights) </p>
                   </div>
                   <div class="btn-wrapper">
                     <a href="javascript:void(0)" routerLink="/checkout/{{room.id}}"class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>

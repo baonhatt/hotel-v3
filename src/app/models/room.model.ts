@@ -1,15 +1,21 @@
+import { ServiceAttach } from "./serviceAttach.model"
+
 export class Room {
-  id!: number
-  roomTypeName!: string
+  id!: string
+  roomNumber!: string
   name!: string
-  roomPicture!: string
-  description!: string
   isActive!: boolean
-  rating!: string
+  description!: string
+  roomPicture!: string
+  roomPictures!: string
+  starSum!: string
+  starAmount!: number
+  numberOfSimpleBed!: string
+  numberOfDoubleBed!: string
   currentPrice!: number
   discountPrice!: number
+  roomTypeId!: number
+  roomTypeName!: string
   peopleNumber!: string
-  numberOfBed!: string
-  starAmount!: number
-  roomPictures!: string
+  serviceAttachs!: ServiceAttach[]
 }

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { AuthService } from '../_service/auth.service';
 import { ApiService } from '../_service/api.service';
@@ -8,8 +8,6 @@ import { Room } from '../models/room.model';
 import { Blog } from '../models/blog.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Search } from '../models/search.model';
-import { LoginComponent } from '../login/login.component';
-// import * as $ from 'jquery'
 
 const today = new Date();
 const month = today.getMonth();
@@ -23,7 +21,7 @@ interface RoomType {
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.scss'],
+  styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
   rooms: Room[];
@@ -35,7 +33,7 @@ export class HomepageComponent implements OnInit {
   maxPrice = null;
   selectedRoomType = '';
   selectedServiceAttach = '';
-  roomTypes: RoomType[] = [];
+  roomTypes:  RoomType[] = []
   serviceAttachs = [];
   array!: number[];
   selectedPersonCount: number = 1;
@@ -43,52 +41,49 @@ export class HomepageComponent implements OnInit {
     private http: HttpClient,
     private toast: NgToastService,
     private apiService: ApiService,
-    private activeRoute: ActivatedRoute,
-    private router: Router
+    private activeRoute: ActivatedRoute
   ) {
-    (this.rooms = []), (this.roomtoDisplay = this.roomtoDisplay);
-    (this.blogs = []), (this.blogtoDisplay = this.blogs);
-    $.getScript('assets/js/main.js');
+    this.rooms = [],
+    this.roomtoDisplay = this.roomtoDisplay;
+    this.blogs = [],
+    this.blogtoDisplay = this.blogs;
   }
 
   date = new FormControl(new Date());
   serializedDate = new FormControl(new Date().toISOString());
   ngOnInit(): void {
-    this.apiService.searchRoom().subscribe((data: any) => {
+    this.apiService.searchRoom().subscribe((data: any)=> {
       this.maxPerson = data.maxPerson;
       this.maxPrice = data.maxPrice;
       this.roomTypes = data.roomTypes;
       this.serviceAttachs = data.serviceAttachs;
-
     });
 
-    if (localStorage.getItem('firstLogin') == "") {
-      setTimeout(() => {
-        this.toast.success({
-          detail: 'Welcome you !',
-          summary: "Đăng nhập thành công!",
-          duration: 5000,
-        });
-        localStorage.removeItem("firstLogin");
-      }, 500);
-    }
-
-
-    this.apiService.getRooms().subscribe((res: any) => {
-      for (let r of res) {
-        this.rooms.unshift(r);
-      }
-      this.roomtoDisplay = this.rooms ;
-    });
+    // this.apiService.getRooms().subscribe((res: any) => {
+    //   for (let r of res) {
+    //     this.rooms.unshift(r);
+    //   }
+    //   this.roomtoDisplay = this.rooms ;
+    // });
 
 
     this.apiService.getBlogs().subscribe((res: any) => {
       for (let b of res) {
         this.blogs.unshift(b);
       }
-      this.blogtoDisplay = this.blogs;
+      this.blogtoDisplay = this.blogs ;
     });
 
+    this.sortMaxPersonArrayDescending();
+    // $.getScript('assets/js/main.js');
+
+  }
+  sortMaxPersonArrayDescending() {
+    this.maxPersonArray.sort((a, b) => a - b);
+  }
+
+  get maxPersonArray(): number[] {
+    return Array.from({length: this.maxPerson}, (_, i) => this.maxPerson - i);
   }
 
   navigateToPage(url: string) {

@@ -22,52 +22,20 @@ interface RoomType {
   styleUrls: ['./search-result.component.scss']
 })
 export class SearchResultComponent implements OnInit{
-  roomtoDisplay!: Room[];
   rooms!: Room[];
-  maxPerson!: any;
-  datasearch!: number[];
-  maxPrice = null;
-  selectedRoomType = '';
-  selectedServiceAttach = '';
-  serviceAttachs = [];
-  array!: number[];
-  roomTypes:  RoomType[] = [];
-  selectedPersonCount: number = 1;
   constructor( private roomService: ApiService,
     private router: Router,
     private api: ApiService){
-
-
   }
-  date = new FormControl(new Date());
-  serializedDate = new FormControl(new Date().toISOString());
   ngOnInit(): void {
-
-    this.getRooms();
-
-    this.api.searchRoom().subscribe((data: any)=> {
-      this.maxPerson = data.maxPerson;
-      this.maxPrice = data.maxPrice;
-      this.roomTypes = data.roomTypes;
-      this.serviceAttachs = data.serviceAttachs;
-    });
-    this.sortMaxPersonArrayDescending()
-  }
-
-  sortMaxPersonArrayDescending() {
-    this.maxPersonArray.sort((a, b) => a - b);
-  }
-
-  get maxPersonArray(): number[] {
-    return Array.from({length: this.maxPerson}, (_, i) => this.maxPerson - i);
+    if(this.rooms == null)
+    {
+      this.getRooms();
+    }
   }
   getRooms(){
     this.roomService.getRooms().subscribe((res: any)=>{
       this.rooms = res;
     })
   }
-  routePage(){
-    this.router.navigate(['/room-detail/{{room.id}}'])
-  }
-
 }

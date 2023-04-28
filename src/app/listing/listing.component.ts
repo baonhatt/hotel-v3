@@ -4,8 +4,6 @@ import { Room } from '../models/room.model';
 import { ApiService } from '../_service/api.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../_service/auth.service';
-
-
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -41,8 +39,6 @@ export class ListingComponent implements OnInit {
     private router: Router,
     private auth: AuthService,
     private apiService: ApiService){
-
-
   }
 
   date = new FormControl(new Date());
@@ -53,12 +49,10 @@ export class ListingComponent implements OnInit {
       this.maxPrice = data.maxPrice;
       this.roomTypes = data.roomTypes;
       this.serviceAttachs = data.serviceAttachs;
-
     });
     this.getRooms();
-    this.auth.reloadOnNavigation()
-
-    this.sortMaxPersonArrayDescending()
+    this.auth.reloadOnNavigation();
+    this.sortMaxPersonArrayDescending();
   }
 
   sortMaxPersonArrayDescending() {
@@ -73,6 +67,12 @@ export class ListingComponent implements OnInit {
     this.roomService.getRooms().subscribe((res: any)=>{
       this.rooms = res;
     })
+  }
+  searchRoom()
+  {
+    //viet 1 ham khi click nut seach se lay cac data o cac o can search và gọi api search r điền vào
+    //sau khi get thành công
+    //gọi SearchResultComponent . rooms rồi gắn bằng cái res trả về
   }
   routePage(){
     this.router.navigate(['/room-detail/{{room.id}}'])
