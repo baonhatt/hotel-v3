@@ -24,19 +24,12 @@ export class RoomComponent implements OnInit {
   imgURL: any;
 
   @Input() room: addRoom;
-  rooms: any[] = [];
-  roomtoDisplay!: addRoom[];
+  rooms: Room[];
   id!: number;
   typeId!: number;
   roomForm!: FormGroup;
   inputValue: any;
   roomTypes:  RoomType[] = []
-  Bednums = [
-    '1',
-    '2',
-    '3',
-    '4',
-  ];
 
   constructor(private roomService: ApiService,
     private router: Router,
@@ -46,17 +39,18 @@ export class RoomComponent implements OnInit {
   ) {
     this.rooms = []
     this.room = {
-      NumberOfBed:  0,
-      RoomPicture:  '',
-      RoomNumber:  '',
-      Name:  '',
-      IsActive:  '',
-      RoomTypeId:  '',
-      CurrentPrice:  '',
-      PeopleNumber:  '',
-      Description:  '',
+      roomNumber : '',
+      name : '',
+      isActive : true,
+      description : '',
+      roomPicture : '',
+      roomPictures : '',
+      numberOfSimpleBed : '1',
+      numberOfDoubleBed : '1',
+      currentPrice : 0,
+      roomTypeId : 0,
+      peopleNumber : '',
     }
-    this.roomtoDisplay = this.rooms
   }
   uploadFileDetail= (files : any) => {
     if (files.length === 0){
@@ -101,24 +95,23 @@ export class RoomComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-
     this.api.getRoomTypeId().subscribe((data: any)=>{
       this.roomTypes = data.roomTypes;
       this.typeId = data.roomTypes.id
       });
 
     this.roomForm = this.fb.group({
-      RoomNumber: [''],
       Name: [''],
-      IsActive: [''],
+      RoomNumber: [''],
+      IsActive: [true],
       Description: [''],
-      CurrentPrice: [''],
+      CurrentPrice: ['0'],
       RoomPicture: [''],
       RoomPictures: [''],
-      PeopleNumber: [''],
-      NumberOfBed: [''],
-      RoomTypeId: [''],
-      selectedRoomTypeId: ['']
+      PeopleNumber: ['1'],
+      NumberOfSimpleBed: ['1'],
+      NumberOfDoubleBed: ['1'],
+      RoomTypeId: ['1'],
     });
     this.getRooms();
     this.getRoomtype()
@@ -176,12 +169,7 @@ export class RoomComponent implements OnInit {
   }
   getRooms() {
     this.roomService.getRooms().subscribe((res: any) => {
-      for (let r of res) {
-        this.rooms.unshift(r);
-      }
       this.rooms = res;
-      this.id = res;
-      this.roomtoDisplay = this.rooms
     })
   }
   routePage() {

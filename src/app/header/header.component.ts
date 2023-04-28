@@ -16,10 +16,10 @@ export class HeaderComponent {
   constructor(private auth: AuthService, private fb: FormBuilder, private apiServe: ApiService, private userService: UserService){}
   ngOnInit(): void {
     if(this.auth.isLoggedIn() && localStorage.getItem('user_profile')!= ""){
-      this.getUserProfile();
-    }else{
       let result = localStorage.getItem('user_profile')!;
       this.userProfile = JSON.parse(result) as userProfile;
+    }else{
+      this.getUserProfile();
     }
   }
 

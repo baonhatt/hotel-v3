@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LayoutpageComponent } from './components/layoutpage/layoutpage.component';
@@ -43,7 +41,6 @@ import { SpinnerComponent } from './spinner/spinner.component';
     LoginAdminComponent,
     PageErrorComponent,
     SpinnerComponent,
-
   ],
   imports: [
     NgToastModule,
@@ -57,46 +54,38 @@ import { SpinnerComponent } from './spinner/spinner.component';
     MatListModule,
     FormsModule,
     JwtModule.forRoot({
-      jwtOptionsProvider:{
-        provide:JWT_OPTIONS,
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
         useFactory: jwtOptionsFactor,
-        deps:[StorageService]
-      }
+        deps: [StorageService],
+      },
     }),
     ReactiveFormsModule,
-    HttpClientModule
-
+    HttpClientModule,
   ],
-  providers:
-  [
-    { provide: HTTP_INTERCEPTORS,
-      useClass: AuthTokenInterceptor,
-      multi: true
-    },
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true },
     [AuthGuard],
-    [
-      {
-        provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
-      }
-    ]
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
 
-export function jwtOptionsFactor(storage:StorageService){
+export function jwtOptionsFactor(storage: StorageService) {
   return {
-    tokenGetter:() => {
-      console.log("Đã add authen");
-
+    tokenGetter: () => {
+      console.log('Đã add authen');
       return storage.getAccessToken();
     },
-    allowedDomains:["https://webhotel.click"],
-    disallowedRoutes:[
-      "https://webhotel.click/user/login",
-      "https://webhotel.click/user/token/refresh"
-    ],
-    skipWhenExpired: false,
-  }
+    allowedDomains: ['https://webhotel.click'],
+    disallowedRoutes: [
+      'https://webhotel.click/user/login',
+      'https://webhotel.click/user/token/refresh',
+    ]
+  };
 }
-

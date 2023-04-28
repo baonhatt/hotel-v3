@@ -15,13 +15,18 @@ export class HeaderComponent {
   userProfile = new userProfile;
   constructor(private auth: AuthService,private route: Router, private fb: FormBuilder, private apiServe: ApiService, private userService: UserService){}
   ngOnInit(): void {
-
-    this.getUserProfile()
+    if(localStorage.getItem('admin_profile') != ""){
+      var result = localStorage.getItem('admin_profile')!;
+      this.userProfile = JSON.parse(result) as userProfile;
+    }else{
+      this.getUserProfile();
+    }
   }
 
   getUserProfile() : any{
     this.userService.getUserProfile().subscribe((res) => {
       this.userProfile = res;
+      localStorage.setItem('admin_profile', JSON.stringify(this.userProfile));
     })
   }
 

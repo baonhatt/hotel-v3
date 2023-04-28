@@ -7,7 +7,6 @@
         <h4 class="page-title">Products</h4>
       </div>
     </div>
-    <!-- end page title -->
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -15,7 +14,7 @@
             <div class="row mb-2">
               <div class="col-sm-4">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                  class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Products</button>
+                  class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Room</button>
               </div>
               <div class="col-sm-8">
                 <div class="text-sm-end">
@@ -28,7 +27,7 @@
 
             <div class="table-responsive">
               <table class="table border customize-table mb-0 align-middle">
-                <thead class="text-dark fs-4">
+                <thead class="text-dark fs-4 align-middle">
                   <tr>
                     <th class="all" style="width: 20px;">
                       <div class="form-check">
@@ -36,17 +35,18 @@
                         <label class="form-check-label" for="customCheck1">&nbsp;</label>
                       </div>
                     </th>
-                    <th class="all">Room Name</th>
-                    <th>Room Type</th>
+                    <th class="all">Room name</th>
+                    <th>Roomtype name</th>
                     <th>Price</th>
                     <th>Discount price</th>
-                    <th>Simple Bed</th>
-                    <th>Double Bed</th>
+                    <th>Simple bed</th>
+                    <th>Double bed</th>
+                    <th>People number</th>
                     <th>Status</th>
                     <th style="width: 135px;">Action</th>
                   </tr>
                 </thead>
-                <tbody *ngFor="let room of rooms; let i = index;">
+                <tbody *ngFor="let room of rooms; let i = index;" class="align-middle">
                   <tr *ngIf="room">
                     <td>
                       <div class="form-check">
@@ -77,11 +77,17 @@
                       {{room.numberOfDoubleBed}}
                     </td>
                     <td>
+                      {{room.peopleNumber}}
+                    </td>
+                    <td>
                       <div *ngIf="room.isActive; else inactiveBadge">
-                        <span class="badge bg-light-success text-success fw-semibold fs-2 gap-1 d-inline-flex align-items-center"><i class="ti ti-circle fs-3"></i>active</span>
+                        <span
+                          class="badge bg-light-success text-success fw-semibold fs-2 gap-1 d-inline-flex align-items-center"><i
+                            class="ti ti-circle fs-3"></i>active</span>
                       </div>
                       <ng-template #inactiveBadge>
-                        <span class="badge bg-light text-dark fw-semibold fs-2 gap-1 d-inline-flex align-items-center"><i class="ti ti-clock-hour-4 fs-3"></i>close</span>
+                        <span class="badge bg-light text-dark fw-semibold fs-2 gap-1 d-inline-flex align-items-center"><i
+                            class="ti ti-clock-hour-4 fs-3"></i>close</span>
                       </ng-template>
                     </td>
                     <td>
@@ -124,7 +130,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Add new room</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -132,118 +138,112 @@
           <div class="content container-fluid">
             <div class="page-header">
               <div class="row align-items-center">
-                <div class="col">
-                  <h3 class="page-title mt-5">Add Room</h3>
-                </div>
               </div>
             </div>
             <div class="row">
               <div class="col-lg-12">
-                <form [formGroup]="roomForm" >
-                  <div class="row formtype">
+                <form [formGroup]="roomForm">
+                  <div class="row formtype mb-3">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Room Name</label>
-                        <input type="text" class="form-control"   formControlName="Name">
+                        <label class="mb-1">Room Number</label>
+                        <input type="text" class="form-control" formControlName="RoomNumber">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Room Number</label>
-                        <input type="text" class="form-control"  formControlName="RoomNumber">
+                        <label class="mb-1">Room Name</label>
+                        <input type="text" class="form-control" formControlName="Name">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Active</label>
+                        <label class="mb-1">Active</label>
                         <select class="form-select mr-sm-2" formControlName="IsActive" id="IsActive" name="IsActive">
-                          <option>Select</option>
-                          <option [ngValue]="true">True</option>
-                          <option [ngValue]="false">False</option>
+                          <option [ngValue]="true">Active</option>
+                          <option [ngValue]="false">Closed</option>
                         </select>
                       </div>
                     </div>
+                  </div>
+                  <div class="row formtype mb-3">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Bed Count</label>
-                        <select class="form-select mr-sm-2" id="sel" name="sellist1"  formControlName="NumberOfBed">
-                          <option>Select</option>
-                          <option *ngFor="let option of Bednums; let i = index;" value="{{i}}">
-                            {{option | titlecase}}
-                          </option>
-                        </select>
+                        <label class="mb-1">Simple Bed</label>
+                        <input type="text" class="form-control" formControlName="NumberOfSimpleBed">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>People Count</label>
-                        <select class="form-select mr-sm-2" id="sel" name="sellist1"   formControlName="PeopleNumber">
-                          <option>Select</option>
-                          <option *ngFor="let option of Bednums; let i = index;" value="{{i}}">
-                            {{option | titlecase}}
-                          </option>
-                        </select>
+                        <label class="mb-1">Double Bed</label>
+                        <input type="text" class="form-control" formControlName="NumberOfDoubleBed">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Price</label>
-                        <input type="text" formControlName="CurrentPrice" class="form-control" id="CurrentPrice">
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label>RoomTypeId</label>
-                        <select class="form-select mr-sm-2" id="RoomTypeId"   formControlName="selectedRoomTypeId">
+                        <label class="mb-1">RoomTypeId</label>
+                        <select class="form-select mr-sm-2" id="RoomTypeId" formControlName="RoomTypeId">
                           <option>Select</option>
-                          <option *ngFor="let roomType of roomTypes"  value="{{roomType.id}}">
+                          <option *ngFor="let roomType of roomTypes" value="{{roomType.id}}">
                             {{roomType.typeName}}
                           </option>
                         </select>
                       </div>
                     </div>
+                  </div>
+                  <div class="row formtype mb-3">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Discount </label>
-                        <input type="text" class="form-control" formControlName="discountPrice" id="discountPrice">
+                        <label class="mb-1">People Number</label>
+                        <input type="text" class="form-control" formControlName="PeopleNumber">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>File Upload</label>
+                        <label class="mb-1">Price</label>
+                        <input type="text" formControlName="CurrentPrice" class="form-control" id="CurrentPrice">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="mb-1">File Upload</label>
                         <div class="form-group mb-3">
-                          <input type="file" id="formFile" class="form-control" formControlName="RoomPicture"  name="RoomPicture" accept=".png, .jpg" #file (change)="uploadFile(file.files)">
-                         </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label>File Upload</label>
-                        <div class="form-group mb-3">
-                          <input type="file" id="formFile" class="form-control" formControlName="RoomPictures"  name="RoomPictures" accept=".png, .jpg" multiple #file (change)="uploadFileDetail(file.files)">
-                         </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label>Description</label>
-                        <textarea class="form-control" rows="5" id="comment" name="text"  formControlName="Description"></textarea>
+                          <input type="file" id="formFile" class="form-control" formControlName="RoomPicture" name="RoomPicture"
+                            accept=".png, .jpg" #file (change)="uploadFile(file.files)">
+                        </div>
                       </div>
                     </div>
                   </div>
-                </form>
-              </div>
+                  <div class="row formtype mb-3">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="mb-1">File Upload</label>
+                        <div class="form-group mb-3">
+                          <input type="file" id="formFile" class="form-control" formControlName="RoomPictures" name="RoomPictures"
+                            accept=".png, .jpg" multiple #file (change)="uploadFileDetail(file.files)">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label class="mb-1">Description</label>
+                        <textarea class="form-control" rows="5" id="comment" name="text" formControlName="Description"></textarea>
+                      </div>
+                    </div>
+                  </div>
+              </form>
             </div>
-
           </div>
+
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="submit" (click)="addRoom(roomForm)"  class="btn btn-primary">Add</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" (click)="addRoom(roomForm)" class="btn btn-primary">Add</button>
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
     </div>
   </div>
+</div>
 </div>
 <!-- Modal EDIT ROOM -->
 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -266,23 +266,23 @@
             </div>
             <div class="row">
               <div class="col-lg-12">
-                <form [formGroup]="roomForm" >
-                  <div class="row formtype">
+                <form [formGroup]="roomForm">
+                  <div class="row formtype mb-3">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Room Name</label>
-                        <input type="text" class="form-control"   formControlName="Name">
+                        <label class="mb-1">Room Name</label>
+                        <input type="text" class="form-control" formControlName="Name">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Room Number</label>
-                        <input type="text" class="form-control"  formControlName="RoomNumber">
+                        <label class="mb-1">Room Number</label>
+                        <input type="text" class="form-control" formControlName="RoomNumber">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Active</label>
+                        <label class="mb-1">Active</label>
                         <select class="form-control" formControlName="IsActive" id="sel1" name="sellist1">
                           <option>Select</option>
                           <option [ngValue]="true">True</option>
@@ -292,7 +292,7 @@
                     </div>
                     <!-- <div class="col-md-4">
                       <div class="form-group">
-                        <label>Non</label>
+                        <label class="mb-1">Non</label>
                         <select class="form-control" id="sel2" name="sellist1">
                           <option>Select</option>
                           <option>AC</option>
@@ -302,7 +302,7 @@
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Food</label>
+                        <label class="mb-1">Food</label>
                         <select class="form-control" id="sel3" name="sellist1">
                           <option>Select</option>
                           <option>Free Breakfast</option>
@@ -316,18 +316,13 @@
                     </div> -->
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Bed Count</label>
-                        <select class="form-control" id="sel" name="sellist1"   formControlName="NumberOfBed">
-                          <option>Select</option>
-                          <option *ngFor="let option of Bednums; let i = index;" value="{{i}}">
-                            {{option | titlecase}}
-                          </option>
-                        </select>
+                        <label class="mb-1">Bed Count</label>
+                        <input type="text" class="form-control" formControlName="RoomNumber">
                       </div>
                     </div>
                     <!-- <div class="col-md-4">
                       <div class="form-group">
-                        <label>Charges For cancellation</label>
+                        <label class="mb-1">Charges For cancellation</label>
                         <select class="form-control" id="sel4" name="sellist1">
                           <option>Select</option>
                           <option>Free</option>
@@ -338,28 +333,28 @@
                     </div> -->
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Price</label>
-                        <input type="text"     formControlName="CurrentPrice" class="form-control" id="usr">
+                        <label class="mb-1">Price</label>
+                        <input type="text" formControlName="CurrentPrice" class="form-control" id="usr">
                       </div>
                     </div>
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                       <div class="form-group">
-                        <label>Discount </label>
+                        <label class="mb-1">Discount </label>
                         <input type="text" class="form-control"    formControlName="discountPrice" id="usr1">
                       </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>File Upload</label>
+                        <label class="mb-1">File Upload</label>
                         <div class="form-group mb-3">
-                          <input type="text" id="image" class="form--control" formControlName="RoomPicture"  name="image" >
-                         </div>
+                          <input type="text" id="image" class="form--control" formControlName="RoomPicture" name="image">
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>Description</label>
-                        <textarea class="form-control" rows="5" id="comment" name="text"  formControlName="Description"></textarea>
+                        <label class="mb-1">Description</label>
+                        <textarea class="form-control" rows="5" id="comment" name="text" formControlName="Description"></textarea>
                       </div>
                     </div>
                   </div>
@@ -371,7 +366,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" (click)="addRoom(roomForm)"  class="btn btn-primary">Add</button>
+        <button type="submit" (click)="addRoom(roomForm)" class="btn btn-primary">Add</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
