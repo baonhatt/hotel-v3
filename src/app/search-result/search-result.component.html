@@ -1,6 +1,12 @@
 <div id="tab-list" class="tab-content-item active mt-4">
   <div class="row gy-4">
-    <div class="col-12" *ngFor="let room of rooms; let i = index;">
+    <div class="col-12" *ngFor="let room of rooms  | paginate
+    : {
+        itemsPerPage: tableSize,
+        currentPage: page,
+        totalItems: count
+      }
+    ; let i = index;">
       <div class="hotel-view bg-white radius-20">
         <div class="hotel-view-flex">
           <a routerLink="/room-detail/{{room.id}}" class="hotel-view-thumb hotel-view-list-thumb bg-image">
@@ -38,8 +44,8 @@
             <div class="hotel-view-contents-bottom">
               <div class="hotel-view-contents-bottom-flex">
                 <div class="hotel-view-contents-bottom-contents d-flex flex-wrap gap-4 gap-sm-1">
-                  <h4 class="hotel-view-contents-bottom-title"> {{room.currentPrice}} VND<sub>/Night</sub> </h4>
-                  <p class="hotel-view-contents-bottom-para"> (4 Nights, 2 Rooms, 4 Persons) </p>
+                  <h4 class="hotel-view-contents-bottom-title"> {{room.currentPrice | currency}} VND<sub>/Night</sub> </h4>
+                  <p class="hotel-view-contents-bottom-para"> <br> (4 Nights, 2 Rooms, 4 Persons) </p>
                 </div>
               </div>
             </div>
@@ -51,7 +57,7 @@
   <div class="row mt-5">
     <div class="col">
       <div class="pagination-wrapper">
-        <ul class="pagination-list list-style-none">
+        <!-- <ul class="pagination-list list-style-none">
           <li class="pagination-list-item-prev">
             <a href="javascript:void(0)" class="pagination-list-item-button"> Prev </a>
           </li>
@@ -73,7 +79,14 @@
           <li class="pagination-list-item-next">
             <a href="javascript:void(0)" class="pagination-list-item-button"> Next </a>
           </li>
-        </ul>
+        </ul> -->
+        <pagination-controls class="pagination-wrapper"
+        previousLabel="Prev"
+        nextLabel="Next"
+        (pageChange)="onTableDataChange($event)"
+      >
+
+      </pagination-controls>
       </div>
     </div>
   </div>

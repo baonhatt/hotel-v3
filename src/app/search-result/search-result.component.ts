@@ -23,6 +23,10 @@ interface RoomType {
 })
 export class SearchResultComponent implements OnInit{
   rooms!: Room[];
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
   constructor( private roomService: ApiService,
     private router: Router,
     private api: ApiService){
@@ -37,5 +41,14 @@ export class SearchResultComponent implements OnInit{
     this.roomService.getRooms().subscribe((res: any)=>{
       this.rooms = res;
     })
+  }
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getRooms();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getRooms();
   }
 }
