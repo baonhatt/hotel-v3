@@ -89,7 +89,6 @@
             <div class="banner-location-single-contents">
               <span class="banner-location-single-contents-subtitle"> Room Type </span>
               <mat-form-field appearance="fill">
-                <mat-label>Room Type</mat-label>
                 <mat-select>
                   <mat-option *ngFor="let roomType of roomTypes" value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
                 </mat-select>
