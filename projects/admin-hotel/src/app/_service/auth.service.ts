@@ -5,8 +5,8 @@ import { BehaviorSubject, catchError, map, Observable, of, switchMap, tap } from
 import { TokenModel } from './token.model';
 import { User } from './user.model';
 import { StorageService } from './storage.service';
-import { NgToastService } from 'ng-angular-popup'
 import { environment } from '../environments/environment.development';
+import { ToastrService } from 'ngx-toastr';
 // import { TranslateService } from "@ngx-translate/core";
 export const JWT_NAME = 'blog-token';
 
@@ -18,7 +18,7 @@ export class AuthService implements OnInit{
   isHomePageLoaded = false;
   email: any;
   jwtService: JwtHelperService = new JwtHelperService();
-  constructor(private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService, private toast: NgToastService) { }
+  constructor(private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService, private toast: ToastrService) { }
   ngOnInit(): void {
     this.loadPage()
   }

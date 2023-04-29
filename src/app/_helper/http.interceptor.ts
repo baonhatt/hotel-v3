@@ -39,6 +39,8 @@ export class AuthTokenInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    console.log('check_api');
+
     let authReq = req;
     if(req.url.indexOf('login') > 0 || req.url.indexOf('token/refresh') > 0){
       return next.handle(req);

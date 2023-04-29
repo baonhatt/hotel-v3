@@ -18,7 +18,7 @@ import { RoomComponent } from './components/components/room/room.component';
 import { AddbookingComponent } from './components/addbooking/addbooking.component';
 import { LoginAdminComponent } from './components/login-admin/login-admin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgToastModule } from 'ng-angular-popup';
+// import { NgToastModule } from 'ng-angular-popup';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
 import { StorageService } from './_service/storage.service';
@@ -28,6 +28,9 @@ import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { PageErrorComponent } from './page-error/page-error.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastContainerModule, ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +47,14 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
     SpinnerComponent,
   ],
   imports: [
-    NgToastModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut : 5000,
+      progressBar: true
+    }),
+    ToastContainerModule,
+    ToastNoAnimationModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     MatSidenavModule,
@@ -57,12 +67,13 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
     JwtModule.forRoot({
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,
-        useFactory: jwtOptionsFactor,
         deps: [StorageService],
+        useFactory: jwtOptionsFactor,
       },
     }),
     ReactiveFormsModule,
     HttpClientModule,
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true },
@@ -75,8 +86,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
       },
     ],
   ],
-  bootstrap: [AppComponent],
-  schemas: [NO_ERRORS_SCHEMA],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
 

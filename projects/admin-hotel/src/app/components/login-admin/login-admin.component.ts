@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../_service/auth.service';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgToastService } from 'ng-angular-popup';
 import { environment } from '../../environments/environment.development';
 import { TokenModel } from '../../_service/token.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login-admin',
@@ -28,7 +28,7 @@ export class LoginAdminComponent implements OnInit {
     private auth: AuthService,
     private fb: FormBuilder,
     private route: Router,
-    private toast: NgToastService,
+    private toast: ToastrService,
     private http: HttpClient
   ) {}
   ngOnInit(): void {
@@ -58,10 +58,9 @@ export class LoginAdminComponent implements OnInit {
       (response) => {
           var token = response as TokenModel;
           localStorage.setItem('token_admin', JSON.stringify(token));
-          localStorage.setItem("firstLogin", "");
           this.userProfile = this.auth.userProfile;
           this.loading = true;
-          // window.location.reload();
+          this.toast.success('Đăng nhập thành công!');
           this.route.navigate(['dashboard']);
         },
         (err) => {

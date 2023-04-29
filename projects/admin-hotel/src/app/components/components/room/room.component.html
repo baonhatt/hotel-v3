@@ -13,8 +13,13 @@
           <div class="card-body">
             <div class="row mb-2">
               <div class="col-sm-4">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-                  class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Room</button>
+                <button type="button" class="btn mb-1 waves-effect waves-light btn-primary me-2" data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop">
+                  Primary
+                </button>
+                <button type="button" class="btn mb-1 waves-effect waves-light btn-danger">
+                  Delete
+                </button>
               </div>
               <div class="col-sm-8">
                 <div class="text-sm-end">
@@ -147,13 +152,21 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="mb-1">Room Number</label>
-                        <input type="text" class="form-control" formControlName="RoomNumber">
+                        <input type="text" class="form-control" formControlName="RoomNumber"
+                          [ngClass]="{ 'is-invalid': submitted && f['RoomNumber'].errors }" />
+                        <div *ngIf="submitted && f['RoomNumber'].errors" class="invalid-feedback">
+                          <div *ngIf="f['RoomNumber'].errors['required']">RoomNumber is required</div>
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="mb-1">Room Name</label>
-                        <input type="text" class="form-control" formControlName="Name">
+                        <input type="text" class="form-control" formControlName="Name"
+                          [ngClass]="{ 'is-invalid': submitted && f['Name'].errors }" />
+                        <div *ngIf="submitted && f['Name'].errors" class="invalid-feedback">
+                          <div *ngIf="f['Name'].errors['required']">Room name is required</div>
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -170,13 +183,21 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="mb-1">Simple Bed</label>
-                        <input type="text" class="form-control" formControlName="NumberOfSimpleBed">
+                        <input type="text" class="form-control" formControlName="NumberOfSimpleBed"
+                          [ngClass]="{ 'is-invalid': submitted && f['NumberOfSimpleBed'].errors }" />
+                        <div *ngIf="submitted && f['NumberOfSimpleBed'].errors" class="invalid-feedback">
+                          <div *ngIf="f['NumberOfSimpleBed'].errors['required']">NumberOfSimpleBed is required</div>
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="mb-1">Double Bed</label>
-                        <input type="text" class="form-control" formControlName="NumberOfDoubleBed">
+                        <input type="text" class="form-control" formControlName="NumberOfDoubleBed"
+                          [ngClass]="{ 'is-invalid': submitted && f['NumberOfDoubleBed'].errors }" />
+                        <div *ngIf="submitted && f['NumberOfDoubleBed'].errors" class="invalid-feedback">
+                          <div *ngIf="f['NumberOfDoubleBed'].errors['required']">NumberOfDoubleBed is required</div>
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -195,13 +216,21 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label class="mb-1">People Number</label>
-                        <input type="text" class="form-control" formControlName="PeopleNumber">
+                        <input type="text" class="form-control" formControlName="PeopleNumber"
+                          [ngClass]="{ 'is-invalid': submitted && f['PeopleNumber'].errors }" />
+                        <div *ngIf="submitted && f['PeopleNumber'].errors" class="invalid-feedback">
+                          <div *ngIf="f['PeopleNumber'].errors['required']">PeopleNumber is required</div>
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label class="mb-1">Price</label>
-                        <input type="text" formControlName="CurrentPrice" class="form-control" id="CurrentPrice">
+                        <label class="mb-1">CurrentPrice</label>
+                        <input type="text" formControlName="CurrentPrice" class="form-control" id="CurrentPrice"
+                          [ngClass]="{ 'is-invalid': submitted && f['CurrentPrice'].errors }" />
+                        <div *ngIf="submitted && f['CurrentPrice'].errors" class="invalid-feedback">
+                          <div *ngIf="f['CurrentPrice'].errors['required']">CurrentPrice is required</div>
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -231,19 +260,18 @@
                       </div>
                     </div>
                   </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
-
         </div>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" (click)="addRoom(roomForm)" class="btn btn-primary">Add</button>
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+      <div class="modal-footer">
+        <button type="submit" (click)="addRoom(roomForm)" class="btn btn-primary" id="addRoom">Add</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="loadModal()">Close</button>
+      </div>
     </div>
   </div>
-</div>
 </div>
 <!-- Modal EDIT ROOM -->
 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"

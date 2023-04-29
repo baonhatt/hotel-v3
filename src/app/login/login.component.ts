@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  HttpClient,
-  HttpHandler,
-  HttpHeaders,
-  HttpRequest,
-} from '@angular/common/http';
+import * as http from '@angular/common/http';
 import { Router } from '@angular/router';
 import {
   FormBuilder,
@@ -15,9 +10,9 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../_service/auth.service';
 import { TokenModel } from '../_service/token.model';
-import { NgToastService } from 'ng-angular-popup';
 import { environment } from '../../environments/environment.development';
 import { HomepageComponent } from '../homepage/homepage.component';
+import { ToastrService } from 'ngx-toastr';
 // import { AuthinterceptorInterceptor } from '../shared/auth/authinterceptor.interceptor';
 
 @Component({
@@ -27,9 +22,7 @@ import { HomepageComponent } from '../homepage/homepage.component';
 })
 export class LoginComponent implements OnInit {
   submitted = false;
-  req: HttpRequest<any> | undefined;
-  email: any;
-  password: any;
+  req: http.HttpRequest<any> | undefined;
   loading = false;
   loginForm!: FormGroup;
   data: any;
@@ -40,7 +33,7 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private fb: FormBuilder,
     private route: Router,
-    private toast: NgToastService
+    private toast: ToastrService
   ) {}
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -66,16 +59,10 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm?.get('password')?.value;
     this.auth.login(email, password).subscribe(
       (response) => {
-        console.log(response);
-        this.toast.success({
-          detail: 'Welcome you !',
-          summary: "Login successfull",
-          duration: 500000,
-        });
+        this.toast.success("Login successfull");
         var token = response as TokenModel;
         localStorage.setItem('token', JSON.stringify(token));
         this.route.navigateByUrl('/home');
-        this.loading = true;
       },
       (err) => {
         err

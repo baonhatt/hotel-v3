@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { NgToastService } from 'ng-angular-popup';
 import { AuthService } from '../_service/auth.service';
 import { ApiService } from '../_service/api.service';
 import { Room } from '../models/room.model';
 import { Blog } from '../models/blog.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Search } from '../models/search.model';
+import { ToastrService } from 'ngx-toastr';
 
 const today = new Date();
 const month = today.getMonth();
@@ -39,7 +39,7 @@ export class HomepageComponent implements OnInit {
   selectedPersonCount: number = 1;
   constructor(
     private http: HttpClient,
-    private toast: NgToastService,
+    private toast: ToastrService,
     private apiService: ApiService,
     private activeRoute: ActivatedRoute
   ) {
@@ -52,6 +52,7 @@ export class HomepageComponent implements OnInit {
   date = new FormControl(new Date());
   serializedDate = new FormControl(new Date().toISOString());
   ngOnInit(): void {
+    this.toast.success("ok");
     this.apiService.searchRoom().subscribe((data: any)=> {
       this.maxPerson = data.maxPerson;
       this.maxPrice = data.maxPrice;

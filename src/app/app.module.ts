@@ -18,7 +18,7 @@ import { RoomDetailComponent } from './room-detail/room-detail.component';
 import { FooterComponent } from './footer/footer.component';
 import { StorageService } from './_service/storage.service';
 import { EmailValidatorDirective } from './_shared/validator/email-validators.directive';
-import { NgToastModule } from 'ng-angular-popup';
+// import { NgToastModule } from 'ng-angular-popup';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { ProfileComponent } from './client/profile/profile.component';
 import { SpinnerComponent } from './spinner/spinner.component';
@@ -35,7 +35,6 @@ import { IconModule } from '@coreui/icons-angular';
 import { BlogsComponent } from './blogs/blogs.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-
 import { AboutComponent } from './about/about.component';
 import { LeftContentComponent } from './client/dashboard/left-content/left-content.component';
 import { SearchResultComponent } from './search-result/search-result.component';
@@ -55,6 +54,8 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatOption } from '@angular/material/core';
 import {  NO_ERRORS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ToastContainerModule, ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,7 +84,14 @@ import {  NO_ERRORS_SCHEMA } from '@angular/core';
 
   ],
   imports: [
-
+    CommonModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut : 5000,
+      progressBar: true
+    }),
+    ToastContainerModule,
+    ToastNoAnimationModule.forRoot(),
     MatOptionModule,
     MatSelectModule,
     BrowserAnimationsModule,
@@ -101,7 +109,6 @@ import {  NO_ERRORS_SCHEMA } from '@angular/core';
     MatDatepickerModule,
     NgxPaginationModule,
     BrowserModule,
-    NgToastModule,
     AppRoutingModule,
     RouterModule.forChild([{ path: 'products', component: ListingComponent },
     {

@@ -2,12 +2,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgToastService } from 'ng-angular-popup';
 import { environment } from 'src/environments/environment.development';
 import { FormControl } from '@angular/forms';
 import { userProfile } from 'src/app/models/userProfile.model';
 import { ProfileComponent } from '../profile/profile.component';
 import { UserService } from 'src/app/_service/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-profile',
@@ -28,7 +28,7 @@ export class EditProfileComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private route: Router,
-    private toast: NgToastService,
+    private toast: ToastrService,
     private userService: UserService,
   ){}
   get f() {
@@ -86,9 +86,7 @@ export class EditProfileComponent implements OnInit {
     formData.append('CMND', this.updateProfile.controls['CMND'].value);
     this.http.patch<any>(environment.BASE_URL_API + `/user/user-profile/update`, formData )
     .subscribe((res) =>{
-      this.toast.success({
-        detail: res.message
-      });
+      this.toast.success(res.message);
     });
   };
 

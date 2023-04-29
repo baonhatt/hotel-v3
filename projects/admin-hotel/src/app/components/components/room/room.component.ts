@@ -2,9 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Room, addRoom } from '../../../models/room.model';
 import { ApiService } from '../../../_service/api.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+// import { NgToastService } from 'ng-angular-popup';
+import { ToastrService } from 'ngx-toastr';
 interface RoomType {
   id: number;
   typeName: string;
@@ -16,12 +18,13 @@ interface RoomType {
   styleUrls: ['./room.component.css']
 })
 export class RoomComponent implements OnInit {
-  isDeleting = false;
   image : any;
   images : any;
   message: any;
   imagePath : any;
   imgURL: any;
+  submitted = false;
+  modal:any;
 
   @Input() room: addRoom;
   rooms: Room[];
@@ -30,12 +33,15 @@ export class RoomComponent implements OnInit {
   roomForm!: FormGroup;
   inputValue: any;
   roomTypes:  RoomType[] = []
-
+  get f() {
+    return this.roomForm.controls;
+  }
   constructor(private roomService: ApiService,
     private router: Router,
     private api: ApiService,
     private fb: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private toastr: ToastrService
   ) {
     this.rooms = []
     this.room = {
@@ -95,27 +101,15 @@ export class RoomComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.toastr.success('This is a success message', 'Tada');
+    this.loadModal();
     this.api.getRoomTypeId().subscribe((data: any)=>{
       this.roomTypes = data.roomTypes;
       this.typeId = data.roomTypes.id
-      });
-
-    this.roomForm = this.fb.group({
-      Name: [''],
-      RoomNumber: [''],
-      IsActive: [true],
-      Description: [''],
-      CurrentPrice: ['0'],
-      RoomPicture: [''],
-      RoomPictures: [''],
-      PeopleNumber: ['1'],
-      NumberOfSimpleBed: ['1'],
-      NumberOfDoubleBed: ['1'],
-      RoomTypeId: ['1'],
     });
     this.getRooms();
     this.getRoomtype()
-
+    console.log(this.roomForm);
   }
   getRoomtype(): Promise<number> {
     return new Promise((resolve, reject) => {
@@ -127,6 +121,10 @@ export class RoomComponent implements OnInit {
     });
   }
   addRoom(_roomForm: FormGroup){
+    this.submitted = true;
+    if (this.roomForm.invalid) {
+      return;
+    }
     let fileToUpload;
     let fileToUploads;
     const formData = new FormData();
@@ -156,12 +154,18 @@ export class RoomComponent implements OnInit {
     formData.append('CurrentPrice', _roomForm.controls['CurrentPrice'].value);
     formData.append('RoomPictures', "");
     formData.append('PeopleNumber', _roomForm.controls['PeopleNumber'].value);
-    formData.append('NumberOfBed', _roomForm.controls['NumberOfBed'].value);
-    formData.append('RoomTypeId', _roomForm.controls['selectedRoomTypeId'].value);
+    formData.append('NumberOfSimpleBed', _roomForm.controls['NumberOfSimpleBed'].value);
+    formData.append('NumberOfNumberOfDoubleBedBed', _roomForm.controls['NumberOfDoubleBed'].value);
+    formData.append('RoomTypeId', _roomForm.controls['RoomTypeId'].value);
     this.http.post<any>(`https://webhotel.click/v2/admin/room/create`, formData).subscribe(res => {
-      alert("Create an account successfully!");
-      this.rooms.unshift(res);
+      // this.toastr.success({
+      //   detail: 'Welcome you !',
+      //   summary: 'Đăng nhập thành công!',
+      //   duration: 5000,
+      // });
+      $('#addRoom').attr('data-bs-dismiss', 'modal');
       this.getRooms()
+      this.loadModal();
     }, _err => {
       alert(_err);
     })
@@ -176,8 +180,22 @@ export class RoomComponent implements OnInit {
     this.router.navigate(['/room-detail/{{room.id}}']);
   }
 
-  reset() {
-    // this.userForm.reset();
+  loadModal() {
+    this.submitted = false;
+    this.roomForm = this.fb.group({
+      Name: ['', [Validators.required]],
+      RoomNumber: ['', [Validators.required]],
+      IsActive: [true, [Validators.required]],
+      Description: [''],
+      CurrentPrice: ['0', [Validators.required]],
+      RoomPicture: [''],
+      RoomPictures: [''],
+      PeopleNumber: ['1', [Validators.required]],
+      NumberOfSimpleBed: ['1', [Validators.required] ],
+      NumberOfDoubleBed: ['1', [Validators.required]],
+      RoomTypeId: ['1', [Validators.required]],
+    });
+    console.log(this.roomForm);
   }
 
   deleteRoom(id: string) {

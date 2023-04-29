@@ -25,7 +25,7 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"
           ],
-            "styles": ["src/styles.scss"],
+            "styles": ["src/styles.scss", "node_modules/ngx-toastr/toastr.css"],
             "scripts": ["src/assets/scripts.js"]
           },
           "configurations": {
@@ -102,7 +102,7 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "styles": ["src/styles.scss", "node_modules/ngx-toastr/toastr.css"],
             "scripts": []
           }
         }
@@ -135,7 +135,8 @@
               "projects/adminhotel/src/assets"
             ],
             "styles": [
-              "projects/adminhotel/src/styles.scss"
+              "projects/adminhotel/src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
@@ -198,7 +199,8 @@
               "projects/adminhotel/src/assets"
             ],
             "styles": [
-              "projects/adminhotel/src/styles.scss"
+              "projects/adminhotel/src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           }
@@ -227,7 +229,8 @@
               "projects/admin-hotel/src/assets"
             ],
             "styles": [
-              "projects/admin-hotel/src/styles.scss"
+              "projects/admin-hotel/src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
@@ -289,7 +292,8 @@
               "projects/admin-hotel/src/assets"
             ],
             "styles": [
-              "projects/admin-hotel/src/styles.scss"
+              "projects/admin-hotel/src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           }

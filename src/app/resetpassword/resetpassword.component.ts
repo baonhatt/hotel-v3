@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment.development';
 import { AuthService } from '../_service/auth.service';
-import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-resetpassword',
@@ -23,7 +23,7 @@ export class ResetpasswordComponent {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private toast: NgToastService) { }
+    private toast: ToastrService) { }
   ngOnInit() {
     this.form = this.formBuilder.group({
       newPassword: ['', Validators.required],
@@ -45,15 +45,11 @@ export class ResetpasswordComponent {
       .subscribe((res) => {
         if (res.statusCode == 1) {
           //thêm toasrt res.message
-          this.toast.success({
-            detail:" Successfully changed password!"
-          })
+          this.toast.success("Successfully changed password!");
           this.router.navigate(['login'])
         }
         else {
-          this.toast.error({
-            detail:" Make sure your password match!"
-          })
+          this.toast.error("Make sure your password match!");
         }
       },
         (err) => {
