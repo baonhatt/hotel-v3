@@ -1,6 +1,7 @@
+
 <div id="tab-list" class="tab-content-item active mt-4">
   <div class="row gy-4">
-    <div class="col-12" *ngFor="let room of rooms  | paginate
+    <div class="col-12" *ngFor="let room of searchResults | paginate
     : {
         itemsPerPage: tableSize,
         currentPage: page,
@@ -20,7 +21,7 @@
                 <span class="hotel-view-contents-review"> <i class="las la-star"></i>{{room.starSum}}<span
                     class="hotel-view-contents-review-count"> ({{room.starAmount}}) </span> </span>
                 <div class="btn-wrapper">
-                  <a href="javascript:void(0)" class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
+                  <a routerLink="/checkout/{{room.id}}" class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
                 </div>
               </div>
               <h3 class="hotel-view-contents-title"> <a routerLink="/room-detail"> {{room.name}} </a> </h3>

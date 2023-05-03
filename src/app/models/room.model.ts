@@ -18,4 +18,12 @@ export class Room {
   roomTypeName!: string
   peopleNumber!: string
   serviceAttachs!: ServiceAttach[]
+  rooms!: number;
+}
+
+export interface Roomsearch {
+  id: number;
+  name: string;
+  numOfGuests: number;
+  roomType: string;
 }

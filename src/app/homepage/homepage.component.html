@@ -37,112 +37,98 @@
 <div class="location-area">
   <div class="container">
     <div class="banner-location bg-white radius-5">
-      <div class="banner-location-flex">
+      <form [formGroup]="roomSearchForm" (ngSubmit)="onSubmit()">
+        <div class="banner-location-flex">
 
-        <div class="banner-location-single">
-          <div class="banner-location-single-flex">
+          <div class="banner-location-single">
+            <div class="banner-location-single-flex">
 
-            <div class="banner-location-single-contents">
-              <span class="banner-location-single-contents-subtitle"> Check In </span>
+              <div class="banner-location-single-contents">
+                <span class="banner-location-single-contents-subtitle"> Check In </span>
 
-              <mat-form-field appearance="fill">
-                <input matInput [matDatepicker]="picker2" [formControl]="serializedDate">
-                <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-        <div class="banner-location-single">
-          <div class="banner-location-single-flex">
-
-            <div class="banner-location-single-contents">
-              <span class="banner-location-single-contents-subtitle"> Check Out </span>
-              <div class="banner-location-single-contents-dropdown custom-select">
                 <mat-form-field appearance="fill">
-                  <input matInput [matDatepicker]="picker3" [formControl]="serializedDate">
-                  <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
-                  <mat-datepicker #picker3></mat-datepicker>
+                  <input matInput [matDatepicker]="picker2" [formControl]="serializedDate">
+                  <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
               </div>
             </div>
           </div>
-        </div>
-        <div class="banner-location-single">
-          <div class="banner-location-single-flex">
+          <div class="banner-location-single">
+            <div class="banner-location-single-flex">
 
-            <div class="banner-location-single-contents">
-              <span class="banner-location-single-contents-subtitle"> Person </span>
-              <mat-form-field appearance="fill">
-                <mat-select [(ngModel)]="selectedPersonCount">
-                  <mat-option *ngFor="let i of maxPersonArray" [value]="maxPersonArray.length + 1 - i">{{maxPersonArray.length + 1 - i}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-        <div class="banner-location-single">
-          <div class="banner-location-single-flex">
-            <div class="banner-location-single-icon">
-              <i class="las la-user-friends"></i>
-            </div>
-            <div class="banner-location-single-contents">
-              <span class="banner-location-single-contents-subtitle"> Room Type </span>
-              <mat-form-field appearance="fill">
-                <mat-select>
-                  <mat-option *ngFor="let roomType of roomTypes" value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-
-            </div>
-          </div>
-        </div>
-        <div class="banner-location-single-search">
-          <div class="search-suggestions-wrapper">
-            <div class="search-click-icon">
-              <i routerLink="/room-result" class="las la-search"></i>
-            </div>
-            <!-- <div class="search-show">
-              <div class="search-show-inner">
-                <form action="#">
-                  <div class="search-show-form">
-                    <input autocomplete="off" class="form--control" id="search_form_input" type="text"
-                      placeholder="Search here...."
-                      (input)="seachRoom(searchInput.value)" #searchInput
-                      >
-                    <button type="submit" > <i class="las la-search"></i> </button>
-                    <span class="suggestions-icon-close"> <i class="las la-times"></i> </span>
-                  </div>
-                  <div class="search-product" id="search_suggestions_wrap">
-                    <h6 class="search-product-title">Product Suggestions</h6>
-                    <div class="search-product-inner" *ngFor="let r of roomtoDisplay; let i = index;">
-                      <ul class="search-product-list-item">
-                        <a href="javascript:void(0)" class="search-product-list-link" routerLink="/room-detail">
-                            <div class="search-product-list-image"><img
-                                    src= {{r.roomPicture}} alt="img">
-                            </div>
-                            <div class="search-product-list-info">
-                                <div class="search-product-list-info-top">
-                                    <h6 class="earch-product-list-info-title"> {{r.name}}</h6>
-                                </div>
-                                <div class="search-product-list-info-price mt-2">
-                                    <div class="search-product-list-info-price-through">
-                                        <span class="main-price fw-500 color-light"> {{r.currentPrice}}</span>
-                                        <span class="stock-out"> Discount:{{r.discountPrice}} </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </ul>
-                    </div>
-                  </div>
-                </form>
+              <div class="banner-location-single-contents">
+                <span class="banner-location-single-contents-subtitle"> Check Out </span>
+                <div class="banner-location-single-contents-dropdown custom-select">
+                  <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker3" [formControl]="serializedDate">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                </div>
               </div>
-            </div> -->
+            </div>
           </div>
-          <div class="search-suggestion-overlay"></div>
+          <div class="banner-location-single">
+            <div class="banner-location-single-flex">
+              <div class="banner-location-single-icon">
+                <i class="las la-user-friends"></i>
+              </div>
+              <div class="banner-location-single-contents">
+                <span class="banner-location-single-contents-subtitle"> Person </span>
+                <mat-form-field appearance="fill">
+                  <mat-select formControlName="peopleNumber">
+                    <mat-option value="" disabled selected>Select people number</mat-option>
+                    <mat-option value="1">1</mat-option>
+                    <mat-option value="2">2</mat-option>
+                    <mat-option value="3">3</mat-option>
+                    <mat-option value="4">4</mat-option>
+                    <mat-option value="5">5</mat-option>
+                    <mat-option value="6">6</mat-option>
+                    <!-- <mat-option *ngFor="let number of peopleNumberOptions" [value]="peopleNumberOptions">{{number}}</mat-option> -->
+                    <!-- <mat-option *ngFor="let i of maxPersonArray" [value]="maxPersonArray.length + 1 - i">{{maxPersonArray.length + 1 - i}}</mat-option> -->
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="banner-location-single">
+            <div class="banner-location-single-flex">
+              <div class="banner-location-single-icon">
+                <i class="las la-user-friends"></i>
+              </div>
+              <div class="banner-location-single-contents">
+                <span class="banner-location-single-contents-subtitle"> Room Type </span>
+                <mat-form-field appearance="fill">
+                  <mat-select formControlName="roomTypeName">
+                    <mat-option value="" disabled selected>Select room type</mat-option>
+                    <mat-option *ngFor="let roomType of roomTypeName" value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <!-- <input type="text" formControlName="roomTypeName"> -->
+
+              </div>
+            </div>
+          </div>
+          <div class="banner-location-single-search">
+            <div class="search-suggestions-wrapper">
+              <button type="submit"  class="search-click-icon"  for="control-modal">
+
+                  <i class="las la-search"></i>
+              </button>
+
+
+            </div>
+            <div class="search-suggestion-overlay"></div>
+          </div>
         </div>
-      </div>
+
+      </form>
+
+      <ul>
+        <li *ngFor="let room of filteredRooms">  {{room.name}} ({{room.roomTypeName}}) - Number of people: {{room.peopleNumber}}</li>
+      </ul>
+
     </div>
   </div>
 </div>
@@ -215,16 +201,17 @@
     </div>
     <div class="row mt-5">
       <div class="col-12">
-        <div class="global-slick-init attraction-slider nav-style-one nav-color-two slider-inner-margin" data-infinite="true"
-          data-arrows="true" data-dots="false" data-slidesToShow="4" data-swipeToSlide="true" data-autoplay="true"
-          data-autoplaySpeed="2500"
+        <div class="global-slick-init attraction-slider nav-style-one nav-color-two slider-inner-margin"
+          data-infinite="true" data-arrows="true" data-dots="false" data-slidesToShow="4" data-swipeToSlide="true"
+          data-autoplay="true" data-autoplaySpeed="2500"
           data-prevArrow='<div class="prev-icon radius-parcent-50"><i class="las la-angle-left"></i></div>'
           data-nextArrow='<div class="next-icon radius-parcent-50"><i class="las la-angle-right"></i></div>'
           data-responsive='[{"breakpoint": 1400,"settings": {"slidesToShow": 4}},{"breakpoint": 1200,"settings": {"slidesToShow": 3}},{"breakpoint": 992,"settings": {"slidesToShow": 3}},{"breakpoint": 768,"settings": {"slidesToShow": 2}},{"breakpoint": 576, "settings": {"slidesToShow": 1} }]'>
           <div class="attraction-item">
             <div class="single-attraction-two radius-20">
               <div class="single-attraction-two-thumb">
-                <a href="assets/img/attraction/a5.jpg" class="gallery-popup"> <img src="assets/img/attraction/a5.jpg" alt="img">
+                <a href="assets/img/attraction/a5.jpg" class="gallery-popup"> <img src="assets/img/attraction/a5.jpg"
+                    alt="img">
                 </a>
               </div>
               <div class="single-attraction-two-contents">
@@ -238,7 +225,8 @@
           <div class="attraction-item">
             <div class="single-attraction-two radius-20">
               <div class="single-attraction-two-thumb">
-                <a href="assets/img/attraction/a6.jpg" class="gallery-popup"> <img src="assets/img/attraction/a6.jpg" alt="img">
+                <a href="assets/img/attraction/a6.jpg" class="gallery-popup"> <img src="assets/img/attraction/a6.jpg"
+                    alt="img">
                 </a>
               </div>
               <div class="single-attraction-two-contents">
@@ -252,7 +240,8 @@
           <div class="attraction-item">
             <div class="single-attraction-two radius-20">
               <div class="single-attraction-two-thumb">
-                <a href="assets/img/attraction/a7.jpg" class="gallery-popup"> <img src="assets/img/attraction/a7.jpg" alt="img">
+                <a href="assets/img/attraction/a7.jpg" class="gallery-popup"> <img src="assets/img/attraction/a7.jpg"
+                    alt="img">
                 </a>
               </div>
               <div class="single-attraction-two-contents">
@@ -266,7 +255,8 @@
           <div class="attraction-item">
             <div class="single-attraction-two radius-20">
               <div class="single-attraction-two-thumb">
-                <a href="assets/img/attraction/a8.jpg" class="gallery-popup"> <img src="assets/img/attraction/a8.jpg" alt="img">
+                <a href="assets/img/attraction/a8.jpg" class="gallery-popup"> <img src="assets/img/attraction/a8.jpg"
+                    alt="img">
                 </a>
               </div>
               <div class="single-attraction-two-contents">
@@ -280,7 +270,8 @@
           <div class="attraction-item">
             <div class="single-attraction-two radius-20">
               <div class="single-attraction-two-thumb">
-                <a href="assets/img/attraction/a6.jpg" class="gallery-popup"> <img src="assets/img/attraction/a6.jpg" alt="img">
+                <a href="assets/img/attraction/a6.jpg" class="gallery-popup"> <img src="assets/img/attraction/a6.jpg"
+                    alt="img">
                 </a>
               </div>
               <div class="single-attraction-two-contents">
@@ -306,9 +297,9 @@
     </div>
     <div class="row mt-5">
       <div class="col-12">
-        <div class="global-slick-init guest-two-slider nav-style-one slider-inner-margin" data-appendArrows=".append-attraction"
-          data-infinite="true" data-arrows="true" data-dots="false" data-slidesToShow="3" data-swipeToSlide="true"
-          data-autoplay="true" data-autoplaySpeed="2500"
+        <div class="global-slick-init guest-two-slider nav-style-one slider-inner-margin"
+          data-appendArrows=".append-attraction" data-infinite="true" data-arrows="true" data-dots="false"
+          data-slidesToShow="3" data-swipeToSlide="true" data-autoplay="true" data-autoplaySpeed="2500"
           data-prevArrow='<div class="prev-icon radius-parcent-50"><i class="las la-angle-left"></i></div>'
           data-nextArrow='<div class="next-icon radius-parcent-50"><i class="las la-angle-right"></i></div>'
           data-responsive='[{"breakpoint": 1400,"settings": {"slidesToShow": 3}},{"breakpoint": 1200,"settings": {"slidesToShow": 3}},{"breakpoint": 992,"settings": {"slidesToShow": 2}},{"breakpoint": 576, "settings": {"slidesToShow": 1} }]'>
@@ -413,8 +404,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl1.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl1.jpg"
-                alt="img"> </a>
+            <a href="assets/img/single-page/cl1.jpg" class="gallery-popup-two"> <img
+                src="assets/img/single-page/cl1.jpg" alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Eiffel Tower
@@ -425,8 +416,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl2.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl2.jpg"
-                alt="img"> </a>
+            <a href="assets/img/single-page/cl2.jpg" class="gallery-popup-two"> <img
+                src="assets/img/single-page/cl2.jpg" alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Disneyland
@@ -437,8 +428,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl3.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl3.jpg"
-                alt="img"> </a>
+            <a href="assets/img/single-page/cl3.jpg" class="gallery-popup-two"> <img
+                src="assets/img/single-page/cl3.jpg" alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Palace de
@@ -449,8 +440,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl4.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl4.jpg"
-                alt="img"> </a>
+            <a href="assets/img/single-page/cl4.jpg" class="gallery-popup-two"> <img
+                src="assets/img/single-page/cl4.jpg" alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Arc de
@@ -461,8 +452,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl5.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl5.jpg"
-                alt="img"> </a>
+            <a href="assets/img/single-page/cl5.jpg" class="gallery-popup-two"> <img
+                src="assets/img/single-page/cl5.jpg" alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Disneyland
@@ -473,8 +464,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl6.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl6.jpg"
-                alt="img"> </a>
+            <a href="assets/img/single-page/cl6.jpg" class="gallery-popup-two"> <img
+                src="assets/img/single-page/cl6.jpg" alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Disneyland
@@ -485,8 +476,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl7.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl7.jpg"
-                alt="img"> </a>
+            <a href="assets/img/single-page/cl7.jpg" class="gallery-popup-two"> <img
+                src="assets/img/single-page/cl7.jpg" alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Disneyland
@@ -497,8 +488,8 @@
       <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="single-attraction-two radius-20">
           <div class="single-attraction-two-thumb">
-            <a href="assets/img/single-page/cl8.jpg" class="gallery-popup-two"> <img src="assets/img/single-page/cl8.jpg"
-                alt="img"> </a>
+            <a href="assets/img/single-page/cl8.jpg" class="gallery-popup-two"> <img
+                src="assets/img/single-page/cl8.jpg" alt="img"> </a>
           </div>
           <div class="single-attraction-two-contents">
             <h4 class="single-attraction-two-contents-title"> <a href="hotel_details.html"> Disneyland
@@ -612,7 +603,8 @@
       <div class="col-xxl-4 col-lg-4 col-md-6" *ngFor="let b of blogs;let i=index;">
         <div class="single-blog blog-two">
           <div class="single-blog-thumbs">
-            <a (click)="navigateToPage('/blog-detail/{{b.id}}')"> <img class="lazyloads" src="{{b.imgTitle}}" alt="ImgeTitle">
+            <a (click)="navigateToPage('/blog-detail/{{b.id}}')"> <img class="lazyloads" src="{{b.imgTitle}}"
+                alt="ImgeTitle">
             </a>
             <div class="single-blog-thumbs-date">
               <a href="javascript:void(0)"> <span class="date"> {{b.postDate}} </span> <span class="month"> Jun
@@ -627,7 +619,8 @@
               <span class="single-blog-contents-tags-item"> <a href="javascript:void(0)"> 22 Comments
                 </a> </span>
             </div>
-            <h4 class="single-blog-contents-title mt-3"> <a (click)="navigateToPage('/blog-detail/{{b.id}}')">{{b.discription}}
+            <h4 class="single-blog-contents-title mt-3"> <a
+                (click)="navigateToPage('/blog-detail/{{b.id}}')">{{b.discription}}
               </a> </h4>
           </div>
         </div>

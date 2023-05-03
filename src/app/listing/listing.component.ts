@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Room } from '../models/room.model';
 import { ApiService } from '../_service/api.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../_service/auth.service';
+import { SearchService } from '../_service/search.service';
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -23,6 +24,7 @@ export class ListingComponent implements OnInit {
   rooms: Room[] = [];
   page: number = 1;
   count: number = 0;
+  filteredRooms!: Room[];
   tableSize: number = 7;
   tableSizes: any = [3, 6, 9, 12];
   roomtoDisplay!: Room[];
@@ -31,26 +33,42 @@ export class ListingComponent implements OnInit {
   maxPrice = null;
   selectedRoomType = '';
   selectedServiceAttach = '';
-  roomTypes:  RoomType[] = []
+  roomTypeName: RoomType[] = [];
   serviceAttachs = [];
+  roomSearchForm!: FormGroup;
   array!: number[];
   selectedPersonCount: number = 1;
   constructor( private roomService: ApiService,
     private router: Router,
     private auth: AuthService,
-    private apiService: ApiService){
+    private apiService: ApiService,
+    private fb: FormBuilder){
+
+      this.roomSearchForm = this.fb.group({
+        peopleNumber: '',
+        roomTypeName: ''
+      })
   }
 
   date = new FormControl(new Date());
   serializedDate = new FormControl(new Date().toISOString());
   ngOnInit(): void {
-    this.apiService.searchRoom().subscribe((data: any)=> {
+    this.apiService.searchRoom().subscribe((data: any) => {
       this.maxPerson = data.maxPerson;
       this.maxPrice = data.maxPrice;
-      this.roomTypes = data.roomTypes;
+      this.roomTypeName = data.roomTypes;
       this.serviceAttachs = data.serviceAttachs;
     });
-    this.getRooms();
+
+    this.apiService.getRooms().subscribe(
+      (rooms: Room[]) => {
+        this.rooms = rooms;
+        this.filteredRooms = rooms;
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
     this.auth.reloadOnNavigation();
     this.sortMaxPersonArrayDescending();
   }
@@ -85,5 +103,26 @@ export class ListingComponent implements OnInit {
     this.tableSize = event.target.value;
     this.page = 1;
     this.getRooms();
+  }
+  onSubmit() {
+    const roomTypeName = this.roomSearchForm.value.roomTypeName;
+    const peopleNumber = this.roomSearchForm.value.peopleNumber;
+
+    if (roomTypeName || peopleNumber) {
+      this.filteredRooms = this.rooms.filter((room: Room) => {
+        if (roomTypeName && !room.name.toLowerCase().includes(roomTypeName.toLowerCase())) {
+          return false;
+        }
+
+        if (peopleNumber && room.peopleNumber < peopleNumber) {
+          return false;
+        }
+
+        return true;
+      });
+    } else {
+      this.filteredRooms = this.rooms;
+    }
+
   }
 }

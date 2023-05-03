@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
@@ -6,8 +6,10 @@ import { AuthService } from '../_service/auth.service';
 import { ApiService } from '../_service/api.service';
 import { Room } from '../models/room.model';
 import { Blog } from '../models/blog.model';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Search } from '../models/search.model';
+import { SearchService } from '../_service/search.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 const today = new Date();
 const month = today.getMonth();
@@ -25,65 +27,82 @@ interface RoomType {
 })
 export class HomepageComponent implements OnInit {
   rooms: Room[];
+  filteredRooms!: Room[];
+  private apiRooms = 'https://webhotel.click/user/room/get-all';
   blogs: Blog[];
   roomtoDisplay!: Room[];
   blogtoDisplay!: Blog[];
   maxPerson!: any;
-  datasearch!: number[];
   maxPrice = null;
   selectedRoomType = '';
   selectedServiceAttach = '';
-  roomTypes:  RoomType[] = []
+  roomTypeName: RoomType[] = [];
   serviceAttachs = [];
-  array!: number[];
-  selectedPersonCount: number = 1;
+  peopleNumberOptions = [1, 2, 3, 4, 5, 6, 7, 8];
+  roomSearchForm!: FormGroup;
+  peopleNumber: number  = 1;
+
+
   constructor(
     private http: HttpClient,
     private toast: NgToastService,
     private apiService: ApiService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    private search: SearchService
   ) {
     this.rooms = [],
-    this.roomtoDisplay = this.roomtoDisplay;
+      this.roomtoDisplay = this.roomtoDisplay;
     this.blogs = [],
-    this.blogtoDisplay = this.blogs;
+      this.blogtoDisplay = this.blogs;
+
+    this.roomSearchForm = this.fb.group({
+      peopleNumber: '',
+      roomTypeName: ''
+    })
   }
 
   date = new FormControl(new Date());
   serializedDate = new FormControl(new Date().toISOString());
   ngOnInit(): void {
-    this.apiService.searchRoom().subscribe((data: any)=> {
+    this.apiService.searchRoom().subscribe((data: any) => {
       this.maxPerson = data.maxPerson;
       this.maxPrice = data.maxPrice;
-      this.roomTypes = data.roomTypes;
+      this.roomTypeName = data.roomTypes;
       this.serviceAttachs = data.serviceAttachs;
     });
 
-    // this.apiService.getRooms().subscribe((res: any) => {
-    //   for (let r of res) {
-    //     this.rooms.unshift(r);
-    //   }
-    //   this.roomtoDisplay = this.rooms ;
+    this.apiService.getRooms().subscribe(
+      (rooms: Room[]) => {
+        this.rooms = rooms;
+        this.filteredRooms = rooms;
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+    // this.apiService.getRooms().subscribe(data => {
+    //   this.rooms = data;
     // });
-
-
+    this.sortMaxPersonArrayDescending();
+    // $.getScript('assets/js/main.js');
     this.apiService.getBlogs().subscribe((res: any) => {
       for (let b of res) {
         this.blogs.unshift(b);
       }
-      this.blogtoDisplay = this.blogs ;
+      this.blogtoDisplay = this.blogs;
     });
 
-    this.sortMaxPersonArrayDescending();
-    // $.getScript('assets/js/main.js');
-
   }
+
+
+
   sortMaxPersonArrayDescending() {
     this.maxPersonArray.sort((a, b) => a - b);
   }
 
   get maxPersonArray(): number[] {
-    return Array.from({length: this.maxPerson}, (_, i) => this.maxPerson - i);
+    return Array.from({ length: this.maxPerson }, (_, i) => this.maxPerson - i);
   }
 
   navigateToPage(url: string) {
@@ -91,18 +110,28 @@ export class HomepageComponent implements OnInit {
     window.scrollTo(0, 0);
   }
 
-  // seachRoom(event: any) {
-  //   let filteredRooms: Room[] = [];
 
-  //   if (event === '') {
-  //     this.roomtoDisplay = this.rooms;
-  //   } else {
-  //     filteredRooms = this.rooms.filter((val, index) => {
-  //       let targetKey =  val.name.toLowerCase() + val.currentPrice.toString()
-  //       let searchKey = event.toLowerCase();
-  //       return targetKey.includes(searchKey);
-  //     });
-  //     this.roomtoDisplay = filteredRooms;
-  //   }
-  // }
+
+  onSubmit() {
+    const roomTypeName = this.roomSearchForm.value.roomTypeName;
+    const peopleNumber = this.roomSearchForm.value.peopleNumber.value;
+
+    if (roomTypeName || peopleNumber) {
+      this.filteredRooms = this.rooms.filter((room: Room) => {
+        if (roomTypeName && !room.name.toLowerCase().includes(roomTypeName.toLowerCase())) {
+          return false;
+        }
+
+        if (peopleNumber && room.peopleNumber < peopleNumber) {
+          return false;
+        }
+
+        return true;
+      });
+    } else {
+      this.filteredRooms = this.rooms;
+    }
+
+  }
 }
+
