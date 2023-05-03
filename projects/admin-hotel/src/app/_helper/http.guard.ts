@@ -28,7 +28,6 @@ export class AuthGuard implements CanActivate {
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
       const id = Number(route.paramMap.get('id'));
-
     var check = this.auth.checkAccessTokenAndRefresh();
     console.log(check.status);
     var token = this.storage.isLoggedIn();

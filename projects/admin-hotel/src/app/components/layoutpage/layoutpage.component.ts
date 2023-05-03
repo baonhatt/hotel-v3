@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgToastService } from 'ng-angular-popup';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-layoutpage',
@@ -9,19 +9,8 @@ import { NgToastService } from 'ng-angular-popup';
 
 export class LayoutpageComponent implements OnInit {
   sideBarOpen = true;
-  constructor(private toast: NgToastService) {}
+  constructor(private toast: ToastrService) {}
   ngOnInit(): void {
-    if (localStorage.getItem('firstLogin') == '') {
-      setTimeout(() => {
-        console.log(123);
-        this.toast.success({
-          detail: 'Welcome you !',
-          summary: 'Đăng nhập thành công!',
-          duration: 5000,
-        });
-        localStorage.removeItem('firstLogin');
-      }, 500);
-    }
   }
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;

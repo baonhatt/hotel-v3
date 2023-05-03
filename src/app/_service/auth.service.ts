@@ -5,11 +5,11 @@ import { BehaviorSubject, catchError, map, Observable, of, switchMap, tap } from
 import { TokenModel } from './token.model';
 import { User } from './user.model';
 import { StorageService } from './storage.service';
-import { NgToastService } from 'ng-angular-popup'
 import { environment } from '../../environments/environment.development';
 // import { TranslateService } from "@ngx-translate/core";
 import { filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 export const JWT_NAME = 'blog-token';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class AuthService implements OnInit{
   isHomePageLoaded = false;
   email: any;
   jwtService: JwtHelperService = new JwtHelperService();
-  constructor(private http: HttpClient, private router: Router, private storage: StorageService, private jwtHelper: JwtHelperService, private toast: NgToastService) { }
+  constructor(private http: HttpClient, private router: Router, private storage: StorageService, private jwtHelper: JwtHelperService, private toast: ToastrService) { }
   ngOnInit(): void {
     this.loadPage()
   }
@@ -40,12 +40,12 @@ export class AuthService implements OnInit{
             this.userProfile.next(userInfo);
           },
           error: (err) => {
-            this.toast.error({ detail: "Error Message", summary: err.error.message, duration: 5000 });
+            this.toast.error(err.error.message);
           },
       }),
       catchError((error) => {
         error.
-          this.toast.error({ detail: "Error Message", summary: " Please check your email or password again!", duration: 5000 })
+          this.toast.error(" Please check your email or password again!")
         return of(false);
       }),
     );

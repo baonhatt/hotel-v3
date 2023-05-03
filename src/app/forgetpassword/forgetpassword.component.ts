@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { finalize, first } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { AuthService } from '../_service/auth.service'
-import { NgToastService } from 'ng-angular-popup';
 @Component({
   selector: 'app-forgetpassword',
   templateUrl: './forgetpassword.component.html',
@@ -16,7 +16,7 @@ export class ForgetpasswordComponent implements OnInit {
   loading = false;
   submitted = false;
   email: any;
-  constructor(private auth: AuthService, private formBuilder: FormBuilder, private router: Router, private toast: NgToastService) { }
+  constructor(private auth: AuthService, private formBuilder: FormBuilder, private router: Router, private toast: ToastrService) { }
   forgotPasswordForm!: FormGroup
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -37,17 +37,12 @@ export class ForgetpasswordComponent implements OnInit {
         const message = result_resetpasswordstatus.message
 
 
-        this.toast.success({
-          detail: message
-
-        })
+        this.toast.success(message);
 
       },
         (err) => {
           console.log(err);
-          this.toast.error({
-            detail: err.error.message
-          })
+          this.toast.error(err.error.message);
         })
   }
 }

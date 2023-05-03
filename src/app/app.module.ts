@@ -18,7 +18,7 @@ import { RoomDetailComponent } from './room-detail/room-detail.component';
 import { FooterComponent } from './footer/footer.component';
 import { StorageService } from './_service/storage.service';
 import { EmailValidatorDirective } from './_shared/validator/email-validators.directive';
-import { NgToastModule } from 'ng-angular-popup';
+// import { NgToastModule } from 'ng-angular-popup';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { ProfileComponent } from './client/profile/profile.component';
 import { SpinnerComponent } from './spinner/spinner.component';
@@ -54,7 +54,55 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatOption } from '@angular/material/core';
 import {  NO_ERRORS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
 @NgModule({
+  imports: [
+    HttpClientModule,
+    JwtModule.forRoot({
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        deps: [StorageService],
+        useFactory: jwtOptionsFactor
+      }
+    }),
+    CommonModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut : 5000,
+      progressBar: true
+    }),
+    ToastContainerModule,
+    // ToastNoAnimationModule.forRoot(),
+    MatOptionModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatSlideToggleModule,
+    MatIconModule,
+    MatNativeDateModule,
+    MatDialogModule,
+    MatButtonToggleModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    NgxPaginationModule,
+    BrowserModule,
+    AppRoutingModule,
+    RouterModule.forChild([{ path: 'products', component: ListingComponent },
+    {
+      path: 'products/:id',
+      canActivate: [RoomDetailComponent],
+      component: RoomDetailComponent
+    }])
+    ,
+    FormsModule,
+    ReactiveFormsModule,
+    AlertModule,
+    IconModule
+
+  ],
   declarations: [
     AppComponent,
     LoginComponent,
@@ -81,48 +129,7 @@ import {  NO_ERRORS_SCHEMA } from '@angular/core';
     BellNotifComponent,
 
   ],
-  imports: [
 
-    MatOptionModule,
-    MatSelectModule,
-    BrowserAnimationsModule,
-    MatNativeDateModule,
-    MatSlideToggleModule,
-    MatIconModule,
-    FormsModule,
-    MatNativeDateModule,
-    MatDialogModule,
-    MatButtonToggleModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    NgxPaginationModule,
-    BrowserModule,
-    NgToastModule,
-    AppRoutingModule,
-    RouterModule.forChild([{ path: 'products', component: ListingComponent },
-    {
-      path: 'products/:id',
-      canActivate: [RoomDetailComponent],
-      component: RoomDetailComponent
-    }])
-    ,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    JwtModule.forRoot({
-      jwtOptionsProvider: {
-        provide: JWT_OPTIONS,
-        useFactory: jwtOptionsFactor,
-        deps: [StorageService]
-      }
-    }),
-    AlertModule,
-    IconModule
-
-  ],
   providers:
     [
       {
@@ -138,9 +145,6 @@ import {  NO_ERRORS_SCHEMA } from '@angular/core';
       ]
     ],
   bootstrap: [AppComponent],
-  schemas: [
-    NO_ERRORS_SCHEMA
-  ],
 })
 
 export class AppModule { }
@@ -148,15 +152,7 @@ export class AppModule { }
 export function jwtOptionsFactor(storage: StorageService) {
   return {
     tokenGetter: () => {
-      console.log("Đã add authen");
-
       return storage.getAccessToken();
-    },
-    allowedDomains: ["https://webhotel.click"],
-    disallowedRoutes: [
-      "https://webhotel.click/user/login",
-      "https://webhotel.click/user/token/refresh"
-    ],
-    skipWhenExpired: false,
+    }
   }
 }
