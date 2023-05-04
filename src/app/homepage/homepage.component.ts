@@ -9,6 +9,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Search } from '../models/search.model';
 import { SearchService } from '../_service/search.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 const today = new Date();
 const month = today.getMonth();
@@ -64,7 +65,6 @@ export class HomepageComponent implements OnInit {
   date = new FormControl(new Date());
   serializedDate = new FormControl(new Date().toISOString());
   ngOnInit(): void {
-    this.toast.success("ok");
     this.apiService.searchRoom().subscribe((data: any)=> {
       this.maxPerson = data.maxPerson;
       this.maxPrice = data.maxPrice;
@@ -114,7 +114,7 @@ export class HomepageComponent implements OnInit {
 
   onSubmit() {
     const roomTypeName = this.roomSearchForm.value.roomTypeName;
-    const peopleNumber = this.roomSearchForm.value.peopleNumber.value;
+    const peopleNumber = this.roomSearchForm.value.peopleNumber;
 
     if (roomTypeName || peopleNumber) {
       this.filteredRooms = this.rooms.filter((room: Room) => {
@@ -131,7 +131,6 @@ export class HomepageComponent implements OnInit {
     } else {
       this.filteredRooms = this.rooms;
     }
-
   }
 }
 

@@ -25,10 +25,10 @@
         <div class="checkout-wrapper">
           <div class="checkout-single bg-white radius-10">
             <h4 class="checkout-title"> Booking Information </h4>
+
             <div class="checkout-contents mt-3">
               <div class="checkout-form custom-form">
-                <form action="" [formGroup]="bookForm" (ngSubmit)="OnSubmit()">
-
+                <form action="" [formGroup]="bookForm" (ngSubmit)="pay()">
                   <div class="single-input mt-4">
                     <label class="label-title"> Name </label>
                     <input class="form--control" type="text" formControlName="name" placeholder="Type Address">
@@ -61,19 +61,22 @@
                   <div class="input-flex-item">
                     <div class="single-input mt-4">
                       <label class="label-title"> Number of day </label>
-                      <input class="form--control" type="text" formControlName="numberOfDay" placeholder="Type Address">
+                      <input class="form--control" type="text" formControlName="numberOfDay" placeholder="Number of day">
                     </div>
                   </div>
                   <div class="input-flex-item">
                     <div class="single-input mt-4">
                       <label class="label-title"> Address </label>
-                      <input class="form--control" type="text" formControlName="address" placeholder="Type Address">
+                      <input class="form--control"  type="text" formControlName="address" placeholder="Type Address">
                     </div>
+                  </div>
+                  <div class="single-input mt-2">
+                    <input type="checkbox" clicked="true"> Pay with MOMO
                   </div>
 
                   <div class="input-flex-item">
                     <div class="btn-wrapper mt-4">
-                      <button href="javascript:void(0)" type="submit" class="cmn-btn btn-bg-1 btn-small"> Booking </button>
+                      <button type="submit" class="cmn-btn btn-bg-1 btn-small"> Booking </button>
                     </div>
                   </div>
                 </form>

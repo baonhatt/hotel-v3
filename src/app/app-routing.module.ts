@@ -23,6 +23,7 @@ import { AboutComponent } from './about/about.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { SuccessPaymentComponent } from './success-payment/success-payment.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -165,6 +166,14 @@ const routes: Routes = [
   {
     path: 'room',
     component: RoomDetailComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'successPayment',
+    component: SuccessPaymentComponent,
     data: {
       requiredAuth: false
     },
