@@ -36,14 +36,13 @@ export class CheckoutComponent implements OnInit {
     private apiService: ApiService
 
 
-    ) { 
+    ) {
       this.payForm = this.fb.group({
 
       })
     }
 
   ngOnInit(): void {
-
     this.roomId = this.route.snapshot.paramMap.get('id')
     this.bookForm = this.fb.group({
       startDate:new Date().toISOString(),
@@ -55,15 +54,17 @@ export class CheckoutComponent implements OnInit {
       phoneNumber: [''],
       address: [''],
     });
-
-    const id = this.route.snapshot.paramMap.get('id')!;
-    this.apiService.getRoomDetail(id)
-      .subscribe(res => {
-        console.log(res);
-        this.rooms = res
-
-      });
+    this.getRoomById();
     this.calculateDays()
+  }
+
+  getRoomById()
+  {
+    this.apiService.getRoomDetail(this.roomId)
+    .subscribe(res => {
+      console.log(res);
+      this.rooms = res
+    });
   }
 
   calculateDays() {
@@ -74,7 +75,6 @@ export class CheckoutComponent implements OnInit {
 
 
   bookingRoom(bookForm: FormGroup){
-
     this.http.post<any>(`${environment.BASE_URL_API}/user/reservation/create`, this.bookForm.value)
     .subscribe(res =>{
       alert("Create an account successfully!");
@@ -88,17 +88,17 @@ export class CheckoutComponent implements OnInit {
     const orderInfo = this.rooms.name;
     const amount = this.rooms.currentPrice;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    this.http.post<any>(environment.QR_MOMO(orderInfo,amount),{}, {headers})
+    this.http.post<any>(environment.QR_MOMO,{orderInfo : "abc", amount : "10000"}, {headers})
        .subscribe(response => {
         const redirectUrl = response['payUrl'];
        if (redirectUrl) { window.location.href = redirectUrl;
-      } 
+      }
     })
     console.log(orderInfo, amount)
   }
-  
+
   OnSubmit(){
-  
+
     this.calculateDays
     // this.bookingRoom(this.bookForm)
     console.log(this.roomId);
