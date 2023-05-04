@@ -17,6 +17,7 @@ export class CheckoutComponent implements OnInit {
   rooms!: Room;
   amount!: number;
   bookForm!: FormGroup;
+  payForm!: FormGroup;
   startDate!: Date;
   endDate!: Date;
   numDays!: number;
@@ -36,7 +37,9 @@ export class CheckoutComponent implements OnInit {
 
 
     ) { 
-      
+      this.payForm = this.fb.group({
+
+      })
     }
 
   ngOnInit(): void {
@@ -81,7 +84,7 @@ export class CheckoutComponent implements OnInit {
 
     })
   }
-  pay() {
+  payMoMo() {
     const orderInfo = this.rooms.name;
     const amount = this.rooms.currentPrice;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });

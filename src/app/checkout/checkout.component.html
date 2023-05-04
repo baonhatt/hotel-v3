@@ -28,7 +28,7 @@
 
             <div class="checkout-contents mt-3">
               <div class="checkout-form custom-form">
-                <form action="" [formGroup]="bookForm" (ngSubmit)="pay()">
+                <form action="" [formGroup]="bookForm" (ngSubmit)="payMoMo()">
                   <div class="single-input mt-4">
                     <label class="label-title"> Name </label>
                     <input class="form--control" type="text" formControlName="name" placeholder="Type Address">
@@ -208,7 +208,7 @@
                       (+13%) $20.08 </span> </li>
                 </ul>
                 <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
-                  <li class="list"> <span class="regular"> Total </span> <span class="strong color-one fs-20"> $250.08
+                  <li class="list"> <span class="regular"> Total </span> <span class="strong color-one fs-20"> {{rooms.currentPrice}}
                     </span> </li>
                 </ul>
               </div>
