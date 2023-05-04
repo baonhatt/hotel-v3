@@ -66,4 +66,6 @@ export class ApiService {
     return this.http.post(environment.BASE_URL_API + '', data);
 
   }
+
+  
 }

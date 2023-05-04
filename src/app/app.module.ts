@@ -56,6 +56,7 @@ import { MatOption } from '@angular/material/core';
 import {  NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
+import { SuccessPaymentComponent } from './success-payment/success-payment.component';
 @NgModule({
   imports: [
     HttpClientModule,
@@ -72,6 +73,7 @@ import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
       timeOut : 5000,
       progressBar: true
     }),
+    ToastrModule,
     ToastContainerModule,
     // ToastNoAnimationModule.forRoot(),
     MatOptionModule,
@@ -127,6 +129,7 @@ import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
     LeftContentComponent,
     SearchResultComponent,
     BellNotifComponent,
+    SuccessPaymentComponent,
 
   ],
 

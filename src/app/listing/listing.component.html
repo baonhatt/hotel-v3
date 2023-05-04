@@ -54,7 +54,9 @@
           </div>
           <div class="banner-location-single">
             <div class="banner-location-single-flex">
-
+              <div class="banner-location-single-icon">
+                <i class="las la-user-friends"></i>
+              </div>
               <div class="banner-location-single-contents">
                 <span class="banner-location-single-contents-subtitle"> Person </span>
                 <mat-form-field appearance="fill">
@@ -65,7 +67,6 @@
                     <mat-option value="3">3</mat-option>
                     <mat-option value="4">4</mat-option>
                     <mat-option value="5">5</mat-option>
-                    <mat-option value="6">6</mat-option>
                     <!-- <mat-option *ngFor="let number of peopleNumberOptions" [value]="peopleNumberOptions">{{number}}</mat-option> -->
                     <!-- <mat-option *ngFor="let i of maxPersonArray" [value]="maxPersonArray.length + 1 - i">{{maxPersonArray.length + 1 - i}}</mat-option> -->
                   </mat-select>
@@ -76,7 +77,7 @@
           <div class="banner-location-single">
             <div class="banner-location-single-flex">
               <div class="banner-location-single-icon">
-                <i class="las la-user-friends"></i>
+                <i class="fa-regular fa-booth-curtain"></i>
               </div>
               <div class="banner-location-single-contents">
                 <span class="banner-location-single-contents-subtitle"> Room Type </span>
@@ -257,7 +258,7 @@
                       <div class="hotel-view-contents-bottom-flex">
                         <div class="hotel-view-contents-bottom-contents d-flex flex-wrap gap-4 gap-sm-1">
                           <h4 class="hotel-view-contents-bottom-title"> {{room.currentPrice | currency}} VND<sub>/Night</sub> </h4>
-                          <p class="hotel-view-contents-bottom-para"> <br> (4 Nights, 2 Rooms, 4 Persons) </p>
+                          <p class="hotel-view-contents-bottom-para"> <br> (4 Nights, 2 Rooms, {{room.peopleNumber}} Persons) </p>
                         </div>
                       </div>
                     </div>
