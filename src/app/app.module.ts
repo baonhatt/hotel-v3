@@ -12,12 +12,10 @@ import { FormsModule } from '@angular/forms';
 import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { HeaderComponent } from './header/header.component';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
-import { CanActivate } from '@angular/router';
 import { AuthGuard } from './_helper/http.guard';
 import { RoomDetailComponent } from './room-detail/room-detail.component';
 import { FooterComponent } from './footer/footer.component';
 import { StorageService } from './_service/storage.service';
-import { EmailValidatorDirective } from './_shared/validator/email-validators.directive';
 // import { NgToastModule } from 'ng-angular-popup';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { ProfileComponent } from './client/profile/profile.component';
@@ -27,7 +25,6 @@ import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.compone
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { ContactComponent } from './contact/contact.component';
 import { ListingComponent } from './listing/listing.component';
-import { RoomDetailGuard } from './_helper/room-detail.guard';
 import { EditProfileComponent } from './client/edit-profile/edit-profile.component';
 import { PasswordChangeComponent } from './client/password-change/password-change.component';
 import { AlertModule } from '@coreui/angular';
@@ -53,7 +50,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {MatSelectModule} from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatOption } from '@angular/material/core';
-import {  NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';

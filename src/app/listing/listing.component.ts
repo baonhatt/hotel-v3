@@ -21,11 +21,14 @@ interface RoomType {
 })
 export class ListingComponent implements OnInit {
   rooms: Room[] = [];
+
+  pageOfItems!: Array<any>;
+
   roomSearchs: Room[] = [];
   page: number = 1;
   count: number = 0;
   filteredRooms!: Room[];
-  tableSize: number = 7;
+  tableSize: number = 5;
   tableSizes: any = [3, 6, 9, 12];
   roomtoDisplay!: Room[];
   maxPerson!: any;
@@ -56,6 +59,11 @@ export class ListingComponent implements OnInit {
   checkIn = new FormControl(new Date().toISOString());
   checkOut = new FormControl(new Date().toISOString());
   ngOnInit(): void {
+    if(this.filteredRooms == null)
+    {
+      this.getRooms();
+    }
+
     this.apiService.searchRoom().subscribe((data: any) => {
       this.maxPerson = Array(data.maxPerson)
         .fill(1)
@@ -69,7 +77,6 @@ export class ListingComponent implements OnInit {
 
     this.apiService.getRooms().subscribe(
       (rooms: Room[]) => {
-        this.rooms = rooms;
         this.filteredRooms = rooms;
       },
       (error: any) => {
@@ -78,6 +85,7 @@ export class ListingComponent implements OnInit {
     );
     this.auth.reloadOnNavigation();
     this.sortMaxPersonArrayDescending();
+
   }
 
   sortMaxPersonArrayDescending() {
@@ -88,29 +96,24 @@ export class ListingComponent implements OnInit {
     return Array.from({ length: this.maxPerson }, (_, i) => this.maxPerson - i);
   }
 
-  // getRooms(){
-  //   this.roomService.getRooms().subscribe((res: Room[])=>{
-  //     this.rooms = res;
-  //     this.roomSearchs = res;
-  //   })
-  // }
-  searchRoom() {
-    //viet 1 ham khi click nut seach se lay cac data o cac o can search và gọi api search r điền vào
-    //sau khi get thành công
-    //gọi SearchResultComponent . rooms rồi gắn bằng cái res trả về
+  getRooms(){
+    this.roomService.getRooms().subscribe((res: any)=>{
+      this.filteredRooms = res;
+    })
   }
+
   routePage() {
     this.router.navigate(['/room-detail/{{room.id}}']);
   }
-  // onTableDataChange(event: any) {
-  //   this.page = event;
-  //   this.getRooms();
-  // }
-  // onTableSizeChange(event: any): void {
-  //   this.tableSize = event.target.value;
-  //   this.page = 1;
-  //   this.getRooms();
-  // }
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getRooms();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getRooms();
+  }
   onSubmit() {
     const roomTypeId = this.roomSearchForm.value.roomTypeId;
     const peopleNumber = this.roomSearchForm.value.peopleNumber;

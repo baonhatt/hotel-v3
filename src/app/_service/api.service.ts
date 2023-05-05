@@ -8,6 +8,7 @@ import { Blog } from '../models/blog.model';
 import { User } from './user.model';
 import { Data } from '@angular/router';
 import { Search } from '../models/search.model';
+import { Payment } from '../models/payment.models';
 
 @Injectable({
   providedIn: 'root'
@@ -59,7 +60,10 @@ export class ApiService {
     return this.user
   }
 
+  payment(payment: Payment){
+    return this.http.post(environment.BASE_URL_API + '/user/invoid/create', payment )
 
+  }
   bookRoom(startDate: Data, enDate: Data, roomId: string, numberOfDays: number): Observable<any>{
 
  const data = {

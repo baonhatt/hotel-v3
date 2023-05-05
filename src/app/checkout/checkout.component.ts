@@ -55,7 +55,6 @@ export class CheckoutComponent implements OnInit {
       address: [''],
     });
     this.getRoomById();
-    this.calculateDays()
   }
 
   getRoomById()
@@ -67,11 +66,7 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
-  calculateDays() {
-    this.numDays = this.auth.getNumberOfDays(this.bookForm?.get('startDate')?.value,this.bookForm?.get('endDate')?.value);
-    console.log(this.numDays);
 
-  }
 
 
   bookingRoom(bookForm: FormGroup){
@@ -99,7 +94,7 @@ export class CheckoutComponent implements OnInit {
 
   OnSubmit(){
 
-    this.calculateDays
+   localStorage.setItem('bookingForm', JSON.stringify(this.bookForm.value))
     // this.bookingRoom(this.bookForm)
     console.log(this.roomId);
 

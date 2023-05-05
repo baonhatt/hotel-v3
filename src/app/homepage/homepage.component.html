@@ -110,9 +110,12 @@
             </div>
           </div>
           <div class="banner-location-single-search">
-            <div class="search-suggestions-wrapper">
+            <div class="search-suggestions-wrapper flex">
               <button type="submit"  class="search-click-icon"  for="control-modal">
                   <i class="las la-search"></i>
+              </button>
+              <button (click)="getRoom()" class="search-click-icon"  for="control-modal">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
               </button>
             </div>
             <div class="search-suggestion-overlay"></div>
@@ -120,13 +123,70 @@
         </div>
       </form>
 
-      <ul>
-        <li *ngFor="let room of filteredRooms">  {{room.name}} ({{room.roomTypeName}}) - Number of people: {{room.peopleNumber}}</li>
-      </ul>
+    <!-- <div class="show-grid-contents">
+      <div id="tab-grid" class="tab-content-item active mt-4">
+        <div class="row gy-2"  *ngFor="let room of filteredRooms">
 
+
+
+          </div>
+        </div>
+
+      </div>
+
+    </div> -->
+    <div class="container-search">
+      <div class="row" *ngFor="let room of filteredRooms">
+        <div class="col">
+          <div style="margin-top: 12px" class="hotel-view bg-white radius-20">
+            <div class="hotel-view-flex">
+              <a routerLink="/room-detail/{{room.id}}" style="padding: 10px;" class="hotel-view-thumb hotel-view-list-thumb bg-image">
+                <img [src]="room.roomPicture" style="height: 100%;
+                object-fit: cover;">
+              </a>
+              <div class="hotel-view-contents">
+                <div class="hotel-view-contents-header">
+                  <div
+                    class="hotel-view-contents-header-flex d-flex flex-wrap gap-3 align-items-center justify-content-between">
+                    <span class="hotel-view-contents-review"> <i class="las la-star"></i>{{room.starSum}}<span
+                        class="hotel-view-contents-review-count"> ({{room.starAmount}}) </span> </span>
+                    <div class="btn-wrapper">
+                      <a routerLink="/checkout/{{room.id}}" class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
+                    </div>
+                  </div>
+                  <h3 class="hotel-view-contents-title"> <a routerLink="/room-detail"> {{room.name}} </a> </h3>
+
+                </div>
+                <div class="hotel-view-contents-middle">
+                  <div class="hotel-view-contents-flex">
+                    <div class="hotel-view-contents-icon d-flex gap-1" *ngFor="let serviceAttach of room.serviceAttachs">
+                      <span> <i [ngClass]="serviceAttach.icon"></i> </span>
+                      <p class="hotel-view-contents-icon-title flex-fill"> {{serviceAttach.name}} </p>
+                    </div>
+                    <div class="hotel-view-contents-icon d-flex gap-1">
+                      <a class="hotel-view-contents-icon-more" href="javascript:void(0)"> +8 More </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="hotel-view-contents-bottom">
+                  <div class="hotel-view-contents-bottom-flex">
+                    <div class="hotel-view-contents-bottom-contents d-flex flex-wrap  ">
+                      <h4 class="hotel-view-contents-bottom-title"> {{room.currentPrice | currency}} VND<sub>/Night</sub> </h4>
+
+                    </div>
+                  </div>
+                  <p class="hotel-view-contents-bottom-para">
+                    (4 Nights, 2 Rooms, {{room.peopleNumber}} Persons) </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
-</div>
 
 
 <section class="booking-two-area pat-100 pab-50">

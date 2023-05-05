@@ -86,7 +86,7 @@ export class HomepageComponent implements OnInit {
     //   this.rooms = data;
     // });
     this.sortMaxPersonArrayDescending();
-    // $.getScript('assets/js/main.js');
+    $.getScript('assets/js/main.js');
     this.apiService.getBlogs().subscribe((res: any) => {
       for (let b of res) {
         this.blogs.unshift(b);
@@ -132,6 +132,11 @@ export class HomepageComponent implements OnInit {
       this.filteredRooms = res;
     }, _err => {
       console.log(_err);
+    })
+  }
+  getRoom(){
+    return this.apiService.getRooms().subscribe(res =>{
+      this.filteredRooms = res
     })
   }
 }
