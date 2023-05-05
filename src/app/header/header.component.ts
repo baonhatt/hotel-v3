@@ -18,6 +18,8 @@ export class HeaderComponent {
     if(this.auth.isLoggedIn() && localStorage.getItem('user_profile')!.length > 0){
       let result = localStorage.getItem('user_profile')!;
       this.userProfile = JSON.parse(result) as userProfile;
+      console.log(this.userProfile);
+
     }else{
       this.getUserProfile();
     }

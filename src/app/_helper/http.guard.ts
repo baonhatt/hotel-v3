@@ -8,7 +8,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, timeout } from 'rxjs';
 import { AuthService } from '../_service/auth.service';
 import { StorageService } from '../_service/storage.service';
 import { User } from '../_service/user.model';
@@ -25,11 +25,21 @@ export class AuthGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-      const id = Number(route.paramMap.get('id'));
+      // const id = Number(route.paramMap.get('id'));
 
     // var check = this.auth.checkAccessTokenAndRefresh();
     //add js will load
+    // setTimeout(() => {
+    //   $('html').find('script').filter(function(){
+    //     return $(this).attr('src') === 'assets/js/main.js'
+    // }).remove();
+
+    // }, 500);
+
+    // $('<script src="assets/js/main.js"></script>').remove();
+
     $.getScript('assets/js/main.js');
+    $.getScript('main.js');
 
     var token = this.storage.isLoggedIn();
     if (token) {

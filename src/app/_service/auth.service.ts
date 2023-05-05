@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment.development';
 import { filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { userProfile } from '../models/userProfile.model';
 export const JWT_NAME = 'blog-token';
 
 @Injectable({
@@ -24,7 +25,8 @@ export class AuthService implements OnInit{
   ngOnInit(): void {
     this.loadPage()
   }
-  userProfile = new BehaviorSubject<User | null>(null);
+  userAuth = new BehaviorSubject<User | null>(null);
+  userProfile = new BehaviorSubject<userProfile | null>(null);
   login(email: string, password: string) {
     const body = {
       email: email,
@@ -37,7 +39,7 @@ export class AuthService implements OnInit{
             this.storage.setToken(token);
             var claims = JSON.stringify(this.jwtService.decodeToken(token.accessToken));
             var userInfo = JSON.parse(claims.replaceAll("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/","")) as User;
-            this.userProfile.next(userInfo);
+            this.userAuth.next(userInfo);
           },
           error: (err) => {
             this.toast.error(err.error.message);
@@ -160,5 +162,10 @@ export class AuthService implements OnInit{
     const timeDiff = endDate.getTime() - startDate.getTime();
     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
     return daysDiff;
+  }
+
+  getUserProfile() : Observable<userProfile>
+  {
+    return this.http.get<userProfile>(`${environment.BASE_URL_API}/user/user-profile/get`);
   }
 }

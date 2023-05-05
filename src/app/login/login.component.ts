@@ -13,6 +13,7 @@ import { TokenModel } from '../_service/token.model';
 import { environment } from '../../environments/environment.development';
 import { HomepageComponent } from '../homepage/homepage.component';
 import { ToastrService } from 'ngx-toastr';
+import { userProfile } from '../models/userProfile.model';
 // import { AuthinterceptorInterceptor } from '../shared/auth/authinterceptor.interceptor';
 
 @Component({
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   loginForm!: FormGroup;
   data: any;
+  user_profile : userProfile | undefined;
   get f() {
     return this.loginForm.controls;
   }
@@ -62,15 +64,18 @@ export class LoginComponent implements OnInit {
         this.toast.success("Login successfull");
         var token = response as TokenModel;
         localStorage.setItem('token', JSON.stringify(token));
+        this.auth.getUserProfile().subscribe((res) =>
+        {
+          localStorage.setItem('user_profile', JSON.stringify(res))
+        },
+        (err)=>
+        {
+
+        });
         this.route.navigateByUrl('/home');
       },
       (err) => {
-        err
-        // this.toast.error({
-        //   detail: 'Error Message',
-        //   summary: err.message,
-        //   duration: 5000,
-        // });
+        this.toast.error(err.message);
       }
     );
   }

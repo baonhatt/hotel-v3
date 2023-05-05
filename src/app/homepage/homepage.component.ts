@@ -42,7 +42,6 @@ export class HomepageComponent implements OnInit {
   roomSearchForm!: FormGroup;
   peopleNumber: number  = 1;
 
-
   constructor(
     private http: HttpClient,
     private toast: ToastrService,
