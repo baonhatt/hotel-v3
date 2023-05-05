@@ -7,12 +7,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./success-payment.component.scss']
 })
 export class SuccessPaymentComponent implements OnInit{
-
-  message: string = 'Successful';
+  urlParams = new URLSearchParams(window.location.search);
+  resultCode = this.urlParams.get('resultCode');
+  message = this.urlParams.get('message');
 
   constructor(private router: Router){}
   ngOnInit(): void {
-    if(this.message =='Successful'){
+    if(this.resultCode =='0'){
       // alert("ok")
     }
   }
