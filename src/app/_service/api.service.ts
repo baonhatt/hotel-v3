@@ -35,6 +35,11 @@ export class ApiService {
     return this.http.get<Room>(url);
   }
 
+  getRoomBySearch(dataSearch : any): Observable<Room>{
+    const url = `${environment.BASE_URL_API}/user/room/get-by-all`;
+    return this.http.post<Room>(url, dataSearch);
+  }
+
   getBlogDetail(id: number): Observable<Blog>{
     return this.http.get<Blog>(`${this.apiBlog}/${id}`).pipe()
   }
@@ -67,5 +72,5 @@ export class ApiService {
 
   }
 
-  
+
 }

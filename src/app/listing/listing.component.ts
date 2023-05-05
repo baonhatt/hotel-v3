@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Room } from '../models/room.model';
 import { ApiService } from '../_service/api.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../_service/auth.service';
 import { SearchService } from '../_service/search.service';
+import { Room } from '../models/room.model';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -16,12 +17,11 @@ interface RoomType {
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
-  styleUrls: ['./listing.component.scss']
+  styleUrls: ['./listing.component.scss'],
 })
-
-
 export class ListingComponent implements OnInit {
   rooms: Room[] = [];
+  roomSearchs: Room[] = [];
   page: number = 1;
   count: number = 0;
   filteredRooms!: Room[];
@@ -30,33 +30,40 @@ export class ListingComponent implements OnInit {
   roomtoDisplay!: Room[];
   maxPerson!: any;
   datasearch!: number[];
-  maxPrice = null;
+  maxPrice = 0;
   selectedRoomType = '';
   selectedServiceAttach = '';
-  roomTypeName: RoomType[] = [];
+  roomTypes: RoomType[] = [];
   serviceAttachs = [];
   roomSearchForm!: FormGroup;
   array!: number[];
   selectedPersonCount: number = 1;
-  constructor( private roomService: ApiService,
+  constructor(
+    private roomService: ApiService,
     private router: Router,
+    private http: HttpClient,
     private auth: AuthService,
     private apiService: ApiService,
-    private fb: FormBuilder){
-
-      this.roomSearchForm = this.fb.group({
-        peopleNumber: '',
-        roomTypeName: ''
-      })
+    private fb: FormBuilder
+  ) {
+    this.roomSearchForm = this.fb.group({
+      peopleNumber: '',
+      roomTypeId: '',
+    });
   }
 
   date = new FormControl(new Date());
-  serializedDate = new FormControl(new Date().toISOString());
+  checkIn = new FormControl(new Date().toISOString());
+  checkOut = new FormControl(new Date().toISOString());
   ngOnInit(): void {
     this.apiService.searchRoom().subscribe((data: any) => {
-      this.maxPerson = data.maxPerson;
+      this.maxPerson = Array(data.maxPerson)
+        .fill(1)
+        .map((x, i) => i + 1);
       this.maxPrice = data.maxPrice;
-      this.roomTypeName = data.roomTypes;
+      console.log(this.maxPrice);
+
+      this.roomTypes = data.roomTypes;
       this.serviceAttachs = data.serviceAttachs;
     });
 
@@ -78,51 +85,56 @@ export class ListingComponent implements OnInit {
   }
 
   get maxPersonArray(): number[] {
-    return Array.from({length: this.maxPerson}, (_, i) => this.maxPerson - i);
+    return Array.from({ length: this.maxPerson }, (_, i) => this.maxPerson - i);
   }
 
-  getRooms(){
-    this.roomService.getRooms().subscribe((res: any)=>{
-      this.rooms = res;
-    })
-  }
-  searchRoom()
-  {
+  // getRooms(){
+  //   this.roomService.getRooms().subscribe((res: Room[])=>{
+  //     this.rooms = res;
+  //     this.roomSearchs = res;
+  //   })
+  // }
+  searchRoom() {
     //viet 1 ham khi click nut seach se lay cac data o cac o can search và gọi api search r điền vào
     //sau khi get thành công
     //gọi SearchResultComponent . rooms rồi gắn bằng cái res trả về
   }
-  routePage(){
-    this.router.navigate(['/room-detail/{{room.id}}'])
+  routePage() {
+    this.router.navigate(['/room-detail/{{room.id}}']);
   }
-  onTableDataChange(event: any) {
-    this.page = event;
-    this.getRooms();
-  }
-  onTableSizeChange(event: any): void {
-    this.tableSize = event.target.value;
-    this.page = 1;
-    this.getRooms();
-  }
+  // onTableDataChange(event: any) {
+  //   this.page = event;
+  //   this.getRooms();
+  // }
+  // onTableSizeChange(event: any): void {
+  //   this.tableSize = event.target.value;
+  //   this.page = 1;
+  //   this.getRooms();
+  // }
   onSubmit() {
-    const roomTypeName = this.roomSearchForm.value.roomTypeName;
+    const roomTypeId = this.roomSearchForm.value.roomTypeId;
     const peopleNumber = this.roomSearchForm.value.peopleNumber;
+    console.log(roomTypeId);
 
-    if (roomTypeName || peopleNumber) {
-      this.filteredRooms = this.rooms.filter((room: Room) => {
-        if (roomTypeName && !room.name.toLowerCase().includes(roomTypeName.toLowerCase())) {
-          return false;
+    var payLoad = {
+      checkIn: this.checkIn.value,
+      checkOut: this.checkOut.value,
+      price: 0,
+      typeRoomId: roomTypeId == '' ? 0 : roomTypeId,
+      star: 0,
+      peopleNumber: peopleNumber == '' ? 0 : peopleNumber,
+    };
+
+    this.http
+      .post<Room[]>(`https://webhotel.click/user/room/get-all-by`, payLoad)
+      .subscribe(
+        (res) => {
+          this.filteredRooms = res;
+          console.log(this.filteredRooms);
+        },
+        (_err) => {
+          console.log(_err);
         }
-
-        if (peopleNumber && room.peopleNumber < peopleNumber) {
-          return false;
-        }
-
-        return true;
-      });
-    } else {
-      this.filteredRooms = this.rooms;
-    }
-
+      );
   }
 }

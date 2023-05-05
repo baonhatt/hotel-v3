@@ -339,7 +339,7 @@
                 }
             }), i.noUiSlider.on("update", function(a, b) {
                 var c = a[b];
-                b ? (p.innerHTML = Math.round(c), r.value = Math.round(c)) : (o.innerHTML = Math.round(c), q.value = Math.round(c))
+                b ? (p.innerHTML = Math.round(c).toLocaleString(), r.value = Math.round(c).toLocaleString()) : (o.innerHTML = Math.round(c).toLocaleString(), q.value = Math.round(c).toLocaleString())
             })
         }
 
@@ -556,6 +556,6 @@
         }
     });
 
-    
+
 
 })(jQuery);
