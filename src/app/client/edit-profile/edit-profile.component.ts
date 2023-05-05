@@ -84,7 +84,7 @@ export class EditProfileComponent implements OnInit {
     formData.append('Address', this.updateProfile.controls['Address'].value);
     formData.append('PhoneNumber', this.updateProfile.controls['PhoneNumber'].value);
     formData.append('CMND', this.updateProfile.controls['CMND'].value);
-    this.http.patch<any>(environment.BASE_URL_API + `/user/user-profile/update`, formData )
+    this.http.post<any>(environment.BASE_URL_API + `/user/user-profile/update`, formData )
     .subscribe((res) =>{
       this.toast.success(res.message);
     });
