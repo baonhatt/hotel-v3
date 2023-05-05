@@ -30,7 +30,7 @@
                 <span class="banner-location-single-contents-subtitle"> Check In </span>
 
                 <mat-form-field appearance="fill">
-                  <input matInput [matDatepicker]="picker2" [formControl]="serializedDate">
+                  <input matInput [matDatepicker]="picker2" [formControl]="checkIn">
                   <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                   <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
@@ -44,7 +44,7 @@
                 <span class="banner-location-single-contents-subtitle"> Check Out </span>
                 <div class="banner-location-single-contents-dropdown custom-select">
                   <mat-form-field appearance="fill">
-                    <input matInput [matDatepicker]="picker3" [formControl]="serializedDate">
+                    <input matInput [matDatepicker]="picker3" [formControl]="checkOut">
                     <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
                     <mat-datepicker #picker3></mat-datepicker>
                   </mat-form-field>
@@ -62,13 +62,7 @@
                 <mat-form-field appearance="fill">
                   <mat-select formControlName="peopleNumber">
                     <mat-option value="" disabled selected>Select people number</mat-option>
-                    <mat-option value="1">1</mat-option>
-                    <mat-option value="2">2</mat-option>
-                    <mat-option value="3">3</mat-option>
-                    <mat-option value="4">4</mat-option>
-                    <mat-option value="5">5</mat-option>
-                    <!-- <mat-option *ngFor="let number of peopleNumberOptions" [value]="peopleNumberOptions">{{number}}</mat-option> -->
-                    <!-- <mat-option *ngFor="let i of maxPersonArray" [value]="maxPersonArray.length + 1 - i">{{maxPersonArray.length + 1 - i}}</mat-option> -->
+                      <mat-option *ngFor="let item of maxPerson" value="1">{{item}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -82,9 +76,9 @@
               <div class="banner-location-single-contents">
                 <span class="banner-location-single-contents-subtitle"> Room Type </span>
                 <mat-form-field appearance="fill">
-                  <mat-select formControlName="roomTypeName">
+                  <mat-select formControlName="roomTypeId">
                     <mat-option value="" disabled selected>Select room type</mat-option>
-                    <mat-option *ngFor="let roomType of roomTypeName" value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
+                    <mat-option *ngFor="let roomType of roomTypes" value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <!-- <input type="text" formControlName="roomTypeName"> -->
@@ -120,16 +114,15 @@
             <div class="single-shop-left-title open">
               <h5 class="title"> Prices </h5>
               <div class="single-shop-left-inner mt-4">
-                <form class="price-range-slider" method="post" data-start-min="0" data-start-max="10000" data-min="0"
-                  data-max="10000" data-step="5">
+                <form class="price-range-slider" method="post" data-start-min="0" data-start-max="10000000" data-min="0" data-max="10000000" data-step="5">
                   <div class="ui-range-slider"></div>
                   <div class="ui-range-slider-footer">
                     <div class="ui-range-values">
                       <span class="ui-price-title"> Price: </span>
-                      <div class="ui-range-value-min">$<span class="min_price">100</span>
+                      <div class="ui-range-value-min"><span class="min_price">0</span> VND
                         <input type="hidden" value="100">
-                      </div>-
-                      <div class="ui-range-value-max">$<span class="max_price">9950</span>
+                      </div> -
+                      <div class="ui-range-value-max"><span class="max_price">9950</span> VND
                         <input type="hidden" value="9950">
                       </div>
                     </div>
@@ -149,7 +142,6 @@
                   </li>
                   <li class="item"> <a href="javascript:void(0)"> Parking </a> </li>
                   <li class="item active"> <a href="javascript:void(0)"> Room Service </a> </li>
-                  <li class="more-amenities"> <a href="javascript:void(0)"> 23 More Amenities </a> </li>
                 </ul>
               </div>
             </div>
@@ -296,7 +288,6 @@
                 <pagination-controls class="pagination-wrapper"
                 previousLabel="Prev"
                 nextLabel="Next"
-                (pageChange)="onTableDataChange($event)"
               >
 
               </pagination-controls>

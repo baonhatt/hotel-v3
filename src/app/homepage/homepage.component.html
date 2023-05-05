@@ -47,7 +47,7 @@
                 <span class="banner-location-single-contents-subtitle"> Check In </span>
 
                 <mat-form-field appearance="fill">
-                  <input matInput [matDatepicker]="picker2" [formControl]="serializedDate">
+                  <input matInput [matDatepicker]="picker2" [formControl]="checkIn">
                   <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                   <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
@@ -56,12 +56,11 @@
           </div>
           <div class="banner-location-single">
             <div class="banner-location-single-flex">
-
               <div class="banner-location-single-contents">
                 <span class="banner-location-single-contents-subtitle"> Check Out </span>
                 <div class="banner-location-single-contents-dropdown custom-select">
                   <mat-form-field appearance="fill">
-                    <input matInput [matDatepicker]="picker3" [formControl]="serializedDate">
+                    <input matInput [matDatepicker]="picker3" [formControl]="checkOut">
                     <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
                     <mat-datepicker #picker3></mat-datepicker>
                   </mat-form-field>
@@ -100,7 +99,7 @@
               <div class="banner-location-single-contents">
                 <span class="banner-location-single-contents-subtitle"> Room Type </span>
                 <mat-form-field appearance="fill">
-                  <mat-select formControlName="roomTypeName">
+                  <mat-select formControlName="roomTypeId">
                     <mat-option value="" disabled selected>Select room type</mat-option>
                     <mat-option *ngFor="let roomType of roomTypeName" value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
                   </mat-select>
@@ -113,18 +112,14 @@
           <div class="banner-location-single-search">
             <div class="search-suggestions-wrapper">
               <button type="submit"  class="search-click-icon"  for="control-modal">
-
                   <i class="las la-search"></i>
               </button>
-
-
             </div>
             <div class="search-suggestion-overlay"></div>
           </div>
         </div>
-
       </form>
-      
+
       <ul>
         <li *ngFor="let room of filteredRooms">  {{room.name}} ({{room.roomTypeName}}) - Number of people: {{room.peopleNumber}}</li>
       </ul>

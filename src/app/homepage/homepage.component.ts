@@ -58,12 +58,13 @@ export class HomepageComponent implements OnInit {
 
     this.roomSearchForm = this.fb.group({
       peopleNumber: '',
-      roomTypeName: ''
+      roomTypeId: ''
     })
   }
 
   date = new FormControl(new Date());
-  serializedDate = new FormControl(new Date().toISOString());
+  checkIn = new FormControl(new Date().toISOString());
+  checkOut = new FormControl(new Date().toISOString());
   ngOnInit(): void {
     this.apiService.searchRoom().subscribe((data: any)=> {
       this.maxPerson = data.maxPerson;
@@ -113,24 +114,25 @@ export class HomepageComponent implements OnInit {
 
 
   onSubmit() {
-    const roomTypeName = this.roomSearchForm.value.roomTypeName;
+    const roomTypeId = this.roomSearchForm.value.roomTypeId;
     const peopleNumber = this.roomSearchForm.value.peopleNumber;
+    console.log(this.checkIn);
+    console.log(this.checkOut);
 
-    if (roomTypeName || peopleNumber) {
-      this.filteredRooms = this.rooms.filter((room: Room) => {
-        if (roomTypeName && !room.name.toLowerCase().includes(roomTypeName.toLowerCase())) {
-          return false;
-        }
-
-        if (peopleNumber && room.peopleNumber < peopleNumber) {
-          return false;
-        }
-
-        return true;
-      });
-    } else {
-      this.filteredRooms = this.rooms;
+    var payLoad = {
+      checkIn : this.checkIn.value,
+      checkOut : this.checkOut.value,
+      price : 0,
+      typeRoomId : roomTypeId==""?0:roomTypeId,
+      star : 0,
+      peopleNumber : peopleNumber==""?0:peopleNumber,
     }
+
+    this.http.post<Room[]>(`https://webhotel.click/user/room/get-all-by`, payLoad).subscribe(res => {
+      this.filteredRooms = res;
+    }, _err => {
+      console.log(_err);
+    })
   }
 }
 
