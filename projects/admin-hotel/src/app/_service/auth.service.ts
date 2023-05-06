@@ -28,7 +28,7 @@ export class AuthService implements OnInit{
       email: email,
       password: password,
     };
-    return this.http.post<any>('https://webhotel.click/v2/admin/login', body).pipe(
+    return this.http.post<any>('https://webhotel.click/v2/admin/authen/login', body).pipe(
       tap((response: TokenModel) => {
 
 

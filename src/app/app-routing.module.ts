@@ -24,6 +24,7 @@ import { SearchResultComponent } from './search-result/search-result.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';
+import { PaymentdetailComponent } from './paymentdetail/paymentdetail.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -174,6 +175,14 @@ const routes: Routes = [
   {
     path: 'successPayment',
     component: SuccessPaymentComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'paymentdetail',
+    component: PaymentdetailComponent,
     data: {
       requiredAuth: false
     },

@@ -82,8 +82,12 @@ export class CheckoutComponent implements OnInit {
   payMoMo() {
     const orderInfo = this.rooms.name;
     const amount = this.rooms.currentPrice;
+    const amountNum1 = amount.toString()
+    const orderInfoString = orderInfo.toString();
+    const amountNum2 = parseInt(amountNum1)
+
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    this.http.post<any>(environment.QR_MOMO,{orderInfo : 'name', amount: '10000'}, {headers})
+    this.http.post<any>(environment.QR_MOMO,{orderInfo : 'BEYOND room booking', amount: '10000'}, {headers})
        .subscribe(response => {
         const redirectUrl = response['payUrl'];
        if (redirectUrl) { window.location.href = redirectUrl;

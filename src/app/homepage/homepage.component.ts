@@ -73,15 +73,15 @@ export class HomepageComponent implements OnInit {
       this.serviceAttachs = data.serviceAttachs;
     });
 
-    this.apiService.getRooms().subscribe(
-      (rooms: Room[]) => {
-        this.rooms = rooms;
-        this.filteredRooms = rooms;
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
+    // this.apiService.getRooms().subscribe(
+    //   (rooms: Room[]) => {
+    //     this.rooms = rooms;
+    //     this.filteredRooms = rooms;
+    //   },
+    //   (error: any) => {
+    //     console.log(error);
+    //   }
+    // );
     // this.apiService.getRooms().subscribe(data => {
     //   this.rooms = data;
     // });

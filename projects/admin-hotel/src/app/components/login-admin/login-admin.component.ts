@@ -59,7 +59,6 @@ export class LoginAdminComponent implements OnInit {
           var token = response as TokenModel;
           localStorage.setItem('token_admin', JSON.stringify(token));
           this.userProfile = this.auth.userProfile;
-          this.loading = true;
           this.toast.success('Đăng nhập thành công!');
           this.route.navigate(['dashboard']);
         },

@@ -53,6 +53,7 @@ import { MatOption } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';
+import { PaymentdetailComponent } from './paymentdetail/paymentdetail.component';
 @NgModule({
   imports: [
     HttpClientModule,
@@ -126,6 +127,7 @@ import { SuccessPaymentComponent } from './success-payment/success-payment.compo
     SearchResultComponent,
     BellNotifComponent,
     SuccessPaymentComponent,
+    PaymentdetailComponent,
 
   ],
 

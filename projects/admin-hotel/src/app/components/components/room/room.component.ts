@@ -4,7 +4,6 @@ import { ApiService } from '../../../_service/api.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
 // import { NgToastService } from 'ng-angular-popup';
 import { ToastrService } from 'ngx-toastr';
 interface RoomType {
@@ -36,7 +35,7 @@ export class RoomComponent implements OnInit {
   get f() {
     return this.roomForm.controls;
   }
-  constructor(private roomService: ApiService,
+  constructor(
     private router: Router,
     private api: ApiService,
     private fb: FormBuilder,
@@ -101,6 +100,7 @@ export class RoomComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.getRooms()
     this.toastr.success('This is a success message', 'Tada');
     this.loadModal();
     this.api.getRoomTypeId().subscribe((data: any)=>{
@@ -172,7 +172,7 @@ export class RoomComponent implements OnInit {
 
   }
   getRooms() {
-    this.roomService.getRooms().subscribe((res: any) => {
+    this.api.getRooms().subscribe((res) => {
       this.rooms = res;
     })
   }
