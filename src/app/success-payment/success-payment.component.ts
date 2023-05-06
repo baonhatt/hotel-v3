@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../_service/api.service';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { Toast } from 'ngx-toastr';
+import { Toast, ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment.development';
 import { Room } from '../models/room.model';
@@ -22,7 +22,7 @@ export class SuccessPaymentComponent implements OnInit {
   formGroup!: FormGroup;
   invoiceForm!: FormGroup;
   reservationId!: any;
-  constructor(private router: Router, private api: ApiService, private http: HttpClient, private fb: FormBuilder) {
+  constructor(private router: Router, private api: ApiService, private http: HttpClient, private fb: FormBuilder, private toast: ToastrService) {
 
 
 
@@ -79,11 +79,11 @@ export class SuccessPaymentComponent implements OnInit {
         this.http.post<any>(`${environment.BASE_URL_API}/user/invoid/create`, this.invoiceForm.value, httpOptions)
         .subscribe(respon => {
 
-          alert(respon.message);
+          this.toast.success(respon.message)
 
 
         }, _err => {
-          alert("Something was wrong!");
+          this.toast.error("Something was wrong!");
 
         })
       }
