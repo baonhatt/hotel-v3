@@ -9,9 +9,9 @@ import { StorageService } from '../_service/storage.service';
   styleUrls: ['./bell-notif.component.less'],
 })
 export class BellNotifComponent implements OnInit {
-  private hubOptions: IHttpConnectionOptions = {
-    headers: { Authorization: 'Bearer ' + this.storage.getAccessToken() },
-  };
+  // private hubOptions: IHttpConnectionOptions = {
+  //   headers: { Authorization: 'Bearer ' + this.storage.getAccessToken() },
+  // };
   count_nof: any;
   items_nof: any;
   constructor(private storage: StorageService) {}
@@ -19,7 +19,7 @@ export class BellNotifComponent implements OnInit {
     if (this.storage.isLoggedIn()) {
       var hubConnection: HubConnection;
       hubConnection = new signalR.HubConnectionBuilder()
-        .withUrl('https://webhotel.click/hub', this.hubOptions)
+        .withUrl('https://webhotel.click/hub', {accessTokenFactory: () => this.storage.getAccessToken() })
         .build();
       hubConnection
         .start()
