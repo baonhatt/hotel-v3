@@ -3,36 +3,95 @@ import { Router } from '@angular/router';
 import { ApiService } from '../_service/api.service';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Toast } from 'ngx-toastr';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { environment } from 'src/environments/environment.development';
+import { Room } from '../models/room.model';
 @Component({
   selector: 'app-success-payment',
   templateUrl: './success-payment.component.html',
   styleUrls: ['./success-payment.component.scss']
 })
-export class SuccessPaymentComponent implements OnInit{
+export class SuccessPaymentComponent implements OnInit {
   urlParams = new URLSearchParams(window.location.search);
   resultCode = this.urlParams.get('resultCode');
   message = this.urlParams.get('message');
+  orderType = this.urlParams.get('orderType');
+  orderInfo = this.urlParams.get('orderInfo');
+   payType = this.urlParams.get('payType');
+   amount = this.urlParams.get('amount');
+  formGroup!: FormGroup;
+  invoiceForm!: FormGroup;
+  reservationId!: any;
+  constructor(private router: Router, private api: ApiService, private http: HttpClient, private fb: FormBuilder) {
 
-  constructor(private router: Router, private api: ApiService, private http: HttpClient){}
+
+
+  }
   ngOnInit(): void {
-    const bookingForm = JSON.stringify(localStorage.getItem('bookingForm'))
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
+    const bookingForm = this.fb.group({
+      startDate: [''],
+      endDate: [''],
+      roomId: [''],
+      numberOfDay: [''],
+      email: [''],
+      name: [''],
+      phoneNumber: [''],
+      address: ['']
+    });
+    // Get value of bookingForm is stored in checkout component
+    const bookingFormStored = JSON.stringify(localStorage.getItem('bookingForm'));
+    const savedData = localStorage.getItem('bookingData');
 
-    if(this.resultCode =='0'){
-      this.http.post('https://webhotel.click/user/reservation/create', bookingForm,httpOptions).subscribe((res) =>{
-        const message = res
-        alert(message)
-      })
-      console.log(bookingForm);
 
+    if (savedData) {
+      // Chuyển đổi chuỗi JSON thành đối tượng JavaScript
+      const bookingData = JSON.parse(savedData);
+      this.reservationId =  JSON.parse(savedData);
+      // Sử dụng giá trị lấy được
+      console.log(bookingData.message);
+      console.log(bookingData.reservationId);
+      console.log(bookingData.statusCode);
     }
+
+    // Form Invoice
+    this.invoiceForm = this.fb.group({
+      priceTotal: this.amount,
+      orderInfo: this.orderInfo,
+      orderType: this.orderType,
+      payType: this.payType,
+      status: this.reservationId.statusCode,
+      message: this.reservationId.message,
+      reservationId: this.reservationId.reservationId,
+    })
+    // Transfer to json data
+    const bookingFormValues = JSON.parse(bookingFormStored)
+    // Param value for new form
+    bookingForm.patchValue(bookingFormValues)
+    if (bookingFormStored) {
+
+
+      if (this.resultCode == '0') {
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json'
+          })
+        };
+        this.http.post<any>(`${environment.BASE_URL_API}/user/invoid/create`, this.invoiceForm.value, httpOptions)
+        .subscribe(respon => {
+
+          alert(respon.message);
+
+
+        }, _err => {
+          alert("Something was wrong!");
+
+        })
+      }
+
+      }
   }
   goBackToProFile(){
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/paymentdetail']);
   }
 
 }

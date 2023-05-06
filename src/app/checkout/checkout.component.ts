@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment.development';
 import { ActivatedRoute, Route } from '@angular/router';
 import { Room } from '../models/room.model';
 import { ApiService } from '../_service/api.service';
+import { Toast, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-checkout',
@@ -19,6 +20,7 @@ export class CheckoutComponent implements OnInit {
   bookForm!: FormGroup;
   payForm!: FormGroup;
   startDate!: Date;
+  numberOfDay!: number;
   endDate!: Date;
   numDays!: number;
   numOfPeople!: number;
@@ -33,8 +35,8 @@ export class CheckoutComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private apiService: ApiService
-
+    private apiService: ApiService,
+    private toast: ToastrService
 
     ) {
       this.payForm = this.fb.group({
@@ -43,6 +45,8 @@ export class CheckoutComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    const savedCheckoutForm = localStorage.getItem('checkoutForm');
+
     this.roomId = this.route.snapshot.paramMap.get('id')
     this.bookForm = this.fb.group({
       startDate:new Date().toISOString(),
@@ -54,14 +58,22 @@ export class CheckoutComponent implements OnInit {
       phoneNumber: [''],
       address: [''],
     });
+    if(savedCheckoutForm){
+      const result =
+      this.bookForm.setValue(JSON.parse(savedCheckoutForm))
+
+      console.log(result);
+
+    }
     this.getRoomById();
+
   }
 
   getRoomById()
   {
     this.apiService.getRoomDetail(this.roomId)
     .subscribe(res => {
-      console.log(res);
+      // console.log(res);
       this.rooms = res
     });
   }
@@ -72,20 +84,27 @@ export class CheckoutComponent implements OnInit {
   bookingRoom(bookForm: FormGroup){
     this.http.post<any>(`${environment.BASE_URL_API}/user/reservation/create`, this.bookForm.value)
     .subscribe(res =>{
-      alert("Create an account successfully!");
+      this.toast.success(res.message)
+
+
+      this.payMoMo()
+
+      const dataToSave = JSON.stringify(res);
+      localStorage.setItem('bookingData', dataToSave);
 
     },_err=>{
-      alert('Something was wrong');
-
+      
+      this.toast.error("Something was wrong!")
     })
   }
   payMoMo() {
+    let momo = 'momo'
     const orderInfo = this.rooms.name;
     const amount = this.rooms.currentPrice;
     const amountNum1 = amount.toString()
     const orderInfoString = orderInfo.toString();
     const amountNum2 = parseInt(amountNum1)
-
+    localStorage.setItem('momoType', momo);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
     this.http.post<any>(environment.QR_MOMO,{orderInfo : 'BEYOND room booking', amount: '10000'}, {headers})
        .subscribe(response => {
@@ -98,8 +117,11 @@ export class CheckoutComponent implements OnInit {
 
   OnSubmit(){
 
-   localStorage.setItem('bookingForm', JSON.stringify(this.bookForm.value))
-    // this.bookingRoom(this.bookForm)
+     if(this.bookForm.invalid){
+      return;
+     }
+     localStorage.setItem('bookingForm', JSON.stringify(this.bookForm.value));
+     this.bookingRoom(this.bookForm.value)
     console.log(this.roomId);
 
   }

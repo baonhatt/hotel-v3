@@ -61,15 +61,15 @@
 
               </table> -->
               <div class="checkout-form custom-form">
-                <form action="" [formGroup]="bookForm" (ngSubmit)="payMoMo()">
+                <form action="" [formGroup]="bookForm" (ngSubmit)="OnSubmit()">
                   <div class="input-flex-item">
                     <div class="single-input mt-4">
                       <label class="label-title"> Name </label>
-                      <input class="form--control" type="text" formControlName="name" placeholder="Type Address">
+                      <input class="form--control" type="text"  formControlName="name" placeholder="Type Name">
                     </div>
                     <div class="single-input mt-4">
                       <label class="label-title"> Phone Number </label>
-                      <input class="form--control" type="text" formControlName="phoneNumber" placeholder="Type Address">
+                      <input class="form--control" type="text" formControlName="phoneNumber" placeholder="Type Phone Number">
                     </div>
                   </div>
                   <div class="input-flex-item">
@@ -93,7 +93,7 @@
                   <div class="input-flex-item">
                     <div class="single-input mt-4">
                       <label class="label-title"> Number of day </label>
-                      <input class="form--control" type="text" formControlName="numberOfDay" placeholder="Number of day">
+                      <input class="form--control" type="text" formControlName="numberOfDay" [(ngModel)]="numberOfDay" placeholder="Number of day">
                     </div>
                   </div>
                   <div class="input-flex-item">
@@ -138,7 +138,7 @@
                   </li>
                   <li class="list"> <span class="regular"> Checking Out </span> <span class="strong" [innerHTML]="endDate">
                     </span> </li>
-                  <li class="list"> <span class="regular"> Number of Rooms </span> <span class="strong"> 03 </span>
+                  <li class="list"> <span class="regular"> Number of Rooms </span> <span class="strong" [innerHTML]="numberOfDay">  </span>
                   </li>
                   <li class="list"> <span class="regular"> Total Stay </span> <span class="strong"> 3 Nights, 2 Days
                     </span> </li>

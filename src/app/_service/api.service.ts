@@ -9,6 +9,7 @@ import { User } from './user.model';
 import { Data } from '@angular/router';
 import { Search } from '../models/search.model';
 import { Payment } from '../models/payment.models';
+import { Invoice } from '../models/invoice.model';
 
 @Injectable({
   providedIn: 'root'
@@ -55,18 +56,10 @@ export class ApiService {
   searchRoom(): Observable<Search[]>{
     return this.http.get<Search[]>(environment.BASE_URL_API + '/user/search-room')
   }
-  getUser() {
-    this.user = this.auth.userProfile
-    return this.user
-  }
 
-  payment(payment: Payment){
-    return this.http.post(environment.BASE_URL_API + '/user/invoid/create', payment )
-
-  }
   bookRoom(startDate: Data, enDate: Data, roomId: string, numberOfDays: number): Observable<any>{
 
- const data = {
+  const data = {
       start_date: startDate,
       end_date: enDate,
       room_id: roomId,
@@ -76,5 +69,18 @@ export class ApiService {
 
   }
 
+  // Api User
+  getUser() {
+    this.user = this.auth.userProfile
+    return this.user
+  }
 
+  payment(payment: Payment){
+    return this.http.post(environment.BASE_URL_API + '/user/invoid/create', payment );
+
+  }
+  successPayment(){
+    return this.http.get(environment.BASE_URL_API + '/user/reservation/get-successful');
+  }
+  
 }
