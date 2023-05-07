@@ -51,7 +51,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatOption } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
-import { ToastContainerModule, ToastrModule } from 'ngx-toastr';
+import {  ToastrModule } from 'ngx-toastr';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';
 import { PaymentdetailComponent } from './paymentdetail/paymentdetail.component';
 @NgModule({
@@ -71,7 +71,6 @@ import { PaymentdetailComponent } from './paymentdetail/paymentdetail.component'
       progressBar: true
     }),
     ToastrModule,
-    ToastContainerModule,
     // ToastNoAnimationModule.forRoot(),
     MatOptionModule,
     MatSelectModule,
