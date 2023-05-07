@@ -61,9 +61,9 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm?.get('password')?.value;
     this.auth.login(email, password).subscribe(
       (response) => {
-        this.toast.success("Login successfull");
         var token = response as TokenModel;
         localStorage.setItem('token', JSON.stringify(token));
+        this.toast.success("Login successfull");
         this.auth.getUserProfile().subscribe((res) =>
         {
           localStorage.setItem('user_profile', JSON.stringify(res))

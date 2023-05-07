@@ -11,6 +11,7 @@ import { filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { userProfile } from '../models/userProfile.model';
+import { StatusToken } from '../models/statusToken.model';
 export const JWT_NAME = 'blog-token';
 
 @Injectable({
@@ -70,7 +71,7 @@ export class AuthService implements OnInit{
   }
   refreshToken(login: TokenModel) {
     return this.http.post<TokenModel>(
-      environment.BASE_URL_API + '/api/Token/Refresh',
+      environment.BASE_URL_API + '/v3/token/refresh',
       login
     );
   }
@@ -106,33 +107,30 @@ export class AuthService implements OnInit{
     return null;
   }
 
-  public checkAccessTokenAndRefresh(): { status: "", token: "" } {
+   checkAccessTokenAndRefresh(): any {
     const localStorageTokens = localStorage.getItem('token');
-    var check = true;
     if (localStorageTokens) {
       var token = JSON.parse(localStorageTokens) as TokenModel;
       var isTokenExpired = this.jwtHelper.isTokenExpired(token.accessToken);
       if (isTokenExpired) {
+        console.log("hết hạn rồi");
         this.refreshToken(token).subscribe(
-          (tokenNew: TokenModel) => {
-            localStorage.setItem('token', JSON.stringify(tokenNew));
-            return Object({
-              status: check,
-              token: tokenNew,
-            });
+          (res) => {
+            var a = new StatusToken();
+            a.status = true;
+            a.token = res;
+            return a;
           },
-          err => {
+          (err) => {
             this.logout();
-            check = false;
           }
         );
       }
     } else {
-      check = false;
+      var a = new StatusToken();
+      a.status = false;
+      return a;
     }
-    return Object({
-      status: check,
-    });
   }
 
 
