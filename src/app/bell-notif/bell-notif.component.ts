@@ -23,6 +23,8 @@ export class BellNotifComponent implements OnInit {
   constructor(private storage: StorageService, private jwtHelper: JwtHelperService,private authService: AuthService) {}
   async ngOnInit() {
     await this.checkAndRefreshToken();
+    console.log(3);
+
     if (this.storage.isLoggedIn()) {
       console.log("ddax vafo");
 
@@ -50,28 +52,29 @@ export class BellNotifComponent implements OnInit {
       });
     }
   }
-  checkAndRefreshToken() : any
+  async checkAndRefreshToken() : Promise<void>
   {
     const localStorageTokens = localStorage.getItem('token');
     if (localStorageTokens) {
       var token = JSON.parse(localStorageTokens) as TokenModel;
       var isTokenExpired = this.jwtHelper.isTokenExpired(token.accessToken);
       if (isTokenExpired) {
-        this.refreshToken(token);
+        await this.refreshToken(token);
+        console.log(2);
+
       }
-      return true;
     }
   }
   async refreshToken(token:any): Promise<void> {
     var check = true;
-    const res$ = this.authService.refreshToken(token).toPromise()
+    const res$ = await this.authService.refreshToken(token).toPromise()
     .then((res) => {
       localStorage.setItem("token", JSON.stringify(res));
     })
     .catch((error)=>{
       localStorage.removeItem('token');
             localStorage.removeItem('user_profile');
-            console.log("refresh het han");
+            console.log("1");
 
             // toastr.error("Login session has expired, please login again");
             // router.navigate(["login"]);
