@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LayoutpageComponent } from './components/layoutpage/layoutpage.component';
@@ -18,19 +20,16 @@ import { RoomComponent } from './components/components/room/room.component';
 import { AddbookingComponent } from './components/addbooking/addbooking.component';
 import { LoginAdminComponent } from './components/login-admin/login-admin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { NgToastModule } from 'ng-angular-popup';
+import { NgToastModule } from 'ng-angular-popup';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
 import { StorageService } from './_service/storage.service';
-import { LoadingInterceptor } from './_helper/loading.interceptor';
+import { LoadingInterceptor } from 'src/app/loading.interceptor';
 import { AuthGuard } from './_helper/http.guard';
 import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { PageErrorComponent } from './page-error/page-error.component';
-import { SpinnerComponent } from './spinner/spinner.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastContainerModule, ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,17 +43,13 @@ import { ToastContainerModule, ToastNoAnimationModule, ToastrModule } from 'ngx-
     AddbookingComponent,
     LoginAdminComponent,
     PageErrorComponent,
-    SpinnerComponent,
+
   ],
   imports: [
-    CommonModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot({
-      timeOut : 5000,
-      progressBar: true
-    }),
-    ToastContainerModule,
-    ToastNoAnimationModule.forRoot(),
+    ToastrModule.forRoot(),
+    FormsModule,
+    NgToastModule,
     BrowserModule,
     AppRoutingModule,
     MatSidenavModule,
@@ -65,41 +60,46 @@ import { ToastContainerModule, ToastNoAnimationModule, ToastrModule } from 'ngx-
     MatListModule,
     FormsModule,
     JwtModule.forRoot({
-      jwtOptionsProvider: {
-        provide: JWT_OPTIONS,
-        deps: [StorageService],
+      jwtOptionsProvider:{
+        provide:JWT_OPTIONS,
         useFactory: jwtOptionsFactor,
-      },
+        deps:[StorageService]
+      }
     }),
     ReactiveFormsModule,
     HttpClientModule,
 
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true },
+  providers:
+  [
+    { provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
+      multi: true
+    },
     [AuthGuard],
     [
       {
-        provide: HTTP_INTERCEPTORS,
-        useClass: LoadingInterceptor,
-        multi: true,
-      },
-    ],
+        provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+      }
+    ]
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
 
-export function jwtOptionsFactor(storage: StorageService) {
+export function jwtOptionsFactor(storage:StorageService){
   return {
-    tokenGetter: () => {
-      console.log('Đã add authen');
+    tokenGetter:() => {
+      console.log("Đã add authen");
+
       return storage.getAccessToken();
     },
-    allowedDomains: ['https://webhotel.click'],
-    disallowedRoutes: [
-      'https://webhotel.click/user/login',
-      'https://webhotel.click/user/token/refresh',
+    allowedDomains:["https://webhotel.click"],
+    disallowedRoutes:[
+      "https://webhotel.click/user/login",
+      "https://webhotel.click/user/token/refresh"
     ],
-  };
+    skipWhenExpired: false,
+  }
 }
+

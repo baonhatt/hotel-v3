@@ -29,7 +29,6 @@ export class LoginAdminComponent implements OnInit {
     private fb: FormBuilder,
     private route: Router,
     private toast: ToastrService,
-    private http: HttpClient
   ) {}
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -58,12 +57,15 @@ export class LoginAdminComponent implements OnInit {
       (response) => {
           var token = response as TokenModel;
           localStorage.setItem('token_admin', JSON.stringify(token));
+          localStorage.setItem("firstLogin", "");
           this.userProfile = this.auth.userProfile;
-          this.toast.success('Đăng nhập thành công!');
+          this.loading = true;
           this.route.navigate(['dashboard']);
+          alert(response.success.message)
         },
         (err) => {
-          alert("Your account not have permission!")
+        alert(err.error.message)
+
       }
     );
   }

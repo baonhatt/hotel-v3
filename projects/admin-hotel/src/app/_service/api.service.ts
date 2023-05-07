@@ -17,26 +17,27 @@ export class ApiService {
   user: any;
   room!: addRoom;
   blog: any;
+  private roomData: { [roomNumber: string]: any } = {};
   apiRoom = 'https://webhotel.click/user/room/get-all';
   apiBlog = 'http://localhost:3000/blog';
   private baseUrl1 = 'http://localhost:3000/rooms';
 
   ////////////////////////////////////// Room API
   getRooms() {
-    return this.http.get<Room[]>('https://webhotel.click/user/room/get-all');
+    return this.http.get<Room[]>(environment.BASE_URL_API + '/v2/admin/room/get-all');
 
   }
 
-
-  getRoomTypeId(): Observable<Search[]>{
-    return this.http.get<Search[]>(environment.BASE_URL_API + '/user/search-room')
-  }
   postRoom(room: addRoom) {
     return this.http.post<any>('https://webhotel.click/v2/admin/room/create', room );
   }
   deleteRoom(id: string): Observable<any> {
     return this.http.get(`https://webhotel.click/v2/admin/room/delete/?id=${id}`);
     // return this.http.delete(`http://localhost:3000/rooms/${id}`);
+  }
+
+  updateRoom(id: string): Observable<any> {
+    return this.http.get(`https://webhotel.click/v2/admin/room/update/?id=${id}`);
   }
 
   getRoomDetail(id: string): Observable<Room>{
@@ -47,6 +48,20 @@ export class ApiService {
   searchRoom(query: string): Observable<any>{
     return this.http.get<Room[]>(`${environment.BASE_URL_API}/api/Room/getAllBy${query}`)
   }
+
+  getRoomTypeId(): Observable<Search[]>{
+    return this.http.get<Search[]>(environment.BASE_URL_API + '/user/search-room')
+  }
+
+
+  updateRoomData(roomNumber: string, data: any): void {
+    if (!this.roomData[roomNumber]) {
+      this.roomData[roomNumber] = {};
+    }
+    this.roomData[roomNumber] = { ...this.roomData[roomNumber], ...data };
+  }
+
+ 
 
   bookRoom(startDate: Data, enDate: Data, roomId: string, numberOfDays: number): Observable<any>{
 

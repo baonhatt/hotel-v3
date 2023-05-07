@@ -26,7 +26,7 @@ const routes: Routes = [
     data: {
       requiredAuth: true
     },
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   { path: 'login', loadChildren: () => import('../../admin/admin.module').then(m => m.AdminModule) },
   { path: 'dashboard', loadChildren: () => import('../../dashboard/dashboard.module').then(m => m.DashboardModule) },

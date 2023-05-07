@@ -1,35 +1,28 @@
-import { ServiceAttach } from "./serviceAttach.model"
-
 export class Room {
-  id!: string
-  roomNumber!: string
-  name!: string
+  id?: number = 0;
+  roomTypeName: string = '';
+  name: string = '';
+  roomPicture: string = '';
+  description: string = '';
   isActive!: boolean
-  description!: string
-  roomPicture!: string
-  roomPictures!: string
-  starSum!: string
-  starAmount!: number
-  numberOfSimpleBed!: string
-  numberOfDoubleBed!: string
-  currentPrice!: number
-  discountPrice!: number
-  roomTypeId!: number
-  roomTypeName!: string
-  peopleNumber!: string
-  serviceAttachs!: ServiceAttach[]
+  rating: string = '';
+  currentPrice: number = 0;
+  discountPrice: number = 0;
+  peopleNumber: string = '';
+  numberOfBed: string = '';
+  starAmount: number = 0;
+  roomNumber: number = 0;
 }
 
 export class addRoom {
-  roomNumber!: string
-  name!: string
-  isActive!: boolean
-  description!: string
-  roomPicture!: string
-  roomPictures!: string
-  numberOfSimpleBed!: string
-  numberOfDoubleBed!: string
-  currentPrice!: number
-  roomTypeId!: number
-  peopleNumber!: string
+  NumberOfBed: number = 0;
+  RoomPicture: string = '';
+  RoomPictures: string = '';
+  RoomNumber: string = '';
+  Name: string = '';
+  IsActive: string = '';
+  RoomTypeId: string = '';
+  CurrentPrice: string = '';
+  PeopleNumber: string = '';
+  Description: string = '';
 }
