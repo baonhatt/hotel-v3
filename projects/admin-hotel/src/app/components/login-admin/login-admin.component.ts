@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login-admin',
   templateUrl: './login-admin.component.html',
-  styleUrls: ['./login-admin.component.css']
+  styleUrls: ['./login-admin.component.css'],
 })
 export class LoginAdminComponent implements OnInit {
   submitted = false;
@@ -28,7 +28,7 @@ export class LoginAdminComponent implements OnInit {
     private auth: AuthService,
     private fb: FormBuilder,
     private route: Router,
-    private toast: ToastrService,
+    private toast: ToastrService
   ) {}
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -55,26 +55,23 @@ export class LoginAdminComponent implements OnInit {
 
     this.auth.login(email, password).subscribe(
       (response) => {
-          var token = response as TokenModel;
-          localStorage.setItem('token_admin', JSON.stringify(token));
-          localStorage.setItem("firstLogin", "");
-          this.userProfile = this.auth.userProfile;
-          this.loading = true;
-          this.route.navigate(['dashboard']);
-          alert(response.success.message)
-        },
-        (err) => {
-        alert(err.error.message)
-
+        var token = response as TokenModel;
+        localStorage.setItem('token_admin', JSON.stringify(token));
+        this.auth.getUserProfile().subscribe(
+          (res) => {
+            localStorage.setItem('user_profile', JSON.stringify(res));
+            this.toast.success('Login successfull');
+          },
+          (err) => {}
+        );
+        this.route.navigate(['dashboard']);
       }
     );
   }
 
-showpass(){
-
-}
-  getUserData(){
-      window.self.close();
+  showpass() {}
+  getUserData() {
+    window.self.close();
   }
   onSubmit() {
     this.submitted = true;

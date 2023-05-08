@@ -1,50 +1,62 @@
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, catchError, map, Observable, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { TokenModel } from './token.model';
 import { User } from './user.model';
 import { StorageService } from './storage.service';
-import { NgToastService } from 'ng-angular-popup'
-import { environment } from '../environments/environment.development';
-// import { TranslateService } from "@ngx-translate/core";
-export const JWT_NAME = 'blog-token';
 
+// import { TranslateService } from "@ngx-translate/core";
+import { filter } from 'rxjs/operators';
+import { NavigationEnd, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { userProfile } from '../models/userProfile.model';
+import { StatusToken } from '../models/statusToken.model';
+import { environment } from '../environments/environment.development';
+export const JWT_NAME = 'blog-token';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService implements OnInit{
+
   isHomePageLoaded = false;
   email: any;
   jwtService: JwtHelperService = new JwtHelperService();
-  constructor(private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService, private toast: NgToastService) { }
+  constructor(private http: HttpClient, private router: Router, private storage: StorageService, private jwtHelper: JwtHelperService, private toast: ToastrService) { }
   ngOnInit(): void {
     this.loadPage()
   }
-  userProfile = new BehaviorSubject<User | null>(null);
+  userAuth = new BehaviorSubject<User | null>(null);
+  userProfile = new BehaviorSubject<userProfile | null>(null);
   login(email: string, password: string) {
     const body = {
       email: email,
       password: password,
     };
-    return this.http.post<any>('https://webhotel.click/v2/admin/authen/login', body).pipe(
-      tap((response) => {
-
-
-        let token = response as TokenModel;
-        this.storage.setToken(token);
-        var claims = JSON.stringify(this.jwtService.decodeToken(token.accessToken));
-        var userInfo = JSON.parse(claims.replaceAll("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/","")) as User;
-        this.userProfile.next(userInfo);
-        return true;
+    return this.http.post<any>(environment.BASE_URL_API + '/v2/admin/authen/login', body).pipe(
+      tap({
+          next: (response) => {
+            let token = response as TokenModel;
+            var claims = JSON.stringify(this.jwtService.decodeToken(token.accessToken));
+            var userInfo = JSON.parse(claims.replaceAll("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/","")) as User;
+            this.userAuth.next(userInfo);
+          },
+          error: (err) => {
+            this.toast.error(err.error.message);
+          },
       }),
       catchError((error) => {
-        error.
-          this.toast.error({ detail: "Error Message", summary: " Please check your email or password again!", duration: 5000 })
-        return of(false);
+        return throwError(error.message);
       }),
     );
+  }
+  reloadOnNavigation() {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        window.location.reload();
+      });
   }
   loadPage(){
     if(!sessionStorage.getItem('isPageReloaded')){
@@ -57,7 +69,7 @@ export class AuthService implements OnInit{
   }
   refreshToken(login: TokenModel) {
     return this.http.post<TokenModel>(
-      environment.BASE_URL_API + '/api/Token/Refresh',
+      environment.BASE_URL_API + '/v3/token/refresh',
       login
     );
   }
@@ -72,7 +84,7 @@ export class AuthService implements OnInit{
   }
   logout(): void {
     // Xóa thông tin người dùng khỏi localStorage hoặc sessionStorage khi đăng xuất
-    localStorage.removeItem('token_admin');
+    localStorage.removeItem('token');
   }
 
   isLoggedIn(): boolean {
@@ -83,7 +95,7 @@ export class AuthService implements OnInit{
 
   getLoggedInUser(): any {
     // Lấy thông tin người dùng đã đăng nhập từ localStorage hoặc sessionStorage
-    var token = localStorage.getItem('token_admin');
+    var token = localStorage.getItem('token');
     if (token) {
       var tokenModel = JSON.parse(token) as TokenModel;
       var claims = JSON.stringify(this.jwtService.decodeToken(tokenModel.accessToken));
@@ -93,33 +105,30 @@ export class AuthService implements OnInit{
     return null;
   }
 
-  public checkAccessTokenAndRefresh(): { status: "", token: "" } {
-    const localStorageTokens = localStorage.getItem('token_admin');
-    var check = true;
+   checkAccessTokenAndRefresh(): any {
+    const localStorageTokens = localStorage.getItem('token');
     if (localStorageTokens) {
       var token = JSON.parse(localStorageTokens) as TokenModel;
       var isTokenExpired = this.jwtHelper.isTokenExpired(token.accessToken);
       if (isTokenExpired) {
+        console.log("hết hạn rồi");
         this.refreshToken(token).subscribe(
-          (tokenNew: TokenModel) => {
-            localStorage.setItem('token_admin', JSON.stringify(tokenNew));
-            return Object({
-              status: check,
-              token: tokenNew,
-            });
+          (res) => {
+            var a = new StatusToken();
+            a.status = true;
+            a.token = res;
+            return a;
           },
-          err => {
+          (err) => {
             this.logout();
-            check = false;
           }
         );
       }
     } else {
-      check = false;
+      var a = new StatusToken();
+      a.status = false;
+      return a;
     }
-    return Object({
-      status: check,
-    });
   }
 
 
@@ -151,5 +160,8 @@ export class AuthService implements OnInit{
     return daysDiff;
   }
 
-
+  getUserProfile() : Observable<userProfile>
+  {
+    return this.http.get<userProfile>(`${environment.BASE_URL_API}/user/user-profile/get`);
+  }
 }

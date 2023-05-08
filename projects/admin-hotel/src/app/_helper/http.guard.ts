@@ -17,12 +17,9 @@ import { User } from '../_service/user.model';
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router, private storage: StorageService) {}
-  private hasReloaded = false;
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-
-
   ):
     | boolean
     | UrlTree
@@ -30,22 +27,17 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree> {
       const id = Number(route.paramMap.get('id'));
 
-    var check = this.auth.checkAccessTokenAndRefresh();
-    console.log(check.status);
+    // var check = this.auth.checkAccessTokenAndRefresh();
+    //add js will load
+    // $.getScript('assets/js/main.js');
+    $.getScript('main.js');
 
     var token = this.storage.isLoggedIn();
-    // if (!this.hasReloaded) {
-    //   this.hasReloaded = true;
-    //   location.reload(); // Tải lại trang
-    // }
-
     if (token) {
       if (state.url == "/login"){
         this.router.navigate(['/']);
         return true;
       }
-
-
       return true;
     } else {
       if (route.data['requiredAuth'] == true) {
@@ -54,7 +46,5 @@ export class AuthGuard implements CanActivate {
       }
       return true;
     }
-
-
   }
 }

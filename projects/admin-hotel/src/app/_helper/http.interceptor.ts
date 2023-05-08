@@ -12,10 +12,16 @@ import {
   BehaviorSubject,
   catchError,
   filter,
+  first,
+  from,
+  lastValueFrom,
+  map,
+  mergeMap,
   Observable,
   of,
   switchMap,
   take,
+  tap,
   throwError,
 } from 'rxjs';
 import { AuthService } from '../_service/auth.service';
@@ -23,6 +29,8 @@ import { TokenModel } from '../_service/token.model';
 import { User } from '../_service/user.model';
 import { Token } from '@angular/compiler';
 import { StorageService } from '../_service/storage.service';
+import { StatusToken } from '../models/statusToken.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class AuthTokenInterceptor implements HttpInterceptor {
@@ -34,6 +42,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
     private authService: AuthService,
     private router: Router,
     private store: StorageService,
+    private toastr: ToastrService
   ) {}
   intercept(
     req: HttpRequest<any>,
@@ -53,26 +62,47 @@ export class AuthTokenInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.log(error.status);
         if (error.status === 401) {
-          this.router.navigate(['login']);
-          return this.handle401Error(authReq, next);
+          return this.handle401Error(authReq, next, this.router, this.toastr);
         }
         return throwError(error);
       })
     );
   }
-  private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
-    var result = this.authService.checkAccessTokenAndRefresh();
+  async refreshToken(token:any): Promise<TokenModel> {
+    const res$ = this.authService.refreshToken(token)
+    .pipe(map((res) => res))
+    .pipe(first());
+    const res = await lastValueFrom(res$);
+    localStorage.setItem("token", JSON.stringify(res));
+    return res;
+  }
+  handle401Error(request: HttpRequest<any>, next: HttpHandler, router:Router, toastr:ToastrService) {
+    const localStorageTokens = localStorage.getItem('token');
     this.refreshTokenSubject.next(null);
-
-    if(result.status){
-      this.refreshTokenSubject.next(result.token);
-      return this.refreshTokenSubject.pipe(
-        filter((token) => token !== null),
-        take(1),
-        switchMap((token) => next.handle(this.addTokenHeader(request, token)))
-      );
+    if (localStorageTokens) {
+      var token = JSON.parse(localStorageTokens) as TokenModel;
+      var isTokenExpired = this.jwtHelper.isTokenExpired(token.accessToken);
+      if (isTokenExpired) {
+        return from(this.refreshToken(token)).pipe(
+          mergeMap((tokenNew) => {
+            const cloned = request.clone({
+              headers: request.headers.set("Authorization", "Bearer " + tokenNew.accessToken),
+            });
+            return next.handle(cloned);
+          }),
+          tap({error(err){
+            localStorage.removeItem('token');
+            localStorage.removeItem('user_profile');
+            toastr.error("Login session has expired, please login again");
+            router.navigate(["login"]);
+          }})
+        );
+      }
+      const cloned = request.clone({
+        headers: request.headers.set("Authorization", "Bearer " + token.accessToken),
+      });
+      return next.handle(cloned);
     }
     return of();
   }
