@@ -15,11 +15,14 @@ export class HeaderComponent {
   userProfile = new userProfile;
   constructor(private auth: AuthService, private fb: FormBuilder, private apiServe: ApiService, private userService: UserService){}
   ngOnInit(): void {
-    if(this.auth.isLoggedIn() && localStorage.getItem('user_profile')!.length > 0){
-      let result = localStorage.getItem('user_profile')!;
-      this.userProfile = JSON.parse(result) as userProfile;
-    }else{
-      this.getUserProfile();
+    if(this.auth.isLoggedIn()){
+      if(localStorage.getItem('user_profile')!.length > 0)
+      {
+        let result = localStorage.getItem('user_profile')!;
+        this.userProfile = JSON.parse(result) as userProfile;
+      }else{
+        this.getUserProfile();
+      }
     }
   }
 
