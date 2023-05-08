@@ -59,7 +59,7 @@ export class ApiService {
 
   bookRoom(startDate: Data, enDate: Data, roomId: string, numberOfDays: number): Observable<any>{
 
-  const data = {
+    const data = {
       start_date: startDate,
       end_date: enDate,
       room_id: roomId,
@@ -82,5 +82,5 @@ export class ApiService {
   successPayment(){
     return this.http.get(environment.BASE_URL_API + '/user/reservation/get-successful');
   }
-  
+
 }

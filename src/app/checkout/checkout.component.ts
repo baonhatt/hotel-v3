@@ -46,8 +46,7 @@ export class CheckoutComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    const savedCheckoutForm = localStorage.getItem('checkoutForm');
-
+   
     this.roomId = this.route.snapshot.paramMap.get('id')
     this.bookForm = this.fb.group({
       startDate:new Date().toISOString(),
@@ -59,13 +58,13 @@ export class CheckoutComponent implements OnInit {
       phoneNumber: [''],
       address: [''],
     });
-    if(savedCheckoutForm){
-      const result =
-      this.bookForm.setValue(JSON.parse(savedCheckoutForm))
+    // if(savedCheckoutForm){
+    //   const result =
+    //   this.bookForm.setValue(JSON.parse(savedCheckoutForm))
 
-      console.log(result);
+    //   console.log(result);
 
-    }
+    // }
     this.getRoomById();
 
   }
@@ -85,7 +84,7 @@ export class CheckoutComponent implements OnInit {
   bookingRoom(bookForm: FormGroup){
     this.http.post<any>(`${environment.BASE_URL_API}/user/reservation/create`, this.bookForm.value)
     .subscribe(res =>{
-      
+
       this.toast.success(res.message)
 
 
@@ -126,7 +125,7 @@ export class CheckoutComponent implements OnInit {
      if(this.bookForm.invalid){
       return;
      }
-     localStorage.setItem('bookingForm', JSON.stringify(this.bookForm.value));
+
      this.bookingRoom(this.bookForm.value)
     console.log(this.roomId);
 

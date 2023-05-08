@@ -10,7 +10,6 @@ import { Search } from '../models/search.model';
 import { SearchService } from '../_service/search.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -49,7 +48,7 @@ export class HomepageComponent implements OnInit {
     private apiService: ApiService,
     private activeRoute: ActivatedRoute,
     private fb: FormBuilder,
-    private search: SearchService
+    private router: Router
   ) {
     this.rooms = [],
       this.roomtoDisplay = this.roomtoDisplay;
@@ -86,7 +85,7 @@ export class HomepageComponent implements OnInit {
     //   this.rooms = data;
     // });
     this.sortMaxPersonArrayDescending();
-    $.getScript('assets/js/main.js');
+    // $.getScript('assets/js/main.js');
     this.apiService.getBlogs().subscribe((res: any) => {
       for (let b of res) {
         this.blogs.unshift(b);
@@ -130,6 +129,13 @@ export class HomepageComponent implements OnInit {
 
     this.http.post<Room[]>(`https://webhotel.click/user/room/get-all-by`, payLoad).subscribe(res => {
       this.filteredRooms = res;
+      // Truyền kết quả tìm kiếm dưới dạng query parameter
+      const bin =  JSON.stringify(this.filteredRooms)
+       console.log(JSON.parse(bin));
+
+    // this.router.navigate(['/room-listing'], { queryParams: { rooms: JSON.stringify(this.filteredRooms) } });
+    const encodedRooms = encodeURIComponent(JSON.stringify(this.filteredRooms));
+    this.router.navigate(['/room-listing'], { queryParams: { rooms: encodedRooms } });
     }, _err => {
       console.log(_err);
     })

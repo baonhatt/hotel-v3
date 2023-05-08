@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,8 +6,11 @@ import { Router } from '@angular/router';
   templateUrl: './left-content.component.html',
   styleUrls: ['./left-content.component.scss']
 })
-export class LeftContentComponent {
+export class LeftContentComponent implements OnInit {
   constructor(private route: Router){}
+  ngOnInit(): void {
+    $.getScript('main.js');
+  }
   logout(): void {
     // Xóa thông tin người dùng khỏi localStorage hoặc sessionStorage khi đăng xuất
     localStorage.removeItem('token');

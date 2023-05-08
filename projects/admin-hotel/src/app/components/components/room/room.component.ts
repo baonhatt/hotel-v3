@@ -212,11 +212,10 @@ export class RoomComponent implements OnInit {
     }
 
 
-    this.api.deleteRoom(roomId)
-
     if (this.roomForm.invalid) {
       return;
     }
+    this.api.deleteRoom(roomId)
 
     let fileToUpload: File | undefined;
     let fileToUploads: File[] | undefined;
@@ -282,9 +281,7 @@ export class RoomComponent implements OnInit {
     this.router.navigate(['/room-detail/{{room.id}}']);
   }
 
-  reset() {
-    // this.userForm.reset();
-  }
+ 
 
   deleteRoom(id: string) {
 
@@ -296,7 +293,9 @@ export class RoomComponent implements OnInit {
           this.getRooms();
 
         },
-        error: console.log,
+        error: (err: any)=>{
+          alert(err.error.message)
+        }
       });
     }
   }

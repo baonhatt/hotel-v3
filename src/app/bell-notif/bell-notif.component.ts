@@ -1,7 +1,13 @@
+import { Token } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import * as signalR from '@microsoft/signalr';
 import { HubConnection, IHttpConnectionOptions } from '@microsoft/signalr';
+import { catchError, first, lastValueFrom, map, Observable, of } from 'rxjs';
+import { StatusToken } from '../models/statusToken.model';
+import { AuthService } from '../_service/auth.service';
 import { StorageService } from '../_service/storage.service';
+import { TokenModel } from '../_service/token.model';
 
 @Component({
   selector: 'app-bell-notif',
@@ -14,9 +20,12 @@ export class BellNotifComponent implements OnInit {
   // };
   count_nof: any;
   items_nof: any;
-  constructor(private storage: StorageService) {}
-  ngOnInit() {
+  constructor(private storage: StorageService, private jwtHelper: JwtHelperService,private authService: AuthService) {}
+  async ngOnInit() {
+    await this.checkAndRefreshToken();
     if (this.storage.isLoggedIn()) {
+      console.log("ddax vafo");
+
       var hubConnection: HubConnection;
       hubConnection = new signalR.HubConnectionBuilder()
         .withUrl('https://webhotel.click/hub', {accessTokenFactory: () => this.storage.getAccessToken() })
@@ -41,7 +50,41 @@ export class BellNotifComponent implements OnInit {
       });
     }
   }
+  checkAndRefreshToken() : any
+  {
+    const localStorageTokens = localStorage.getItem('token');
+    if (localStorageTokens) {
+      var token = JSON.parse(localStorageTokens) as TokenModel;
+      var isTokenExpired = this.jwtHelper.isTokenExpired(token.accessToken);
+      if (isTokenExpired) {
+        this.refreshToken(token);
+      }
+      return true;
+    }
+  }
+  async refreshToken(token:any): Promise<void> {
+    var check = true;
+    const res$ = this.authService.refreshToken(token).toPromise()
+    .then((res) => {
+      localStorage.setItem("token", JSON.stringify(res));
+    })
+    .catch((error)=>{
+      localStorage.removeItem('token');
+            localStorage.removeItem('user_profile');
+            console.log("refresh het han");
+
+            // toastr.error("Login session has expired, please login again");
+            // router.navigate(["login"]);
+    })
+    // .pipe(
+    //   map((res) => res))
+    // .pipe(first())
+
+    // const res = await lastValueFrom(res$);
+    // localStorage.setItem("token", JSON.stringify(res));
+  }
 }
+
 function sendMessage(hubConnection:HubConnection) {
   hubConnection!.invoke('SendChatMessageAuto', 'Ok hiểu').catch(
     function (err) {
@@ -54,4 +97,3 @@ function sendNotificationGetRoom(hubConnection:HubConnection) {
     return console.error(err.toString());
   });
 }
-

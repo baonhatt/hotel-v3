@@ -32,12 +32,10 @@ export class AuthGuard implements CanActivate {
 
     var check = this.auth.checkAccessTokenAndRefresh();
     console.log(check.status);
-
+    $.getScript('assets/js/pages/demo.dashboard.js');
+    $.getScript('main.js');
     var token = this.storage.isLoggedIn();
-    // if (!this.hasReloaded) {
-    //   this.hasReloaded = true;
-    //   location.reload(); // Tải lại trang
-    // }
+   
 
     if (token) {
       if (state.url == "/login"){

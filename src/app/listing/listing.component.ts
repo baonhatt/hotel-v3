@@ -6,6 +6,7 @@ import { AuthService } from '../_service/auth.service';
 import { SearchService } from '../_service/search.service';
 import { Room } from '../models/room.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -47,7 +48,8 @@ export class ListingComponent implements OnInit {
     private http: HttpClient,
     private auth: AuthService,
     private apiService: ApiService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute
   ) {
     this.roomSearchForm = this.fb.group({
       peopleNumber: '',
@@ -59,6 +61,13 @@ export class ListingComponent implements OnInit {
   checkIn = new FormControl(new Date().toISOString());
   checkOut = new FormControl(new Date().toISOString());
   ngOnInit(): void {
+
+    this.route.queryParams.subscribe(params => {
+      if (params['rooms']) {
+        const rooms = JSON.parse(params['rooms']);
+        // Sử dụng biến rooms để hiển thị kết quả tìm kiếm trên trang listing
+      }
+    });
     if(this.filteredRooms == null)
     {
       this.getRooms();
