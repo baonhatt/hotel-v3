@@ -7,6 +7,7 @@ import { ActivatedRoute, Route } from '@angular/router';
 import { Room } from '../models/room.model';
 import { ApiService } from '../_service/api.service';
 import { Toast, ToastrService } from 'ngx-toastr';
+import { error } from 'jquery';
 
 @Component({
   selector: 'app-checkout',
@@ -84,6 +85,7 @@ export class CheckoutComponent implements OnInit {
   bookingRoom(bookForm: FormGroup){
     this.http.post<any>(`${environment.BASE_URL_API}/user/reservation/create`, this.bookForm.value)
     .subscribe(res =>{
+      
       this.toast.success(res.message)
 
 
@@ -93,20 +95,24 @@ export class CheckoutComponent implements OnInit {
       localStorage.setItem('bookingData', dataToSave);
 
     },_err=>{
-      
-      this.toast.error("Something was wrong!")
+
+      const wrongtime = _err.error.title
+
+      if(wrongtime){
+        this.toast.error(_err.error.title)
+      }
+      this.toast.error(_err.error.message)
     })
   }
   payMoMo() {
-    let momo = 'momo'
     const orderInfo = this.rooms.name;
     const amount = this.rooms.currentPrice;
     const amountNum1 = amount.toString()
     const orderInfoString = orderInfo.toString();
-    const amountNum2 = parseInt(amountNum1)
-    localStorage.setItem('momoType', momo);
+    console.log(orderInfoString);
+
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    this.http.post<any>(environment.QR_MOMO,{orderInfo : 'BEYOND room booking', amount: '10000'}, {headers})
+    this.http.post<any>(environment.QR_MOMO,{orderInfo : orderInfoString, amount: amountNum1}, {headers})
        .subscribe(response => {
         const redirectUrl = response['payUrl'];
        if (redirectUrl) { window.location.href = redirectUrl;

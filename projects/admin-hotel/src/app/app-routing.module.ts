@@ -30,7 +30,14 @@ const routes: Routes = [
   },
   { path: 'login', loadChildren: () => import('../../admin/admin.module').then(m => m.AdminModule) },
   { path: 'dashboard', loadChildren: () => import('../../dashboard/dashboard.module').then(m => m.DashboardModule) },
-  { path: 'room', component: RoomComponent},
+  {
+    path: 'room',
+    component: RoomComponent,
+    data: {
+      requiredAuth: true
+    },
+    canActivate: [AuthGuard]
+  },
   { path: 'booking', component: BookingComponent},
   { path: 'customer', component: CustomerComponent},
   {

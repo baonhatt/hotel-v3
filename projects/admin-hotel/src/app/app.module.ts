@@ -30,6 +30,8 @@ import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { PageErrorComponent } from './page-error/page-error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { PaymentComponent } from './components/components/payment/payment.component';
+import { EmployeeComponent } from './components/components/employee/employee.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +45,8 @@ import { ToastrModule } from 'ngx-toastr';
     AddbookingComponent,
     LoginAdminComponent,
     PageErrorComponent,
+    PaymentComponent,
+    EmployeeComponent,
 
   ],
   imports: [
