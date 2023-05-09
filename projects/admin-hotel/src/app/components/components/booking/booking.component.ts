@@ -21,12 +21,7 @@ export class BookingComponent implements OnInit{
     .subscribe(
       (res)=>{
         this.reservationGetAll = res;
-        console.log(res);
-        console.log(this.reservationGetAll);
-
-        console.log(this.reservationGetAll[0].startDate);
-        console.log(this.reservationGetAll[0].createdAt);
-
+        console.log(res[0].updatedAt);
       },
       (err) => {
         console.log(err);

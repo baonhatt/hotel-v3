@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, VERSION } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -13,5 +13,6 @@ export class AppComponent {
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
   }
-
+  // version = VERSION.full;
+  dateNow: Date = new Date();
 }
