@@ -44,7 +44,7 @@ export class ListingComponent implements OnInit {
   array!: number[];
   selectedPersonCount: number = 1;
   displayPrice = false;
-
+  roomTypeName: RoomType[] = [];
   constructor(
     private roomService: ApiService,
     private router: Router,
@@ -64,6 +64,14 @@ export class ListingComponent implements OnInit {
   checkIn = new FormControl(new Date().toISOString());
   checkOut = new FormControl(new Date().toISOString());
   ngOnInit(): void {
+
+    this.apiService.searchRoom().subscribe((data: any) => {
+      this.maxPerson = data.maxPerson;
+      this.maxPrice = data.maxPrice;
+      this.roomTypeName = data.roomTypes;
+      this.serviceAttachs = data.serviceAttachs;
+    });
+
 
     this.route.queryParams.subscribe(params => {
       if (params['rooms']) {
@@ -133,6 +141,14 @@ export class ListingComponent implements OnInit {
     this.tableSize = event.target.value;
     this.page = 1;
     this.getRooms();
+  }
+  deleteData() {
+    // Xóa dữ liệu khỏi URL
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { data: null },
+      queryParamsHandling: 'merge'
+    });
   }
   onSubmit() {
     this.getFullRooms()

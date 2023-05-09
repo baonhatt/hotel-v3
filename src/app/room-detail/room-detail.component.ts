@@ -9,18 +9,17 @@ import { ViewportScroller } from '@angular/common';
   styleUrls: ['./room-detail.component.scss']
 })
 export class RoomDetailComponent implements OnInit {
-
-  // @Input() room!: Room;
+  imgUrl!: string;
   room!: Room;
+  imageUrls: string[] = [];
   roomId!: any;
   constructor(private route: ActivatedRoute, private apiService: ApiService, private viewPort: ViewportScroller){}
   isHomePageLoaded = false;
   ngOnInit() {
-
     this.roomId = this.route.snapshot.paramMap.get('id')
+    this.viewPort.scrollToPosition([0, 0]);
 
     this.getRoomById();
-    this.viewPort.scrollToPosition([0, 0]);
   }
   getRoomById(): void {
     const id = this.route.snapshot.paramMap.get('id')!;
@@ -28,12 +27,17 @@ export class RoomDetailComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         this.room = res
+        const linkArray: string[] = JSON.parse(res.roomPictures);
+        const formattedLinks: string[] = linkArray.map((link: string) => `${link}`);
+        // this.imageUrls = formattedLinks
+        this.imageUrls = formattedLinks
+        console.log(this.imageUrls)
+
 
       });
   }
 
   loadPage(){}
-
 
 }
 

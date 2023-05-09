@@ -30,16 +30,16 @@
                 <span class="banner-location-single-contents-subtitle"> Check In </span>
 
                 <mat-form-field appearance="fill">
-                  <input matInput [matDatepicker]="picker2" [formControl]="checkIn">
+                  <input class="" matInput [matDatepicker]="picker2" [formControl]="checkIn">
                   <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                   <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
+
               </div>
             </div>
           </div>
           <div class="banner-location-single">
             <div class="banner-location-single-flex">
-
               <div class="banner-location-single-contents">
                 <span class="banner-location-single-contents-subtitle"> Check Out </span>
                 <div class="banner-location-single-contents-dropdown custom-select">
@@ -62,7 +62,14 @@
                 <mat-form-field appearance="fill">
                   <mat-select formControlName="peopleNumber">
                     <mat-option value="" disabled selected>Select people number</mat-option>
-                      <mat-option *ngFor="let item of maxPerson" value="1">{{item}}</mat-option>
+                    <mat-option value="1">1</mat-option>
+                    <mat-option value="2">2</mat-option>
+                    <mat-option value="3">3</mat-option>
+                    <mat-option value="4">4</mat-option>
+                    <mat-option value="5">5</mat-option>
+                    <mat-option value="6">6</mat-option>
+                    <!-- <mat-option *ngFor="let number of peopleNumberOptions" [value]="peopleNumberOptions">{{number}}</mat-option> -->
+                    <!-- <mat-option *ngFor="let i of maxPersonArray" [value]="maxPersonArray.length + 1 - i">{{maxPersonArray.length + 1 - i}}</mat-option> -->
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -71,14 +78,14 @@
           <div class="banner-location-single">
             <div class="banner-location-single-flex">
               <div class="banner-location-single-icon">
-                <i class="fa-regular fa-booth-curtain"></i>
+                <i class="las la-user-friends"></i>
               </div>
               <div class="banner-location-single-contents">
                 <span class="banner-location-single-contents-subtitle"> Room Type </span>
                 <mat-form-field appearance="fill">
                   <mat-select formControlName="roomTypeId">
                     <mat-option value="" disabled selected>Select room type</mat-option>
-                    <mat-option *ngFor="let roomType of roomTypes" value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
+                    <mat-option *ngFor="let roomType of roomTypeName" value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <!-- <input type="text" formControlName="roomTypeName"> -->
@@ -87,18 +94,17 @@
             </div>
           </div>
           <div class="banner-location-single-search">
-            <div class="search-suggestions-wrapper">
-              <button type="submit"  class="search-click-icon">
-
+            <div class="search-suggestions-wrapper flex">
+              <button type="submit"  class="search-click-icon"  for="control-modal">
                   <i class="las la-search"></i>
               </button>
-
-
             </div>
             <div class="search-suggestion-overlay"></div>
           </div>
         </div>
-
+        <!-- <button (click)="getRoom()" class="search-click-icon"  for="control-modal">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button> -->
       </form>
     </div>
     <div class="shop-contents-wrapper mt-5">

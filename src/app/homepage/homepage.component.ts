@@ -132,6 +132,7 @@ export class HomepageComponent implements OnInit {
     const checkInDate = new Date(checkInValue);
     const checkOutDate = new Date(checkOutValue);
     const numDays = differenceInDays(checkOutDate, checkInDate);
+    alert(checkOutDate)
 
     var payLoad = {
       checkIn: this.checkIn.value,
@@ -149,9 +150,7 @@ export class HomepageComponent implements OnInit {
       console.log(JSON.parse(bin));
 
       this.filteredRooms.forEach(room => {
-        // const roomPrice = room.currentPrice;
-        // const resultPrice =
-        // room.resultPrice = roomPrice * numDays;
+      
 
         this.numDays = numDays
       });

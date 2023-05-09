@@ -9,19 +9,21 @@
             <div class="details-contents-header" >
                 <img [src]="room.roomPicture" alt="Room Image">
               </div>
-            <div class="details-contents-header" >
+            <div class="details-contents-header"  >
               <div class="row mt-2 slider">
-                <div class="col-11 ">
-                  <div class="global-slick-init attraction-slider nav-style-one nav-color-two slider-inner-margin"
+                <div class="col-11 " >
+                  <div  class="global-slick-init attraction-slider nav-style-one nav-color-two slider-inner-margin"
                     data-infinite="true" data-arrows="true" data-dots="false" data-slidesToShow="4" data-swipeToSlide="true"
                     data-autoplay="true" data-autoplaySpeed="2500"
                     data-prevArrow='<div class="prev-icon radius-parcent-50"><i class="las la-angle-left"></i></div>'
                     data-nextArrow='<div class="next-icon radius-parcent-50"><i class="las la-angle-right"></i></div>'
                     data-responsive='[{"breakpoint": 1400,"settings": {"slidesToShow": 4}},{"breakpoint": 1200,"settings": {"slidesToShow": 3}},{"breakpoint": 992,"settings": {"slidesToShow": 3}},{"breakpoint": 768,"settings": {"slidesToShow": 2}},{"breakpoint": 576, "settings": {"slidesToShow": 1} }]'>
-                    <div class="attraction-item">
+
+
+                    <!-- <div class="attraction-item">
                       <div class="single-attraction-two radius-20">
                         <div class="single-attraction-two-thumb">
-                          <a href="https://plus.unsplash.com/premium_photo-1678297270891-fda2e16796ea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbSUyMGhvdGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" class="gallery-popup"> <img src="https://plus.unsplash.com/premium_photo-1678297270891-fda2e16796ea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cm9vbSUyMGhvdGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                          <a href="https://images.unsplash.com/photo-1613252086325-ac35531fc326?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJvb20lMjBob3RlbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" class="gallery-popup"> <img src="https://images.unsplash.com/photo-1613252086325-ac35531fc326?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJvb20lMjBob3RlbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
                               alt="img"> </a>
                         </div>
                         <div class="single-attraction-two-contents"></div>
@@ -30,7 +32,7 @@
                     <div class="attraction-item">
                       <div class="single-attraction-two radius-20">
                         <div class="single-attraction-two-thumb">
-                          <a href="https://plus.unsplash.com/premium_photo-1678297270523-8775c817d0b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8cm9vbSUyMGhvdGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" class="gallery-popup"> <img src="https://plus.unsplash.com/premium_photo-1678297270523-8775c817d0b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8cm9vbSUyMGhvdGVsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                          <a href="https://images.unsplash.com/photo-1613252086325-ac35531fc326?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJvb20lMjBob3RlbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" class="gallery-popup"> <img src="https://images.unsplash.com/photo-1613252086325-ac35531fc326?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJvb20lMjBob3RlbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
                               alt="img"> </a>
                         </div>
                         <div class="single-attraction-two-contents"></div>
@@ -62,8 +64,14 @@
                         </div>
                         <div class="single-attraction-two-contents"></div>
                       </div>
+                    </div> -->
+                    <div class="slider">
+                      <div *ngFor="let imageUrl of imageUrls">
+                        <img [src]="imageUrl" alt="Slider Image">
+                      </div>
                     </div>
 
+                   
                   </div>
                 </div>
               </div>
@@ -132,7 +140,7 @@
                 <div class="about-tab-contents">
                   <p class="about-tab-contents-para"> {{room.description}} </p>
                   <p class="about-tab-contents-para"> {{room.description}}</p>
-                 
+
                 </div>
               </div>
               <div id="reviews" class="tab-content-item">
