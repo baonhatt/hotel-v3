@@ -44,7 +44,6 @@ export class StorageService {
 
   public getAccessToken(): string {
     const tokenLocalStorage = localStorage.getItem(TOKEN);
-    console.log(123123);
 
     if (tokenLocalStorage) {
       let token = JSON.parse(tokenLocalStorage) as TokenModel;

@@ -2,11 +2,16 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Room, addRoom } from '../../../models/room.model';
 import { ApiService } from '../../../_service/api.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import * as bootstrap from 'bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { NgToastService } from 'ng-angular-popup';
 interface RoomType {
   id: number;
   typeName: string;
@@ -15,63 +20,83 @@ interface RoomType {
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
-  styleUrls: ['./room.component.css']
+  styleUrls: ['./room.component.css'],
 })
 export class RoomComponent implements OnInit {
-  roomNum!: number;
-  selectedRoomId: string | undefined;
-  roomData: any;
-  typeId!: number;
-  isDeleting = false;
   image: any;
   images: any;
   message: any;
   imagePath: any;
   imgURL: any;
-  @Input() room: addRoom;
-  rooms: any[] = [];
-  roomtoDisplay!: addRoom[];
-  id!: number;
-  roomForm!: FormGroup;
-  inputValue: any;
-  roomTypes: RoomType[] = []
-  roomOption = [
-    'Single',
-    'Deluxe',
-    'Double',
-    'Quad',
-    'King',
-  ];
-  Bednums = [
-    '1',
-    '2',
-    '3',
-    '4',
-  ];
+  submitted = false;
+  RoomId!: string;
 
-  constructor(private roomService: ApiService,
+  @Input() room: addRoom;
+  rooms: Room[];
+  id!: number;
+  typeId!: number;
+  roomForm!: FormGroup;
+  roomFormEdit!: FormControl;
+  inputValue: any;
+  roomTypes: RoomType[] = [];
+  get f() {
+    return this.roomForm.controls;
+  }
+  constructor(
+    private roomService: ApiService,
     private router: Router,
     private api: ApiService,
     private fb: FormBuilder,
     private http: HttpClient,
-    private toast: NgToastService
+    private toastr: ToastrService
   ) {
-    this.rooms = []
+    this.rooms = [];
     this.room = {
-      NumberOfBed: 0,
-      RoomPicture: '',
-      RoomPictures: '',
-      RoomNumber: '',
-      Name: '',
-      IsActive: '',
-      RoomTypeId: '',
-      CurrentPrice: '',
-      PeopleNumber: '',
-      Description: '',
-    }
-    this.roomtoDisplay = this.rooms
+      roomNumber: '',
+      name: '',
+      isActive: true,
+      description: '',
+      roomPicture: '',
+      roomPictures: '',
+      numberOfSimpleBed: '1',
+      numberOfDoubleBed: '1',
+      currentPrice: 0,
+      roomTypeId: 0,
+      peopleNumber: '',
+    };
+    this.roomForm = this.fb.group({
+      Name: ['', [Validators.required]],
+      RoomNumber: ['', [Validators.required]],
+      IsActive: [true, [Validators.required]],
+      Description: [''],
+      CurrentPrice: ['0', [Validators.required]],
+      RoomPicture: [''],
+      RoomPictures: [''],
+      PeopleNumber: ['1', [Validators.required]],
+      NumberOfSimpleBed: ['1', [Validators.required]],
+      NumberOfDoubleBed: ['1', [Validators.required]],
+      RoomTypeId: ['1', [Validators.required]],
+    });
   }
-
+  uploadFileDetail = (files: any) => {
+    if (files.length === 0) {
+      return;
+    }
+    if (files.length > 0) {
+      this.images = files;
+      // var mimeType = files[0].type;
+      // if (mimeType.match(/image\/*/) == null) {
+      //   this.message = "Only images are supported.";
+      //   return;
+      // }
+      // var reader = new FileReader();
+      // this.imagePath = files;
+      // reader.readAsDataURL(files[0]);
+      // reader.onload = (_event) => {
+      //   this.imgURL = reader.result;
+      // }
+    }
+  };
 
   uploadFile = (files: any) => {
     if (files.length === 0) {
@@ -81,7 +106,7 @@ export class RoomComponent implements OnInit {
       this.image = files;
       var mimeType = files[0].type;
       if (mimeType.match(/image\/*/) == null) {
-        this.message = "Only images are supported.";
+        this.message = 'Only images are supported.';
         return;
       }
       var reader = new FileReader();
@@ -89,33 +114,19 @@ export class RoomComponent implements OnInit {
       reader.readAsDataURL(files[0]);
       reader.onload = (_event) => {
         this.imgURL = reader.result;
-      }
+      };
     }
-  }
+  };
   ngOnInit(): void {
-    this.roomForm = this.fb.group({
-      RoomNumber: [''],
-      Name: [''],
-      IsActive: [''],
-      Description: [''],
-      CurrentPrice: [''],
-      RoomPicture: [''],
-      RoomPictures: [''],
-      PeopleNumber: [''],
-      NumberOfBed: [''],
-      RoomTypeId: [''],
-    });
+    // this.loadModal();
+    // this.submitted = false;
+    // this.api.getRoomTypeId().subscribe((data: any)=>{
+    //   this.roomTypes = data.roomTypes;
+    //   this.typeId = data.roomTypes.id
+    // });
     this.getRooms();
     this.getRoomtype();
-    this.loadModal(this.roomForm.value);
-    this.api.getRoomTypeId().subscribe((data: any) => {
-      this.roomTypes = data.roomTypes;
-      this.typeId = data.roomTypes.id
-    });
-
   }
-
-
   getRoomtype(): Promise<number> {
     return new Promise((resolve, reject) => {
       this.api.getRoomTypeId().subscribe((data: any) => {
@@ -125,45 +136,25 @@ export class RoomComponent implements OnInit {
       }, reject);
     });
   }
-  loadModal(roomId: string) {
-
-
-    this.api.getRoomDetail(roomId).subscribe( res =>{
-      return this.roomNum = res.roomNumber
-   })
-    this.roomForm = this.fb.group({
-      Name: ['', [Validators.required]],
-      RoomNumber: [this.roomNum, [Validators.required]],
-      IsActive: [true, [Validators.required]],
-      Description: [''],
-      CurrentPrice: ['1000000', [Validators.required]],
-      RoomPicture: [''],
-      NumberOfBed: ['2'],
-      RoomPictures: [''],
-      discountPrice: ['10'],
-      PeopleNumber: ['1', [Validators.required]],
-      NumberOfSimpleBed: ['1', [Validators.required]],
-      NumberOfDoubleBed: ['1', [Validators.required]],
-      RoomTypeId: ['1', [Validators.required]],
-    });
-    console.log(this.roomForm);
-  }
   addRoom(_roomForm: FormGroup) {
+    this.submitted = true;
     if (this.roomForm.invalid) {
       return;
     }
     let fileToUpload;
     let fileToUploads;
     const formData = new FormData();
+    console.log(this.image);
+
     if (this.image == null) {
-      fileToUpload = "";
+      fileToUpload = '';
       formData.append('RoomPicture', fileToUpload);
     } else {
       fileToUpload = <File>this.image[0];
       formData.append('RoomPicture', fileToUpload, fileToUpload.name);
     }
     if (this.images == null) {
-      fileToUploads = "";
+      fileToUploads = '';
       formData.append('RoomPicture', fileToUploads);
     } else {
       fileToUploads = <File[]>this.images;
@@ -176,52 +167,106 @@ export class RoomComponent implements OnInit {
     formData.append('IsActive', _roomForm.controls['IsActive'].value);
     formData.append('Description', _roomForm.controls['Description'].value);
     formData.append('CurrentPrice', _roomForm.controls['CurrentPrice'].value);
-    formData.append('RoomPictures', "");
+    formData.append('RoomPictures', '');
     formData.append('PeopleNumber', _roomForm.controls['PeopleNumber'].value);
-    formData.append('NumberOfSimpleBed', _roomForm.controls['NumberOfSimpleBed'].value);
-    formData.append('NumberOfNumberOfDoubleBedBed', _roomForm.controls['NumberOfDoubleBed'].value);
+    formData.append(
+      'NumberOfSimpleBed',
+      _roomForm.controls['NumberOfSimpleBed'].value
+    );
+    formData.append(
+      'NumberOfDoubleBedBed',
+      _roomForm.controls['NumberOfDoubleBed'].value
+    );
     formData.append('RoomTypeId', _roomForm.controls['RoomTypeId'].value);
-    this.http.post<any>(`https://webhotel.click/v2/admin/room/create`, formData).subscribe(res => {
-
-
-      $('#addRoom').attr('data-bs-dismiss', 'modal');
-      this.getRooms();
-
-    this.loadModal(this.roomForm.value);
-
-      alert(res.message);
-
-
-
-    }, _err => {
-     alert(_err.error.message);
-
-    })
-
+    this.http
+      .post<any>(`https://webhotel.click/v2/admin/room/create`, formData)
+      .subscribe(
+        (res) => {
+          $('#addRoom').attr('data-bs-dismiss', 'modal');
+          this.getRooms();
+          this.loadModal();
+          $('#staticBackdrop').modal('toggle');
+          this.toastr.success(res.message);
+        },
+        (_err) => {
+          alert(_err);
+        }
+      );
+  }
+  getRooms() {
+    this.roomService.getRooms().subscribe((res: any) => {
+      this.rooms = res;
+    });
+  }
+  routePage() {
+    this.router.navigate(['/room-detail/{{room.id}}']);
   }
 
+  loadModal() {
+    this.submitted = false;
+    this.roomForm = this.fb.group({
+      Name: ['', [Validators.required]],
+      RoomNumber: ['', [Validators.required]],
+      IsActive: [true, [Validators.required]],
+      Description: [''],
+      CurrentPrice: ['0', [Validators.required]],
+      RoomPicture: [''],
+      RoomPictures: [''],
+      PeopleNumber: ['1', [Validators.required]],
+      NumberOfSimpleBed: ['1', [Validators.required]],
+      NumberOfDoubleBed: ['1', [Validators.required]],
+      RoomTypeId: ['1', [Validators.required]],
+    });
+  }
 
+  loadModalUpdate(roomId: string) {
+    this.api.getRoomDetail(roomId).subscribe((res) => {
+      this.roomForm = this.fb.group({
+        Name: [res?.name, [Validators.required]],
+        RoomNumber: [res?.roomNumber, [Validators.required]],
+        IsActive: [res?.isActive, [Validators.required]],
+        Description: [res?.description],
+        CurrentPrice: [res?.currentPrice, [Validators.required]],
+        discountPrice: [res?.discountPrice],
+        PeopleNumber: ['1', [Validators.required]],
+        NumberOfSimpleBed: [res?.numberOfSimpleBed, [Validators.required]],
+        NumberOfDoubleBed: [res?.numberOfDoubleBed, [Validators.required]],
+        RoomTypeId: [res.roomTypeId, [Validators.required]],
+      });
+      this.RoomId = res.id;
+    });
+  }
 
-  updateRoom(roomId: string  | undefined, _roomForm2: FormGroup) {
+  resetModal() {
+    this.submitted = false;
+    this.roomForm = this.fb.group({
+      Name: ['', [Validators.required]],
+      RoomNumber: ['', [Validators.required]],
+      IsActive: [true, [Validators.required]],
+      Description: [''],
+      CurrentPrice: ['0', [Validators.required]],
+      RoomPicture: [''],
+      RoomPictures: [''],
+      PeopleNumber: ['1', [Validators.required]],
+      NumberOfSimpleBed: ['1', [Validators.required]],
+      NumberOfDoubleBed: ['1', [Validators.required]],
+      RoomTypeId: ['1', [Validators.required]],
+    });
+  }
 
-
+  updateRoom(_roomForm2: FormGroup) {
     // Identity roomId
-    if (!roomId) {
-
-      return;
-    }
-
-
-    if (this.roomForm.invalid) {
-      return;
-    }
-    this.api.deleteRoom(roomId)
+    // this.api.deleteRoom(roomId)
+    // if (this.roomForm.invalid) {
+    //   return;
+    // }
 
     let fileToUpload: File | undefined;
     let fileToUploads: File[] | undefined;
     const formData = new FormData();
+    console.log(this.image);
 
-    if (this.image == null) {
+    if (this.image == undefined) {
       fileToUpload = undefined;
       formData.append('RoomPicture', '');
     } else {
@@ -229,7 +274,7 @@ export class RoomComponent implements OnInit {
       formData.append('RoomPicture', fileToUpload, fileToUpload.name);
     }
 
-    if (this.images == null) {
+    if (this.images == undefined) {
       fileToUploads = undefined;
       formData.append('RoomPictures', '');
     } else {
@@ -239,67 +284,59 @@ export class RoomComponent implements OnInit {
       });
     }
 
-
-
     formData.append('RoomNumber', _roomForm2.controls['RoomNumber'].value);
     formData.append('Name', _roomForm2.controls['Name'].value);
     formData.append('IsActive', _roomForm2.controls['IsActive'].value);
     formData.append('Description', _roomForm2.controls['Description'].value);
     formData.append('CurrentPrice', _roomForm2.controls['CurrentPrice'].value);
     formData.append('PeopleNumber', _roomForm2.controls['PeopleNumber'].value);
-    formData.append('NumberOfSimpleBed', _roomForm2.controls['NumberOfSimpleBed'].value);
-    formData.append('NumberOfNumberOfDoubleBedBed', _roomForm2.controls['NumberOfDoubleBed'].value);
+    formData.append(
+      'NumberOfSimpleBed',
+      _roomForm2.controls['NumberOfSimpleBed'].value
+    );
+    formData.append(
+      'NumberOfDoubleBedBed',
+      _roomForm2.controls['NumberOfDoubleBed'].value
+    );
     formData.append('RoomTypeId', _roomForm2.controls['RoomTypeId'].value);
 
-    this.http.post<any>(`https://webhotel.click/v2/admin/room/update?id=${roomId}`, formData).subscribe(
-      res => {
-        $('#addRoom').attr('data-bs-dismiss', 'modal');
-        this.getRooms();
-        this.loadModal(this.roomForm.value);
-
-        alert(res.message);
-      },
-      err => {
-        alert(err.error.message);
-      }
-    );
+    this.http
+      .post<any>(
+        `https://webhotel.click/v2/admin/room/update?id=${this.RoomId}`,
+        formData
+      )
+      .subscribe(
+        (res) => {
+          $('#editRoom').modal('toggle');
+          this.getRooms();
+          // this.loadModal(this.roomForm.value);
+          this.toastr.success(res.message);
+        },
+        (err) => {
+          this.toastr.error(err.message);
+        }
+      );
   }
-
-
-
-  getRooms() {
-    this.roomService.getRooms().subscribe((res: any) => {
-      for (let r of res) {
-        this.rooms.unshift(r);
-      }
-      this.rooms = res;
-      this.id = res;
-      this.roomtoDisplay = this.rooms
-    })
-  }
-  routePage() {
-    this.router.navigate(['/room-detail/{{room.id}}']);
-  }
-
- 
 
   deleteRoom(id: string) {
-
     if (confirm('Are you want to delete this room?')) {
-
+      //   this.rooms.forEach((value, index) =>{
+      //     if(value.id == parseInt(id)){
+      //       this.api.deleteRoom(id).subscribe((res) =>{
+      //         this.rooms.splice(index, 1)
+      //       });
+      //     }
+      //   });
+      // }
       this.api.deleteRoom(id).subscribe({
         next: (_res) => {
-          alert('Room deleted!');
+          this.toastr.success('Room deleted!');
           this.getRooms();
-
         },
-        error: (err: any)=>{
-          alert(err.error.message)
-        }
+        error: (_err) => {
+          this.toastr.error(_err.message);
+        },
       });
     }
   }
-
-
-
 }

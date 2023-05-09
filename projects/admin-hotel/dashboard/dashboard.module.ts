@@ -9,7 +9,7 @@ const routes: Routes = [
     path: 'dashboard',
     component: LayoutpageComponent,
     data: {
-      requiredAuth: true
+      requiredAuth: false
     },
     canActivate: [AuthGuard]
   },

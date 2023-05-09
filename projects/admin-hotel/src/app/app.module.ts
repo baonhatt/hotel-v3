@@ -24,7 +24,6 @@ import { NgToastModule } from 'ng-angular-popup';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
 import { StorageService } from './_service/storage.service';
-import { LoadingInterceptor } from 'src/app/loading.interceptor';
 import { AuthGuard } from './_helper/http.guard';
 import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { PageErrorComponent } from './page-error/page-error.component';
@@ -32,8 +31,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { PaymentComponent } from './components/components/payment/payment.component';
 import { EmployeeComponent } from './components/components/employee/employee.component';
+import { BellNotifComponent } from './components/bell-notif/bell-notif.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { LoadingInterceptor } from './_helper/loading.interceptor';
 @NgModule({
   declarations: [
+    BellNotifComponent,
     AppComponent,
     HeaderComponent,
     SidebarComponent,
@@ -47,6 +50,7 @@ import { EmployeeComponent } from './components/components/employee/employee.com
     PageErrorComponent,
     PaymentComponent,
     EmployeeComponent,
+    SpinnerComponent
 
   ],
   imports: [

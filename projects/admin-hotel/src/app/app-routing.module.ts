@@ -29,9 +29,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { path: 'login', loadChildren: () => import('../../admin/admin.module').then(m => m.AdminModule) },
-  { path: 'dashboard', loadChildren: () => import('../../dashboard/dashboard.module').then(m => m.DashboardModule),
-    canActivate: [AuthGuard]
- },
+  { path: 'dashboard', loadChildren: () => import('../../dashboard/dashboard.module').then(m => m.DashboardModule) },
   {
     path: 'room',
     component: RoomComponent,

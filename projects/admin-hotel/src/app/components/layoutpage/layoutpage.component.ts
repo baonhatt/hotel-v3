@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 export class LayoutpageComponent implements OnInit{
   ngOnInit(): void {
 
+
   }
   sideBarOpen = true;
 
