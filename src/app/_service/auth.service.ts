@@ -36,7 +36,6 @@ export class AuthService implements OnInit{
       tap({
           next: (response) => {
             let token = response as TokenModel;
-            this.storage.setToken(token);
             var claims = JSON.stringify(this.jwtService.decodeToken(token.accessToken));
             var userInfo = JSON.parse(claims.replaceAll("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/","")) as User;
             this.userAuth.next(userInfo);

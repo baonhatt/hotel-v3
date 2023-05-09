@@ -22,9 +22,10 @@ interface RoomType {
 })
 export class ListingComponent implements OnInit {
   rooms: Room[] = [];
-
+  room!: Room ;
   pageOfItems!: Array<any>;
-
+  currentPrice!: number ;
+  numDays!: number;
   roomSearchs: Room[] = [];
   page: number = 1;
   count: number = 0;
@@ -42,6 +43,8 @@ export class ListingComponent implements OnInit {
   roomSearchForm!: FormGroup;
   array!: number[];
   selectedPersonCount: number = 1;
+  displayPrice = false;
+
   constructor(
     private roomService: ApiService,
     private router: Router,
@@ -64,15 +67,27 @@ export class ListingComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       if (params['rooms']) {
-        const rooms = JSON.parse(params['rooms']);
-        // Sử dụng biến rooms để hiển thị kết quả tìm kiếm trên trang listing
-      }
-    });
-    if(this.filteredRooms == null)
-    {
-      this.getRooms();
-    }
+        const encodedRooms = (params['rooms']);
+        let numDaysroute = parseInt(params['numdays']);
+        const rooms =  JSON.parse(decodeURIComponent(encodedRooms));
+        this.filteredRooms = rooms
 
+        if(this.displayPrice = true){
+          this.currentPrice = numDaysroute
+        }
+  }});
+
+    // if(this.filteredRooms == null)
+    // {
+    //   this.getRooms();
+    // }
+
+
+    this.auth.reloadOnNavigation();
+    this.sortMaxPersonArrayDescending();
+
+  }
+  getFullRooms(){
     this.apiService.searchRoom().subscribe((data: any) => {
       this.maxPerson = Array(data.maxPerson)
         .fill(1)
@@ -92,11 +107,7 @@ export class ListingComponent implements OnInit {
         console.log(error);
       }
     );
-    this.auth.reloadOnNavigation();
-    this.sortMaxPersonArrayDescending();
-
   }
-
   sortMaxPersonArrayDescending() {
     this.maxPersonArray.sort((a, b) => a - b);
   }
@@ -124,6 +135,7 @@ export class ListingComponent implements OnInit {
     this.getRooms();
   }
   onSubmit() {
+    this.getFullRooms()
     const roomTypeId = this.roomSearchForm.value.roomTypeId;
     const peopleNumber = this.roomSearchForm.value.peopleNumber;
     console.log(roomTypeId);
@@ -143,6 +155,7 @@ export class ListingComponent implements OnInit {
         (res) => {
           this.filteredRooms = res;
           console.log(this.filteredRooms);
+
         },
         (_err) => {
           console.log(_err);

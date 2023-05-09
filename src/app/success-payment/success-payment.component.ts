@@ -71,19 +71,15 @@ export class SuccessPaymentComponent implements OnInit {
 
 
       if (this.resultCode == '0') {
-        const httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json'
-          })
-        };
-        this.http.post<any>(`${environment.BASE_URL_API}/user/invoid/create`, this.invoiceForm.value, httpOptions)
+
+        this.http.post<any>(`${environment.BASE_URL_API}/user/invoid/create`, this.invoiceForm.value)
         .subscribe(respon => {
 
           this.toast.success(respon.success.message)
 
 
         }, _err => {
-          this.toast.error("Something was wrong !");
+          this.toast.error(_err.error.message);
 
         })
       }

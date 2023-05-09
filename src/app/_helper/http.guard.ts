@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate {
 
     // var check = this.auth.checkAccessTokenAndRefresh();
     //add js will load
-    $.getScript('main.js');
+    $.getScript('assets/js/main.js');
     var token = this.storage.isLoggedIn();
     if (token) {
       if (state.url == "/login"){

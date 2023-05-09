@@ -6,4 +6,6 @@ export interface Payment {
   status: number ;
   message: string ;
   reservationId: string;
+
 }
+

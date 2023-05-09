@@ -81,12 +81,12 @@
                   <div class="input-flex-item">
                     <div class="single-input mt-4">
                       <label class="label-title"> Start Date </label>
-                      <input class="form--control" type="date" formControlName="startDate" [(ngModel)]="startDate"
+                      <input class="form--control" type="date" formControlName="startDate" [formControl]="checkIn" [(ngModel)]="startDate"
                         id="requestdate" placeholder="Type First Name">
                     </div>
                     <div class="single-input mt-4">
                       <label class="label-title"> Leave Date </label>
-                      <input class="form--control" type="date" formControlName="endDate" [(ngModel)]="endDate"
+                      <input class="form--control" type="date" formControlName="endDate" [formControl]="checkOut" [(ngModel)]="endDate"
                         placeholder="Type Last Name">
                     </div>
                   </div>
@@ -105,12 +105,12 @@
                   <div class="single-input mt-2">
                     <div class="custom-radio custom-radio-inline">
                       <div class="custom-radio-single active">
-                        <input class="radio-input" type="radio" id="radio1" name="size" checked="checked">
-                        <label for="radio1"> <img src="../../assets/img/logo-momo-inkythuatso/logo-momo-png-1.png" alt="card" style="width: 50px;">Pay with MOMO</label>
+                        <input class="radio-input" type="radio" formControlName="paymentMethod" value="momo" id="momoRadio"  name="paymentMethod" checked="checked">
+                        <label for="momoRadio"> <img src="../../assets/img/logo-momo-inkythuatso/logo-momo-png-1.png" alt="card" style="width: 50px;">Pay with MOMO</label>
                       </div>
                       <div class="custom-radio-single">
-                        <input class="radio-input" type="radio" name="size" id="radio2">
-                        <label for="radio2"> <img src="../../assets/img/vnpay-logo-inkythuatso/vnpay-logo-inkythuatso-01.png" alt="Paypal" style="width: 50px;">VN Pay</label>
+                        <input class="radio-input" type="radio"  name="paymentMethod" formControlName="paymentMethod" value="vnpay" id="vnpayRadio">
+                        <label for="vnpayRadio"> <img src="../../assets/img/vnpay-logo-inkythuatso/vnpay-logo-inkythuatso-01.png" alt="Paypal" style="width: 50px;">VN Pay</label>
                       </div>
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../_service/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -8,6 +8,7 @@ import { Room } from '../models/room.model';
 import { ApiService } from '../_service/api.service';
 import { Toast, ToastrService } from 'ngx-toastr';
 import { error } from 'jquery';
+import { differenceInDays } from 'date-fns';
 
 @Component({
   selector: 'app-checkout',
@@ -15,8 +16,11 @@ import { error } from 'jquery';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
+  @ViewChild('momoRadio') momoRadio!: ElementRef;
+  @ViewChild('vnpayRadio') vnpayRadio!: ElementRef;
   orderInfo!: string;
   rooms!: Room;
+  payurl!: string;
   amount!: number;
   bookForm!: FormGroup;
   payForm!: FormGroup;
@@ -24,9 +28,11 @@ export class CheckoutComponent implements OnInit {
   numberOfDay!: number;
   endDate!: Date;
   numDays!: number;
-  numOfPeople!: number;
   roomId!: any;
-  orderInfoo: string = '';
+  amountNum1!: number;
+  orderInfoString!: string;
+  checkIn = new FormControl(new Date().toISOString());
+  checkOut = new FormControl(new Date().toISOString());
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   get f() {
     return this.bookForm.controls
@@ -43,10 +49,11 @@ export class CheckoutComponent implements OnInit {
       this.payForm = this.fb.group({
 
       })
+
     }
 
   ngOnInit(): void {
-   
+
     this.roomId = this.route.snapshot.paramMap.get('id')
     this.bookForm = this.fb.group({
       startDate:new Date().toISOString(),
@@ -57,14 +64,21 @@ export class CheckoutComponent implements OnInit {
       name: [''],
       phoneNumber: [''],
       address: [''],
+      paymentMethod: ['momo'],
+
     });
-    // if(savedCheckoutForm){
-    //   const result =
-    //   this.bookForm.setValue(JSON.parse(savedCheckoutForm))
+     const checkInValue = this.checkIn.value
+    const checkOutValue = this.checkOut.value;
 
-    //   console.log(result);
+    if (!checkInValue || !checkOutValue) {
+      // Handle error when check-in or check-out values are not set
+      return;
+    }
 
-    // }
+    const checkInDate = new Date(checkInValue);
+    const checkOutDate = new Date(checkOutValue);
+    const numDays = differenceInDays(checkOutDate, checkInDate);
+    // aler
     this.getRoomById();
 
   }
@@ -78,7 +92,14 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
-
+  methodPay(){
+    const selectedPaymentMethod = this.bookForm.get('paymentMethod')?.value;
+    if(selectedPaymentMethod == 'momo'){
+      this.payMoMo();
+    } else if(selectedPaymentMethod == 'vnpay'){
+      this.payVnPay()
+    }
+  }
 
 
   bookingRoom(bookForm: FormGroup){
@@ -87,8 +108,7 @@ export class CheckoutComponent implements OnInit {
 
       this.toast.success(res.message)
 
-
-      this.payMoMo()
+      this.methodPay()
 
       const dataToSave = JSON.stringify(res);
       localStorage.setItem('bookingData', dataToSave);
@@ -99,8 +119,10 @@ export class CheckoutComponent implements OnInit {
 
       if(wrongtime){
         this.toast.error(_err.error.title)
+      }else {
+        this.toast.error(_err.error.message)
+
       }
-      this.toast.error(_err.error.message)
     })
   }
   payMoMo() {
@@ -120,11 +142,28 @@ export class CheckoutComponent implements OnInit {
     console.log(orderInfo, amount)
   }
 
+  payVnPay() {
+
+    this.amountNum1 = this.rooms.currentPrice;
+    this.orderInfoString = this.rooms.name;
+
+    this.http.post<any>(environment.BASE_URL_API + '/user/vn-pay/create',{amount: this.amountNum1, orderDescription: this.orderInfoString, name: 'Customer'} ).subscribe( res => {
+
+      const payUrl = res['url']
+      window.location.href = payUrl
+    }, err =>{
+      this.toast.error("Pay Failed")
+      // window.location.href = this.payurl
+
+
+    });
+  }
   OnSubmit(){
 
      if(this.bookForm.invalid){
       return;
      }
+
 
      this.bookingRoom(this.bookForm.value)
     console.log(this.roomId);

@@ -10,6 +10,7 @@ import { Search } from '../models/search.model';
 import { SearchService } from '../_service/search.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { differenceInDays } from 'date-fns';
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -26,6 +27,7 @@ interface RoomType {
 })
 export class HomepageComponent implements OnInit {
   rooms: Room[];
+  numDays!: number;
   filteredRooms!: Room[];
   private apiRooms = 'https://webhotel.click/user/room/get-all';
   blogs: Blog[];
@@ -39,7 +41,7 @@ export class HomepageComponent implements OnInit {
   serviceAttachs = [];
   peopleNumberOptions = [1, 2, 3, 4, 5, 6, 7, 8];
   roomSearchForm!: FormGroup;
-  peopleNumber: number  = 1;
+  peopleNumber: number = 1;
 
 
   constructor(
@@ -65,7 +67,7 @@ export class HomepageComponent implements OnInit {
   checkIn = new FormControl(new Date().toISOString());
   checkOut = new FormControl(new Date().toISOString());
   ngOnInit(): void {
-    this.apiService.searchRoom().subscribe((data: any)=> {
+    this.apiService.searchRoom().subscribe((data: any) => {
       this.maxPerson = data.maxPerson;
       this.maxPrice = data.maxPrice;
       this.roomTypeName = data.roomTypes;
@@ -113,35 +115,56 @@ export class HomepageComponent implements OnInit {
 
 
   onSubmit() {
+
     const roomTypeId = this.roomSearchForm.value.roomTypeId;
     const peopleNumber = this.roomSearchForm.value.peopleNumber;
     console.log(this.checkIn);
     console.log(this.checkOut);
 
+    const checkInValue = this.checkIn.value
+    const checkOutValue = this.checkOut.value;
+
+    if (!checkInValue || !checkOutValue) {
+      // Handle error when check-in or check-out values are not set
+      return;
+    }
+
+    const checkInDate = new Date(checkInValue);
+    const checkOutDate = new Date(checkOutValue);
+    const numDays = differenceInDays(checkOutDate, checkInDate);
+
     var payLoad = {
-      checkIn : this.checkIn.value,
-      checkOut : this.checkOut.value,
-      price : 0,
-      typeRoomId : roomTypeId==""?0:roomTypeId,
-      star : 0,
-      peopleNumber : peopleNumber==""?0:peopleNumber,
+      checkIn: this.checkIn.value,
+      checkOut: this.checkOut.value,
+      price: 0,
+      typeRoomId: roomTypeId == "" ? 0 : roomTypeId,
+      star: 0,
+      peopleNumber: peopleNumber == "" ? 0 : peopleNumber,
     }
 
     this.http.post<Room[]>(`https://webhotel.click/user/room/get-all-by`, payLoad).subscribe(res => {
       this.filteredRooms = res;
       // Truyền kết quả tìm kiếm dưới dạng query parameter
-      const bin =  JSON.stringify(this.filteredRooms)
-       console.log(JSON.parse(bin));
+      const bin = JSON.stringify(this.filteredRooms)
+      console.log(JSON.parse(bin));
 
-    // this.router.navigate(['/room-listing'], { queryParams: { rooms: JSON.stringify(this.filteredRooms) } });
-    const encodedRooms = encodeURIComponent(JSON.stringify(this.filteredRooms));
-    this.router.navigate(['/room-listing'], { queryParams: { rooms: encodedRooms } });
+      this.filteredRooms.forEach(room => {
+        // const roomPrice = room.currentPrice;
+        // const resultPrice =
+        // room.resultPrice = roomPrice * numDays;
+
+        this.numDays = numDays
+      });
+
+      // this.router.navigate(['/room-listing'], { queryParams: { rooms: JSON.stringify(this.filteredRooms) } });
+      const encodedRooms = encodeURIComponent(JSON.stringify(this.filteredRooms));
+      this.router.navigate(['/room-listing'], { queryParams: { rooms: encodedRooms, numdays:  this.numDays},});
     }, _err => {
       console.log(_err);
     })
   }
-  getRoom(){
-    return this.apiService.getRooms().subscribe(res =>{
+  getRoom() {
+    return this.apiService.getRooms().subscribe(res => {
       this.filteredRooms = res
     })
   }

@@ -74,10 +74,16 @@ export class ApiService {
     this.user = this.auth.userProfile
     return this.user
   }
-
+  //Payment
   payment(payment: Payment){
     return this.http.post(environment.BASE_URL_API + '/user/invoid/create', payment );
 
+  }
+
+  vnpay(amount: number, orderDescription: string, name: string){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json, text/plain', 'Access-Control-Allow-Origin': '*' });
+
+    return this.http.post(environment.BASE_URL_API + '/user/vn-pay/create', {amount, orderDescription, name},{headers});
   }
   successPayment(){
     return this.http.get(environment.BASE_URL_API + '/user/reservation/get-successful');

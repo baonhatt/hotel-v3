@@ -186,7 +186,7 @@ const routes: Routes = [
     data: {
       requiredAuth: false
     },
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
 
   {

@@ -249,7 +249,9 @@
                     <div class="hotel-view-contents-bottom">
                       <div class="hotel-view-contents-bottom-flex">
                         <div class="hotel-view-contents-bottom-contents d-flex flex-wrap gap-4 gap-sm-1">
-                          <h4 class="hotel-view-contents-bottom-title"> {{room.currentPrice | currency}} VND<sub>/Night</sub> </h4>
+                          <!-- <h4 class="hotel-view-contents-bottom-title"> {{displayPrice}} VND<sub>/Night</sub> </h4> -->
+                          <h4 class="hotel-view-contents-bottom-title" *ngIf="displayPrice" > {{ room.currentPrice * currentPrice }} VND<sub>/Night</sub> </h4>
+                          <h4 class="hotel-view-contents-bottom-title" *ngIf="!displayPrice" > {{ room.currentPrice }} VND<sub>/Night</sub> </h4>
                           <p class="hotel-view-contents-bottom-para"> <br> (4 Nights, 2 Rooms, {{room.peopleNumber}} Persons) </p>
                         </div>
                       </div>

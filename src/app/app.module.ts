@@ -70,6 +70,7 @@ import { PaymentdetailComponent } from './paymentdetail/paymentdetail.component'
       timeOut : 5000,
       progressBar: true
     }),
+    FormsModule,
     ToastrModule,
     // ToastNoAnimationModule.forRoot(),
     MatOptionModule,

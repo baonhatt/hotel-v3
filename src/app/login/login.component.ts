@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit {
         this.route.navigateByUrl('/home');
       },
       (err) => {
-        this.toast.error(err.message);
+        this.toast.error(err.error.message);
       }
     );
   }

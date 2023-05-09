@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Room } from '../models/room.model';
 import { ApiService } from '../_service/api.service';
-
+import { ViewportScroller } from '@angular/common';
 @Component({
   selector: 'app-room-detail',
   templateUrl: './room-detail.component.html',
@@ -13,14 +13,14 @@ export class RoomDetailComponent implements OnInit {
   // @Input() room!: Room;
   room!: Room;
   roomId!: any;
-  constructor(private route: ActivatedRoute, private apiService: ApiService){}
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private viewPort: ViewportScroller){}
   isHomePageLoaded = false;
   ngOnInit() {
 
     this.roomId = this.route.snapshot.paramMap.get('id')
 
     this.getRoomById();
-
+    this.viewPort.scrollToPosition([0, 0]);
   }
   getRoomById(): void {
     const id = this.route.snapshot.paramMap.get('id')!;

@@ -19,6 +19,7 @@ export class Room {
   peopleNumber!: string
   serviceAttachs!: ServiceAttach[]
   rooms!: number;
+  resultPrice!: number;
 }
 
 export interface Roomsearch {
