@@ -28,27 +28,17 @@
           <div  class="blog-details-wrapper">
             <div class="single-blog-details">
               <div class="single-blog-details-content pt-0">
-                <h2 class="single-blog-details-content-title fw-500"> Do they have any other concerns or needs that we
-                  should keep in mind during the demo today? </h2>
+                <h2 class="single-blog-details-content-title fw-500"> {{blogDetail.longTitle}} </h2>
                 <div class="single-blog-details-content-tags mt-3">
                   <span class="single-blog-details-content-tags-item"> <a href="javascript:void(0)"> Category </a>
                   </span>
-                  <span class="single-blog-details-content-tags-item"> {{blogDetail.postDate}} </span>
+                  <span class="single-blog-details-content-tags-item"> {{blogDetail.createdAt | date}} </span>
                 </div>
                 <div class="single-blog-details-thumb mt-4">
-                  <img class="radius-5" src="{{blogDetail.imgTitle}}" alt="">
+                  <img class="radius-5" src="{{blogDetail.image}}" alt="">
                 </div>
-                <p class="single-blog-details-content-para mt-4"> Mutley, you snickering, floppy eared hound. When
-                  courage is needed, you’re never around. Those medals you wear on your moth-eaten chest should be
-                  there for bungling at which you are best. So, stop that pigeon, stop
-                  that pigeon, stop that pigeon, stop that pigeon, stop that pigeon, stop that pigeon, stop that
-                  pigeon. Howwww! Nab him, jab him, tab him, grab him, stop that pigeon now. </p>
-                <p class="single-blog-details-content-para mt-4"> One for all and all for one, Muskehounds are always
-                  ready. One for all and all for one, helping everybody. One for all and all for one, it’s a pretty
-                  story. Sharing everything with fun, that’s the way to be. One for
-                  all and all for one, Muskehounds are always ready. One for all and all for one, helping everybody.
-                  One for all and all for one, can sound pretty corny. If you’ve got a problem chum, think how it
-                  could be. </p>
+
+                <p class="single-blog-details-content-para mt-4">{{blogDetail.longContent}}</p>
                 <blockquote class="section-bg-1 mt-4">
                   <div class="blockquote-contents">
                     <h3 class="blockquote-contents-title color-heading fw-500"> What do you currently do to manage? Do

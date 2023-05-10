@@ -20,16 +20,12 @@ export class ApiService {
   room: any;
   blog: any;
   apiRooms = 'https://webhotel.click/user/room/get-all';
-  apiBlog = 'http://localhost:3000/blog';
+  apiBlog = 'https://webhotel.click/user/blog/get-all';
   apiRoomm = 'http://localhost:3000/rooms';
   getRooms() {
     // return this.http.get<Room[]>(environment.BASE_URL_API + '/user/room/get-all');
-    return this.http.get<Room[]>(this.apiRooms);
+    return this.http.get<Room[]>(environment.BASE_URL_API + 'user/room/get-all');
   }
-  getBlogs(){
-    return this.http.get<Blog[]>(this.apiBlog);
-  }
-
 
   getRoomDetail(id: string): Observable<Room>{
     const url = `${environment.BASE_URL_API}/user/room/get-by-id?id=${id}`;
@@ -42,9 +38,6 @@ export class ApiService {
     return this.http.post<Room>(url, dataSearch);
   }
 
-  getBlogDetail(id: number): Observable<Blog>{
-    return this.http.get<Blog>(`${this.apiBlog}/${id}`).pipe()
-  }
 
   postRoom(_room: Room) {
     return this.http.post<Room>(environment.BASE_URL_API + '/user/room/get-by-id', _room);
@@ -69,6 +62,17 @@ export class ApiService {
 
   }
 
+  //Blog Api
+  getBlogs(){
+    return this.http.get<Blog[]>(environment.BASE_URL_API + '/user/blog/get-all');
+  }
+
+  getBlogDetail(id: number): Observable<Blog>{
+    return this.http.get<Blog>(`${environment.BASE_URL_API}/user/blog/get-by-id?id=${id}`)
+  }
+  getNewestBlog(){
+    return this.http.get<Blog[]>(environment.BASE_URL_API + '/user/blog/get-top-new');
+  }
   // Api User
   getUser() {
     this.user = this.auth.userProfile

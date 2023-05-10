@@ -18,7 +18,6 @@ export class RoomDetailComponent implements OnInit {
   ngOnInit() {
     this.roomId = this.route.snapshot.paramMap.get('id')
     this.viewPort.scrollToPosition([0, 0]);
-
     this.getRoomById();
   }
   getRoomById(): void {

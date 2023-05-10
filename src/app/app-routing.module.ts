@@ -25,6 +25,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';
 import { PaymentdetailComponent } from './paymentdetail/paymentdetail.component';
+import { BlogNewestComponent } from './blog-newest/blog-newest.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {

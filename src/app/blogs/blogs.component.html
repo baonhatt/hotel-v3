@@ -26,9 +26,9 @@
       <div id class="col-xxl-4 col-lg-4 col-md-6" *ngFor="let b of blogs">
         <div class="single-blog">
           <div class="single-blog-thumbs">
-            <a routerLink="/blog-detail/{{b.id}}"> <img class="lazyloads" src="{{b.imgTitle}}" alt=""> </a>
+            <a routerLink="/blog-detail/{{b.id}}"> <img class="lazyloads" src="{{b.image}}" alt=""> </a>
             <div class="single-blog-thumbs-date">
-              <a href="javascript:void(0)"> <span class="date"> {{b.postDate}} </span> <span class="month"> Jun </span> </a>
+              <a href="javascript:void(0)"> <span class="date"> {{b.createdAt | date}} </span> <span class="month"> Jun </span> </a>
             </div>
           </div>
           <div class="single-blog-contents mt-3">
@@ -38,7 +38,7 @@
               </span>
               <span class="single-blog-contents-tags-item"> <a href="javascript:void(0)"> 22 Comments </a> </span>
             </div>
-            <h4 class="single-blog-contents-title mt-3"> <a routerLink="/blog-detail/{{b.id}}"> {{b.discription}} </a> </h4>
+            <h4 class="single-blog-contents-title mt-3"> <a routerLink="/blog-detail/{{b.id}}"> {{b.shortTitle}} </a> </h4>
           </div>
         </div>
       </div>

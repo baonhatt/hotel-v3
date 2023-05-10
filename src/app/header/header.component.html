@@ -17,15 +17,14 @@
       </div>
       <div class="collapse navbar-collapse" id="hotel_booking_menu">
         <ul class="navbar-nav">
-          <li class=" current-menu-item"><a routerLink="/home">Home</a></li>
-          <li><a routerLink="/about"> About </a></li>
-          <li><a routerLink="/checkout"> Checkout </a></li>
-          <li><a routerLink="/room-listing"> Room </a></li>
+          <li class=" current-menu-item " ><a  routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+            true}" routerLink="/home">Home</a></li>
+          <li><a  routerLinkActive="active" routerLink="/about"> About </a></li>
 
-          <li><a routerLink="/blogs" >Blog</a></li>
+          <li><a routerLinkActive="active" routerLink="/blogs" >Blog</a></li>
 
 
-          <li><a routerLink="/contact"> Contact Us </a></li>
+          <li><a routerLinkActive="active" routerLink="/contact"> Contact Us </a></li>
         </ul>
       </div>
       <div class="navbar-right-flex">

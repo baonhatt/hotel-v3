@@ -10,7 +10,7 @@ import { Blog } from '../models/blog.model';
 })
 export class BlogDetailComponent implements OnInit {
 
-  blogDetail = new Blog;
+  blogDetail!: Blog;
   constructor(private route: ActivatedRoute, private apiService: ApiService){}
 
   ngOnInit(): void {

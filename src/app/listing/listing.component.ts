@@ -7,6 +7,9 @@ import { SearchService } from '../_service/search.service';
 import { Room } from '../models/room.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { param } from 'jquery';
+import { DatePipe } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -23,9 +26,11 @@ interface RoomType {
 export class ListingComponent implements OnInit {
   rooms: Room[] = [];
   room!: Room ;
+  results!: number;
   pageOfItems!: Array<any>;
   currentPrice!: number ;
   numDays!: number;
+  numNights!: number;
   roomSearchs: Room[] = [];
   page: number = 1;
   count: number = 0;
@@ -52,7 +57,8 @@ export class ListingComponent implements OnInit {
     private auth: AuthService,
     private apiService: ApiService,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toast: ToastrService,
   ) {
     this.roomSearchForm = this.fb.group({
       peopleNumber: '',
@@ -77,9 +83,11 @@ export class ListingComponent implements OnInit {
       if (params['rooms']) {
         const encodedRooms = (params['rooms']);
         let numDaysroute = parseInt(params['numdays']);
+        let result = parseInt(params['results']);
+        this.results = result
         const rooms =  JSON.parse(decodeURIComponent(encodedRooms));
         this.filteredRooms = rooms
-
+        this.numNights = numDaysroute
         if(this.displayPrice = true){
           this.currentPrice = numDaysroute
         }
@@ -151,31 +159,59 @@ export class ListingComponent implements OnInit {
     });
   }
   onSubmit() {
-    this.getFullRooms()
+    const datePipe = new DatePipe('en-US');
+
     const roomTypeId = this.roomSearchForm.value.roomTypeId;
     const peopleNumber = this.roomSearchForm.value.peopleNumber;
-    console.log(roomTypeId);
+    console.log(this.checkIn);
+    console.log(this.checkOut);
+
+    const checkInValue = this.checkIn.value
+    const checkOutValue = this.checkOut.value;
+
+    if (!checkInValue || !checkOutValue) {
+      // Handle error when check-in or check-out values are not set
+      return;
+    }
+
+    const checkInDate = new Date(checkInValue);
+    const checkOutDate = new Date(checkOutValue);
+
+    const formattedCheckInDate = datePipe.transform(checkInDate, 'yyyy-MM-dd');
+    const formattedCheckOutDate = datePipe.transform(checkOutDate, 'yyyy-MM-dd');
+    const numberOfNights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
+    const numDays = numberOfNights
 
     var payLoad = {
       checkIn: this.checkIn.value,
       checkOut: this.checkOut.value,
       price: 0,
-      typeRoomId: roomTypeId == '' ? 0 : roomTypeId,
+      typeRoomId: roomTypeId == "" ? 0 : roomTypeId,
       star: 0,
-      peopleNumber: peopleNumber == '' ? 0 : peopleNumber,
-    };
+      peopleNumber: peopleNumber == "" ? 0 : peopleNumber,
+    }
 
-    this.http
-      .post<Room[]>(`https://webhotel.click/user/room/get-all-by`, payLoad)
-      .subscribe(
-        (res) => {
-          this.filteredRooms = res;
-          console.log(this.filteredRooms);
+    if(numDays > 0 ){
 
-        },
-        (_err) => {
-          console.log(_err);
-        }
-      );
+      this.http.post<Room[]>(`https://webhotel.click/user/room/get-all-by`, payLoad).subscribe(res => {
+        this.filteredRooms = res;
+        // Truyền kết quả tìm kiếm dưới dạng query parameter
+        const bin = JSON.stringify(this.filteredRooms)
+        console.log(JSON.parse(bin));
+        // alert(this.result)
+        this.filteredRooms.forEach(room => {
+
+          this.numNights = numDays
+        });
+
+
+        // this.router.navigate(['/room-listing'], { queryParams: { rooms: JSON.stringify(this.filteredRooms) } });
+
+      }, _err => {
+        console.log(_err);
+      })
+    }else{
+      this.toast.error("You have to select to Checkout day!")
+    }
   }
 }

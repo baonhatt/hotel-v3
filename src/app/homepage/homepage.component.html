@@ -2,7 +2,7 @@
 <app-spinner></app-spinner>
 <div class="banner-area banner-area-two banner-bg">
   <div class="banner-shapes">
-    <img src="assets/img/banner/banner-shapes.png" alt="shapes">
+    <img class="animation" src="assets/img/banner/banner-shapes.png" alt="shapes">
     <img src="assets/img/banner/banner-shapes2.png" alt="shapes">
   </div>
   <div class="container">
@@ -47,8 +47,8 @@
                 <span class="banner-location-single-contents-subtitle"> Check In </span>
 
                 <mat-form-field appearance="fill">
-                  <input class="" matInput [matDatepicker]="picker2" [formControl]="checkIn">
-                  <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <input  matInput [matDatepicker]="picker2" [formControl]="checkIn">
+                  <mat-datepicker-toggle matIconSuffix  [for]="picker2"></mat-datepicker-toggle>
                   <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
 
@@ -60,8 +60,8 @@
               <div class="banner-location-single-contents">
                 <span class="banner-location-single-contents-subtitle"> Check Out </span>
                 <div class="banner-location-single-contents-dropdown custom-select">
-                  <mat-form-field appearance="fill">
-                    <input matInput [matDatepicker]="picker3" [formControl]="checkOut">
+                  <mat-form-field  appearance="fill">
+                    <input  matInput [matDatepicker]="picker3" [formControl]="checkOut">
                     <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
                     <mat-datepicker #picker3></mat-datepicker>
                   </mat-form-field>
@@ -638,43 +638,7 @@
 </section>
 
 
-<section class="blog-area pat-50 pab-50">
-  <div class="container">
-    <div class="section-title center-text">
-      <h2 class="title"> Latest News </h2>
-      <div class="section-title-line"> </div>
-    </div>
-    <div class="row gy-4 mt-4">
-      <div class="col-xxl-4 col-lg-4 col-md-6" *ngFor="let b of blogs;let i=index;">
-        <div class="single-blog blog-two">
-          <div class="single-blog-thumbs">
-            <a (click)="navigateToPage('/blog-detail/{{b.id}}')"> <img class="lazyloads" src="{{b.imgTitle}}"
-                alt="ImgeTitle">
-            </a>
-            <div class="single-blog-thumbs-date">
-              <a href="javascript:void(0)"> <span class="date"> {{b.postDate}} </span> <span class="month"> Jun
-                </span> </a>
-            </div>
-          </div>
-          <div class="single-blog-contents mt-3">
-            <div class="single-blog-contents-tags mt-3">
-              <span class="single-blog-contents-tags-item">
-                <a href="javascript:void(0)"> <i class="las la-tag"></i> Hotel </a>
-              </span>
-              <span class="single-blog-contents-tags-item"> <a href="javascript:void(0)"> 22 Comments
-                </a> </span>
-            </div>
-            <h4 class="single-blog-contents-title mt-3"> <a
-                (click)="navigateToPage('/blog-detail/{{b.id}}')">{{b.discription}}
-              </a> </h4>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
+<app-blog-newest></app-blog-newest>
 
 <div class="brand-area pat-50 pab-100">
   <div class="container">

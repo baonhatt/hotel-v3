@@ -54,8 +54,11 @@ import { CommonModule } from '@angular/common';
 import {  ToastrModule } from 'ngx-toastr';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';
 import { PaymentdetailComponent } from './paymentdetail/paymentdetail.component';
+import { VndCurrencyPipe } from './_shared/currency/vnd-currency.pipe';
+import { BlogNewestComponent } from './blog-newest/blog-newest.component';
 @NgModule({
   imports: [
+
     HttpClientModule,
     JwtModule.forRoot({
       jwtOptionsProvider: {
@@ -103,6 +106,7 @@ import { PaymentdetailComponent } from './paymentdetail/paymentdetail.component'
 
   ],
   declarations: [
+    VndCurrencyPipe,
     AppComponent,
     LoginComponent,
     SignupComponent,
@@ -128,6 +132,8 @@ import { PaymentdetailComponent } from './paymentdetail/paymentdetail.component'
     BellNotifComponent,
     SuccessPaymentComponent,
     PaymentdetailComponent,
+    VndCurrencyPipe,
+    BlogNewestComponent,
 
   ],
 

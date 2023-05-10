@@ -93,7 +93,7 @@
                   <div class="input-flex-item">
                     <div class="single-input mt-4">
                       <label class="label-title"> Number of day </label>
-                      <input class="form--control" type="text" formControlName="numberOfDay" [(ngModel)]="numberOfDay" placeholder="Number of day">
+                      <input class="form--control" type="text" formControlName="numberOfDay"  [(ngModel)]="numberOfDay" placeholder="Number of day">
                     </div>
                   </div>
                   <div class="input-flex-item">
@@ -138,9 +138,9 @@
                   </li>
                   <li class="list"> <span class="regular"> Checking Out </span> <span class="strong" [innerHTML]="endDate">
                     </span> </li>
-                  <li class="list"> <span class="regular"> Number of Rooms </span> <span class="strong" [innerHTML]="numberOfDay">  </span>
+                  <li class="list"> <span class="regular"> Number of Rooms </span> <span class="strong" > {{rooms.roomNumber}} </span>
                   </li>
-                  <li class="list"> <span class="regular"> Total Stay </span> <span class="strong"> 3 Nights, 2 Days
+                  <li class="list"> <span class="regular"> Total Stay </span> <span class="strong"> <span [innerHTML]="numberOfDay + 1  "></span> Nights, <span [innerHTML]="numberOfDay"></span> Nights
                     </span> </li>
                   <li class="list"> <span class="regular"> Number of Person </span> <span class="strong"> 5 Person
                     </span> </li>
@@ -164,7 +164,7 @@
                 </ul>
                 <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
                   <li class="list"> <span class="regular"> Total </span> <span class="strong color-one fs-20">
-                      {{rooms.currentPrice}}
+                      {{rooms.currentPrice * numberOfDay | vndCurrency }}
                     </span> </li>
                 </ul>
               </div>

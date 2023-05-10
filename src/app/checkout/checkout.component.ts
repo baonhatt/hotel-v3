@@ -9,7 +9,7 @@ import { ApiService } from '../_service/api.service';
 import { Toast, ToastrService } from 'ngx-toastr';
 import { error } from 'jquery';
 import { differenceInDays } from 'date-fns';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -23,7 +23,7 @@ export class CheckoutComponent implements OnInit {
   payurl!: string;
   amount!: number;
   bookForm!: FormGroup;
-  payForm!: FormGroup;
+  dateForm!: FormGroup;
   startDate!: Date;
   numberOfDay!: number;
   endDate!: Date;
@@ -43,21 +43,21 @@ export class CheckoutComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private toast: ToastrService
+    private toast: ToastrService,
+  ) {
+    this.bookForm = this.fb.group({
+      startDate: [''],
+      checkOut: ['']
+    });
 
-    ) {
-      this.payForm = this.fb.group({
-
-      })
-
-    }
+  }
 
   ngOnInit(): void {
 
     this.roomId = this.route.snapshot.paramMap.get('id')
     this.bookForm = this.fb.group({
-      startDate:new Date().toISOString(),
-      endDate:new Date().toISOString(),
+      startDate: new Date().toISOString(),
+      endDate: new Date().toISOString(),
       roomId: [this.roomId],
       numberOfDay: [''],
       email: [''],
@@ -67,63 +67,81 @@ export class CheckoutComponent implements OnInit {
       paymentMethod: ['momo'],
 
     });
-     const checkInValue = this.checkIn.value
-    const checkOutValue = this.checkOut.value;
 
-    if (!checkInValue || !checkOutValue) {
-      // Handle error when check-in or check-out values are not set
-      return;
-    }
+    // Lắng nghe sự thay đổi của startDate và endDate
+    this.bookForm.get('startDate')?.valueChanges.subscribe(() => {
+      this.calculateNumberOfDays();
+    });
 
-    const checkInDate = new Date(checkInValue);
-    const checkOutDate = new Date(checkOutValue);
-    const numDays = differenceInDays(checkOutDate, checkInDate);
-    // aler
+    this.bookForm.get('endDate')?.valueChanges.subscribe(() => {
+      this.calculateNumberOfDays();
+    });
     this.getRoomById();
 
   }
 
-  getRoomById()
-  {
-    this.apiService.getRoomDetail(this.roomId)
-    .subscribe(res => {
-      // console.log(res);
-      this.rooms = res
-    });
+  calculateNumberOfDays() {
+    const startDateControl = this.bookForm.get('startDate');
+    const endDateControl = this.bookForm.get('endDate');
+    if (startDateControl && endDateControl) {
+      const startDateValue = startDateControl.value;
+      const endDateValue = endDateControl.value;
+
+      if (startDateValue && endDateValue) {
+        const startDate = new Date(startDateValue);
+        const endDate = new Date(endDateValue);
+        const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+        const numberOfDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+        const abc = this.bookForm.get('numberOfDay')?.setValue(numberOfDays);
+        console.log(abc);
+
+      }
+    }
   }
 
-  methodPay(){
+
+
+  getRoomById() {
+    this.apiService.getRoomDetail(this.roomId)
+      .subscribe(res => {
+        // console.log(res);
+        this.rooms = res
+      });
+  }
+
+  methodPay() {
     const selectedPaymentMethod = this.bookForm.get('paymentMethod')?.value;
-    if(selectedPaymentMethod == 'momo'){
+    if (selectedPaymentMethod == 'momo') {
       this.payMoMo();
-    } else if(selectedPaymentMethod == 'vnpay'){
+    } else if (selectedPaymentMethod == 'vnpay') {
       this.payVnPay()
     }
   }
 
 
-  bookingRoom(bookForm: FormGroup){
+  bookingRoom(bookForm: FormGroup) {
     this.http.post<any>(`${environment.BASE_URL_API}/user/reservation/create`, this.bookForm.value)
-    .subscribe(res =>{
+      .subscribe(res => {
 
-      this.toast.success(res.message)
+        this.methodPay()
+        this.toast.success(res.message)
 
-      this.methodPay()
 
-      const dataToSave = JSON.stringify(res);
-      localStorage.setItem('bookingData', dataToSave);
+        const dataToSave = JSON.stringify(res);
+        localStorage.setItem('bookingData', dataToSave);
 
-    },_err=>{
+      }, _err => {
 
-      const wrongtime = _err.error.title
+        const wrongtime = _err.error.title
 
-      if(wrongtime){
-        this.toast.error(_err.error.title)
-      }else {
-        this.toast.error(_err.error.message)
+        if (wrongtime) {
+          this.toast.error(_err.error.title)
+        } else {
+          this.toast.error(_err.error.message)
 
-      }
-    })
+        }
+      })
   }
   payMoMo() {
     const orderInfo = this.rooms.name;
@@ -133,12 +151,15 @@ export class CheckoutComponent implements OnInit {
     console.log(orderInfoString);
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    this.http.post<any>(environment.QR_MOMO,{orderInfo : orderInfoString, amount: amountNum1}, {headers})
-       .subscribe(response => {
+    this.http.post<any>(environment.QR_MOMO, { orderInfo: orderInfoString, amount: amountNum1 },)
+      .subscribe(response => {
         const redirectUrl = response['payUrl'];
-       if (redirectUrl) { window.location.href = redirectUrl;
-      }
-    })
+        if (redirectUrl) {
+          window.location.href = redirectUrl;
+        }
+      }, _err => {
+        this.toast.error(" The booking amount is too high, please switch to another method.")
+      })
     console.log(orderInfo, amount)
   }
 
@@ -147,25 +168,25 @@ export class CheckoutComponent implements OnInit {
     this.amountNum1 = this.rooms.currentPrice;
     this.orderInfoString = this.rooms.name;
 
-    this.http.post<any>(environment.BASE_URL_API + '/user/vn-pay/create',{amount: this.amountNum1, orderDescription: this.orderInfoString, name: 'Customer'} ).subscribe( res => {
+    this.http.post<any>(environment.BASE_URL_API + '/user/vn-pay/create', { amount: this.amountNum1, orderDescription: this.orderInfoString, name: 'Customer' }).subscribe(res => {
 
       const payUrl = res['url']
       window.location.href = payUrl
-    }, err =>{
+    }, err => {
       this.toast.error("Pay Failed")
       // window.location.href = this.payurl
 
 
     });
   }
-  OnSubmit(){
+  OnSubmit() {
 
-     if(this.bookForm.invalid){
+    if (this.bookForm.invalid) {
       return;
-     }
+    }
 
 
-     this.bookingRoom(this.bookForm.value)
+    this.bookingRoom(this.bookForm.value)
     console.log(this.roomId);
 
   }

@@ -1,10 +1,11 @@
 export class Blog {
-  id!: number
-  title!: string
-  postDate!: Date
-  imgTitle!: string
-  content!: string
-  imageBlog!: boolean
-  discription!: string
-
+  id!: number ;
+  shortTitle!: string ;
+  longTitle!: string ;
+  createdAt!: Date ;
+  image!: string ;
+  longContent!: string ;
+  shortContent!: string ;
+  posterEmail!: string ;
+  posterRoles!: string ;
 }

@@ -201,7 +201,7 @@
       <div class="shop-grid-contents">
         <div class="grid-list-contents">
           <div class="grid-list-contents-flex">
-            <p class="grid-list-contents-para"> Showing 1-4 of 16 results </p>
+            <p class="grid-list-contents-para"> Showing {{results}} results </p>
           </div>
         </div>
 
@@ -236,9 +236,10 @@
                       </div>
                       <h3 class="hotel-view-contents-title"> <a routerLink="/room-detail"> {{room.name}} </a> </h3>
                       <div class="hotel-view-contents-location mt-2">
-                        <span class="hotel-view-contents-location-icon"> <i class="las la-map-marker-alt"></i> </span>
-                        <span class="hotel-view-contents-location-para"> {{room.roomNumber}}
-                        </span>
+                        <span class="hotel-view-contents-location-icon"> <i class="las la-map-marker-alt"></i> {{room.roomTypeName }} </span>
+                        <br>
+                        <!-- <span class="hotel-view-contents-location-para"> {{room.roomNumber}}
+                        </span> -->
                       </div>
                     </div>
                     <div class="hotel-view-contents-middle">
@@ -256,9 +257,9 @@
                       <div class="hotel-view-contents-bottom-flex">
                         <div class="hotel-view-contents-bottom-contents d-flex flex-wrap gap-4 gap-sm-1">
                           <!-- <h4 class="hotel-view-contents-bottom-title"> {{displayPrice}} VND<sub>/Night</sub> </h4> -->
-                          <h4 class="hotel-view-contents-bottom-title" *ngIf="displayPrice" > {{ room.currentPrice * currentPrice }} VND<sub>/Night</sub> </h4>
-                          <h4 class="hotel-view-contents-bottom-title" *ngIf="!displayPrice" > {{ room.currentPrice }} VND<sub>/Night</sub> </h4>
-                          <p class="hotel-view-contents-bottom-para"> <br> (4 Nights, 2 Rooms, {{room.peopleNumber}} Persons) </p>
+                          <h4 class="hotel-view-contents-bottom-title" *ngIf="displayPrice" > {{ room.currentPrice * currentPrice | vndCurrency }}<span>/ {{numNights}} Night</span> </h4>
+                          <h4 class="hotel-view-contents-bottom-title" *ngIf="!displayPrice" > {{ room.currentPrice | vndCurrency }} VND<sub>/Night</sub> </h4>
+                          <p class="hotel-view-contents-bottom-para"> <br> ({{numNights}} Nights, 2 Rooms, {{room.peopleNumber}} Persons) </p>
                         </div>
                       </div>
                     </div>

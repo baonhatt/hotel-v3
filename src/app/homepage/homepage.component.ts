@@ -10,7 +10,8 @@ import { Search } from '../models/search.model';
 import { SearchService } from '../_service/search.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { differenceInDays } from 'date-fns';
+import { daysInWeek, differenceInDays } from 'date-fns';
+import { DatePipe } from '@angular/common';
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -27,7 +28,8 @@ interface RoomType {
 })
 export class HomepageComponent implements OnInit {
   rooms: Room[];
-  numDays!: number;
+  result!: number;
+  numNights!: number;
   filteredRooms!: Room[];
   private apiRooms = 'https://webhotel.click/user/room/get-all';
   blogs: Blog[];
@@ -42,6 +44,7 @@ export class HomepageComponent implements OnInit {
   peopleNumberOptions = [1, 2, 3, 4, 5, 6, 7, 8];
   roomSearchForm!: FormGroup;
   peopleNumber: number = 1;
+
 
 
   constructor(
@@ -74,18 +77,7 @@ export class HomepageComponent implements OnInit {
       this.serviceAttachs = data.serviceAttachs;
     });
 
-    // this.apiService.getRooms().subscribe(
-    //   (rooms: Room[]) => {
-    //     this.rooms = rooms;
-    //     this.filteredRooms = rooms;
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //   }
-    // );
-    // this.apiService.getRooms().subscribe(data => {
-    //   this.rooms = data;
-    // });
+
     this.sortMaxPersonArrayDescending();
     // $.getScript('assets/js/main.js');
     this.apiService.getBlogs().subscribe((res: any) => {
@@ -107,14 +99,11 @@ export class HomepageComponent implements OnInit {
     return Array.from({ length: this.maxPerson }, (_, i) => this.maxPerson - i);
   }
 
-  navigateToPage(url: string) {
-    window.location.href = url;
-    window.scrollTo(0, 0);
-  }
 
 
 
   onSubmit() {
+    const datePipe = new DatePipe('en-US');
 
     const roomTypeId = this.roomSearchForm.value.roomTypeId;
     const peopleNumber = this.roomSearchForm.value.peopleNumber;
@@ -131,8 +120,8 @@ export class HomepageComponent implements OnInit {
 
     const checkInDate = new Date(checkInValue);
     const checkOutDate = new Date(checkOutValue);
-    const numDays = differenceInDays(checkOutDate, checkInDate);
-    alert(checkOutDate)
+    const numberOfNights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
+    const numDays = numberOfNights
 
     var payLoad = {
       checkIn: this.checkIn.value,
@@ -148,16 +137,22 @@ export class HomepageComponent implements OnInit {
       // Truyền kết quả tìm kiếm dưới dạng query parameter
       const bin = JSON.stringify(this.filteredRooms)
       console.log(JSON.parse(bin));
-
+      this.result = res.length
+      // alert(this.result)
       this.filteredRooms.forEach(room => {
-      
 
-        this.numDays = numDays
+        this.numNights = numDays
       });
 
       // this.router.navigate(['/room-listing'], { queryParams: { rooms: JSON.stringify(this.filteredRooms) } });
-      const encodedRooms = encodeURIComponent(JSON.stringify(this.filteredRooms));
-      this.router.navigate(['/room-listing'], { queryParams: { rooms: encodedRooms, numdays:  this.numDays},});
+      if (numDays > 0) {
+
+        const encodedRooms = encodeURIComponent(JSON.stringify(this.filteredRooms));
+        this.router.navigate(['/room-listing'], { queryParams: { rooms: encodedRooms, numdays: this.numNights, results: this.result }, });
+      } else {
+
+        this.toast.error("You have to select to Checkout day!")
+      }
     }, _err => {
       console.log(_err);
     })

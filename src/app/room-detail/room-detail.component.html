@@ -12,64 +12,120 @@
             <div class="details-contents-header"  >
               <div class="row mt-2 slider">
                 <div class="col-11 " >
-                  <div  class="global-slick-init attraction-slider nav-style-one nav-color-two slider-inner-margin"
+                  <div class="global-slick-init attraction-slider nav-style-one nav-color-two slider-inner-margin"
                     data-infinite="true" data-arrows="true" data-dots="false" data-slidesToShow="4" data-swipeToSlide="true"
                     data-autoplay="true" data-autoplaySpeed="2500"
                     data-prevArrow='<div class="prev-icon radius-parcent-50"><i class="las la-angle-left"></i></div>'
                     data-nextArrow='<div class="next-icon radius-parcent-50"><i class="las la-angle-right"></i></div>'
                     data-responsive='[{"breakpoint": 1400,"settings": {"slidesToShow": 4}},{"breakpoint": 1200,"settings": {"slidesToShow": 3}},{"breakpoint": 992,"settings": {"slidesToShow": 3}},{"breakpoint": 768,"settings": {"slidesToShow": 2}},{"breakpoint": 576, "settings": {"slidesToShow": 1} }]'>
 
+                    <div class="attraction-item">
+                      <!-- Các phần tử trong slider -->
+                      <div class="attraction-item1" >
+                        <div class="single-attraction-two radius-20" *ngIf="imageUrls">
+                          <div class="single-attraction-two-thumb">
+                            <a href="{{imageUrls[0]}}" class="gallery-popup">
+                              <img [src]="imageUrls[0]" alt="img">
+                            </a>
+                          </div>
+                          <div class="single-attraction-two-contents"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="attraction-item">
+                      <!-- Các phần tử trong slider -->
+                      <div class="attraction-item1"  *ngIf="imageUrls">
+                        <div class="single-attraction-two radius-20">
+                          <div class="single-attraction-two-thumb">
+                            <a href="{{imageUrls[1]}}" class="gallery-popup">
+                              <img [src]="imageUrls[1]" alt="img">
+                            </a>
+                          </div>
+                          <div class="single-attraction-two-contents"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="attraction-item">
+                      <!-- Các phần tử trong slider -->
+                      <div class="attraction-item1" *ngIf="imageUrls">
+                        <div class="single-attraction-two radius-20">
+                          <div class="single-attraction-two-thumb">
+                            <a href="{{imageUrls[2]}}" class="gallery-popup">
+                              <img [src]="imageUrls[2]" alt="img">
+                            </a>
+                          </div>
+                          <div class="single-attraction-two-contents"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="attraction-item">
+                      <!-- Các phần tử trong slider -->
+                      <div class="attraction-item1" *ngIf="imageUrls">
+                        <div class="single-attraction-two radius-20">
+                          <div class="single-attraction-two-thumb">
+                            <a href="{{imageUrls[3]}}" class="gallery-popup">
+                              <img [src]="imageUrls[3]" alt="img">
+                            </a>
+                          </div>
+                          <div class="single-attraction-two-contents"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="attraction-item">
+                      <!-- Các phần tử trong slider -->
+                      <div class="attraction-item1" *ngIf="imageUrls">
+                        <div class="single-attraction-two radius-20">
+                          <div class="single-attraction-two-thumb">
+                            <a href="{{imageUrls[4]}}" class="gallery-popup">
+                              <img [src]="imageUrls[4]" alt="img">
+                            </a>
+                          </div>
+                          <div class="single-attraction-two-contents"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="attraction-item">
+                      <!-- Các phần tử trong slider -->
+                      <div class="attraction-item1" *ngIf="imageUrls">
+                        <div class="single-attraction-two radius-20">
+                          <div class="single-attraction-two-thumb">
+                            <a href="{{imageUrls[5]}}" class="gallery-popup">
+                              <img [src]="imageUrls[5]" alt="img">
+                            </a>
+                          </div>
+                          <div class="single-attraction-two-contents"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="attraction-item">
+                      <!-- Các phần tử trong slider -->
+                      <div class="attraction-item1" *ngIf="imageUrls">
+                        <div class="single-attraction-two radius-20">
+                          <div class="single-attraction-two-thumb">
+                            <a href="{{imageUrls[6]}}" class="gallery-popup">
+                              <img [src]="imageUrls[6]" alt="img">
+                            </a>
+                          </div>
+                          <div class="single-attraction-two-contents"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="attraction-item">
+                      <!-- Các phần tử trong slider -->
+                      <div class="attraction-item1" *ngIf="imageUrls">
+                        <div class="single-attraction-two radius-20">
+                          <div class="single-attraction-two-thumb">
+                            <a href="{{imageUrls[7]}}" class="gallery-popup">
+                              <img [src]="imageUrls[7]" alt="img">
+                            </a>
+                          </div>
+                          <div class="single-attraction-two-contents"></div>
+                        </div>
+                      </div>
+                    </div>
 
-                    <!-- <div class="attraction-item">
-                      <div class="single-attraction-two radius-20">
-                        <div class="single-attraction-two-thumb">
-                          <a href="https://images.unsplash.com/photo-1613252086325-ac35531fc326?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJvb20lMjBob3RlbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" class="gallery-popup"> <img src="https://images.unsplash.com/photo-1613252086325-ac35531fc326?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJvb20lMjBob3RlbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                              alt="img"> </a>
-                        </div>
-                        <div class="single-attraction-two-contents"></div>
-                      </div>
-                    </div>
-                    <div class="attraction-item">
-                      <div class="single-attraction-two radius-20">
-                        <div class="single-attraction-two-thumb">
-                          <a href="https://images.unsplash.com/photo-1613252086325-ac35531fc326?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJvb20lMjBob3RlbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" class="gallery-popup"> <img src="https://images.unsplash.com/photo-1613252086325-ac35531fc326?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJvb20lMjBob3RlbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                              alt="img"> </a>
-                        </div>
-                        <div class="single-attraction-two-contents"></div>
-                      </div>
-                    </div>
-                    <div class="attraction-item">
-                      <div class="single-attraction-two radius-20">
-                        <div class="single-attraction-two-thumb">
-                          <a href="https://images.unsplash.com/photo-1613252086325-ac35531fc326?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJvb20lMjBob3RlbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" class="gallery-popup"> <img src="https://images.unsplash.com/photo-1613252086325-ac35531fc326?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJvb20lMjBob3RlbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                              alt="img"> </a>
-                        </div>
-                        <div class="single-attraction-two-contents"></div>
-                      </div>
-                    </div>
-                    <div class="attraction-item">
-                      <div class="single-attraction-two radius-20">
-                        <div class="single-attraction-two-thumb">
-                          <a href="https://images.unsplash.com/photo-1613252086325-ac35531fc326?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJvb20lMjBob3RlbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" class="gallery-popup"> <img src="https://images.unsplash.com/photo-1613252086325-ac35531fc326?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHJvb20lMjBob3RlbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                              alt="img"> </a>
-                        </div>
-                        <div class="single-attraction-two-contents"></div>
-                      </div>
-                    </div>
-                    <div class="attraction-item">
-                      <div class="single-attraction-two radius-20">
-                        <div class="single-attraction-two-thumb">
-                          <a href="https://plus.unsplash.com/premium_photo-1678297270523-8775c817d0b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" class="gallery-popup"> <img src="https://plus.unsplash.com/premium_photo-1678297270523-8775c817d0b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                              alt="img"> </a>
-                        </div>
-                        <div class="single-attraction-two-contents"></div>
-                      </div>
-                    </div> -->
-                    <div class="slider">
-                      <div *ngFor="let imageUrl of imageUrls">
-                        <img [src]="imageUrl" alt="Slider Image">
-                      </div>
-                    </div>
+
+
 
 
                   </div>
@@ -122,8 +178,8 @@
               <div class="hotel-view-contents-bottom">
                 <div class="hotel-view-contents-bottom-flex">
                   <div class="hotel-view-contents-bottom-contents">
-                    <h4 class="hotel-view-contents-bottom-title"> {{room.currentPrice}} <sub>/Night</sub> </h4>
-                    <p class="hotel-view-contents-bottom-para"> ({{room.peopleNumber}} Persons, {{room.numberOfSimpleBed}} Beds, 4 Nights) </p>
+                    <h4 class="hotel-view-contents-bottom-title"> {{room.currentPrice | vndCurrency}} <sub>/Night</sub> </h4>
+                    <p class="hotel-view-contents-bottom-para"> ({{room.peopleNumber}} Persons, {{room.numberOfSimpleBed}} Beds, 1 Nights) </p>
                   </div>
                   <div class="btn-wrapper">
                     <a href="javascript:void(0)" routerLink="/checkout/{{room.id}}"class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
