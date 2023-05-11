@@ -22,6 +22,8 @@ export class BookingComponent implements OnInit{
     .subscribe(
       (res)=>{
         this.reservationGetAll = res;
+        console.log(res);
+
       },
       (err) => {
         console.log(err);
