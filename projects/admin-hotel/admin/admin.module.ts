@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes } from '@angular/router';
-import { LoginAdminComponent } from '../src/app/components/login-admin/login-admin.component';
+import { LoginAdminComponent } from '../src/app/pages/login-admin/login-admin.component';
 import { AuthGuard } from '../src/app/_helper/http.guard';
 const routes: Routes = [
   {

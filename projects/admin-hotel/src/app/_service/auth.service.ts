@@ -25,7 +25,6 @@ export class AuthService implements OnInit{
   jwtService: JwtHelperService = new JwtHelperService();
   constructor(private http: HttpClient, private router: Router, private storage: StorageService, private jwtHelper: JwtHelperService, private toast: ToastrService) { }
   ngOnInit(): void {
-    this.loadPage()
   }
   userAuth = new BehaviorSubject<User | null>(null);
   userProfile = new BehaviorSubject<userProfile | null>(null);
@@ -58,15 +57,7 @@ export class AuthService implements OnInit{
         window.location.reload();
       });
   }
-  loadPage(){
-    if(!sessionStorage.getItem('isPageReloaded')){
-      sessionStorage.setItem('isPageReloaded','true');
-      window.location.reload()
-    } else {
-      sessionStorage.removeItem('isPageReloaded');
-    }
 
-  }
   refreshToken(login: TokenModel) {
     return this.http.post<TokenModel>(
       environment.BASE_URL_API + '/v3/token/refresh',
@@ -82,9 +73,10 @@ export class AuthService implements OnInit{
       )
     ));
   }
+
   logout(): void {
-    // Xóa thông tin người dùng khỏi localStorage hoặc sessionStorage khi đăng xuất
-    localStorage.removeItem('token');
+    localStorage.removeItem('token_admin');
+    localStorage.removeItem('user_profile');
   }
 
   isLoggedIn(): boolean {
