@@ -1,57 +1,64 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutpageComponent } from '../../../admin-hotel/src/app/components/layoutpage/layoutpage.component';
-import { BookingComponent } from './components/components/booking/booking.component';
-import { CustomerComponent } from '../../../admin-hotel/src/app/components/components/customer/customer.component';
-import { RoomComponent } from './components/components/room/room.component';
-import { AddbookingComponent } from './components/addbooking/addbooking.component';
-import { LoginAdminComponent } from './components/login-admin/login-admin.component';
-import { WrapcontentComponent } from './components/wrapcontent/wrapcontent.component';
+import { LayoutpageComponent } from './pages/layoutpage/layoutpage.component';
+import { BookingComponent } from './pages/booking/booking.component';
+import { AddbookingComponent } from './components/booking/addbooking/addbooking.component';
+import { LoginAdminComponent } from './pages/login-admin/login-admin.component';
 import { AuthGuard } from './_helper/http.guard';
-import { PageErrorComponent } from './page-error/page-error.component';
-AuthGuard
+import { PageErrorComponent } from './pages/page-error/page-error.component';
+import { CustomerComponent } from './pages/customer/customer.component';
+import { RoomComponent } from './pages/room/room.component';
+AuthGuard;
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full'},
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginAdminComponent,
     data: {
-      requiredAuth: false
+      requiredAuth: false,
     },
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'dashboard',
     component: LayoutpageComponent,
     data: {
-      requiredAuth: true
+      requiredAuth: true,
     },
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
-  { path: 'login', loadChildren: () => import('../../admin/admin.module').then(m => m.AdminModule) },
-  { path: 'dashboard', loadChildren: () => import('../../dashboard/dashboard.module').then(m => m.DashboardModule) },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('../../admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('../../dashboard/dashboard.module').then((m) => m.DashboardModule),
+  },
   {
     path: 'room',
     component: RoomComponent,
     data: {
-      requiredAuth: true
+      requiredAuth: true,
     },
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
-  { path: 'booking', component: BookingComponent},
-  { path: 'customer', component: CustomerComponent},
+  { path: 'booking', component: BookingComponent },
+  { path: 'customer', component: CustomerComponent },
   {
     path: '**',
     component: PageErrorComponent,
     data: {
-      requiredAuth: false
+      requiredAuth: false,
     },
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

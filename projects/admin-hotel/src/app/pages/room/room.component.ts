@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Room, addRoom } from '../../../models/room.model';
-import { ApiService } from '../../../_service/api.service';
 import { Router } from '@angular/router';
 import {
   FormBuilder,
@@ -12,6 +10,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as bootstrap from 'bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { addRoom, Room } from '../../models/room.model';
+import { ApiService } from '../../_service/api.service';
 interface RoomType {
   id: number;
   typeName: string;
