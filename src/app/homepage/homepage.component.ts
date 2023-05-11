@@ -31,6 +31,7 @@ export class HomepageComponent implements OnInit {
   result!: number;
   numNights!: number;
   filteredRooms!: Room[];
+  discountRoom!: Room[];
   private apiRooms = 'https://webhotel.click/user/room/get-all';
   blogs: Blog[];
   roomtoDisplay!: Room[];
@@ -45,6 +46,9 @@ export class HomepageComponent implements OnInit {
   roomSearchForm!: FormGroup;
   peopleNumber: number = 1;
 
+  date = new FormControl(new Date());
+  checkIn = new FormControl(new Date().toISOString());
+  checkOut = new FormControl(new Date().toISOString());
 
 
   constructor(
@@ -66,9 +70,6 @@ export class HomepageComponent implements OnInit {
     })
   }
 
-  date = new FormControl(new Date());
-  checkIn = new FormControl(new Date().toISOString());
-  checkOut = new FormControl(new Date().toISOString());
   ngOnInit(): void {
     this.apiService.searchRoom().subscribe((data: any) => {
       this.maxPerson = data.maxPerson;
@@ -77,7 +78,19 @@ export class HomepageComponent implements OnInit {
       this.serviceAttachs = data.serviceAttachs;
     });
 
+    this.apiService.getRoomOnSale().subscribe(
+      (rooms: Room[]) => {
+        this.rooms = rooms;
+        this.discountRoom = rooms;
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
 
+    // this.apiService.getRooms().subscribe(data => {
+    //   this.rooms = data;
+    // });
     this.sortMaxPersonArrayDescending();
     // $.getScript('assets/js/main.js');
     this.apiService.getBlogs().subscribe((res: any) => {
@@ -99,6 +112,10 @@ export class HomepageComponent implements OnInit {
     return Array.from({ length: this.maxPerson }, (_, i) => this.maxPerson - i);
   }
 
+  navigateToPage(url: string) {
+    window.location.href = url;
+    window.scrollTo(0, 0);
+  }
 
 
 
@@ -120,6 +137,9 @@ export class HomepageComponent implements OnInit {
 
     const checkInDate = new Date(checkInValue);
     const checkOutDate = new Date(checkOutValue);
+
+    const formattedCheckInDate = datePipe.transform(checkInDate, 'yyyy-MM-dd');
+    const formattedCheckOutDate = datePipe.transform(checkOutDate, 'yyyy-MM-dd');
     const numberOfNights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
     const numDays = numberOfNights
 
@@ -145,11 +165,11 @@ export class HomepageComponent implements OnInit {
       });
 
       // this.router.navigate(['/room-listing'], { queryParams: { rooms: JSON.stringify(this.filteredRooms) } });
-      if (numDays > 0) {
+      if(numDays > 0){
 
         const encodedRooms = encodeURIComponent(JSON.stringify(this.filteredRooms));
-        this.router.navigate(['/room-listing'], { queryParams: { rooms: encodedRooms, numdays: this.numNights, results: this.result }, });
-      } else {
+        this.router.navigate(['/room-listing'], { queryParams: { rooms: encodedRooms, numdays:  this.numNights, results: this.result},});
+      }else{
 
         this.toast.error("You have to select to Checkout day!")
       }
@@ -157,10 +177,6 @@ export class HomepageComponent implements OnInit {
       console.log(_err);
     })
   }
-  getRoom() {
-    return this.apiService.getRooms().subscribe(res => {
-      this.filteredRooms = res
-    })
-  }
+
 }
 

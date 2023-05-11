@@ -26,6 +26,7 @@ export class CheckoutComponent implements OnInit {
   dateForm!: FormGroup;
   startDate!: Date;
   numberOfDay!: number;
+  numdayDisplay!: number;
   endDate!: Date;
   numDays!: number;
   roomId!: any;
@@ -67,7 +68,7 @@ export class CheckoutComponent implements OnInit {
       paymentMethod: ['momo'],
 
     });
-
+    this.getRoomById();
     // Lắng nghe sự thay đổi của startDate và endDate
     this.bookForm.get('startDate')?.valueChanges.subscribe(() => {
       this.calculateNumberOfDays();
@@ -76,7 +77,6 @@ export class CheckoutComponent implements OnInit {
     this.bookForm.get('endDate')?.valueChanges.subscribe(() => {
       this.calculateNumberOfDays();
     });
-    this.getRoomById();
 
   }
 
@@ -92,9 +92,9 @@ export class CheckoutComponent implements OnInit {
         const endDate = new Date(endDateValue);
         const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
         const numberOfDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
+        this.numdayDisplay = numberOfDays
         const abc = this.bookForm.get('numberOfDay')?.setValue(numberOfDays);
-        console.log(abc);
+        console.log(this.numdayDisplay);
 
       }
     }
@@ -145,27 +145,24 @@ export class CheckoutComponent implements OnInit {
   }
   payMoMo() {
     const orderInfo = this.rooms.name;
-    const amount = this.rooms.currentPrice;
-    const amountNum1 = amount.toString()
+    const amount = this.rooms.currentPrice
     const orderInfoString = orderInfo.toString();
-    console.log(orderInfoString);
-
+    let amountNum1 = amount * this.numdayDisplay
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    this.http.post<any>(environment.QR_MOMO, { orderInfo: orderInfoString, amount: amountNum1 },)
+    this.http.post<any>(environment.QR_MOMO, { orderInfo: orderInfoString, amount:  amountNum1.toString() },{headers})
       .subscribe(response => {
         const redirectUrl = response['payUrl'];
         if (redirectUrl) {
           window.location.href = redirectUrl;
         }
       }, _err => {
-        this.toast.error(" The booking amount is too high, please switch to another method.")
+        this.toast.error(" The maximum transaction only 50.000.000 đ, please switch to another method.")
       })
     console.log(orderInfo, amount)
   }
 
   payVnPay() {
-
-    this.amountNum1 = this.rooms.currentPrice;
+    this.amountNum1 = this.rooms.currentPrice * this.numdayDisplay;
     this.orderInfoString = this.rooms.name;
 
     this.http.post<any>(environment.BASE_URL_API + '/user/vn-pay/create', { amount: this.amountNum1, orderDescription: this.orderInfoString, name: 'Customer' }).subscribe(res => {

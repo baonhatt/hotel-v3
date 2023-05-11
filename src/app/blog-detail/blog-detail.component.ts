@@ -14,7 +14,7 @@ export class BlogDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private apiService: ApiService){}
 
   ngOnInit(): void {
-
+    window.scrollTo(0, 0);
     this.getRoute(this.route.snapshot.params['id']);
   }
   getRoute(id : any) {

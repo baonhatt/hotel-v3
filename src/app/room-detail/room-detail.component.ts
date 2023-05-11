@@ -16,10 +16,14 @@ export class RoomDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private apiService: ApiService, private viewPort: ViewportScroller){}
   isHomePageLoaded = false;
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.roomId = this.route.snapshot.paramMap.get('id')
     this.viewPort.scrollToPosition([0, 0]);
     this.getRoomById();
+
   }
+
+  
   getRoomById(): void {
     const id = this.route.snapshot.paramMap.get('id')!;
     this.apiService.getRoomDetail(id)

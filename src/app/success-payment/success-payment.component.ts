@@ -17,8 +17,9 @@ export class SuccessPaymentComponent implements OnInit {
   message = this.urlParams.get('message');
   orderType = this.urlParams.get('orderType');
   orderInfo = this.urlParams.get('orderInfo');
-   payType = this.urlParams.get('payType');
-   amount = this.urlParams.get('amount');
+  payType = this.urlParams.get('payType');
+  amount = this.urlParams.get('amount');
+  vnp_ResponseCode = this.urlParams.get('vnp_ResponseCode');
   formGroup!: FormGroup;
   invoiceForm!: FormGroup;
   reservationId!: any;
@@ -38,6 +39,7 @@ export class SuccessPaymentComponent implements OnInit {
       phoneNumber: [''],
       address: ['']
     });
+
     // Get value of bookingForm is stored in checkout component
     const bookingFormStored = JSON.stringify(localStorage.getItem('bookingForm'));
     const savedData = localStorage.getItem('bookingData');
@@ -46,7 +48,7 @@ export class SuccessPaymentComponent implements OnInit {
     if (savedData) {
       // Chuyển đổi chuỗi JSON thành đối tượng JavaScript
       const bookingData = JSON.parse(savedData);
-      this.reservationId =  JSON.parse(savedData);
+      this.reservationId = JSON.parse(savedData);
       // Sử dụng giá trị lấy được
       console.log(bookingData.message);
       console.log(bookingData.reservationId);
@@ -73,20 +75,21 @@ export class SuccessPaymentComponent implements OnInit {
       if (this.resultCode == '0') {
 
         this.http.post<any>(`${environment.BASE_URL_API}/user/invoid/create`, this.invoiceForm.value)
-        .subscribe(respon => {
+          .subscribe(respon => {
 
-          this.toast.success(respon.success.message)
+            this.toast.success(respon.success.message)
 
 
-        }, _err => {
-          this.toast.error(_err.error.message);
+          }, _err => {
+            this.toast.error(_err.error.message);
 
-        })
+          })
       }
 
-      }
+    }
+   this.vnp_ResponseCode == '0'
   }
-  goBackToProFile(){
+  goBackToProFile() {
     this.router.navigate(['/paymentdetail']);
   }
 

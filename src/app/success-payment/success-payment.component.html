@@ -22,6 +22,7 @@
             <i class="fa fa-times" aria-hidden="true"></i>
           </div>
           <h4 class="confirmation-contents-title">{{message}} </h4>
+          <h4 *ngIf="vnp_ResponseCode !== '00'" class="confirmation-contents-title"> Your payment is denied! </h4>
 
           <div class="btn-wrapper flex-btn mt-4 mt-lg-5">
               <a routerLink="/home" class="cmn-btn btn-outline-1 color-one"> Back to Home </a>

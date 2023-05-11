@@ -23,6 +23,8 @@ import { userProfile } from '../models/userProfile.model';
 })
 export class LoginComponent implements OnInit {
   submitted = false;
+  password: any;
+  show = false;
   req: http.HttpRequest<any> | undefined;
   loading = false;
   loginForm!: FormGroup;
@@ -49,8 +51,17 @@ export class LoginComponent implements OnInit {
         ],
       ],
     });
+    this.OnClick()
   }
-
+  OnClick(){
+    if(this.password === 'password'){
+      this.password = 'text';
+      this.show = true;
+    }else{
+      this.password = 'password';
+      this.show = false
+    }
+  }
   routeReset() {
     window.location.href =
       environment.BASE_URL_WEB + `/reset-password?code=reset`;

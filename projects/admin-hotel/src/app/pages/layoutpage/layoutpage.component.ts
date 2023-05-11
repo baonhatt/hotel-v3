@@ -1,12 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../_service/api.service';
+import { Staff } from '../../models/staff.model';
 @Component({
   selector: 'app-layoutpage',
   templateUrl: './layoutpage.component.html',
   styleUrls: ['./layoutpage.component.css']
 })
 export class LayoutpageComponent implements OnInit{
+  numStaff: Staff[] = [];
+
+
+  constructor(private api: ApiService){}
   ngOnInit(): void {
 
+    this.api.getallUser().subscribe( res =>{
+      this.numStaff = res
+      console.log(this.numStaff)
+    })
 
   }
   sideBarOpen = true;
