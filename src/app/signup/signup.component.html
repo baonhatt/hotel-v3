@@ -2,7 +2,9 @@
   <div class="container login-container p-0 signup-container">
     <div class="login-wrapper login-shadow bg-white">
       <div class="login-wrapper-flex">
-        <div class="login-wrapper-thumb">
+        <div class="login-wrapper-contents">
+          <a href=""><img src="assets/img/logo.png" alt="">
+          </a>
           <img src="assets/img/single-page/login2.png" alt="img">
         </div>
         <div class="login-wrapper-contents login-padding">
@@ -16,11 +18,13 @@
               <div *ngIf="submitted && f['userName'].errors" class="invalid-feedback">
                 <div *ngIf="f['userName'].errors['required']">First Name is required</div>
               </div>
+
+
             </div>
             <div class="single-input mt-3">
-              <label class="label-title mb-3"> Email </label>
-              <input class="form-control" id="email" formControlName="Email" type="text" placeholder=" Email "
-                [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+              <label class="label-title mb-3">  Email </label>
+              <input class="form--control" id="email"  formControlName="email" type="text" placeholder=" Email "
+              [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
               <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
                 <div *ngIf="f['email'].errors['required']">Email is required</div>
                 <div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
@@ -46,8 +50,8 @@
                     <div *ngIf="f['phoneNumber'].errors['required']">
                       Phone Number is required.
                     </div>
-                    <div *ngIf="f['phoneNumber'].errors['patern']">
-                      Please Follow your pattern: +84 Enter 10 digit phone Number.
+                    <div *ngIf="f['phoneNumber'].errors['pattern']">
+                      Please Follow your pattern: Enter 10 digit phone Number.
                     </div>
                   </div>
                 </div>
@@ -57,11 +61,13 @@
               <div class="col">
                 <div class="single-input mt-3">
                   <label class="label-title mb-3"> Create Password </label>
-                  <input class="form--control" type="password" formControlName="password" placeholder="Type Password"
+                  <input class="form--control"  [type]="password" type="password" formControlName="password" placeholder="Type Password"
                     [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
                   <div class="icon toggle-password">
-                    <div class="show-icon"> <i class="las la-eye-slash"></i> </div>
-                    <span class="hide-icon"> <i class="las la-eye"></i> </span>
+                    <i (click)="OnClick()" style="margin-left: -30px; cursor: pointer;">
+                      <i class="fa fa-eye" aria-hidden="true" *ngIf="show"></i>
+                      <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="!show"></i>
+                    </i>
                   </div>
                   <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
                     <div class="" *ngIf="f['password'].errors['required']">
@@ -81,12 +87,10 @@
                   <label class="label-title mb-3"> Confirm Password </label>
                   <input class="form--control" type="password" formControlName="confirmPassword" placeholder="Confirm Password"
                     [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }" required>
-                    <div class="icon toggle-password">
-                      <div class="show-icon"> <i class="las la-eye-slash"></i> </div>
-                      <span class="hide-icon"> <i class="las la-eye"></i> </span>
-                    </div>
+
+
                   <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
-                    <div class="inputerror" *ngIf="f['confirmPassword'].errors['required']">
+                    <div class="inputerror" *ngIf="f['confirmPassword'].errors['passwordMismatch']">
                       Password not match!
                     </div>
                   </div>
@@ -102,10 +106,12 @@
                   Conditions </a>,
                 and <a class="color-one" href="javascript:void(0)"> privacy policy </a> </label>
             </div>
-            <button class="submit-btn w-100 mt-3 disabled" type="submit" id="signup"> Sign Up Now <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>  </button>
+            <button class="submit-btn w-100 mt-3 disabled" type="submit" id="signup"> Sign Up Now  </button>
             <span class="account color-light mt-3"> Already have an account? <a class="color-one" routerLink="/login">
                 Login </a> </span>
           </form>
+
+
         </div>
       </div>
     </div>

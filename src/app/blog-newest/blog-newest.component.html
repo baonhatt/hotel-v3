@@ -8,7 +8,7 @@
       <div class="col-xxl-4 col-lg-4 col-md-6" *ngFor="let b of blogtoDisplay;let i=index;">
         <div class="single-blog blog-two">
           <div class="single-blog-thumbs">
-            <a (click)="navigateToPage('/blog-detail/{{b.id}}')"> <img class="lazyloads" src="{{b.image}}"
+            <a routerLink="/blog-detail/{{b.id}}"> <img class="lazyloads" src="{{b.image}}"
                 alt="ImgeTitle">
             </a>
             <div class="single-blog-thumbs-date">
@@ -25,7 +25,7 @@
                 </a> </span>
             </div>
             <h4 class="single-blog-contents-title mt-3"> <a
-                (click)="navigateToPage('/blog-detail/{{b.id}}')">{{b.shortTitle}}
+                routerLink="/blog-detail/{{b.id}}">{{b.shortTitle}}
               </a> </h4>
           </div>
         </div>

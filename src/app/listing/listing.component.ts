@@ -159,7 +159,6 @@ export class ListingComponent implements OnInit {
     });
   }
   onSubmit() {
-    const datePipe = new DatePipe('en-US');
 
     const roomTypeId = this.roomSearchForm.value.roomTypeId;
     const peopleNumber = this.roomSearchForm.value.peopleNumber;
@@ -177,8 +176,7 @@ export class ListingComponent implements OnInit {
     const checkInDate = new Date(checkInValue);
     const checkOutDate = new Date(checkOutValue);
 
-    const formattedCheckInDate = datePipe.transform(checkInDate, 'yyyy-MM-dd');
-    const formattedCheckOutDate = datePipe.transform(checkOutDate, 'yyyy-MM-dd');
+
     const numberOfNights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
     const numDays = numberOfNights
 
@@ -192,15 +190,16 @@ export class ListingComponent implements OnInit {
     }
 
     if(numDays > 0 ){
-
+      this.deleteData
       this.http.post<Room[]>(`https://webhotel.click/user/room/get-all-by`, payLoad).subscribe(res => {
         this.filteredRooms = res;
         // Truyền kết quả tìm kiếm dưới dạng query parameter
         const bin = JSON.stringify(this.filteredRooms)
-        console.log(JSON.parse(bin));
+        // console.log(JSON.parse(bin));
         // alert(this.result)
         this.filteredRooms.forEach(room => {
 
+          this.currentPrice = numDays
           this.numNights = numDays
         });
 
