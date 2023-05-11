@@ -38,7 +38,9 @@ export class ApiService {
     return this.http.post<Room>(url, dataSearch);
   }
 
-
+  getRoomOnSale(){
+    return this.http.get<Room[]>(environment.BASE_URL_API + '/user/room/get-top-on-sale');
+  }
   postRoom(_room: Room) {
     return this.http.post<Room>(environment.BASE_URL_API + '/user/room/get-by-id', _room);
   }

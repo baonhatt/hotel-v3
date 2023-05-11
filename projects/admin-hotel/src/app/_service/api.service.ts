@@ -8,6 +8,7 @@ import { Blog } from '../models/blog.model';
 import { User } from './user.model';
 import { Data } from '@angular/router';
 import { Search } from 'src/app/models/search.model';
+import { Staff } from '../models/staff.model';
 
 @Injectable({
   providedIn: 'root'
@@ -61,7 +62,7 @@ export class ApiService {
     this.roomData[roomNumber] = { ...this.roomData[roomNumber], ...data };
   }
 
- 
+
 
   bookRoom(startDate: Data, enDate: Data, roomId: string, numberOfDays: number): Observable<any>{
 
@@ -82,7 +83,7 @@ export class ApiService {
     return this.http.get<Blog[]>(this.apiBlog);
   }
   getBlogDetail(id: number): Observable<Blog>{
-    return this.http.get<Blog>(`${this.apiBlog}/${id}`).pipe()
+    return this.http.get<Blog>(`${this.apiBlog}/${id}`).pipe();
   }
 
 
@@ -94,6 +95,9 @@ export class ApiService {
     return this.user
   }
 
+  getallUser(){
+    return this.http.get<Staff[]>(environment.BASE_URL_API + '/v2/admin/account/get-all');
+  }
 
 
 }

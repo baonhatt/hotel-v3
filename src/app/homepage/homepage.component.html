@@ -1,5 +1,6 @@
 <app-header></app-header>
 <app-spinner></app-spinner>
+
 <div class="banner-area banner-area-two banner-bg">
   <div class="banner-shapes">
     <img class="animation" src="assets/img/banner/banner-shapes.png" alt="shapes">
@@ -7,6 +8,8 @@
   </div>
   <div class="container">
     <div class="banner-area-flex">
+
+
       <div class="banner-single-content text-white">
         <h2 class="banner-single-content-title fw-700"> Book our <span class="banner-single-content-title-shape">
             Hotels, Stays </span> for your next <span class="banner-single-content-title-shape star-shape"> tour </span>
@@ -123,10 +126,13 @@
           <i class="fa fa-refresh" aria-hidden="true"></i>
         </button> -->
       </form>
+      <div class="section-title center-text margin-title">
+        <h2 class="h2"> Hot sales room ! </h2>
+        <div class="section-title-line"> </div>
+      </div>
 
-
-    <!-- <div class="container-search">
-      <div class="row" *ngFor="let room of filteredRooms">
+    <div class="container-search">
+      <div class="row" *ngFor="let room of discountRoom">
         <div class="col">
           <div style="margin-top: 12px" class="hotel-view bg-white radius-20">
             <div class="hotel-view-flex">
@@ -161,10 +167,11 @@
                 <div class="hotel-view-contents-bottom">
                   <div class="hotel-view-contents-bottom-flex">
                     <div class="hotel-view-contents-bottom-contents d-flex flex-wrap  ">
-                      <h4 class="hotel-view-contents-bottom-title"> {{room.currentPrice | currency}} VND<sub>/Night</sub> </h4>
+                      <h4 class="hotel-view-contents-bottom-title"> {{room.currentPrice | vndCurrency}}<sub>/Night</sub> </h4>
 
                     </div>
                   </div>
+                  <h4 class="hotel-view-contents-bottom-title discountprice"> {{room.discountPrice | vndCurrency}}<sub>/Night</sub> </h4>
                   <p class="hotel-view-contents-bottom-para">
                     (4 Nights, 2 Rooms, {{room.peopleNumber}} Persons) </p>
                 </div>
@@ -173,7 +180,7 @@
           </div>
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
     </div>
   </div>

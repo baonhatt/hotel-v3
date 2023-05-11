@@ -31,6 +31,7 @@ export class HomepageComponent implements OnInit {
   result!: number;
   numNights!: number;
   filteredRooms!: Room[];
+  discountRoom!: Room[];
   private apiRooms = 'https://webhotel.click/user/room/get-all';
   blogs: Blog[];
   roomtoDisplay!: Room[];
@@ -45,6 +46,9 @@ export class HomepageComponent implements OnInit {
   roomSearchForm!: FormGroup;
   peopleNumber: number = 1;
 
+  date = new FormControl(new Date());
+  checkIn = new FormControl(new Date().toISOString());
+  checkOut = new FormControl(new Date().toISOString());
 
 
   constructor(
@@ -66,9 +70,6 @@ export class HomepageComponent implements OnInit {
     })
   }
 
-  date = new FormControl(new Date());
-  checkIn = new FormControl(new Date().toISOString());
-  checkOut = new FormControl(new Date().toISOString());
   ngOnInit(): void {
     this.apiService.searchRoom().subscribe((data: any) => {
       this.maxPerson = data.maxPerson;
@@ -77,15 +78,16 @@ export class HomepageComponent implements OnInit {
       this.serviceAttachs = data.serviceAttachs;
     });
 
-    // this.apiService.getRooms().subscribe(
-    //   (rooms: Room[]) => {
-    //     this.rooms = rooms;
-    //     this.filteredRooms = rooms;
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //   }
-    // );
+    this.apiService.getRoomOnSale().subscribe(
+      (rooms: Room[]) => {
+        this.rooms = rooms;
+        this.discountRoom = rooms;
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+
     // this.apiService.getRooms().subscribe(data => {
     //   this.rooms = data;
     // });
@@ -175,10 +177,6 @@ export class HomepageComponent implements OnInit {
       console.log(_err);
     })
   }
-  getRoom() {
-    return this.apiService.getRooms().subscribe(res => {
-      this.filteredRooms = res
-    })
-  }
+
 }
 
