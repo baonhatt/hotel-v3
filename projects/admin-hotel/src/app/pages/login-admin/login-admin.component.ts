@@ -18,6 +18,7 @@ export class LoginAdminComponent implements OnInit {
   email: any;
   password: any;
   loading = false;
+  show = false;
   loginForm!: FormGroup;
   data: any;
   userProfile: any;
@@ -43,7 +44,15 @@ export class LoginAdminComponent implements OnInit {
       ],
     });
   }
-
+  OnClick(){
+    if(this.password === 'password'){
+      this.password = 'text';
+      this.show = true;
+    }else{
+      this.password = 'password';
+      this.show = false
+    }
+  }
   routeReset() {
     window.location.href =
       environment.BASE_URL_WEB + `/reset-password?code=reset`;
