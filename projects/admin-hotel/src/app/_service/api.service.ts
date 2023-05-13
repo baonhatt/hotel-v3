@@ -9,6 +9,7 @@ import { User } from './user.model';
 import { Data } from '@angular/router';
 import { Search } from 'src/app/models/search.model';
 import { Staff } from '../models/staff.model';
+import { ServiceAttach } from '../models/serviceAttach.model';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,19 @@ export class ApiService {
   }
 
 
+  bookRoom(startDate: Data, enDate: Data, roomId: string, numberOfDays: number): Observable<any>{
+
+    const data = {
+         start_date: startDate,
+         end_date: enDate,
+         room_id: roomId,
+         number_of_days: numberOfDays
+       };
+       return this.http.post(environment.BASE_URL_API + '', data);
+
+     }
+
+  /////////////////////////// Room Type
   getAllRoomType(): Observable<roomType[]>{
     return this.http.get<roomType[]>(environment.BASE_URL_API + '/v2/admin/room-type/get-all');
   }
@@ -75,17 +89,22 @@ export class ApiService {
   deleteRoomType(id: number){
     return this.http.delete(environment.BASE_URL_API + `/v2/admin/room-type/delete?id=${id}`)
   }
-  bookRoom(startDate: Data, enDate: Data, roomId: string, numberOfDays: number): Observable<any>{
 
-    const data = {
-         start_date: startDate,
-         end_date: enDate,
-         room_id: roomId,
-         number_of_days: numberOfDays
-       };
-       return this.http.post(environment.BASE_URL_API + '', data);
+  /////////////////////////// Room service
+  getAllService(): Observable<ServiceAttach[]>{
+    return this.http.get<ServiceAttach[]>(environment.BASE_URL_API + '/v2/admin/service-attach/get-all');
+  }
+  createService(typeName: string){
+    return this.http.post(environment.BASE_URL_API + '/v2/admin/service-attach/create', typeName);
+  }
+  updateService(data: string, id: number): Observable<any> {
+    return this.http.post( environment.BASE_URL_API + `/v2/admin/service-attach/update?id=${id}`, data);
+  }
+  deleteService(id: number){
+    return this.http.delete(environment.BASE_URL_API + `/v2/admin/service-attach/delete?id=${id}`)
+  }
 
-     }
+
 
   /////////////////////////////////////////// Blog API
 

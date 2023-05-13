@@ -33,6 +33,7 @@ import { CustomerComponent } from './pages/customer/customer.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { EmployeeComponent } from './pages/employee/employee.component';
 import { RoomtypeComponent } from './pages/roomtype/roomtype.component';
+import { RoomservicesComponent } from './pages/roomservices/roomservices.component';
 @NgModule({
   declarations: [
     BellNotifComponent,
@@ -49,8 +50,8 @@ import { RoomtypeComponent } from './pages/roomtype/roomtype.component';
     PaymentComponent,
     EmployeeComponent,
     SpinnerComponent,
-    RoomtypeComponent
-
+    RoomtypeComponent,
+    RoomservicesComponent
   ],
   imports: [
     BrowserAnimationsModule,
