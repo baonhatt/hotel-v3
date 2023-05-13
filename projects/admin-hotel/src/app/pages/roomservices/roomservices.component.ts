@@ -4,6 +4,7 @@ import { roomType } from '../../models/room.model';
 import { ApiService } from '../../_service/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceAttach } from '../../models/serviceAttach.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-roomservices',
@@ -16,10 +17,12 @@ export class RoomservicesComponent {
   id!: number;
   roomType!: ServiceAttach[];
 
-  nameTypeForm!: FormGroup;
+  serviceForm!: FormGroup;
   constructor(private api: ApiService, private fb: FormBuilder, private toast: ToastrService){
-    this.nameTypeForm = this.fb.group({
-      TypeName : [''],
+    this.serviceForm = this.fb.group({
+      name : [''],
+      icon : [''],
+      description : [''],
       // icon
     })
   }
@@ -36,27 +39,28 @@ export class RoomservicesComponent {
       this.roomType = res;
     })
   }
-  createRoomType(nameTypeForm: FormGroup){
-    // const nameType = this.nameTypeForm?.get('nameType')?.value;
-    return this.api.createRoomType(nameTypeForm.value).subscribe( res=>{
+  createRoomType(serviceForm: FormGroup){
+    // const service = this.serviceForm?.get('service')?.value;
+    return this.api.createService(serviceForm.value).subscribe( res=>{
 
       this.toast.success("Add successfully!");
       this.getAll();
     }, err => {
-      this.toast.error(err)
+      this.toast.error(err);
     })
   }
-  update(nameTypeForm: FormGroup){
-     this.api.updateRoomType(nameTypeForm.value, this.id = 5).subscribe( res =>{
+  update(serviceForm: FormGroup){
+     this.api.updateService(serviceForm.value, this.id).subscribe( res =>{
       this.toast.success("Update successfully!");
       this.getAll();
 
     }, err => {
-      this.toast.error(err)
+      this.toast.error(err);
     })
   }
-  deleteType(id: number){
-    this.api.deleteRoomType(id).subscribe(res=>{
+  deleteService(id: number){
+
+    this.api.deleteService(id).subscribe(res=>{
       this.toast.success("Delete successfully!");
     },err =>{
       this.toast.error(err);

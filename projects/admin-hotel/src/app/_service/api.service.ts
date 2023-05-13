@@ -101,6 +101,7 @@ export class ApiService {
     return this.http.post( environment.BASE_URL_API + `/v2/admin/service-attach/update?id=${id}`, data);
   }
   deleteService(id: number){
+
     return this.http.delete(environment.BASE_URL_API + `/v2/admin/service-attach/delete?id=${id}`)
   }
 

@@ -1,5 +1,5 @@
 export class ServiceAttach {
-  id!: string
+  id!: number
   name!: string
   icon!: string
   description!: string
