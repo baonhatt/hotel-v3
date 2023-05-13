@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Room, addRoom } from '../models/room.model';
+import { Room, addRoom, roomType } from '../models/room.model';
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment.development';
 import { Blog } from '../models/blog.model';
@@ -63,7 +63,18 @@ export class ApiService {
   }
 
 
-
+  getAllRoomType(): Observable<roomType[]>{
+    return this.http.get<roomType[]>(environment.BASE_URL_API + '/v2/admin/room-type/get-all');
+  }
+  createRoomType(typeName: string){
+    return this.http.post(environment.BASE_URL_API + '/v2/admin/room-type/create', typeName);
+  }
+  updateRoomType(data: string, id: number): Observable<any> {
+    return this.http.post( environment.BASE_URL_API + `/v2/admin/room-type/update?id=${id}`, data);
+  }
+  deleteRoomType(id: number){
+    return this.http.delete(environment.BASE_URL_API + `/v2/admin/room-type/delete?id=${id}`)
+  }
   bookRoom(startDate: Data, enDate: Data, roomId: string, numberOfDays: number): Observable<any>{
 
     const data = {

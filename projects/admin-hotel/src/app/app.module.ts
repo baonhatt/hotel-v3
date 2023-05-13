@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LayoutpageComponent } from './pages/layoutpage/layoutpage.component';
@@ -33,6 +32,7 @@ import { RoomComponent } from './pages/room/room.component';
 import { CustomerComponent } from './pages/customer/customer.component';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { EmployeeComponent } from './pages/employee/employee.component';
+import { RoomtypeComponent } from './pages/roomtype/roomtype.component';
 @NgModule({
   declarations: [
     BellNotifComponent,
@@ -48,7 +48,8 @@ import { EmployeeComponent } from './pages/employee/employee.component';
     PageErrorComponent,
     PaymentComponent,
     EmployeeComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    RoomtypeComponent
 
   ],
   imports: [

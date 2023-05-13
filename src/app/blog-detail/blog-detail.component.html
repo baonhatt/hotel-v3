@@ -21,52 +21,37 @@
 
 
 <section class="blog-details-area pat-100 pab-100">
-  <div class="container">
+  <div class="container" *ngIf="blog$ | async as blog">
     <div class="shop-contents-wrapper">
       <div class="row gy-5">
         <div class="col-xl-8 col-lg-8" >
           <div  class="blog-details-wrapper">
             <div class="single-blog-details">
               <div class="single-blog-details-content pt-0">
-                <h2 class="single-blog-details-content-title fw-500"> {{blogDetail.longTitle}} </h2>
+                <h2 class="single-blog-details-content-title fw-500"> {{blog.fields.shortTitle}} </h2>
                 <div class="single-blog-details-content-tags mt-3">
                   <span class="single-blog-details-content-tags-item"> <a href="javascript:void(0)"> Category </a>
                   </span>
-                  <span class="single-blog-details-content-tags-item"> {{blogDetail.createdAt | date}} </span>
+                  <span class="single-blog-details-content-tags-item"> {{blog.fields.dateCreate | date}} </span>
                 </div>
                 <div class="single-blog-details-thumb mt-4">
-                  <img class="radius-5" src="{{blogDetail.image}}" alt="">
+                  <img class="radius-5"  [src]="blog.fields.imageBlog.fields.file.url" alt="">
                 </div>
-
-                <p class="single-blog-details-content-para mt-4">{{blogDetail.longContent}}</p>
                 <blockquote class="section-bg-1 mt-4">
                   <div class="blockquote-contents">
                     <h3 class="blockquote-contents-title color-heading fw-500"> What do you currently do to manage? Do
                       you feel that is getting the results you want?” </h3>
                   </div>
                 </blockquote>
-                <p class="single-blog-details-content-para mt-4"> One for all and all for one, Muskehounds are always
-                  ready. One for all and all for one, helping everybody. One for all and all for one, it’s a pretty
-                  story. Sharing everything with fun, that’s the way to be. One for
-                  all and all for one, Muskehounds are always ready. One for all and all for one, helping everybody.
-                  One for all and all for one, can sound pretty corny. If you’ve got a problem chum, think how it
-                  could be. </p>
-                <div class="blog-details-advertise center-text mt-4">
-                  <a href="javascript:void(0)"> <img class="radius-5" src="assets/img/blog/advertise.jpg" alt=""> </a>
-                </div>
-                <p class="single-blog-details-content-para mt-4"> Dolor sit amet, consectetur adipiscing elit. Semper
-                  cras elementum sit risus ornare ac. Sed donec malesuada elit vitae mollis cras quam. Ut risus
-                  euismod etiam vel imperdiet pellentesque. Tristique neque lacinia non
-                  interdum. Amet orci, neque, mauris, amet mattis ultrices iaculis eget lacus. Mi placerat sagittis
-                  malesuada enim etiam at tellus. Sed et vitae enim nam a lacinia tristique nunc. Ac posuere enim
-                  faucibus quis id
-                  tellus rutrum sed proin. Faucibus turpis in scelerisque elementum mauris vestibulum. </p>
-                <p class="single-blog-details-content-para mt-4"> Sed donec malesuada elit vitae mollis cras quam. Ut
-                  risus euismod etiam vel imperdiet pellentesque. Tristique neque lacinia non interdum. Amet orci,
-                  neque, mauris, amet mattis ultrices iaculis eget lacus. Mi placerat
-                  sagittis malesuada enim etiam at tellus. Sed et vitae enim nam a lacinia tristique nunc. Ac posuere
-                  enim faucibus quis id tellus rutrum sed proin. Faucibus turpis in scelerisque elementum mauris
-                  vestibulum. </p>
+
+                <p class="single-blog-details-content-para mt-4" *ngFor="let item of blog.fields.longContent.content">
+                  <ng-container [ngSwitch]="item.nodeType">
+                    <p  class="single-blog-details-content-para mt-4">{{ item.content[0].value }}</p>
+                    
+                  </ng-container>
+                </p>
+
+
               </div>
             </div>
 

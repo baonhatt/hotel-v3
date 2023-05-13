@@ -8,6 +8,8 @@ import { AuthGuard } from './_helper/http.guard';
 import { PageErrorComponent } from './pages/page-error/page-error.component';
 import { CustomerComponent } from './pages/customer/customer.component';
 import { RoomComponent } from './pages/room/room.component';
+import { RoomtypeComponent } from './pages/roomtype/roomtype.component';
+import { RoomservicesComponent } from './pages/roomservices/roomservices.component';
 AuthGuard;
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -26,6 +28,7 @@ const routes: Routes = [
       requiredAuth: true,
     },
     canActivate: [AuthGuard],
+    children: []
   },
   {
     path: 'login',
@@ -45,8 +48,38 @@ const routes: Routes = [
     },
     canActivate: [AuthGuard],
   },
-  { path: 'booking', component: BookingComponent },
-  { path: 'customer', component: CustomerComponent },
+  {
+    path: 'roomtype',
+    component: RoomtypeComponent,
+    data: {
+      requiredAuth: true,
+    },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'roomservice',
+    component: RoomservicesComponent,
+    data: {
+      requiredAuth: true,
+    },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'booking',
+    component: BookingComponent,
+    data: {
+      requiredAuth: true,
+    },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'customer',
+    component: BookingComponent,
+    data: {
+      requiredAuth: true,
+    },
+    canActivate: [AuthGuard],
+  },
   {
     path: '**',
     component: PageErrorComponent,

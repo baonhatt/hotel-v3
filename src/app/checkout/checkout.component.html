@@ -133,18 +133,32 @@
               <h4 class="checkout-sidebar-title"> Booking Details </h4>
               <div class="checkout-sidebar-contents">
                 <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
-                  <li class="list"> <span class="regular"> Checking In </span> <span class="strong" [innerHTML]="startDate">
+                  <li class="list"> <span class="regular"> Room name </span> <span class="strong" > {{rooms.name}}
                     </span>
                   </li>
-                  <li class="list"> <span class="regular"> Checking Out </span> <span class="strong" [innerHTML]="endDate">
-                    </span> </li>
-                  <li class="list"> <span class="regular"> Number of Rooms </span> <span class="strong" > {{rooms.roomNumber}} </span>
+                  <li class="list"> <span class="regular"> Room number </span> <span class="strong" > {{rooms.roomNumber}}
+                    </span>
                   </li>
+                  <li class="list"> <span class="regular"> Room type </span> <span class="strong" > {{rooms.roomTypeName}}
+                    </span>
+                  </li>
+                  <li class="list"> <span class="regular"> Service attachs </span>  <span
+                    *ngFor="let item of rooms.serviceAttachs; let i = index; let length = count">
+                    <span *ngIf="i == length - 1; else serviceAttach">{{item.name}}</span>
+                    <ng-template #serviceAttach>{{item.name}}, </ng-template>
+                  </span>
+                  </li>
+
+
+                  <li class="list"> <span class="regular"> Checking In </span> <span class="strong strongdate" [innerHTML]="startDate">
+                    </span> </li>
+                  <li class="list"> <span class="regular"> Checking Out </span> <span class="strong strongdate" [innerHTML]="endDate">
+                    </span> </li>
+
                   <li class="list"> <span class="regular"> Total Stay </span> <span class="strong"> <span [innerHTML]="numberOfDay + 1  "></span> Days, <span [innerHTML]="numberOfDay"></span> Nights
                     </span> </li>
-                  <li class="list"> <span class="regular"> Number of Person </span> <span class="strong"> 5 Person
-                    </span> </li>
-                  <li class="list"> <span class="regular"> Number of Children </span> <span class="strong"> 2 Children
+
+                  <li class="list"> <span class="regular"> Number of people </span> <span class="strong"> 2
                     </span> </li>
                 </ul>
               </div>

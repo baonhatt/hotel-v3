@@ -41,13 +41,16 @@
 
 
 
+                                    <div class="icon toggle-password">
+                                      <i (click)="OnClick()"  style="margin-left: -30px; cursor: pointer;">
+                                        <i class="fa fa-eye" aria-hidden="true" *ngIf="show"></i>
+                                        <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="!show"></i>
+                                      </i>
+                                    </div>
                                     <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
                                       <div *ngIf="f['password'].errors['required']">Password is required</div>
                                       <div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</div>
                                   </div>
-                                      <div class="input-group-text" data-password="false">
-                                          <span class="password-eye"></span>
-                                      </div>
                                   </div>
                               </div>
 
