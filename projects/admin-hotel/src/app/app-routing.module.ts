@@ -10,7 +10,6 @@ import { CustomerComponent } from './pages/customer/customer.component';
 import { RoomComponent } from './pages/room/room.component';
 import { RoomtypeComponent } from './pages/roomtype/roomtype.component';
 import { RoomservicesComponent } from './pages/roomservices/roomservices.component';
-AuthGuard;
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
@@ -28,7 +27,6 @@ const routes: Routes = [
       requiredAuth: true,
     },
     canActivate: [AuthGuard],
-    children: []
   },
   {
     path: 'login',
@@ -74,7 +72,7 @@ const routes: Routes = [
   },
   {
     path: 'customer',
-    component: BookingComponent,
+    component: CustomerComponent,
     data: {
       requiredAuth: true,
     },

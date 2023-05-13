@@ -31,7 +31,7 @@ export class SignupComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       userName: ['', Validators.required, Validators.name],
       phoneNumber: ['',  [Validators.required, Validators.pattern("[0-9 ]{10}")]],
-      password: ['', [Validators.required, Validators.pattern('^((?!.*[s])(?=.*[A-Z])(?=.*d).{8,99})')]],
+      password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*\d).{8,}$/)]],
       confirmPassword: ['', [Validators.required, this.passwordMatchValidator]]
     })
     this.injectScript("assets/js/signup/signup.js");
