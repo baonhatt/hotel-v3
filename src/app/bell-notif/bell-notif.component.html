@@ -18,22 +18,31 @@
   </button>
   <div class="notifications js-notifications">
     <h3>Notifications</h3>
+    <span *ngIf="count_nof == 0; else count_nof_exists" class="">You don't have notifications</span>
+    <ng-template #count_nof_exists>
     <ul class="notifications-list">
-      <li class="item no-data">You don't have notifications</li>
-      <div *ngFor="let item of items_nof">
-        <li class="item js-item " data-id="2">
-          <div class="details">
-            <span class="title">{{item.title}}</span>
-            <span class="date">11:46 AM</span>
-          </div>
-          <button type="button" class="button-default button-dismiss js-dismiss">x</button>
-        </li>
-        <!-- <li class="item js-item expired" data-id="1">
-          <div class="details"><span class="title">Meeting with Ben's agent.</span><span class="date">2014-06-27</span></div><button
-            type="button" class="button-default button-dismiss js-dismiss">×</button>
-        </li> -->
-      </div>
-    </ul><a href="#" class="show-all">Show all notifications</a>
+        <div *ngFor="let item of items_nof, let i = index">
+          <li class="item js-item " *ngIf="item.status == true;else status_false">
+            <div class="details">
+              <span class="title">{{item.title}}</span>
+              <p>{{item.description}}</p>
+              <span class="date">{{item.createAt}}</span>
+            </div>
+            <button type="button" class="button-default button-dismiss js-dismiss" (click)="deleteNotification(item.id, i)">x</button>
+          </li>
+          <ng-template #status_false>
+            <li class="item js-item expired" data-id="1">
+              <div class="details">
+                <span class="title">{{item.title}}</span>
+                <p>{{item.description}}</p>
+                <span class="date">{{item.createAt}}</span>
+              </div>
+              <button type="button" class="button-default button-dismiss js-dismiss" (click)="deleteNotification(item.id, i)">x</button>
+            </li>
+          </ng-template>
+        </div>
+      </ul><a href="#" class="show-all">Show all notifications</a>
+    </ng-template>
   </div>
 
 </div>

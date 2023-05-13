@@ -4,6 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import * as signalR from '@microsoft/signalr';
 import { HubConnection, IHttpConnectionOptions } from '@microsoft/signalr';
 import { catchError, first, lastValueFrom, map, Observable, of } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 import { AuthService } from '../../_service/auth.service';
 import { StorageService } from '../../_service/storage.service';
 import { TokenModel } from '../../_service/token.model';
@@ -22,14 +23,10 @@ export class BellNotifComponent implements OnInit {
   constructor(private storage: StorageService, private jwtHelper: JwtHelperService,private authService: AuthService) {}
   async ngOnInit() {
     await this.checkAndRefreshToken();
-    console.log(3);
-
     if (this.storage.isLoggedIn()) {
-      console.log("ddax vafo");
-
       var hubConnection: HubConnection;
       hubConnection = new signalR.HubConnectionBuilder()
-        .withUrl('https://webhotel.click/hub', {accessTokenFactory: () => this.storage.getAccessToken() })
+        .withUrl(environment.BASE_URL_API + '/hub', {accessTokenFactory: () => this.storage.getAccessToken() })
         .build();
       hubConnection
         .start()
@@ -60,7 +57,6 @@ export class BellNotifComponent implements OnInit {
       if (isTokenExpired) {
         await this.refreshToken(token);
         console.log(2);
-
       }
     }
   }
@@ -73,8 +69,6 @@ export class BellNotifComponent implements OnInit {
     .catch((error)=>{
       localStorage.removeItem('token');
             localStorage.removeItem('user_profile');
-            console.log("1");
-
             // toastr.error("Login session has expired, please login again");
             // router.navigate(["login"]);
     })
