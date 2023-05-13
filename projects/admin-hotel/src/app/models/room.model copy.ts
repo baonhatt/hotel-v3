@@ -33,9 +33,3 @@ export class addRoom {
   roomTypeId!: number
   peopleNumber!: string
 }
-
-export class roomType {
-  id!: number
-  typeName!: string
-}
-
