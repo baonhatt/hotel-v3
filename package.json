@@ -28,7 +28,7 @@
     "@coreui/icons": "^3.0.1",
     "@coreui/icons-angular": "^4.3.17",
     "@microsoft/signalr": "^7.0.5",
-    "angular-validation": "^1.4.5",
+    "angular-validation": "^1.4.1",
     "bootstrap": "^5.2.3",
     "contentful": "^10.2.0",
     "date-fns": "^2.30.0",

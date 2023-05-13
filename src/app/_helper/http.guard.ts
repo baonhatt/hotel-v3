@@ -1,4 +1,3 @@
-
 import { HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
@@ -13,10 +12,13 @@ import { AuthService } from '../_service/auth.service';
 import { StorageService } from '../_service/storage.service';
 import { User } from '../_service/user.model';
 
-
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private auth: AuthService, private router: Router, private storage: StorageService) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private storage: StorageService
+  ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -25,14 +27,21 @@ export class AuthGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-      const id = Number(route.paramMap.get('id'));
+    const id = Number(route.paramMap.get('id'));
 
-    // var check = this.auth.checkAccessTokenAndRefresh();
-    //add js will load
-    $.getScript('assets/js/main.js');
+    var check = true;
+    $(window).on('beforeunload', function(){
+      console.log("not load");
+
+  });
+
+      if (check == true) {
+        $.getScript('assets/js/main.js');
+      }
+
     var token = this.storage.isLoggedIn();
     if (token) {
-      if (state.url == "/login"){
+      if (state.url == '/login') {
         this.router.navigate(['/']);
         return true;
       }
