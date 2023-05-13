@@ -62,6 +62,7 @@ export class RoomservicesComponent {
 
     this.api.deleteService(id).subscribe(res=>{
       this.toast.success("Delete successfully!");
+      this.getAll()
     },err =>{
       this.toast.error(err);
     })
