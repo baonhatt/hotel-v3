@@ -229,8 +229,10 @@
                       egestas leo. Aliquam ut ante lobortis tellus cursus pellentesque. Praesent feugiat tellus quis
                       aliquet </p>
                     <div class="review-tab-contents-author mt-4">
-                      <h4 class="review-tab-contents-author-name"> Robert Fox </h4>
-                      <p class="review-tab-contents-author-para mt-2"> Designer </p>
+
+                      <div class="single-reservation-btn">
+                        <a class="btn btn-primary" (click)="openDialog()" class="dash-btn btn-small-2"> Rate Now </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -308,7 +310,7 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-5">
-        <div class="sticky-top">
+        <div class="readonly">
           <div class="hotel-details-widget hotel-details-widget-padding widget bg-white radius-10">
             <div class="details-sidebar">
               <div class="details-sidebar-dropdown custom-form">
@@ -428,7 +430,7 @@
                   <img src="assets/img/single-page/offer.png" alt="">
                 </div>
                 <div class="btn-wrapper mt-5">
-                  <a href="javascript:void(0)" class="cmn-btn btn-bg-white"> Book Now </a>
+                  <button type="button" class="cmn-btn btn-bg-white"> Book Now </button>
                 </div>
               </div>
             </div>
@@ -439,3 +441,5 @@
   </div>
 <app-footer></app-footer>
 <script type='text/javascript' defer src='https://bytesed.com/wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.7.3' id='wpcf7-recaptcha-js'></script>
+
+<!-- Modal -->

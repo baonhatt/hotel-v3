@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentdetailComponent implements OnInit{
   ngOnInit(): void {
-    $.getScript('main.js');
+    // $.getScript('main.js');
   }
 
 }

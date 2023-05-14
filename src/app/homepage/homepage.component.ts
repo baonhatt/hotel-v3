@@ -12,6 +12,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { daysInWeek, differenceInDays } from 'date-fns';
 import { DatePipe } from '@angular/common';
+import { ListingComponent } from '../listing/listing.component';
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -57,7 +58,7 @@ export class HomepageComponent implements OnInit {
     private apiService: ApiService,
     private activeRoute: ActivatedRoute,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
   ) {
     this.rooms = [],
       this.roomtoDisplay = this.roomtoDisplay;
@@ -155,8 +156,13 @@ export class HomepageComponent implements OnInit {
     this.http.post<Room[]>(`https://webhotel.click/user/room/get-all-by`, payLoad).subscribe(res => {
       this.filteredRooms = res;
       // Truyền kết quả tìm kiếm dưới dạng query parameter
-      const bin = JSON.stringify(this.filteredRooms)
-      console.log(JSON.parse(bin));
+
+
+      const dataToSave = JSON.stringify(this.filteredRooms);
+      localStorage.setItem('bookingData', dataToSave);
+      // const bin = JSON.stringify(this.filteredRooms)
+      // console.log(JSON.parse(bin));
+
       this.result = res.length
       // alert(this.result)
       this.filteredRooms.forEach(room => {
@@ -164,11 +170,11 @@ export class HomepageComponent implements OnInit {
         this.numNights = numDays
       });
 
-      // this.router.navigate(['/room-listing'], { queryParams: { rooms: JSON.stringify(this.filteredRooms) } });
+      // // this.router.navigate(['/room-listing'], { queryParams: { rooms: JSON.stringify(this.filteredRooms) } });
       if(numDays > 0){
 
-        const encodedRooms = encodeURIComponent(JSON.stringify(this.filteredRooms));
-        this.router.navigate(['/room-listing'], { queryParams: { rooms: encodedRooms, numdays:  this.numNights, results: this.result},});
+        // const encodedRooms = encodeURIComponent(JSON.stringify(this.filteredRooms));
+        this.router.navigate(['/room-listing']);
       }else{
 
         this.toast.error("You have to select to Checkout day!")

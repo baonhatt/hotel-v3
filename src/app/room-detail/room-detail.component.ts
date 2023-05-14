@@ -3,6 +3,9 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Room } from '../models/room.model';
 import { ApiService } from '../_service/api.service';
 import { ViewportScroller } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalComponent } from '../pages/modal/modal/modal.component';
+MatDialog
 @Component({
   selector: 'app-room-detail',
   templateUrl: './room-detail.component.html',
@@ -13,17 +16,25 @@ export class RoomDetailComponent implements OnInit {
   room!: Room;
   imageUrls: string[] = [];
   roomId!: any;
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private viewPort: ViewportScroller){}
+  showModal = false;
+  rating = 0;
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private viewPort: ViewportScroller, private dialogref: MatDialog){}
   isHomePageLoaded = false;
   ngOnInit() {
+
     window.scrollTo(0, 0);
     this.roomId = this.route.snapshot.paramMap.get('id')
     this.viewPort.scrollToPosition([0, 0]);
     this.getRoomById();
 
+
+    const dataToSave = JSON.stringify(this.roomId);
+      localStorage.setItem('star', dataToSave);
   }
 
-  
+  openDialog(){
+    this.dialogref.open(ModalComponent)
+  }
   getRoomById(): void {
     const id = this.route.snapshot.paramMap.get('id')!;
     this.apiService.getRoomDetail(id)
@@ -39,6 +50,7 @@ export class RoomDetailComponent implements OnInit {
 
       });
   }
+
 
   loadPage(){}
 

@@ -70,7 +70,6 @@ export class ListingComponent implements OnInit {
   checkIn = new FormControl(new Date().toISOString());
   checkOut = new FormControl(new Date().toISOString());
   ngOnInit(): void {
-
     this.apiService.searchRoom().subscribe((data: any) => {
       this.maxPerson = data.maxPerson;
       this.maxPrice = data.maxPrice;
@@ -79,19 +78,23 @@ export class ListingComponent implements OnInit {
     });
 
 
-    this.route.queryParams.subscribe(params => {
-      if (params['rooms']) {
-        const encodedRooms = (params['rooms']);
-        let numDaysroute = parseInt(params['numdays']);
-        let result = parseInt(params['results']);
-        this.results = result
-        const rooms =  JSON.parse(decodeURIComponent(encodedRooms));
-        this.filteredRooms = rooms
-        this.numNights = numDaysroute
-        if(this.displayPrice = true){
-          this.currentPrice = numDaysroute
-        }
-  }});
+
+
+    const bookingData = localStorage.getItem('bookingData');
+
+    if (bookingData !== null && bookingData !== undefined) {
+      // Chuyển đổi dữ liệu thành đối tượng JavaScript
+      const parsedData = JSON.parse(bookingData);
+      this.filteredRooms = parsedData
+      // Xử lý dữ liệu dưới dạng object
+
+
+    } else {
+      // Không tìm thấy dữ liệu
+      console.log('Không tìm thấy dữ liệu trong localStorage');
+    }
+        // this.numNights = numDaysroute
+       
 
     // if(this.filteredRooms == null)
     // {

@@ -56,6 +56,7 @@ import { SuccessPaymentComponent } from './success-payment/success-payment.compo
 import { PaymentdetailComponent } from './paymentdetail/paymentdetail.component';
 import { VndCurrencyPipe } from './_shared/currency/vnd-currency.pipe';
 import { BlogNewestComponent } from './blog-newest/blog-newest.component';
+import { ModalComponent } from './pages/modal/modal/modal.component';
 @NgModule({
   imports: [
 
@@ -73,9 +74,11 @@ import { BlogNewestComponent } from './blog-newest/blog-newest.component';
       timeOut : 5000,
       progressBar: true
     }),
+    BrowserAnimationsModule,
     FormsModule,
     ToastrModule,
     // ToastNoAnimationModule.forRoot(),
+    MatDialogModule,
     MatOptionModule,
     MatSelectModule,
     MatNativeDateModule,
@@ -134,6 +137,7 @@ import { BlogNewestComponent } from './blog-newest/blog-newest.component';
     PaymentdetailComponent,
     VndCurrencyPipe,
     BlogNewestComponent,
+    ModalComponent,
 
   ],
 

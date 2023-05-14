@@ -95,7 +95,12 @@ export class ApiService {
     return this.http.get(environment.BASE_URL_API + '/user/reservation/get-successful');
   }
   // Voting
-  votingStar(){
-    
+  votingStar(stars: number, roomid: string){
+
+    const data = {
+      number: stars,
+      roomId: roomid
+    }
+    return this.http.post(environment.BASE_URL_API + '/user/room-star/create', data);
   }
 }
