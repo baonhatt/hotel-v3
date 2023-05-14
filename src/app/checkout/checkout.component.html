@@ -93,7 +93,7 @@
                   <div class="input-flex-item">
                     <div class="single-input mt-4">
                       <label class="label-title"> Number of day </label>
-                      <input class="form--control" type="text" formControlName="numberOfDay"  [(ngModel)]="numberOfDay" placeholder="Number of day">
+                      <input class="form--control" readonly="true" type="text" formControlName="numberOfDay"  [(ngModel)]="numberOfDay" placeholder="Number of day">
                     </div>
                   </div>
                   <div class="input-flex-item">
@@ -144,8 +144,8 @@
                   </li>
                   <li class="list"> <span class="regular"> Service attachs </span>  <span
                     *ngFor="let item of rooms.serviceAttachs; let i = index; let length = count">
-                    <span *ngIf="i == length - 1; else serviceAttach">{{item.name}}</span>
-                    <ng-template #serviceAttach>{{item.name}}, </ng-template>
+                    <span class="strong" *ngIf="i == length - 1; else serviceAttach">{{item.name}}</span>
+                    <ng-template s #serviceAttach>{{item.name}}, </ng-template>
                   </span>
                   </li>
 
@@ -158,8 +158,7 @@
                   <li class="list"> <span class="regular"> Total Stay </span> <span class="strong"> <span [innerHTML]="numberOfDay + 1  "></span> Days, <span [innerHTML]="numberOfDay"></span> Nights
                     </span> </li>
 
-                  <li class="list"> <span class="regular"> Number of people </span> <span class="strong"> 2
-                    </span> </li>
+                 
                 </ul>
               </div>
             </div>
