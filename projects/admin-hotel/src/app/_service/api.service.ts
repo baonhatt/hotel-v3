@@ -83,11 +83,12 @@ export class ApiService {
   createRoomType(typeName: string){
     return this.http.post(environment.BASE_URL_API + '/v2/admin/room-type/create', typeName);
   }
-  updateRoomType(data: string, id: number): Observable<any> {
-    return this.http.post( environment.BASE_URL_API + `/v2/admin/room-type/update?id=${id}`, data);
+  updateRoomTypeName(roomTypeId: string, data: string): Observable<any> {
+    return this.http.post(`https://webhotel.click/v2/admin/room-type/update?id=${roomTypeId}`, data);
   }
-  deleteRoomType(id: number){
-    return this.http.delete(environment.BASE_URL_API + `/v2/admin/room-type/delete?id=${id}`)
+  deleteRoomType(id: number): Observable<any>{
+
+    return this.http.get(`https://webhotel.click/v2/admin/room-type/delete?id=${id}`,)
   }
 
   /////////////////////////// Room service
@@ -100,9 +101,9 @@ export class ApiService {
   updateService(data: string, id: number): Observable<any> {
     return this.http.post( environment.BASE_URL_API + `/v2/admin/service-attach/update?id=${id}`, data);
   }
-  deleteService(id: number){
+  deleteService(id: number): Observable<any>{
 
-    return this.http.delete(environment.BASE_URL_API + `/v2/admin/service-attach/delete?id=${id}`)
+    return this.http.get(environment.BASE_URL_API + `/v2/admin/service-attach/delete?id=${id}`)
   }
 
 

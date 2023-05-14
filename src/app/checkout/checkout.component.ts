@@ -149,6 +149,7 @@ export class CheckoutComponent implements OnInit {
     const orderInfoString = orderInfo.toString();
     let amountNum1 = amount * this.numdayDisplay
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+   
     this.http.post<any>(environment.QR_MOMO, { orderInfo: orderInfoString, amount:  amountNum1.toString() },{headers})
       .subscribe(response => {
         const redirectUrl = response['payUrl'];

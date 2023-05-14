@@ -3,33 +3,38 @@ import { ApiService } from '../../_service/api.service';
 import { roomType } from '../../models/room.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-
+interface RoomType {
+  id: number;
+  typeName: string;
+}
 @Component({
   selector: 'app-roomtype',
   templateUrl: './roomtype.component.html',
   styleUrls: ['./roomtype.component.css']
 })
+
 export class RoomtypeComponent implements OnInit{
   id!: number;
   roomType!: roomType[];
-
+  roomTypes!: any[];
+  nameType!: string;
   nameTypeForm!: FormGroup;
+  roomTypeId!: string;
+  selectedIds: string[] = [];
   constructor(private api: ApiService, private fb: FormBuilder, private toast: ToastrService){
     this.nameTypeForm = this.fb.group({
       TypeName : ['']
     })
   }
   ngOnInit(): void {
-    this.api.getAllRoomType().subscribe(res => {
-      this.roomType = res;
-      console.log(res);
+    this.getAll()
 
-    })
   }
 
   getAll(){
-    return this.api.getAllRoomType().subscribe(res => {
+    return this.api.getAllRoomType().subscribe( res => {
       this.roomType = res;
+      this.roomTypes = res;
     })
   }
   createRoomType(nameTypeForm: FormGroup){
@@ -37,23 +42,38 @@ export class RoomtypeComponent implements OnInit{
     return this.api.createRoomType(nameTypeForm.value).subscribe( res=>{
 
       this.toast.success("Add successfully!");
-      this.getAll();
     }, err => {
       this.toast.error(err)
     })
   }
-  update(nameTypeForm: FormGroup){
-     this.api.updateRoomType(nameTypeForm.value, this.id = 5).subscribe( res =>{
-      this.toast.success("Update successfully!");
-      this.getAll();
+  getRoomTypeIdByNameType(nameType: string): number {
+    const roomType = this.roomTypes.find(room => room.nameType === nameType);
+    this.nameType = nameType
+    return roomType ? roomType.id : null;
+  }
+  update( nameTypeForm: FormGroup){
 
-    }, err => {
-      this.toast.error(err)
-    })
+      this.api.updateRoomTypeName(this.roomTypeId, nameTypeForm.value)
+        .subscribe(
+          () => {
+            this.toast.success("Add successfully!");
+            this.getAll()
+          },
+          error => {
+            console.error('Lỗi khi cập nhật tên loại phòng:', error);
+            // Xử lý lỗi nếu có
+          }
+        );
+
   }
+  toggleSelection(itemId: string) {
+    this.roomTypeId = itemId;
+  }
+
   deleteType(id: number){
     this.api.deleteRoomType(id).subscribe(res=>{
       this.toast.success("Delete successfully!");
+      this.getAll();
     },err =>{
       this.toast.error(err);
     })

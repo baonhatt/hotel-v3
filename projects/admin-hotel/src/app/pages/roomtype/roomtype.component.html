@@ -70,7 +70,7 @@
                         <th style="width: 125px;">Action</th>
                       </tr>
                     </thead>
-                    <tbody *ngFor="let item of roomType, let i = index" class="align-middle text-center">
+                    <tbody *ngFor="let item of roomType, let i = index"  (click)="toggleSelection(item.id.toString())" class="align-middle text-center">
                       <tr>
                         <td>
                           <div class="form-check">
@@ -81,8 +81,8 @@
                         <td><span class="text-body fw-bold">{{item.id}}</span> </td>
                         <td>{{item.typeName}}</td>
                         <td>
-                          <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#modal-detail2">
-                            <i class=" mdi mdi-update"></i></a>
+                          <a  href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#modal-detail2">
+                            <i class=" mdi mdi-update"> </i></a>
                             <a class="action-icon"  (click)="deleteType(item.id)">
                               <i class="mdi mdi-delete"></i>
                             </a>
@@ -133,7 +133,7 @@
 </div>
 <!-- Modal update detail -->
 <div id="modal-detail2" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-top modal-lg">
+  <div class="modal-dialog modal-top modal-lg" >
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="topModalLabel">Update room type</h4>
@@ -151,7 +151,7 @@
 
           <div class="justify-content-end row">
               <div class="col-9">
-                  <button type="submit" (click)="update(nameTypeForm)" class="btn btn-info">Add </button>
+                  <button type="submit" (click)="update(nameTypeForm)" class="btn btn-info">Update </button>
               </div>
           </div>
       </form>
