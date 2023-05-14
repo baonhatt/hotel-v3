@@ -13,6 +13,7 @@ export class LayoutpageComponent implements OnInit{
   constructor(private api: ApiService){}
   ngOnInit(): void {
 
+    $.getScript('assets/js/pages/demo.dashboard.js');
     this.api.getallUser().subscribe( res =>{
       this.numStaff = res
       console.log(this.numStaff)

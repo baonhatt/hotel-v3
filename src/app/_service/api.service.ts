@@ -94,5 +94,8 @@ export class ApiService {
   successPayment(){
     return this.http.get(environment.BASE_URL_API + '/user/reservation/get-successful');
   }
-
+  // Voting
+  votingStar(){
+    
+  }
 }

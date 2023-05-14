@@ -193,6 +193,7 @@ export class RoomComponent implements OnInit {
         }
       );
   }
+
   getRooms() {
     this.roomService.getRooms().subscribe((res: any) => {
       this.rooms = res;

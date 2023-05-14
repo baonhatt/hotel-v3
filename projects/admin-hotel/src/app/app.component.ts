@@ -1,11 +1,15 @@
-import { Component, VERSION } from '@angular/core';
+import { Component, OnInit, VERSION } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent  implements OnInit{
+  ngOnInit(): void {
+    $.getScript('../src/assets/js//vendor/apexcharts.min.js');
+
+  }
   title = 'admin-hotel';
 
   sideBarOpen = true;

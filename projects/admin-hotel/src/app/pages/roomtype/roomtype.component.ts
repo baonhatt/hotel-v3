@@ -60,7 +60,7 @@ export class RoomtypeComponent implements OnInit{
             this.getAll()
           },
           error => {
-            console.error('Lỗi khi cập nhật tên loại phòng:', error);
+            this.toast.error('Something was wrong:', error);
             // Xử lý lỗi nếu có
           }
         );
