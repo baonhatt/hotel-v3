@@ -71,13 +71,13 @@
                   </div>
                   <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
                     <div class="" *ngIf="f['password'].errors['required']">
-                      Password is required
+                      Password is required.
                     </div>
                     <div class="" *ngIf="f['password'].errors['required']">
-                      Password must be at least 8 characters
+                      Password must be at least 8 characters.
                     </div>
                     <div class="" *ngIf="f['password'].errors['pattern']">
-                      at least one letter and one number
+                      At least one letter and one number.
                     </div>
                   </div>
                 </div>
@@ -85,7 +85,7 @@
               <div class="col">
                 <div class="single-input mt-3">
                   <label class="label-title mb-3"> Confirm Password </label>
-                  <input class="form--control" type="password" formControlName="confirmPassword" placeholder="Confirm Password"
+                  <input class="form--control" [type]="password"  type="password" formControlName="confirmPassword" placeholder="Confirm Password"
                     [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }" required>
 
 

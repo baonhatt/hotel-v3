@@ -10,6 +10,7 @@ import { CustomerComponent } from './pages/customer/customer.component';
 import { RoomComponent } from './pages/room/room.component';
 import { RoomtypeComponent } from './pages/roomtype/roomtype.component';
 import { RoomservicesComponent } from './pages/roomservices/roomservices.component';
+import { DiscountComponent } from './pages/discount/discount.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
@@ -73,6 +74,14 @@ const routes: Routes = [
   {
     path: 'customer',
     component: CustomerComponent,
+    data: {
+      requiredAuth: true,
+    },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'discount',
+    component: DiscountComponent,
     data: {
       requiredAuth: true,
     },

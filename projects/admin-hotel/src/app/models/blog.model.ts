@@ -1,3 +1,5 @@
+import { Roles } from "./roles.model"
+
 export class Blog {
   id!: number
   title!: string
@@ -6,5 +8,5 @@ export class Blog {
   content!: string
   imageBlog!: boolean
   discription!: string
-
+  roles!: Roles[]
 }

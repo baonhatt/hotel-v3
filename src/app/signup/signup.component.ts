@@ -58,7 +58,7 @@ export class SignupComponent implements OnInit {
         if (!_err.error.title) {
           this.toast.error(_err.error.message)
         } else {
-          alert(_err.error.title)
+          // alert(_err.error.title)
         }
 
 

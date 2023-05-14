@@ -34,6 +34,7 @@ import { PaymentComponent } from './pages/payment/payment.component';
 import { EmployeeComponent } from './pages/employee/employee.component';
 import { RoomtypeComponent } from './pages/roomtype/roomtype.component';
 import { RoomservicesComponent } from './pages/roomservices/roomservices.component';
+import { DiscountComponent } from './pages/discount/discount.component';
 @NgModule({
   declarations: [
     BellNotifComponent,
@@ -51,7 +52,8 @@ import { RoomservicesComponent } from './pages/roomservices/roomservices.compone
     EmployeeComponent,
     SpinnerComponent,
     RoomtypeComponent,
-    RoomservicesComponent
+    RoomservicesComponent,
+    DiscountComponent
   ],
   imports: [
     BrowserAnimationsModule,
