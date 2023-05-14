@@ -29,15 +29,24 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree> {
     const id = Number(route.paramMap.get('id'));
 
-    var check = true;
-    $(window).on('beforeunload', function(){
-      console.log("not load");
+    // async function AddScript() {
+    //   var check = true;
+    //   await checkLoad(check);
+    //   if (check == true) {
+    //     console.log("load script");
 
-  });
+    //   }
+    // }
+    // async function checkLoad(check: any) {
+    //   $(window).on('load', function () {
+    //     console.log("load page");
 
-      if (check == true) {
-        $.getScript('assets/js/main.js');
-      }
+    //     check = false;
+    //   });
+    // }
+    $.getScript('assets/js/main.js');
+
+    // AddScript();
 
     var token = this.storage.isLoggedIn();
     if (token) {
@@ -53,5 +62,6 @@ export class AuthGuard implements CanActivate {
       }
       return true;
     }
+
   }
 }
