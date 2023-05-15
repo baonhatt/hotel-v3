@@ -78,7 +78,19 @@ export class RoomComponent implements OnInit {
       RoomTypeId: ['1', [Validators.required]],
     });
   }
-  uploadFileDetail = (files: any) => {
+  
+  ngOnInit(): void {
+    // this.loadModal();
+    // this.submitted = false;
+    // this.api.getRoomTypeId().subscribe((data: any)=>{
+    //   this.roomTypes = data.roomTypes;
+    //   this.typeId = data.roomTypes.id
+    // });
+    this.getRooms();
+    this.getRoomtype();
+  }
+  uploadFileDetail = (event: any) => {
+    let files = event.target.files;
     if (files.length === 0) {
       return;
     }
@@ -98,7 +110,8 @@ export class RoomComponent implements OnInit {
     }
   };
 
-  uploadFile = (files: any) => {
+  uploadFile = (event: any) => {
+    let files = event.target.files;
     if (files.length === 0) {
       return;
     }
@@ -117,16 +130,6 @@ export class RoomComponent implements OnInit {
       };
     }
   };
-  ngOnInit(): void {
-    // this.loadModal();
-    // this.submitted = false;
-    // this.api.getRoomTypeId().subscribe((data: any)=>{
-    //   this.roomTypes = data.roomTypes;
-    //   this.typeId = data.roomTypes.id
-    // });
-    this.getRooms();
-    this.getRoomtype();
-  }
   getRoomtype(): Promise<number> {
     return new Promise((resolve, reject) => {
       this.api.getRoomTypeId().subscribe((data: any) => {
@@ -229,6 +232,8 @@ export class RoomComponent implements OnInit {
         Description: [res?.description],
         CurrentPrice: [res?.currentPrice, [Validators.required]],
         discountPrice: [res?.discountPrice],
+        RoomPicture: [res?.roomPicture],
+        RoomPictures: [res?.roomPictures],
         PeopleNumber: ['1', [Validators.required]],
         NumberOfSimpleBed: [res?.numberOfSimpleBed, [Validators.required]],
         NumberOfDoubleBed: [res?.numberOfDoubleBed, [Validators.required]],
@@ -272,6 +277,8 @@ export class RoomComponent implements OnInit {
       formData.append('RoomPicture', '');
     } else {
       fileToUpload = this.image[0] as File;
+      console.log(fileToUpload);
+
       formData.append('RoomPicture', fileToUpload, fileToUpload.name);
     }
 

@@ -29,7 +29,7 @@ export class RoomDetailComponent implements OnInit {
 
 
     const dataToSave = JSON.stringify(this.roomId);
-      localStorage.setItem('star', dataToSave);
+    localStorage.setItem('star', dataToSave);
   }
 
   openDialog(){
