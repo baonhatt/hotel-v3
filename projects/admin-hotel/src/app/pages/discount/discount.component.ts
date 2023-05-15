@@ -14,14 +14,13 @@ import { Discount } from '../../models/discount.model';
 })
 export class DiscountComponent {
 
-
+  discountId!: number;
   id!: number;
   roomType!: Discount[];
 
   serviceForm!: FormGroup;
   constructor(private api: ApiService, private fb: FormBuilder, private toast: ToastrService){
     this.serviceForm = this.fb.group({
-      id: [''],
       discountCode: [''],
       name: [''],
       discountPercent: [''],
@@ -30,11 +29,6 @@ export class DiscountComponent {
       endAt: [''],
       isPermanent: [''],
       discountTypeId: [''],
-      nameType: [''],
-      creatorId: [''],
-      email: [''],
-      roles: [''],
-      // icon
     })
   }
   ngOnInit(): void {
@@ -43,8 +37,31 @@ export class DiscountComponent {
       console.log(res);
 
     })
+
   }
 
+
+  loadModal(id: number){
+    this.getId(id)
+    this.api.getDiscountId(this.discountId).subscribe( (res)=>{
+      this.serviceForm = this.fb.group({
+        discountCode: [res?.discountCode],
+        name: [res?.name],
+        discountPercent: [res?.discountPercent],
+        amountUse: [res?.amountUse],
+        startAt: [res?.startAt],
+        endAt: [res?.endAt],
+        isPermanent: [res?.isPermanent],
+        discountTypeId: [res?.discountTypeId],
+      })
+    })
+
+
+  }
+  getId(id: number){
+    this.discountId = id
+
+  }
   getAll(){
     return this.api.getAllDiscount().subscribe(res => {
       this.roomType = res;
@@ -52,8 +69,7 @@ export class DiscountComponent {
   }
   createRoomType(serviceForm: FormGroup){
     // const service = this.serviceForm?.get('service')?.value;
-    return this.api.createService(serviceForm.value).subscribe( res=>{
-
+    return this.api.createDiscount(serviceForm.value).subscribe( res=>{
       this.toast.success("Add successfully!");
       this.getAll();
     }, err => {
@@ -61,7 +77,8 @@ export class DiscountComponent {
     })
   }
   update(serviceForm: FormGroup){
-     this.api.updateService(serviceForm.value, this.id).subscribe( res =>{
+
+     this.api.updateDiscount(serviceForm.value, this.discountId).subscribe( res =>{
       this.toast.success("Update successfully!");
       this.getAll();
 

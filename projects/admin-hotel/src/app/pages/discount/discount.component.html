@@ -31,20 +31,7 @@
                         <label for="inputPassword2" class="visually-hidden">Search</label>
                         <input type="search" class="form-control" id="inputPassword2" placeholder="Search...">
                       </div>
-                      <div class="col-auto">
-                        <div class="d-flex align-items-center">
-                          <label for="status-select" class="me-2">Status</label>
-                          <select class="form-select" id="status-select">
-                            <option selected="">Choose...</option>
-                            <option value="1">Paid</option>
-                            <option value="2">Awaiting Authorization</option>
-                            <option value="3">Payment failed</option>
-                            <option value="4">Cash On Delivery</option>
-                            <option value="5">Fulfilled</option>
-                            <option value="6">Unfulfilled</option>
-                          </select>
-                        </div>
-                      </div>
+                      
                     </form>
                   </div>
                   <div class="col-xl-4">
@@ -72,6 +59,7 @@
                         <th>Created date</th>
                         <th>Expired date</th>
                         <th>Permament status</th>
+                        <th>Discount Type ID</th>
                         <th>Room type</th>
                         <th>Roles</th>
                         <th style="width: 135px;">Action<th>
@@ -111,10 +99,11 @@
                             <span class="badge bg-danger">Inactive</span>
                           </ng-template>
                         </td>
+                        <td>{{item.discountTypeId}}</td>
                         <td>{{item.nameType}}</td>
                         <td>{{item.roles}}</td>
                         <td>
-                          <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#modal-detail2">
+                          <a href="javascript:void(0);" class="action-icon"  (click)="loadModal(item.id)" data-bs-toggle="modal" data-bs-target="#modal-detail2">
                             <i class=" mdi mdi-update"></i></a>
                             <a class="action-icon" (click)="deleteDiscount(item.id)" ><i class="mdi mdi-delete"></i></a>
                         </td>
@@ -141,31 +130,63 @@
       <div class="modal-body">
         <form class="form-horizontal" [formGroup]="serviceForm">
           <div class="row mb-3">
-            <label for="inputEmail3" class="col-3 col-form-label">Name service</label>
-            <div class="col-9">
-                <input type="email" formControlName="name" class="form-control" id="inputEmail3" placeholder="Email">
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label for="inputEmail3" class="col-3 col-form-label">Icon</label>
-            <div class="col-9">
-                <input type="email" formControlName="icon" class="form-control" id="inputEmail3" placeholder="Email">
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label for="inputEmail3" class="col-3 col-form-label">Description</label>
-            <div class="col-9">
-                <input type="email" formControlName="description" class="form-control" id="inputEmail3" placeholder="Email">
-            </div>
-        </div>
-          <div class="justify-content-end row">
+              <label for="inputEmail3" class="col-3 col-form-label">Discount Code</label>
               <div class="col-9">
-                  <button (click)="createRoomType(serviceForm)" type="submit" class="btn btn-info">Add </button>
+                  <input type="text" formControlName="discountCode" class="form-control" id="discountCode" placeholder="">
               </div>
           </div>
-      </form>
+          <div class="row mb-3">
+              <label for="inputEmail3" class="col-3 col-form-label">Name</label>
+              <div class="col-9">
+                  <input type="name" formControlName="name" class="form-control" id="icon" placeholder="">
+              </div>
+          </div>
+          <div class="row mb-3">
+              <label for="inputEmail3" class="col-3 col-form-label">Percents</label>
+              <div class="col-9">
+                  <input type="text" formControlName="discountPercent" class="form-control" id="description" placeholder="">
+              </div>
+          </div>
+          <div class="row mb-3">
+              <label for="inputEmail3" class="col-3 col-form-label">Amount</label>
+              <div class="col-9">
+                  <input type="number" formControlName="amountUse" class="form-control" id="description" placeholder="">
+              </div>
+          </div>
+          <div class="row mb-3">
+              <label for="inputEmail3" class="col-3 col-form-label">Start Date</label>
+              <div class="col-9">
+                  <input type="date" formControlName="startAt" class="form-control" id="description" placeholder="">
+              </div>
+          </div>
+          <div class="row mb-3">
+              <label for="inputEmail3" class="col-3 col-form-label">Expire Date</label>
+              <div class="col-9">
+                  <input type="date" formControlName="endAt" class="form-control" id="description" placeholder="">
+              </div>
+          </div>
+          <div class="row mb-3">
+              <label for="inputEmail3" class="col-3 col-form-label">Discount Type ID</label>
+              <div class="col-9">
+                  <input type="number" formControlName="discountTypeId" class="form-control" id="description" placeholder="">
+              </div>
+          </div>
+          <div class="row md-4">
+              <label for="inputEmail3" class="col-3 col-form-label">Permament</label>
+              <div class="col-md-4">
+                <select class="form-select mr-sm-2" formControlName="isPermanent" id="IsActive" name="IsActive">
+                  <option [ngValue]="true">Active</option>
+                  <option [ngValue]="false">Inactive</option>
+                </select>
+              </div>
+          </div>
+
+          <div class="justify-content-end row">
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
+        <button (click)="createRoomType(serviceForm)" type="submit" class="btn btn-info">Add</button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
@@ -182,33 +203,63 @@
       <div class="modal-body">
         <form class="form-horizontal" [formGroup]="serviceForm">
           <div class="row mb-3">
-              <label for="inputEmail3" class="col-3 col-form-label">Name service</label>
+              <label for="inputEmail3" class="col-3 col-form-label">Discount Code</label>
               <div class="col-9">
-                  <input type="email" formControlName="name" class="form-control" id="inputEmail3" placeholder="Email">
+                  <input type="text" formControlName="discountCode" class="form-control" id="discountCode" placeholder="">
               </div>
           </div>
           <div class="row mb-3">
-              <label for="inputEmail3" class="col-3 col-form-label">Name room type</label>
+              <label for="inputEmail3" class="col-3 col-form-label">Name</label>
               <div class="col-9">
-                  <input type="email" formControlName="icon" class="form-control" id="inputEmail3" placeholder="Email">
+                  <input type="name" formControlName="name" class="form-control" id="icon" placeholder="">
               </div>
           </div>
           <div class="row mb-3">
-              <label for="inputEmail3" class="col-3 col-form-label">Name room type</label>
+              <label for="inputEmail3" class="col-3 col-form-label">Percents</label>
               <div class="col-9">
-                  <input type="email" formControlName="description" class="form-control" id="inputEmail3" placeholder="Email">
+                  <input type="text" formControlName="discountPercent" class="form-control" id="description" placeholder="">
               </div>
           </div>
-
+          <div class="row mb-3">
+              <label for="inputEmail3" class="col-3 col-form-label">Amount</label>
+              <div class="col-9">
+                  <input type="number" formControlName="amountUse" class="form-control" id="description" placeholder="">
+              </div>
+          </div>
+          <div class="row mb-3">
+              <label for="inputEmail3" class="col-3 col-form-label">Start Date</label>
+              <div class="col-9">
+                  <input type="date" formControlName="startAt" class="form-control" id="description" placeholder="">
+              </div>
+          </div>
+          <div class="row mb-3">
+              <label for="inputEmail3" class="col-3 col-form-label">Expire Date</label>
+              <div class="col-9">
+                  <input type="date" formControlName="endAt" class="form-control" id="description" placeholder="">
+              </div>
+          </div>
+          <div class="row mb-3">
+              <label for="inputEmail3" class="col-3 col-form-label">Discount Type ID</label>
+              <div class="col-9">
+                  <input type="number" formControlName="discountTypeId" class="form-control" id="description" placeholder="">
+              </div>
+          </div>
+          <div class="row md-4">
+              <label for="inputEmail3" class="col-3 col-form-label">Permament</label>
+              <div class="col-md-4">
+                <select class="form-select mr-sm-2" formControlName="isPermanent" id="IsActive" name="IsActive">
+                  <option [ngValue]="true">Active</option>
+                  <option [ngValue]="false">Inactive</option>
+                </select>
+              </div>
+          </div>
 
           <div class="justify-content-end row">
-              <div class="col-9">
-                  <button type="submit" (click)="update(serviceForm)" class="btn btn-info">Add </button>
-              </div>
           </div>
-      </form>
+        </form>
       </div>
       <div class="modal-footer">
+        <button type="button" (click)="update(serviceForm)" class="btn btn-info" data-bs-dismiss="modal">Add</button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
       </div>
     </div>

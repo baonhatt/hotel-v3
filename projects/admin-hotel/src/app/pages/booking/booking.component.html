@@ -132,9 +132,9 @@
                               </span></h5>
                           </ng-template>
                         </td>
-                        <td *ngIf="item.status == true;else Status">Paid</td>
+                        <td *ngIf="item.status == true;else Status" ><span class="badge badge-success-lighten"><i class="mdi mdi-coin"></i> Paid</span></td>
                         <ng-template #Status>
-                          <td>Error payment</td>
+                          <td><span class="badge badge-danger-lighten"><i class="mdi mdi-cancel"></i> Payment Failed</span></td>
                         </ng-template>
                         <td>
                           <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#modal-detail" (click)="GetReservationById(item.id)">

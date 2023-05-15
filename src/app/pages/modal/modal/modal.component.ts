@@ -22,7 +22,7 @@ export class ModalComponent implements OnInit{
     const bookingData = localStorage.getItem('star');
     const bookingDataString = bookingData !== null ? bookingData.toString() : '';
     const bookingDataWithoutQuotes = bookingDataString.replace(/"/g, '');
-    this.id = bookingDataWithoutQuotes;
+    this.id = (bookingDataWithoutQuotes);
     console.log(this.id);
 
 
@@ -33,7 +33,9 @@ export class ModalComponent implements OnInit{
 
     if (ratingControl && ratingControl.value !== null) {
       const ratingValue = ratingControl.value;
+      parseInt(ratingValue)
 
+      const starrating = ratingValue.replace(/"/g, '');
       // Tạo request body từ giá trị ratingValue
     this.api.votingStar(ratingValue, this.id).subscribe(res =>{
       this.toast.success("ok")
