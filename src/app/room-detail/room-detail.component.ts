@@ -5,6 +5,7 @@ import { ApiService } from '../_service/api.service';
 import { ViewportScroller } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../pages/modal/modal/modal.component';
+import { FormGroup } from '@angular/forms';
 MatDialog
 @Component({
   selector: 'app-room-detail',
@@ -13,12 +14,17 @@ MatDialog
 })
 export class RoomDetailComponent implements OnInit {
   imgUrl!: string;
+  id!: any;
+  rateForm!: FormGroup;
   room!: Room;
   imageUrls: string[] = [];
   roomId!: any;
   showModal = false;
   rating = 0;
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private viewPort: ViewportScroller, private dialogref: MatDialog){}
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private viewPort: ViewportScroller, private dialogref: MatDialog){
+
+    
+  }
   isHomePageLoaded = false;
   ngOnInit() {
 

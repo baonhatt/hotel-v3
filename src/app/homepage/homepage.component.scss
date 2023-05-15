@@ -40,6 +40,46 @@ img.animation{
 
 .margin-title{
   margin-top: 50px;
+  margin-bottom: 50px;
 }
 // Weather
 
+.width-container{
+  width: 500px !important;
+}
+.single-blog{
+  display: grid;
+  place-content: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.img:hover{
+  margin-bottom: 3rem;
+  border-radius: 20px;
+}
+.hot-sale-sticker{
+  top: 6rem;
+  left: -17rem;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+  width: 120px;
+  height: 120px;
+}
+.hot-sale-sticker span{
+  margin: 20px;
+  width: 120px;
+  border-radius: 50%;
+  background-color: #ca1919;
+  color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+}
+.hotel-view-contents-title{
+  margin-left: 2rem;
+}
+.discount-container{
+  display: grid;
+  place-items: center;
+  margin-bottom: 5rem;
+}
