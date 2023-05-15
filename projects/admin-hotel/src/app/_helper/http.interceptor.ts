@@ -74,11 +74,11 @@ export class AuthTokenInterceptor implements HttpInterceptor {
     .pipe(map((res) => res))
     .pipe(first());
     const res = await lastValueFrom(res$);
-    localStorage.setItem("token", JSON.stringify(res));
+    localStorage.setItem("token_admin", JSON.stringify(res));
     return res;
   }
   handle401Error(request: HttpRequest<any>, next: HttpHandler, router:Router, toastr:ToastrService) {
-    const localStorageTokens = localStorage.getItem('token');
+    const localStorageTokens = localStorage.getItem('token_admin');
     this.refreshTokenSubject.next(null);
     if (localStorageTokens) {
       var token = JSON.parse(localStorageTokens) as TokenModel;
@@ -92,7 +92,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
             return next.handle(cloned);
           }),
           tap({error(err){
-            localStorage.removeItem('token');
+            localStorage.removeItem('token_admin');
             localStorage.removeItem('user_profile');
             toastr.error("Login session has expired, please login again");
             router.navigate(["login"]);
