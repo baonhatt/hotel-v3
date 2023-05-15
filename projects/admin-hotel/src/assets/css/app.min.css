@@ -14812,7 +14812,7 @@ body[data-leftbar-theme=dark][data-leftbar-compact-mode=condensed] .side-nav .si
 .notification-list .notify-item .notify-details {
   margin-bottom: 0;
   overflow: hidden;
-  margin-left: 45px;
+  margin-left: 20px;
   text-overflow: ellipsis;
   white-space: nowrap
 }
@@ -14835,9 +14835,9 @@ body[data-leftbar-theme=dark][data-leftbar-compact-mode=condensed] .side-nav .si
 }
 
 .notification-list .notify-item .user-msg {
-  margin-left: 45px;
   white-space: normal;
-  line-height: 16px
+  line-height: 16px;
+  margin-left: 20px;
 }
 
 .notification-list .topbar-dropdown-menu .notify-item {

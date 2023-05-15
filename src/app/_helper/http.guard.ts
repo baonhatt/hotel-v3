@@ -29,24 +29,7 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree> {
     const id = Number(route.paramMap.get('id'));
 
-    // async function AddScript() {
-    //   var check = true;
-    //   await checkLoad(check);
-    //   if (check == true) {
-    //     console.log("load script");
-
-    //   }
-    // }
-    // async function checkLoad(check: any) {
-    //   $(window).on('load', function () {
-    //     console.log("load page");
-
-    //     check = false;
-    //   });
-    // }
     $.getScript('assets/js/main.js');
-
-    // AddScript();
 
     var token = this.storage.isLoggedIn();
     if (token) {

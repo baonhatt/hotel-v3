@@ -16,67 +16,29 @@
       </h5>
     </div>
     <div style="max-height: 230px;" data-simplebar="">
-      <!-- item-->
-      <a href="javascript:void(0);" class="dropdown-item notify-item">
-        <div class="notify-icon bg-primary">
-          <i class="mdi mdi-comment-account-outline"></i>
-        </div>
-        <p class="notify-details">Caleb Flakelar commented on Admin
-          <small class="text-muted">1 min ago</small>
-        </p>
-      </a>
-      <!-- item-->
-      <a href="javascript:void(0);" class="dropdown-item notify-item">
-        <div class="notify-icon bg-info">
-          <i class="mdi mdi-account-plus"></i>
-        </div>
-        <p class="notify-details">New user registered.
-          <small class="text-muted">5 hours ago</small>
-        </p>
-      </a>
-
-      <!-- item-->
-      <a href="javascript:void(0);" class="dropdown-item notify-item">
-        <div class="notify-icon">
-          <img src="assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="">
-        </div>
-        <p class="notify-details">Cristina Pride</p>
-        <p class="text-muted mb-0 user-msg">
-          <small>Hi, How are you? What about our next meeting</small>
-        </p>
-      </a>
-
-      <!-- item-->
-      <a href="javascript:void(0);" class="dropdown-item notify-item">
-        <div class="notify-icon bg-primary">
-          <i class="mdi mdi-comment-account-outline"></i>
-        </div>
-        <p class="notify-details">Caleb Flakelar commented on Admin
-          <small class="text-muted">4 days ago</small>
-        </p>
-      </a>
-
-      <!-- item-->
-      <a href="javascript:void(0);" class="dropdown-item notify-item">
-        <div class="notify-icon">
-          <img src="assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="">
-        </div>
-        <p class="notify-details">Karen Robinson</p>
-        <p class="text-muted mb-0 user-msg">
-          <small>Wow ! this admin looks good and awesome design</small>
-        </p>
-      </a>
-
-      <!-- item-->
-      <a href="javascript:void(0);" class="dropdown-item notify-item">
-        <div class="notify-icon bg-info">
-          <i class="mdi mdi-heart"></i>
-        </div>
-        <p class="notify-details">Carlos Crouch liked
-          <b>Admin</b>
-          <small class="text-muted">13 days ago</small>
-        </p>
-      </a>
+      <span *ngFor="let item of items_nof">
+        <a href="javascript:void(0);" class="dropdown-item notify-item">
+          <div class="row">
+            <div class="col-2" style="position: relative;">
+              <div class="notify-icon bg-primary" style="position: absolute; top: calc(50% - 18px); margin: 0">
+                <i class="mdi mdi-comment-account-outline"></i>
+              </div>
+            </div>
+            <div class="col-8 p-0">
+              <h5 class="notify-details" style="margin-bottom: 6px;">{{item.title}}</h5>
+              <p class="user-msg" style="margin-bottom: 6px;">{{item.description}}</p>
+              <p class="text-muted mb-0 user-msg">
+                <small>1 minute ago</small>
+              </p>
+            </div>
+            <div class="col-2" style="position: relative;">
+              <div class="notify-icon bg-primary" style="position: absolute; top: calc(50% - 18px); margin: 0">
+                <i class="mdi mdi-comment-account-outline"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+      </span>
     </div>
 
     <!-- All-->
