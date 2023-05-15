@@ -8,5 +8,4 @@ export class userProfile {
   address!: string
   cmnd!: string
   createdAt!: Date
-  name!: string
 }

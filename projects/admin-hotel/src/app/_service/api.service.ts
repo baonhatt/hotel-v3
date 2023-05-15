@@ -94,17 +94,17 @@ export class ApiService {
 
   /////////////////////////// Room service
   getAllService(): Observable<ServiceAttach[]>{
-    return this.http.get<ServiceAttach[]>(environment.BASE_URL_API + '/v2/admin/discount/get-all');
+    return this.http.get<ServiceAttach[]>(environment.BASE_URL_API + '/v2/admin/service-attach/get-all');
   }
   createService(typeName: string){
-    return this.http.post(environment.BASE_URL_API + '/v2/admin/discount/create', typeName);
+    return this.http.post(environment.BASE_URL_API + '/v2/admin/service-attach/create', typeName);
   }
   updateService(data: string, id: number): Observable<any> {
-    return this.http.post( environment.BASE_URL_API + `/v2/admin/discount/update?id=${id}`, data);
+    return this.http.post( environment.BASE_URL_API + `/v2/admin/service-attach/update?id=${id}`, data);
   }
   deleteService(id: number): Observable<any>{
 
-    return this.http.get(environment.BASE_URL_API + `/v2/admin/discount/delete?id=${id}`)
+    return this.http.get(environment.BASE_URL_API + `/v2/admin/service-attach/delete?id=${id}`)
   }
 
 
@@ -138,13 +138,16 @@ export class ApiService {
     return this.http.get<Discount[]>(environment.BASE_URL_API + '/v2/admin/discount/get-all');
   }
   createDiscount(typeName: string){
-    return this.http.post(environment.BASE_URL_API + '/v2/admin/service-attach/create', typeName);
+    return this.http.post(environment.BASE_URL_API + '/v2/admin/discount/create', typeName);
   }
   updateDiscount(data: string, id: number): Observable<any> {
-    return this.http.post( environment.BASE_URL_API + `/v2/admin/service-attach/update?id=${id}`, data);
+    return this.http.post( environment.BASE_URL_API + `/v2/admin/discount/update?id=${id}`, data);
   }
   deleteDiscount(id: number): Observable<any>{
 
-    return this.http.get(environment.BASE_URL_API + `/v2/admin/discount/delete?id=${id}`)
+    return this.http.get(environment.BASE_URL_API + `/v2/admin/discount/delete?id=${id}`);
+  }
+  getDiscountId(id: number): Observable<Discount>{
+    return this.http.get<Discount>(environment.BASE_URL_API + `/v2/admin/discount/get-by-id?id=${id}`);
   }
 }

@@ -10,6 +10,8 @@ import { Toast, ToastrService } from 'ngx-toastr';
 import { error } from 'jquery';
 import { differenceInDays } from 'date-fns';
 import { DatePipe } from '@angular/common';
+import { userProfile } from '../models/userProfile.model';
+import { UserService } from '../_service/user.service';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -18,10 +20,7 @@ import { DatePipe } from '@angular/common';
 export class CheckoutComponent implements OnInit {
   @ViewChild('momoRadio') momoRadio!: ElementRef;
   @ViewChild('vnpayRadio') vnpayRadio!: ElementRef;
-  orderInfo!: string;
   rooms!: Room;
-  payurl!: string;
-  amount!: number;
   bookForm!: FormGroup;
   dateForm!: FormGroup;
   startDate!: Date;
@@ -34,7 +33,7 @@ export class CheckoutComponent implements OnInit {
   orderInfoString!: string;
   checkIn = new FormControl(new Date().toISOString());
   checkOut = new FormControl(new Date().toISOString());
-  headers = new HttpHeaders().set('Content-Type', 'application/json');
+  userInfo!: userProfile
   get f() {
     return this.bookForm.controls
   }
@@ -45,16 +44,16 @@ export class CheckoutComponent implements OnInit {
     private route: ActivatedRoute,
     private apiService: ApiService,
     private toast: ToastrService,
+    private userProfile: UserService
   ) {
     this.bookForm = this.fb.group({
       startDate: [''],
-      checkOut: ['']
+      checkOut: [''],
     });
 
   }
 
-  ngOnInit(): void {
-
+    ngOnInit(): void {
     this.roomId = this.route.snapshot.paramMap.get('id')
     this.bookForm = this.fb.group({
       startDate: new Date().toISOString(),
@@ -68,7 +67,15 @@ export class CheckoutComponent implements OnInit {
       paymentMethod: ['momo'],
 
     });
-    this.getRoomById();
+    this.getRoomById()
+    this.userProfile.getUserProfile().subscribe( res =>{
+      this.bookForm.patchValue({
+        name: res.userName,
+        email: res.email,
+        phoneNumber: res.phoneNumber,
+        address: res.address
+      });
+    })
     // Lắng nghe sự thay đổi của startDate và endDate
     this.bookForm.get('startDate')?.valueChanges.subscribe(() => {
       this.calculateNumberOfDays();
@@ -105,8 +112,10 @@ export class CheckoutComponent implements OnInit {
   getRoomById() {
     this.apiService.getRoomDetail(this.roomId)
       .subscribe(res => {
-        // console.log(res);
         this.rooms = res
+        console.log(res);
+
+
       });
   }
 
@@ -149,7 +158,7 @@ export class CheckoutComponent implements OnInit {
     const orderInfoString = orderInfo.toString();
     let amountNum1 = amount * this.numdayDisplay
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-   
+
     this.http.post<any>(environment.QR_MOMO, { orderInfo: orderInfoString, amount:  amountNum1.toString() },{headers})
       .subscribe(response => {
         const redirectUrl = response['payUrl'];
