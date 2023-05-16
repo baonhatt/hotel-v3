@@ -80,7 +80,7 @@ export class ApiService {
     this.user = this.auth.userProfile
     return this.user
   }
-  //Payment
+  ////////////////////////Payment
   payment(payment: Payment){
     return this.http.post(environment.BASE_URL_API + '/user/invoid/create', payment );
 
@@ -94,7 +94,7 @@ export class ApiService {
   successPayment(){
     return this.http.get(environment.BASE_URL_API + '/user/reservation/get-successful');
   }
-  // Voting
+  /////////////////////////// Voting
   votingStar(stars: number, roomid: string){
 
     const data = {
@@ -103,4 +103,15 @@ export class ApiService {
     }
     return this.http.post(environment.BASE_URL_API + '/user/room-star/create', data);
   }
+
+
+  /////////////////// Roles Based
+
+  addRole(name: string){
+    return this.http.post(environment.BASE_URL_API + '/v2/admin/role/create', name)
+  }
+
+
+  /////////////////// Account
+  
 }

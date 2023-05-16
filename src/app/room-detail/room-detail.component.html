@@ -178,7 +178,7 @@
               <div class="hotel-view-contents-bottom">
                 <div class="hotel-view-contents-bottom-flex">
                   <div class="hotel-view-contents-bottom-contents">
-                    <h4 class="hotel-view-contents-bottom-title"> {{room.currentPrice | vndCurrency}} <sub>/Night</sub> </h4>
+                    <h4 class="hotel-view-contents-bottom-title"> {{room.discountPrice == 0 ? room.currentPrice : room.discountPrice | vndCurrency}} <sub>/Night</sub> </h4>
                     <p class="hotel-view-contents-bottom-para"> ({{room.peopleNumber}} Persons, {{room.numberOfSimpleBed}} Beds, 1 Nights) </p>
                   </div>
                   <div class="btn-wrapper">
@@ -233,7 +233,7 @@
                       <div class="single-reservation-btn">
                         <a class="btn btn-primary" (click)="openDialog()" class="dash-btn btn-small-2"> Rate Now </a>
                       </div>
-                     
+
                     </div>
                   </div>
                 </div>
