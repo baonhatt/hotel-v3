@@ -19,16 +19,19 @@ export class RoomDetailComponent implements OnInit {
   room!: Room;
   imageUrls: string[] = [];
   roomId!: any;
-  showModal = false;
+  showDiscount: number = 0;
+  discount!: number
   rating = 0;
   constructor(private route: ActivatedRoute, private apiService: ApiService, private viewPort: ViewportScroller, private dialogref: MatDialog){
 
-    
+
   }
   isHomePageLoaded = false;
   ngOnInit() {
 
     window.scrollTo(0, 0);
+
+    
     this.roomId = this.route.snapshot.paramMap.get('id')
     this.viewPort.scrollToPosition([0, 0]);
     this.getRoomById();
@@ -47,6 +50,7 @@ export class RoomDetailComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         this.room = res
+        this.showDiscount = res.discountPrice
         const linkArray: string[] = JSON.parse(res.roomPictures);
         const formattedLinks: string[] = linkArray.map((link: string) => `${link}`);
         // this.imageUrls = formattedLinks
@@ -58,7 +62,6 @@ export class RoomDetailComponent implements OnInit {
   }
 
 
-  loadPage(){}
 
 }
 

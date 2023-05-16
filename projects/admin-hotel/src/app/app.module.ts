@@ -35,6 +35,8 @@ import { EmployeeComponent } from './pages/employee/employee.component';
 import { RoomtypeComponent } from './pages/roomtype/roomtype.component';
 import { RoomservicesComponent } from './pages/roomservices/roomservices.component';
 import { DiscountComponent } from './pages/discount/discount.component';
+import { VndCurrencyPipe } from 'src/app/_shared/currency/vnd-currency.pipe';
+import { BlogComponent } from './pages/blog/blog.component';
 @NgModule({
   declarations: [
     BellNotifComponent,
@@ -53,7 +55,9 @@ import { DiscountComponent } from './pages/discount/discount.component';
     SpinnerComponent,
     RoomtypeComponent,
     RoomservicesComponent,
-    DiscountComponent
+    DiscountComponent,
+    VndCurrencyPipe,
+    BlogComponent
   ],
   imports: [
     BrowserAnimationsModule,

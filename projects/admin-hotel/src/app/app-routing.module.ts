@@ -11,6 +11,7 @@ import { RoomComponent } from './pages/room/room.component';
 import { RoomtypeComponent } from './pages/roomtype/roomtype.component';
 import { RoomservicesComponent } from './pages/roomservices/roomservices.component';
 import { DiscountComponent } from './pages/discount/discount.component';
+import { BlogComponent } from './pages/blog/blog.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
@@ -50,6 +51,14 @@ const routes: Routes = [
   {
     path: 'roomtype',
     component: RoomtypeComponent,
+    data: {
+      requiredAuth: true,
+    },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'blog',
+    component: BlogComponent,
     data: {
       requiredAuth: true,
     },
