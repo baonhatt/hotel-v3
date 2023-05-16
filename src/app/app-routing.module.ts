@@ -177,7 +177,7 @@ const routes: Routes = [
     path: 'successPayment',
     component: SuccessPaymentComponent,
     data: {
-      requiredAuth: false
+      requiredAuth: true
     },
     canActivate: [AuthGuard]
   },
@@ -185,7 +185,7 @@ const routes: Routes = [
     path: 'paymentdetail',
     component: PaymentdetailComponent,
     data: {
-      requiredAuth: false
+      requiredAuth: true
     },
     canActivate: [AuthGuard]
   },

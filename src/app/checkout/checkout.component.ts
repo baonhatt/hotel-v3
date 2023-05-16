@@ -15,16 +15,17 @@ import { UserService } from '../_service/user.service';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.scss']
+  styleUrls: ['./checkout.component.scss'],
 })
 export class CheckoutComponent implements OnInit {
   @ViewChild('momoRadio') momoRadio!: ElementRef;
   @ViewChild('vnpayRadio') vnpayRadio!: ElementRef;
+  paymentFailed!: any;
   rooms!: Room;
   bookForm!: FormGroup;
   dateForm!: FormGroup;
   startDate!: Date;
-  numberOfDay!: number;
+  numberOfDay: number = 0;
   numdayDisplay!: number;
   endDate!: Date;
   numDays!: number;
@@ -33,12 +34,13 @@ export class CheckoutComponent implements OnInit {
   orderInfoString!: string;
   checkIn = new FormControl(new Date().toISOString());
   checkOut = new FormControl(new Date().toISOString());
-  userInfo!: userProfile
+  userInfo!: userProfile;
   get f() {
-    return this.bookForm.controls
+    return this.bookForm.controls;
   }
 
-  constructor(private auth: AuthService,
+  constructor(
+    private auth: AuthService,
     private fb: FormBuilder,
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -50,11 +52,11 @@ export class CheckoutComponent implements OnInit {
       startDate: [''],
       checkOut: [''],
     });
-
   }
 
-    ngOnInit(): void {
-    this.roomId = this.route.snapshot.paramMap.get('id')
+  ngOnInit(): void {
+    this.paymentFailed = false;
+    this.roomId = this.route.snapshot.paramMap.get('id');
     this.bookForm = this.fb.group({
       startDate: new Date().toISOString(),
       endDate: new Date().toISOString(),
@@ -65,17 +67,16 @@ export class CheckoutComponent implements OnInit {
       phoneNumber: [''],
       address: [''],
       paymentMethod: ['momo'],
-
     });
-    this.getRoomById()
-    this.userProfile.getUserProfile().subscribe( res =>{
+    this.getRoomById();
+    this.userProfile.getUserProfile().subscribe((res) => {
       this.bookForm.patchValue({
         name: res.userName,
         email: res.email,
         phoneNumber: res.phoneNumber,
-        address: res.address
+        address: res.address,
       });
-    })
+    });
     // Lắng nghe sự thay đổi của startDate và endDate
     this.bookForm.get('startDate')?.valueChanges.subscribe(() => {
       this.calculateNumberOfDays();
@@ -84,7 +85,6 @@ export class CheckoutComponent implements OnInit {
     this.bookForm.get('endDate')?.valueChanges.subscribe(() => {
       this.calculateNumberOfDays();
     });
-
   }
 
   calculateNumberOfDays() {
@@ -99,24 +99,18 @@ export class CheckoutComponent implements OnInit {
         const endDate = new Date(endDateValue);
         const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
         const numberOfDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        this.numdayDisplay = numberOfDays
+        this.numdayDisplay = numberOfDays;
         const abc = this.bookForm.get('numberOfDay')?.setValue(numberOfDays);
         console.log(this.numdayDisplay);
-
       }
     }
   }
 
-
-
   getRoomById() {
-    this.apiService.getRoomDetail(this.roomId)
-      .subscribe(res => {
-        this.rooms = res
-        console.log(res);
-
-
-      });
+    this.apiService.getRoomDetail(this.roomId).subscribe((res) => {
+      this.rooms = res;
+      console.log(res);
+    });
   }
 
   methodPay() {
@@ -124,78 +118,92 @@ export class CheckoutComponent implements OnInit {
     if (selectedPaymentMethod == 'momo') {
       this.payMoMo();
     } else if (selectedPaymentMethod == 'vnpay') {
-      this.payVnPay()
+      this.payVnPay();
     }
   }
 
-
   bookingRoom(bookForm: FormGroup) {
-    this.http.post<any>(`${environment.BASE_URL_API}/user/reservation/create`, this.bookForm.value)
-      .subscribe(res => {
-
-        this.methodPay()
-        this.toast.success(res.message)
-
-
-        const dataToSave = JSON.stringify(res);
-        localStorage.setItem('bookingData', dataToSave);
-
-      }, _err => {
-
-        const wrongtime = _err.error.title
-
-        if (wrongtime) {
-          this.toast.error(_err.error.title)
-        } else {
-          this.toast.error(_err.error.message)
-
+    this.http
+      .post<any>(
+        `${environment.BASE_URL_API}/user/reservation/create`,
+        this.bookForm.value
+      )
+      .subscribe(
+        (res) => {
+          this.methodPay();
+          this.toast.success(res.message);
+          const dataToSave = JSON.stringify(res);
+          localStorage.setItem('bookingData', dataToSave)
+        },
+        (_err) => {
+          const wrongtime = _err.error.title;
+          if (wrongtime) {
+            this.toast.error(_err.error.title);
+          } else {
+            this.toast.error(_err.error.message);
+          }
         }
-      })
+      );
   }
   payMoMo() {
     const orderInfo = this.rooms.name;
-    const amount = this.rooms.currentPrice
+    const amount = this.rooms.currentPrice;
     const orderInfoString = orderInfo.toString();
-    let amountNum1 = amount * this.numdayDisplay
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    let amountNum1 = amount * this.numdayDisplay;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    });
 
-    this.http.post<any>(environment.QR_MOMO, { orderInfo: orderInfoString, amount:  amountNum1.toString() },{headers})
-      .subscribe(response => {
-        const redirectUrl = response['payUrl'];
-        if (redirectUrl) {
-          window.location.href = redirectUrl;
+    this.http
+      .post<any>(
+        environment.QR_MOMO,
+        { orderInfo: orderInfoString, amount: amountNum1.toString() },
+        { headers }
+      )
+      .subscribe(
+        (response) => {
+          const redirectUrl = response['payUrl'];
+          if (redirectUrl) {
+            window.location.href = redirectUrl;
+          }
+        },
+        (_err) => {
+          this.toast.error(
+            ' The maximum transaction only 50.000.000 đ, please switch to another method.'
+          );
         }
-      }, _err => {
-        this.toast.error(" The maximum transaction only 50.000.000 đ, please switch to another method.")
-      })
-    console.log(orderInfo, amount)
+      );
+    console.log(orderInfo, amount);
   }
 
   payVnPay() {
     this.amountNum1 = this.rooms.currentPrice * this.numdayDisplay;
     this.orderInfoString = this.rooms.name;
 
-    this.http.post<any>(environment.BASE_URL_API + '/user/vn-pay/create', { amount: this.amountNum1, orderDescription: this.orderInfoString, name: 'Customer' }).subscribe(res => {
-
-      const payUrl = res['url']
-      window.location.href = payUrl
-    }, err => {
-      this.toast.error("Pay Failed")
-      // window.location.href = this.payurl
-
-
-    });
+    this.http
+      .post<any>(environment.BASE_URL_API + '/user/vn-pay/create', {
+        amount: this.amountNum1,
+        orderDescription: this.orderInfoString,
+        name: 'Customer',
+      })
+      .subscribe(
+        (res) => {
+          const payUrl = res['url'];
+          window.location.href = payUrl;
+        },
+        (err) => {
+          this.toast.error('Pay Failed');
+          // window.location.href = this.payurl
+        }
+      );
   }
   OnSubmit() {
-
     if (this.bookForm.invalid) {
       return;
     }
 
-
-    this.bookingRoom(this.bookForm.value)
+    this.bookingRoom(this.bookForm.value);
     console.log(this.roomId);
-
   }
-
 }

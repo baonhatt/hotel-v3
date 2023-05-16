@@ -169,15 +169,16 @@
               <div class="checkout-sidebar-contents">
                 <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
                   <li class="list"> <span class="regular"> Charge </span> <span class="strong">
-                      $230.00 </span> </li>
+                    {{rooms.currentPrice * numberOfDay | vndCurrency }} </span> </li>
                   <li class="list"> <span class="regular"> Discount </span> <span class="strong">
                       -$8 </span> </li>
                   <li class="list"> <span class="regular"> Vat </span> <span class="strong">
-                      (+13%) $20.08 </span> </li>
+                      (+5%) {{(rooms.currentPrice * numberOfDay)*0.05| vndCurrency }} </span> </li>
                 </ul>
                 <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
-                  <li class="list"> <span class="regular"> Total </span> <span class="strong color-one fs-20">
-                      {{rooms.currentPrice * numberOfDay | vndCurrency }}
+                    <li class="list"> <span class="regular"> Total </span> <span class="strong color-one fs-20">
+                      {{(rooms.currentPrice * numberOfDay)
+                        *1.05 | vndCurrency }}
                     </span> </li>
                 </ul>
               </div>

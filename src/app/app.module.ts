@@ -144,6 +144,10 @@ import { ModalComponent } from './pages/modal/modal/modal.component';
   providers:
     [
       {
+        provide: CheckoutComponent,
+        useValue: {}
+      },
+      {
         provide: HTTP_INTERCEPTORS,
         useClass: AuthTokenInterceptor,
         multi: true

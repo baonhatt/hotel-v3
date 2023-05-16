@@ -6,6 +6,7 @@ import { Toast, ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { environment } from 'src/environments/environment.development';
 import { Room } from '../models/room.model';
+import { CheckoutComponent } from '../checkout/checkout.component';
 @Component({
   selector: 'app-success-payment',
   templateUrl: './success-payment.component.html',
@@ -23,10 +24,7 @@ export class SuccessPaymentComponent implements OnInit {
   formGroup!: FormGroup;
   invoiceForm!: FormGroup;
   reservationId!: any;
-  constructor(private router: Router, private api: ApiService, private http: HttpClient, private fb: FormBuilder, private toast: ToastrService) {
-
-
-
+  constructor(private router: Router, private api: ApiService, private http: HttpClient, private fb: FormBuilder, private toast: ToastrService, private checkout:CheckoutComponent) {
   }
   ngOnInit(): void {
     const bookingForm = this.fb.group({
@@ -43,7 +41,6 @@ export class SuccessPaymentComponent implements OnInit {
     // Get value of bookingForm is stored in checkout component
     const bookingFormStored = JSON.stringify(localStorage.getItem('bookingForm'));
     const savedData = localStorage.getItem('bookingData');
-
 
     if (savedData) {
       // Chuyển đổi chuỗi JSON thành đối tượng JavaScript
@@ -77,7 +74,8 @@ export class SuccessPaymentComponent implements OnInit {
         this.http.post<any>(`${environment.BASE_URL_API}/user/invoid/create`, this.invoiceForm.value)
           .subscribe(respon => {
 
-            this.toast.success(respon.success.message)
+            this.toast.success(respon.success.message);
+            this.checkout.paymentFailed = true;
 
 
           }, _err => {
