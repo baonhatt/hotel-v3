@@ -26,6 +26,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { SuccessPaymentComponent } from './success-payment/success-payment.component';
 import { PaymentdetailComponent } from './paymentdetail/paymentdetail.component';
 import { BlogNewestComponent } from './blog-newest/blog-newest.component';
+import { ConfirmRegisterComponent } from './confirm-register/confirm-register.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -89,6 +90,14 @@ const routes: Routes = [
     component: ProfileComponent,
     data: {
       requiredAuth: true
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'confirm-register',
+    component: ConfirmRegisterComponent,
+    data: {
+      requiredAuth: false
     },
     canActivate: [AuthGuard]
   },

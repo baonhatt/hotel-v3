@@ -57,6 +57,7 @@ import { PaymentdetailComponent } from './paymentdetail/paymentdetail.component'
 import { VndCurrencyPipe } from './_shared/currency/vnd-currency.pipe';
 import { BlogNewestComponent } from './blog-newest/blog-newest.component';
 import { ModalComponent } from './pages/modal/modal/modal.component';
+import { ConfirmRegisterComponent } from './confirm-register/confirm-register.component';
 @NgModule({
   imports: [
 
@@ -138,6 +139,7 @@ import { ModalComponent } from './pages/modal/modal/modal.component';
     VndCurrencyPipe,
     BlogNewestComponent,
     ModalComponent,
+    ConfirmRegisterComponent,
 
   ],
 

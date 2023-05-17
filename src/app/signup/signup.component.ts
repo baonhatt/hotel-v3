@@ -69,10 +69,10 @@ export class SignupComponent implements OnInit {
     this.submitted = true;
     // stop here if form is invalid
     if (this.signup.invalid) {
-      return;
+      return 
     }
+    this.signupdata(this.signup);
 
-      this.signupdata(this.signup);
 
 
   }
