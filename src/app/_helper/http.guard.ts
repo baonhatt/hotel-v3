@@ -7,6 +7,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { AuthService } from '../_service/auth.service';
 import { StorageService } from '../_service/storage.service';
@@ -17,7 +18,8 @@ export class AuthGuard implements CanActivate {
   constructor(
     private auth: AuthService,
     private router: Router,
-    private storage: StorageService
+    private storage: StorageService,
+    private toastr: ToastrService
   ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -40,7 +42,8 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
       if (route.data['requiredAuth'] == true) {
-        this.router.navigate(['/**']);
+        this.router.navigate(['/login']);
+        this.toastr.warning("Please login to perform this function!");
         return false;
       }
       return true;

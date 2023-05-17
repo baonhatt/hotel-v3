@@ -120,7 +120,7 @@ const routes: Routes = [
     path: 'password-change',
     component: PasswordChangeComponent,
     data: {
-      requiredAuth: false
+      requiredAuth: true
     },
     canActivate: [AuthGuard]
   },
@@ -158,10 +158,10 @@ const routes: Routes = [
   },
 
   {
-    path: 'edit-booking',
+    path: 'edit-profile',
     component: EditProfileComponent,
     data: {
-      requiredAuth: false
+      requiredAuth: true
     },
     canActivate: [AuthGuard]
   },

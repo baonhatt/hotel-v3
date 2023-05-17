@@ -32,7 +32,7 @@ export class ForgetpasswordComponent implements OnInit {
 
     this.loading = true;
 
-    this.auth.requestChangePassword(this.form.value.email, environment.BASE_URL_WEB + "/user/request-change-password")
+    this.auth.requestChangePassword(this.form.value.email, environment.BASE_URL_WEB + "/reset-password")
       .subscribe((result_resetpasswordstatus) => {
         const message = result_resetpasswordstatus.message
 

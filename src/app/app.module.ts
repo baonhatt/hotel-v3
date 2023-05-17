@@ -72,12 +72,12 @@ import { ModalComponent } from './pages/modal/modal/modal.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut : 5000,
-      progressBar: true
+      progressBar: true,
+      preventDuplicates: true
     }),
     BrowserAnimationsModule,
     FormsModule,
     ToastrModule,
-    // ToastNoAnimationModule.forRoot(),
     MatDialogModule,
     MatOptionModule,
     MatSelectModule,
