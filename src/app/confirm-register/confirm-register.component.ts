@@ -29,29 +29,38 @@ export class ConfirmRegisterComponent implements OnInit {
   invoiceForm!: FormGroup;
   reservationId!: any;
   submitted = false;
+  finalCode!: string;
   constructor(private router: Router, private api: ApiService, private http: HttpClient, private fb: FormBuilder, private toast: ToastrService, private checkout: CheckoutComponent) {
   }
   ngOnInit(): void {
 
-    if (this.code && this.email !== null) {
-      console.log(this.code)
-      this.decodeEmail = this.email
+    // console.log(new URLSearchParams(window.location.search))
+    console.log(this.code);
+    console.log(this.email);
+
+    if (this.code !== null) {
+      this.decodeCode = this.code
+      console.log(this.decodeCode)
+    } else {
+      // Xử lý khi `code` là null
+
     }
-    // Transfer to json data
-    // Param value for new form
 
 
     if (this.code !== '0') {
-      const url = `${environment.BASE_URL_API}/user/confirm-email-register?email=${decodeURIComponent(this.decodeEmail)}&code=${(this.code)}`;
-      this.http.get(url).subscribe(
+      this.finalCode = this.decodeCode
+      const url = `${environment.BASE_URL_API}/user/confirm-email-register?email=${this.email}&code=${(this.decodeCode)}`;
+      this.http.get<any>(url).subscribe(
 
-        (response: any) => {
+        (response) => {
           console.log(this.code)
-          this.toast.warning(response.message);
+          this.toast.success(response);
+          console.log(this.finalCode);
+
 
         },
         (error) => {
-          this.toast.error(error.message)
+          this.toast.error(error.error.message)
         },
       )
     }
