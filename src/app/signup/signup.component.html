@@ -13,9 +13,9 @@
             <div class="single-input mt-3">
               <label class="label-title mb-3"> User Name </label>
               <input class="form-control" type="text" formControlName="userName" placeholder="Type User Name"
-                [ngClass]="{ 'is-invalid': submitted && f['userName'].errors }">
+                [ngClass]="{ 'is-invalid':  f['userName'].errors && f['userName'].touched  }">
 
-              <div *ngIf="submitted && f['userName'].errors" class="invalid-feedback">
+              <div *ngIf=" f['userName'].errors && f['userName'].touched " class="invalid-feedback">
                 <div *ngIf="f['userName'].errors['required']">First Name is required</div>
               </div>
 
@@ -24,8 +24,8 @@
             <div class="single-input mt-3">
               <label class="label-title mb-3">  Email </label>
               <input class="form--control" id="email"  formControlName="email" type="text" placeholder=" Email "
-              [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
-              <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+              [ngClass]="{ 'is-invalid':  f['email'].errors && f['email'].touched  }" />
+              <div *ngIf=" f['email'].errors && f['email'].touched " class="invalid-feedback">
                 <div *ngIf="f['email'].errors['required']">Email is required</div>
                 <div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
               </div>
@@ -35,8 +35,8 @@
                 <div class="single-input mt-3">
                   <label class="label-title mb-3"> Full Name </label>
                   <input class="form-control" type="name" id="name" formControlName="name" placeholder="Type Full Name"
-                    [ngClass]="{ 'is-invalid': submitted && f['name'].errors }" />
-                  <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                    [ngClass]="{ 'is-invalid':  f['name'].errors && f['name'].touched  }" />
+                  <div *ngIf=" f['name'].errors && f['name'].touched " class="invalid-feedback">
                     <div *ngIf="f['name'].errors['required']">Full Name is required</div>
                   </div>
                 </div>
@@ -45,8 +45,8 @@
                 <div class="single-input mt-3">
                   <label class="label-title mb-3"> Phone Number </label>
                   <input class="form-control" type="text" formControlName="phoneNumber" id="phone"
-                    placeholder="Enter 10 digit phone Number" [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }">
-                  <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
+                    placeholder="Enter 10 digit phone Number" [ngClass]="{ 'is-invalid':  f['phoneNumber'].errors && f['phoneNumber'].touched   }"  >
+                  <div *ngIf=" f['phoneNumber'].errors && f['phoneNumber'].touched " class="invalid-feedback">
                     <div *ngIf="f['phoneNumber'].errors['required']">
                       Phone Number is required.
                     </div>
@@ -62,14 +62,14 @@
                 <div class="single-input mt-3">
                   <label class="label-title mb-3"> Create Password </label>
                   <input class="form--control"  [type]="password" type="password" formControlName="password" placeholder="Type Password"
-                    [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+                    [ngClass]="{ 'is-invalid':  f['password'].errors && f['password'].touched  }">
                   <div class="icon toggle-password">
                     <i (click)="OnClick()" style="margin-left: -30px; cursor: pointer;">
                       <i class="fa fa-eye" aria-hidden="true" *ngIf="show"></i>
                       <i class="fa fa-eye-slash" aria-hidden="true" *ngIf="!show"></i>
                     </i>
                   </div>
-                  <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                  <div *ngIf=" f['password'].errors && f['password'].touched " class="invalid-feedback">
                     <div class="" *ngIf="f['password'].errors['required']">
                       Password is required.
                     </div>
@@ -86,10 +86,10 @@
                 <div class="single-input mt-3">
                   <label class="label-title mb-3"> Confirm Password </label>
                   <input class="form--control" [type]="password"  type="password" formControlName="confirmPassword" placeholder="Confirm Password"
-                    [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }" required>
+                    [ngClass]="{ 'is-invalid':  f['confirmPassword'].errors && f['confirmPassword'].touched  }" required>
 
 
-                  <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
+                  <div *ngIf=" f['confirmPassword'].errors && f['confirmPassword'].touched " class="invalid-feedback">
                     <div class="inputerror" *ngIf="f['confirmPassword'].errors['passwordMismatch']">
                       Password not match!
                     </div>
@@ -106,7 +106,7 @@
                   Conditions </a>,
                 and <a class="color-one" href="javascript:void(0)"> privacy policy </a> </label>
             </div>
-            <button class="submit-btn w-100 mt-3 disabled" type="submit" id="signup"> Sign Up Now  </button>
+            <button class="submit-btn w-100 mt-3 disabled" [disabled]="signup.invalid"  type="submit" id="signup"> Sign Up Now  </button>
             <span class="account color-light mt-3"> Already have an account? <a class="color-one" routerLink="/login">
                 Login </a> </span>
           </form>
