@@ -77,10 +77,10 @@
                       placeholder="Enter 10 digit phone Number" [ngClass]="{ 'is-invalid':  f['CMND'].errors }">
                       <div *ngIf=" f['CMND'].errors" class="invalid-feedback">
                         <div *ngIf="f['CMND'].errors['required']">
-                          Phone Number is required.
+                          ID Card is required.
                         </div>
                         <div *ngIf="f['CMND'].errors['pattern']">
-                          The ID Card must have 20 digit.
+                          ID Card must have 20 digit.
                         </div>
                       </div>
                     </div>

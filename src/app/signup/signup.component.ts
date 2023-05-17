@@ -29,10 +29,10 @@ export class SignupComponent implements OnInit {
     this.signup = this.fb.group({
       name: ['', Validators.required, Validators.name],
       email: ['', [Validators.required, Validators.email]],
-      userName: ['', Validators.required, Validators.name],
+      userName: ['', [Validators.required, Validators.pattern(/^\S*$/)]],
       phoneNumber: ['',  [Validators.required, Validators.pattern("[0-9 ]{10}")]],
-      password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*\d).{8,}$/)]],
-      confirmPassword: ['', [Validators.required, this.passwordMatchValidator]]
+      password: ['', [Validators.required,Validators.pattern(/^\S*$/), Validators.pattern(/^(?=.*[A-Z])(?=.*\d).{8,}$/)]],
+      confirmPassword: ['', [Validators.required,Validators.pattern(/^\S*$/), this.passwordMatchValidator]]
     })
     this.injectScript("assets/js/signup/signup.js");
   }
@@ -95,4 +95,19 @@ export class SignupComponent implements OnInit {
       this.document.head?.appendChild(script);
     }
   }
+}
+export class UsernameValidator {
+
+  static cannotContainSpace(control: AbstractControl) : ValidationErrors | null {
+
+      if((control.value as string).indexOf(' ') >= 0){
+
+          return {cannotContainSpace: true}
+
+      }
+
+      return null;
+
+  }
+
 }

@@ -27,6 +27,7 @@ import { SuccessPaymentComponent } from './success-payment/success-payment.compo
 import { PaymentdetailComponent } from './paymentdetail/paymentdetail.component';
 import { BlogNewestComponent } from './blog-newest/blog-newest.component';
 import { ConfirmRegisterComponent } from './confirm-register/confirm-register.component';
+import { LoadingInterceptor } from './loading.interceptor';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
