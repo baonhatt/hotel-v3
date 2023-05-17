@@ -11,6 +11,7 @@ import { filter } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { userProfile } from '../models/userProfile.model';
+import { LoaderService } from './loader.service';
 export const JWT_NAME = 'blog-token';
 
 @Injectable({

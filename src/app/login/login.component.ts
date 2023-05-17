@@ -14,6 +14,7 @@ import { environment } from '../../environments/environment.development';
 import { HomepageComponent } from '../homepage/homepage.component';
 import { ToastrService } from 'ngx-toastr';
 import { userProfile } from '../models/userProfile.model';
+import { LoaderService } from '../_service/loader.service';
 // import { AuthinterceptorInterceptor } from '../shared/auth/authinterceptor.interceptor';
 
 @Component({
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private fb: FormBuilder,
     private route: Router,
-    private toast: ToastrService
+    private toast: ToastrService,
   ) {}
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -86,7 +87,7 @@ export class LoginComponent implements OnInit {
         this.route.navigateByUrl('/home');
       },
       (err) => {
-        this.toast.error(err.error.message);
+        err
       }
     );
   }

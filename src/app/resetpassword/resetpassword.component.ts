@@ -43,17 +43,12 @@ export class ResetpasswordComponent {
 
     this.auth.confirmChangePasswordViaEmail(token, this.form.value.newPassword, this.form.value.confirmNewPassword, email)
       .subscribe((res) => {
-        if (res.statusCode == 1) {
           //thêm toasrt res.message
-          this.toast.success("Successfully changed password!");
-          this.router.navigate(['login'])
-        }
-        else {
-          this.toast.error("Make sure your password match!");
-        }
+          this.toast.success(res.message);
+          this.router.navigate(['login']);
       },
         (err) => {
-          console.log(err);
+          console.log(err.message);
         })
   }
 }
