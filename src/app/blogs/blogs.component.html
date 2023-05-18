@@ -42,7 +42,7 @@
               </span>
               <span class="single-blog-contents-tags-item"> <a href="javascript:void(0)"> 22 Comments </a> </span>
             </div>
-            <h4 class="single-blog-contents-title mt-3"> <a routerLink="/blog-detail/"> {{blog.fields.shortTitle}} </a> </h4>
+            <h4 class="single-blog-contents-title mt-3"> <a [routerLink]="['/blog-detail',removeBlogsPrefix(blog.sys.id)]"> {{blog.fields.shortTitle}} </a> </h4>
           </div>
         </div>
       </div>

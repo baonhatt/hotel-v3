@@ -38,13 +38,14 @@ export class ConfirmRegisterComponent implements OnInit {
           this.toast.success(response.message);
         },
         (error) => {
+        
           this.toast.error(error.error.message)
         },
       )
     this.vnp_ResponseCode == '0'
   }
   goBackToProFile() {
-    this.router.navigate(['/paymentdetail']);
+    this.router.navigate(['/login']);
   }
 
 }

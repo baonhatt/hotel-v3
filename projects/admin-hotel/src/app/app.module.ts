@@ -30,13 +30,13 @@ import { LoadingInterceptor } from './_helper/loading.interceptor';
 import { AuthGuard } from './_helper/http.guard';
 import { RoomComponent } from './pages/room/room.component';
 import { CustomerComponent } from './pages/customer/customer.component';
-import { PaymentComponent } from './pages/payment/payment.component';
 import { EmployeeComponent } from './pages/employee/employee.component';
 import { RoomtypeComponent } from './pages/roomtype/roomtype.component';
 import { RoomservicesComponent } from './pages/roomservices/roomservices.component';
 import { DiscountComponent } from './pages/discount/discount.component';
 import { VndCurrencyPipe } from 'src/app/_shared/currency/vnd-currency.pipe';
 import { BlogComponent } from './pages/blog/blog.component';
+import { RoomTypeServiceComponent } from './pages/room-type-service/room-type-service.component';
 @NgModule({
   declarations: [
     BellNotifComponent,
@@ -50,14 +50,14 @@ import { BlogComponent } from './pages/blog/blog.component';
     AddbookingComponent,
     LoginAdminComponent,
     PageErrorComponent,
-    PaymentComponent,
     EmployeeComponent,
     SpinnerComponent,
     RoomtypeComponent,
     RoomservicesComponent,
     DiscountComponent,
     VndCurrencyPipe,
-    BlogComponent
+    BlogComponent,
+    RoomTypeServiceComponent
   ],
   imports: [
     BrowserAnimationsModule,

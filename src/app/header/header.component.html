@@ -34,10 +34,10 @@
         <div class="single-right-content">
           <div class="navbar-right-flex">
 
-            <app-bell-notif></app-bell-notif>
 
             <div *ngIf="isLoggedIn(); then loggedInUser; else loginButton"></div>
             <ng-template #loggedInUser>
+              <app-bell-notif></app-bell-notif>
               <span>
                 <div class="navbar-author">
                   <div class="navbar-author-flex">

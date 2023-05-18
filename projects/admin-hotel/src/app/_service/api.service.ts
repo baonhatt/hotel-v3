@@ -11,6 +11,7 @@ import { Search } from 'src/app/models/search.model';
 import { Staff } from '../models/staff.model';
 import { ServiceAttach } from '../models/serviceAttach.model';
 import { Discount } from '../models/discount.model';
+import { RoomTypeService, ServiceAttachDetail } from '../models/roomtypeservice.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class ApiService {
   apiBlog = 'http://localhost:3000/blog';
   private baseUrl1 = 'http://localhost:3000/rooms';
 
-  ////////////////////////////////////// Room API
+ /////////////////////////////////////////////////////////////////////////////////////// Room API
   getRooms() {
     return this.http.get<Room[]>(environment.BASE_URL_API + '/v2/admin/room/get-all');
 
@@ -77,7 +78,7 @@ export class ApiService {
 
      }
 
-  /////////////////////////// Room Type
+ /////////////////////////////////////////////////////////////////////////////////////// Room Type
   getAllRoomType(): Observable<roomType[]>{
     return this.http.get<roomType[]>(environment.BASE_URL_API + '/v2/admin/room-type/get-all');
   }
@@ -92,7 +93,7 @@ export class ApiService {
     return this.http.get(`https://webhotel.click/v2/admin/room-type/delete?id=${id}`,)
   }
 
-  /////////////////////////// Room service
+ /////////////////////////////////////////////////////////////////////////////////////// Type service
   getAllService(): Observable<ServiceAttach[]>{
     return this.http.get<ServiceAttach[]>(environment.BASE_URL_API + '/v2/admin/service-attach/get-all');
   }
@@ -109,7 +110,7 @@ export class ApiService {
 
 
 
-  /////////////////////////////////////////// Blog API
+ /////////////////////////////////////////////////////////////////////////////////////// Blog API
 
 
   getBlogs(){
@@ -121,7 +122,8 @@ export class ApiService {
 
 
 
-////////////////////////////////////////////////// User API
+
+ /////////////////////////////////////////////////////////////////////////////////////// User API
 
   getUser() {
     this.user = this.auth.userProfile
@@ -132,7 +134,8 @@ export class ApiService {
     return this.http.get<Staff[]>(environment.BASE_URL_API + '/v2/admin/account/get-all');
   }
 
-////////////////////////////////////////////////// Discount API
+
+ /////////////////////////////////////////////////////////////////////////////////////// Discount API
 
   getAllDiscount(): Observable<Discount[]>{
     return this.http.get<Discount[]>(environment.BASE_URL_API + '/v2/admin/discount/get-all');
@@ -150,4 +153,24 @@ export class ApiService {
   getDiscountId(id: number): Observable<Discount>{
     return this.http.get<Discount>(environment.BASE_URL_API + `/v2/admin/discount/get-by-id?id=${id}`);
   }
+  
+
+ /////////////////////////////////////////////////////////////////////////////////////// Room Type Service API
+  
+    getAllRoomTypeService(): Observable<RoomTypeService[]>{
+      return this.http.get<RoomTypeService[]>(environment.BASE_URL_API + '/v2/admin/service-room/get-all');
+    }
+    createRoomTypeService(data: RoomTypeService){
+       return this.http.post(environment.BASE_URL_API + '/v2/admin/service-room/create', data);
+    }
+
+ /////////////////////////////////////////////////////////////////////////////////////// ServiceAttachDetailAdmin API
+
+    getAllServiceDetail(): Observable<ServiceAttachDetail[]>{
+        return this.http.get<ServiceAttachDetail[]>(environment.BASE_URL_API + '/v2/admin/service-attach-detail/get-all');
+    }
+    deleteServiceDetail(id: number): Observable<any>{
+
+        return this.http.get(environment.BASE_URL_API + `/v2/admin/service-attach-detail/delete?id=${id}`);
+    }
 }

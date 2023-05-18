@@ -12,6 +12,7 @@ import { RoomtypeComponent } from './pages/roomtype/roomtype.component';
 import { RoomservicesComponent } from './pages/roomservices/roomservices.component';
 import { DiscountComponent } from './pages/discount/discount.component';
 import { BlogComponent } from './pages/blog/blog.component';
+import { RoomTypeServiceComponent } from './pages/room-type-service/room-type-service.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
@@ -66,6 +67,14 @@ const routes: Routes = [
   },
   {
     path: 'roomservice',
+    component: RoomTypeServiceComponent,
+    data: {
+      requiredAuth: true,
+    },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'typeservice',
     component: RoomservicesComponent,
     data: {
       requiredAuth: true,

@@ -12,6 +12,7 @@ import * as bootstrap from 'bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { addRoom, Room } from '../../models/room.model';
 import { ApiService } from '../../_service/api.service';
+import { RoomTypeService, ServiceAttachDetail } from '../../models/roomtypeservice.model';
 interface RoomType {
   id: number;
   typeName: string;
@@ -39,6 +40,7 @@ export class RoomComponent implements OnInit {
   roomFormEdit!: FormControl;
   inputValue: any;
   roomTypes: RoomType[] = [];
+  serviceAttach!: ServiceAttachDetail[]
   get f() {
     return this.roomForm.controls;
   }
@@ -346,5 +348,18 @@ export class RoomComponent implements OnInit {
         },
       });
     }
+  }
+
+/////////////////////////////////////////////////ServiceAttachDetailAdmin
+
+  getAllServiceAttach(){
+    this.api.getAllServiceDetail().subscribe((res: any) =>{
+        this.roomService = res
+        console.log(this.roomService);
+    })
+  }
+  
+  searchRoom(id: string){
+    return this.api.searchRoom(id)
   }
 }
