@@ -37,8 +37,10 @@ import { DiscountComponent } from './pages/discount/discount.component';
 import { VndCurrencyPipe } from 'src/app/_shared/currency/vnd-currency.pipe';
 import { BlogComponent } from './pages/blog/blog.component';
 import { RoomTypeServiceComponent } from './pages/room-type-service/room-type-service.component';
+import { FilterPipe } from './_shared/filter.pipe';
 @NgModule({
   declarations: [
+    FilterPipe,
     BellNotifComponent,
     AppComponent,
     HeaderComponent,
@@ -57,9 +59,11 @@ import { RoomTypeServiceComponent } from './pages/room-type-service/room-type-se
     DiscountComponent,
     VndCurrencyPipe,
     BlogComponent,
-    RoomTypeServiceComponent
+    RoomTypeServiceComponent,
+    FilterPipe
   ],
   imports: [
+    FormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     FormsModule,
@@ -72,7 +76,6 @@ import { RoomTypeServiceComponent } from './pages/room-type-service/room-type-se
     MatIconModule,
     MatDividerModule,
     MatListModule,
-    FormsModule,
     JwtModule.forRoot({
       jwtOptionsProvider:{
         provide:JWT_OPTIONS,
@@ -82,7 +85,6 @@ import { RoomTypeServiceComponent } from './pages/room-type-service/room-type-se
     }),
     ReactiveFormsModule,
     HttpClientModule,
-
   ],
   providers:
   [

@@ -13,6 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 import { addRoom, Room } from '../../models/room.model';
 import { ApiService } from '../../_service/api.service';
 import { RoomTypeService, ServiceAttachDetail } from '../../models/roomtypeservice.model';
+import { Pipe, PipeTransform } from '@angular/core';
+
 interface RoomType {
   id: number;
   typeName: string;
@@ -31,7 +33,7 @@ export class RoomComponent implements OnInit {
   imgURL: any;
   submitted = false;
   RoomId!: string;
-
+  searchTerm: string = '';
   @Input() room: addRoom;
   rooms: Room[];
   id!: number;

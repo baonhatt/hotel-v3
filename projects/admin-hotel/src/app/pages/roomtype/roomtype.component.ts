@@ -21,6 +21,7 @@ export class RoomtypeComponent implements OnInit{
   nameTypeForm!: FormGroup;
   roomTypeId!: string;
   selectedIds: string[] = [];
+  searchBooking: string = ''
   constructor(private api: ApiService, private fb: FormBuilder, private toast: ToastrService){
     this.nameTypeForm = this.fb.group({
       TypeName : ['']

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment.development';
@@ -11,25 +11,37 @@ import { AuthService } from '../_service/auth.service';
   styleUrls: ['./resetpassword.component.scss']
 })
 export class ResetpasswordComponent {
-  //tạo 1 cái form lấy hết dữ liệu bên html về
-  //nhớ tên phải là newPassword và confirmNewPassword
+
   form!: FormGroup;
   loading = false;
   submitted = false;
   newPassword: any;
   confirmNewPassword: any;
+  password: any;
+  show = false;
+  get f() {
+    return this.form.controls
+  }
   constructor(
     private auth: AuthService,
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private toast: ToastrService) { }
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      newPassword: ['', Validators.required],
-      confirmNewPassword: ['', Validators.required
-    ]
+    this.form = this.fb.group({
+      newPassword: ['', [Validators.required,Validators.pattern(/^\S*$/), Validators.pattern(/^(?=.*[A-Z])(?=.*\d).{8,}$/)]],
+      confirmNewPassword: ['', [Validators.required,Validators.pattern(/^\S*$/), this.passwordMatchValidator]]
     });
+  }
+  OnClick(){
+    if(this.password === 'password'){
+      this.password = 'text';
+      this.show = true;
+    }else{
+      this.password = 'password';
+      this.show = false
+    }
   }
   // get f() { return this.form.controls; }
   onSubmit() {
@@ -48,7 +60,33 @@ export class ResetpasswordComponent {
           this.router.navigate(['login']);
       },
         (err) => {
-          console.log(err.message);
+          this.toast.error(err.error.message);
         })
   }
+
+  passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const newPassword = control.root.get('newPassword');
+    const confirmNewPassword = control.value;
+
+    if (newPassword && confirmNewPassword !== newPassword.value) {
+      return { 'passwordMismatch': true };
+    }
+
+    return null;
+  }
+}
+export class UsernameValidator {
+
+  static cannotContainSpace(control: AbstractControl) : ValidationErrors | null {
+
+      if((control.value as string).indexOf(' ') >= 0){
+
+          return {cannotContainSpace: true}
+
+      }
+
+      return null;
+
+  }
+
 }

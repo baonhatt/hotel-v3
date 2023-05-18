@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PipeTransform } from '@angular/core';
 import { DateFilterFn } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
@@ -11,6 +11,7 @@ import { timeout } from 'rxjs';
 })
 export class BookingComponent implements OnInit{
   reservationGetAll! : ReservationModel[];
+  searchBooking: string = '' ;
   reservationGetById! : ReservationModel;
   constructor(private http: HttpClient){}
   ngOnInit(): void {
@@ -20,7 +21,7 @@ export class BookingComponent implements OnInit{
   {
     this.http.get<ReservationModel[]>(environment.BASE_URL_API+"/v2/admin/reservation/get-all")
     .subscribe(
-      (res)=>{
+      (res: any)=>{
         this.reservationGetAll = res;
       },
       (err) => {
