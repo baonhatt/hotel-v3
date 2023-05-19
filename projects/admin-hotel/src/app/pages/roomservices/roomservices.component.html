@@ -122,33 +122,33 @@
       <div class="modal-body">
         <form class="form-horizontal" [formGroup]="serviceForm">
           <div class="row mb-3">
-              <label for="inputEmail3" class="col-3 col-form-label">Name service</label>
+              <label for="inputEmail3" class="col-3 col-form-label">Service</label>
               <div class="col-9">
-                  <input type="email" formControlName="name" class="form-control" id="inputEmail3" placeholder="Email">
+                  <input type="email" formControlName="name" class="form-control" id="inputEmail3" placeholder="Name service">
               </div>
           </div>
           <div class="row mb-3">
               <label for="inputEmail3" class="col-3 col-form-label">Name room type</label>
               <div class="col-9">
-                  <input type="email" formControlName="icon" class="form-control" id="inputEmail3" placeholder="Email">
+                  <input type="email" formControlName="icon" class="form-control" id="inputEmail3" placeholder="Name room type">
               </div>
           </div>
           <div class="row mb-3">
-              <label for="inputEmail3" class="col-3 col-form-label">Name room type</label>
+              <label for="inputEmail3" class="col-3 col-form-label">Icon name</label>
               <div class="col-9">
-                  <input type="email" formControlName="description" class="form-control" id="inputEmail3" placeholder="Email">
+                  <input type="email" formControlName="description" class="form-control" id="inputEmail3" placeholder="Icon">
               </div>
           </div>
 
-
-          <div class="justify-content-end row">
-              <div class="col-9">
-                  <button type="submit" (click)="update(serviceForm)" class="btn btn-info">Add </button>
-              </div>
-          </div>
-      </form>
-      </div>
-      <div class="modal-footer">
+          <div class="col-9">
+        </div>
+        
+        <div class="justify-content-end row">
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" (click)="update(serviceForm)" class="btn btn-info">Update </button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
