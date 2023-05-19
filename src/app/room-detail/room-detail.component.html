@@ -1,17 +1,35 @@
 <app-spinner></app-spinner>
 <app-header></app-header>
-<div class="hotel-details-area section-bg-2 pat-100 pab-100" >
+<div class="breadcrumb-area breadcrumb-padding">
+  <div class="container custom-container-one">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="breadcrumb-contents">
+          <h4 class="breadcrumb-contents-title"> Hotel Details </h4>
+          <ul class="breadcrumb-contents-list list-style-none">
+            <li class="breadcrumb-contents-list-item"> <a href="index.html" class="breadcrumb-contents-list-item-link"> Home </a>
+            </li>
+            <li class="breadcrumb-contents-list-item"> <a href="listing.html" class="breadcrumb-contents-list-item-link"> Hotels
+              </a> </li>
+            <li class="breadcrumb-contents-list-item"> Hotel Details </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="hotel-details-area section-bg-2">
   <div class="container">
     <div class="row g-4">
-      <div class="col-xl-8 col-lg-7" >
-        <div class="details-left-wrapper" >
-          <div class="details-contents bg-white radius-10"  >
-            <div class="details-contents-header" >
-                <img [src]="room.roomPicture" alt="Room Image">
-              </div>
-            <div class="details-contents-header"  >
+      <div class="col-xl-8 col-lg-7">
+        <div class="details-left-wrapper">
+          <div class="details-contents bg-white radius-10">
+            <div class="details-contents-header">
+              <img *ngIf="room!=undefined" [src]="room.roomPicture==undefined?'':room.roomPicture" alt="Room Image">
+            </div>
+            <div class="details-contents-header">
               <div class="row mt-2 slider">
-                <div class="col-11 " >
+                <div class="col-11 ">
                   <div class="global-slick-init attraction-slider nav-style-one nav-color-two slider-inner-margin"
                     data-infinite="true" data-arrows="true" data-dots="false" data-slidesToShow="4" data-swipeToSlide="true"
                     data-autoplay="true" data-autoplaySpeed="2500"
@@ -21,24 +39,11 @@
 
                     <div class="attraction-item">
                       <!-- Các phần tử trong slider -->
-                      <div class="attraction-item1" >
+                      <div class="attraction-item1">
                         <div class="single-attraction-two radius-20" *ngIf="imageUrls">
                           <div class="single-attraction-two-thumb">
-                            <a href="{{imageUrls[0]}}" class="gallery-popup">
-                              <img [src]="imageUrls[0]" alt="img">
-                            </a>
-                          </div>
-                          <div class="single-attraction-two-contents"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="attraction-item">
-                      <!-- Các phần tử trong slider -->
-                      <div class="attraction-item1"  *ngIf="imageUrls">
-                        <div class="single-attraction-two radius-20">
-                          <div class="single-attraction-two-thumb">
-                            <a href="{{imageUrls[1]}}" class="gallery-popup">
-                              <img [src]="imageUrls[1]" alt="img">
+                            <a href="{{imageUrls[0]==null?'':imageUrls[0]}}" class="gallery-popup">
+                              <img [src]="imageUrls[0]==null?'':imageUrls[0]" alt="img">
                             </a>
                           </div>
                           <div class="single-attraction-two-contents"></div>
@@ -50,8 +55,8 @@
                       <div class="attraction-item1" *ngIf="imageUrls">
                         <div class="single-attraction-two radius-20">
                           <div class="single-attraction-two-thumb">
-                            <a href="{{imageUrls[2]}}" class="gallery-popup">
-                              <img [src]="imageUrls[2]" alt="img">
+                            <a href="{{imageUrls[1]==null?'':imageUrls[1]}}" class="gallery-popup">
+                              <img [src]="imageUrls[1]==null?'':imageUrls[1]" alt="img">
                             </a>
                           </div>
                           <div class="single-attraction-two-contents"></div>
@@ -63,8 +68,8 @@
                       <div class="attraction-item1" *ngIf="imageUrls">
                         <div class="single-attraction-two radius-20">
                           <div class="single-attraction-two-thumb">
-                            <a href="{{imageUrls[3]}}" class="gallery-popup">
-                              <img [src]="imageUrls[3]" alt="img">
+                            <a href="{{imageUrls[2]==null?'':imageUrls[2]}}" class="gallery-popup">
+                              <img [src]="imageUrls[2]==null?'':imageUrls[2]" alt="img">
                             </a>
                           </div>
                           <div class="single-attraction-two-contents"></div>
@@ -76,8 +81,8 @@
                       <div class="attraction-item1" *ngIf="imageUrls">
                         <div class="single-attraction-two radius-20">
                           <div class="single-attraction-two-thumb">
-                            <a href="{{imageUrls[4]}}" class="gallery-popup">
-                              <img [src]="imageUrls[4]" alt="img">
+                            <a href="{{imageUrls[3]==null?'':imageUrls[3]}}" class="gallery-popup">
+                              <img [src]="imageUrls[3]==null?'':imageUrls[3]" alt="img">
                             </a>
                           </div>
                           <div class="single-attraction-two-contents"></div>
@@ -89,8 +94,8 @@
                       <div class="attraction-item1" *ngIf="imageUrls">
                         <div class="single-attraction-two radius-20">
                           <div class="single-attraction-two-thumb">
-                            <a href="{{imageUrls[5]}}" class="gallery-popup">
-                              <img [src]="imageUrls[5]" alt="img">
+                            <a href="{{imageUrls[4]==null?'':imageUrls[4]}}" class="gallery-popup">
+                              <img [src]="imageUrls[4]==null?'':imageUrls[4]" alt="img">
                             </a>
                           </div>
                           <div class="single-attraction-two-contents"></div>
@@ -102,8 +107,21 @@
                       <div class="attraction-item1" *ngIf="imageUrls">
                         <div class="single-attraction-two radius-20">
                           <div class="single-attraction-two-thumb">
-                            <a href="{{imageUrls[6]}}" class="gallery-popup">
-                              <img [src]="imageUrls[6]" alt="img">
+                            <a href="{{imageUrls[5]==null?'':imageUrls[5]}}" class="gallery-popup">
+                              <img [src]="imageUrls[5]==null?'':imageUrls[5]" alt="img">
+                            </a>
+                          </div>
+                          <div class="single-attraction-two-contents"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="attraction-item">
+                      <!-- Các phần tử trong slider -->
+                      <div class="attraction-item1" *ngIf="imageUrls">
+                        <div class="single-attraction-two radius-20">
+                          <div class="single-attraction-two-thumb">
+                            <a href="{{imageUrls[6]==null?'':imageUrls[6]}}" class="gallery-popup">
+                              <img [src]="imageUrls[6]==null?'':imageUrls[6]" alt="img">
                             </a>
                           </div>
                           <div class="single-attraction-two-contents"></div>
@@ -123,23 +141,15 @@
                         </div>
                       </div>
                     </div>
-
-
-
-
-
                   </div>
                 </div>
               </div>
-
-              </div>
-
-
-            <div class="hotel-view-contents">
+            </div>
+            <div class="hotel-view-contents" *ngIf="room!=undefined">
               <div class="hotel-view-contents-header">
-                <span class="hotel-view-contents-review"> <i class="las la-star"></i> {{room.starSum}} <span
-                    class="hotel-view-contents-review-count"> (380) </span> </span>
-                <h3 class="hotel-view-contents-title"> {{room.roomTypeName}} </h3>
+                <span *ngIf="room!=undefined" class="hotel-view-contents-review"> <i class="las la-star"></i> {{room.starSum}}
+                  <span class="hotel-view-contents-review-count"> (380) </span> </span>
+                <h3 *ngIf="room!=undefined" class="hotel-view-contents-title"> {{room.roomTypeName}} </h3>
                 <div class="hotel-view-contents-location mt-2">
                 </div>
               </div>
@@ -178,16 +188,19 @@
               <div class="hotel-view-contents-bottom">
                 <div class="hotel-view-contents-bottom-flex">
                   <div class="hotel-view-contents-bottom-contents">
-                    <h4 class="hotel-view-contents-bottom-title"> {{room.discountPrice == 0 ? room.currentPrice : room.discountPrice | vndCurrency}} <sub>/Night</sub> </h4>
-                    <p class="hotel-view-contents-bottom-para"> ({{room.peopleNumber}} Persons, {{room.numberOfSimpleBed}} Beds, 1 Nights) </p>
+                    <h4 class="hotel-view-contents-bottom-title"> {{room.discountPrice == 0 ? room.currentPrice :
+                      room.discountPrice | vndCurrency}} <sub>/Night</sub> </h4>
+                    <p class="hotel-view-contents-bottom-para"> ({{room.peopleNumber}} Persons, {{room.numberOfSimpleBed}} Beds, 1
+                      Nights) </p>
                   </div>
                   <div class="btn-wrapper">
-                    <a href="javascript:void(0)" routerLink="/checkout/{{room.id}}"class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
+                    <a href="javascript:void(0)" (click)="bookingRoom()" class="cmn-btn btn-bg-1 btn-small"> Reserve
+                      Now </a>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="details-contents-tab">
+            <div class="details-contents-tab" *ngIf="room!=undefined">
               <ul class="tabs details-tab details-tab-border">
                 <li class="active" data-tab="about"> About </li>
                 <li data-tab="reviews"> Reviews </li>
@@ -240,69 +253,15 @@
               </div>
             </div>
           </div>
-          <div class="hotel-view bg-white radius-20 mt-4">
-            <div class="hotel-view-flex">
-              <a href="hotel_details.html" class="hotel-view-thumb hotel-view-list-thumb bg-image"
-                style="background-image: url(assets/img/single-page/hotel-list1.jpg);">
-              </a>
-              <div class="hotel-view-contents">
-                <div class="hotel-view-contents-header">
-                  <div
-                    class="hotel-view-contents-header-flex d-flex flex-wrap gap-3 align-items-center justify-content-between">
-                    <span class="hotel-view-contents-review"> <i class="las la-star"></i> 4.5 <span
-                        class="hotel-view-contents-review-count"> (380) </span> </span>
-                    <div class="btn-wrapper">
-                      <a href="javascript:void(0)" class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
-                    </div>
+          <div class="hotel-view bg-white radius-20 mt-4 mb-4">
+            <div class="hotel-details-widget hotel-details-widget-padding widget bg-white radius-10">
+              <div class="details-sidebar">
+                <div class="details-sidebar-offer center-text radius-10">
+                  <div class="details-sidebar-offer-shapes">
+                    <img src="assets/img/single-page/offer_shapes.png" alt="shapes">
                   </div>
-                  <h3 class="hotel-view-contents-title"> <a href="hotel_details.html"> King Suite Room </a> </h3>
-                  <div class="hotel-view-contents-location mt-2">
-                    <span class="hotel-view-contents-location-icon"> <i class="las la-map-marker-alt"></i> </span>
-                    <span class="hotel-view-contents-location-para"> 4140 Parker Rd. Allentown, New Mexico 31134
-                    </span>
-                  </div>
-                </div>
-                <div class="hotel-view-contents-middle">
-                  <div class="hotel-view-contents-flex">
-                    <div class="hotel-view-contents-icon d-flex gap-1">
-                      <span> <i class="las la-parking"></i> </span>
-                      <p class="hotel-view-contents-icon-title flex-fill"> Parking </p>
-                    </div>
-                    <div class="hotel-view-contents-icon d-flex gap-1">
-                      <span> <i class="las la-wifi"></i> </span>
-                      <p class="hotel-view-contents-icon-title flex-fill"> Wifi </p>
-                    </div>
-                    <div class="hotel-view-contents-icon d-flex gap-1">
-                      <span> <i class="las la-coffee"></i> </span>
-                      <p class="hotel-view-contents-icon-title flex-fill"> Breakfast </p>
-                    </div>
-                    <div class="hotel-view-contents-icon d-flex gap-1">
-                      <span> <i class="las la-quidditch"></i> </span>
-                      <p class="hotel-view-contents-icon-title flex-fill"> Room Service </p>
-                    </div>
-                    <div class="hotel-view-contents-icon d-flex gap-1">
-                      <span> <i class="las la-swimming-pool"></i> </span>
-                      <p class="hotel-view-contents-icon-title flex-fill"> Pool </p>
-                    </div>
-                    <div class="hotel-view-contents-icon d-flex gap-1">
-                      <span> <i class="las la-receipt"></i> </span>
-                      <p class="hotel-view-contents-icon-title flex-fill"> Reception </p>
-                    </div>
-                    <div class="hotel-view-contents-icon d-flex gap-1">
-                      <span> <i class="las la-dumbbell"></i> </span>
-                      <p class="hotel-view-contents-icon-title flex-fill"> Gym </p>
-                    </div>
-                    <div class="hotel-view-contents-icon d-flex gap-1">
-                      <a class="hotel-view-contents-icon-more" href="javascript:void(0)"> +8 More </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="hotel-view-contents-bottom">
-                  <div class="hotel-view-contents-bottom-flex">
-                    <div class="hotel-view-contents-bottom-contents d-flex flex-wrap gap-4">
-                      <h4 class="hotel-view-contents-bottom-title"> $230 <sub>/Night</sub> </h4>
-                      <p class="hotel-view-contents-bottom-para"> (4 Nights, 2 Rooms, 4 Persons) </p>
-                    </div>
+                  <div class="details-sidebar-offer-thumb">
+                    <img src="assets/img/single-page/offer.png" alt="">
                   </div>
                 </div>
               </div>
@@ -311,112 +270,47 @@
         </div>
       </div>
       <div class="col-xl-4 col-lg-5">
-        <div class="readonly">
+        <div class="sticky-top">
           <div class="hotel-details-widget hotel-details-widget-padding widget bg-white radius-10">
             <div class="details-sidebar">
               <div class="details-sidebar-dropdown custom-form">
                 <form action="#">
                   <div class="single-input">
                     <label class="details-sidebar-dropdown-title"> Check In </label>
-                    <input class="form--control date-picker" type="text" placeholder="Check in">
+                    <input
+                      class="form--control date-picker form-control input" placeholder="Check in" tabindex="0" type="text"
+                      readonly="readonly">
                   </div>
                   <div class="single-input mt-3">
                     <label class="details-sidebar-dropdown-title"> Check Out </label>
-                    <input class="form--control date-picker" type="text" placeholder="Check out">
+                    <input
+                      class="form--control date-picker form-control input" placeholder="Check out" tabindex="0" type="text"
+                      readonly="readonly">
                   </div>
                 </form>
               </div>
               <div class="details-sidebar-quantity pt-4">
                 <div class="details-sidebar-quantity-flex">
                   <div class="details-sidebar-quantity-item">
-                    <h6 class="details-sidebar-quantity-title"> Guest </h6>
-                    <div class="details-sidebar-quantity-field">
-                      <span class="minus"><i class="las la-minus"></i></span><input class="quantity-input"
-                        type="number" value="5"><span class="plus"><i class="las la-plus"></i></span>
-                    </div>
-                  </div>
-                  <div class="details-sidebar-quantity-item">
-                    <h6 class="details-sidebar-quantity-title"> Children </h6>
-                    <div class="details-sidebar-quantity-field">
-                      <span class="minus"><i class="las la-minus"></i></span><input class="quantity-input"
-                        type="number" value="3"><span class="plus"><i class="las la-plus"></i></span>
-                    </div>
-                  </div>
-                  <div class="details-sidebar-quantity-item">
-                    <h6 class="details-sidebar-quantity-title"> Room </h6>
-                    <div class="details-sidebar-quantity-field">
-                      <span class="minus"><i class="las la-minus"></i></span><input class="quantity-input"
-                        type="number" value="2"><span class="plus"><i class="las la-plus"></i></span>
-                    </div>
+                    <label class="details-sidebar-dropdown-title"> Guest </label>
+                      <input
+                      class="form--control form-control input" placeholder="Guest" tabindex="0" type="text" style="padding: 14px 16px;">
                   </div>
                 </div>
               </div>
               <div class="btn-wrapper mt-4">
-                <a routerLink="/checkout/{{room.id}}" class="cmn-btn btn-bg-1 btn-small"> Go to Checkout </a>
+                <a href="checkout.html" class="cmn-btn btn-bg-1 btn-small"> Go to Checkout </a>
               </div>
             </div>
           </div>
-          <div class="hotel-details-widget widget bg-white radius-10">
-            <div class="hotel-view">
-              <div class="hotel-view-thumb hotel-view-grid-thumb bg-image"
-                style="background-image: url(assets/img/single-page/hotel-grid1.jpg);">
-              </div>
-              <div class="hotel-view-contents">
-                <div class="hotel-view-contents-header">
-                  <span class="hotel-view-contents-review"> <i class="las la-star"></i> 4.5 <span
-                      class="hotel-view-contents-review-count"> (380) </span> </span>
-                  <h3 class="hotel-view-contents-title"> King Suite Room </h3>
-                  <div class="hotel-view-contents-location mt-2">
-                    <span class="hotel-view-contents-location-icon"> <i class="las la-map-marker-alt"></i> </span>
-                    <span class="hotel-view-contents-location-para"> 4140 Parker Rd. Allentown, New Mexico 31134
-                    </span>
-                  </div>
+          <div class="hotel-details-widget hotel-details-widget-padding widget bg-white radius-10">
+            <div class="details-sidebar">
+              <div class="details-sidebar-offer center-text radius-10">
+                <div class="details-sidebar-offer-shapes">
+                  <img src="assets/img/single-page/offer_shapes.png" alt="shapes">
                 </div>
-                <div class="hotel-view-contents-middle">
-                  <div class="hotel-view-contents-flex">
-                    <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top"
-                      title="Car Parking">
-                      <i class="las la-parking"></i>
-                    </div>
-                    <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top"
-                      title="Free Wifi">
-                      <i class="las la-wifi"></i>
-                    </div>
-                    <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top"
-                      title="Free Breakfast">
-                      <i class="las la-coffee"></i>
-                    </div>
-                    <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top"
-                      title="Home Service">
-                      <i class="las la-quidditch"></i>
-                    </div>
-                    <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top"
-                      title="Swimming Pool">
-                      <i class="las la-swimming-pool"></i>
-                    </div>
-                    <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top"
-                      title="Reception">
-                      <i class="las la-receipt"></i>
-                    </div>
-                    <div class="hotel-view-contents-icon myTooltip" data-bs-toggle="tooltip" data-bs-placement="top"
-                      title="Gym">
-                      <i class="las la-dumbbell"></i>
-                    </div>
-                    <div class="hotel-view-contents-icon">
-                      <a class="hotel-view-contents-icon-more" href="javascript:void(0)"> +8 More </a>
-                    </div>
-                  </div>
-                </div>
-                <div class="hotel-view-contents-bottom">
-                  <div class="hotel-view-contents-bottom-flex">
-                    <div class="hotel-view-contents-bottom-contents">
-                      <h4 class="hotel-view-contents-bottom-title"> $230 <sub>/Night</sub> </h4>
-                      <p class="hotel-view-contents-bottom-para"> (4 Nights, 2 Rooms, 4 Persons) </p>
-                    </div>
-                    <div class="btn-wrapper">
-                      <a href="javascript:void(0)" class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
-                    </div>
-                  </div>
+                <div class="details-sidebar-offer-thumb">
+                  <img src="assets/img/single-page/offer.png" alt="">
                 </div>
               </div>
             </div>
@@ -430,8 +324,29 @@
                 <div class="details-sidebar-offer-thumb">
                   <img src="assets/img/single-page/offer.png" alt="">
                 </div>
-                <div class="btn-wrapper mt-5">
-                  <button type="button" class="cmn-btn btn-bg-white"> Book Now </button>
+              </div>
+            </div>
+          </div>
+          <div class="hotel-details-widget hotel-details-widget-padding widget bg-white radius-10">
+            <div class="details-sidebar">
+              <div class="details-sidebar-offer center-text radius-10">
+                <div class="details-sidebar-offer-shapes">
+                  <img src="assets/img/single-page/offer_shapes.png" alt="shapes">
+                </div>
+                <div class="details-sidebar-offer-thumb">
+                  <img src="assets/img/single-page/offer.png" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hotel-details-widget hotel-details-widget-padding widget bg-white radius-10">
+            <div class="details-sidebar">
+              <div class="details-sidebar-offer center-text radius-10">
+                <div class="details-sidebar-offer-shapes">
+                  <img src="assets/img/single-page/offer_shapes.png" alt="shapes">
+                </div>
+                <div class="details-sidebar-offer-thumb">
+                  <img src="assets/img/single-page/offer.png" alt="">
                 </div>
               </div>
             </div>
@@ -440,7 +355,9 @@
       </div>
     </div>
   </div>
-<app-footer></app-footer>
-<script type='text/javascript' defer src='https://bytesed.com/wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.7.3' id='wpcf7-recaptcha-js'></script>
+  <app-footer></app-footer>
+  <script type='text/javascript' defer
+    src='https://bytesed.com/wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=5.7.3'
+    id='wpcf7-recaptcha-js'></script>
 
-<!-- Modal -->
+  <!-- Modal -->

@@ -62,9 +62,6 @@ export class CheckoutComponent implements OnInit {
 
     this.getReservationByID(this.reservationId);
 
-    var roomLocal = JSON.parse(localStorage.getItem("bookedRoom")!);
-    this.room = roomLocal as Room;
-    this.priceRoom = this.room.discountPrice == 0?this.room.currentPrice:this.room.discountPrice;
     this.resultReservation = JSON.parse(localStorage.getItem("resultReservation")!);
     this.resultReservation.startDate = new Date(new Date(this.resultReservation.startDate).setHours(0,0,0)).toLocaleString();
     this.resultReservation.endDate = new Date(new Date(this.resultReservation.endDate).setHours(0,0,0)).toLocaleString();
@@ -86,6 +83,14 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
+  getRoomById(id:any): void {
+    this.apiService.getRoomDetail(id)
+      .subscribe(res => {
+        this.room = res;
+        this.priceRoom = this.room.discountPrice == 0?this.room.currentPrice:this.room.discountPrice;
+      });
+  }
+
   getReservationByID(id:any)
   {
     this.http
@@ -93,8 +98,7 @@ export class CheckoutComponent implements OnInit {
         `${environment.BASE_URL_API}/user/reservation/get-by-id?id=${this.reservationId}`).subscribe(
           res => {
             this.reservationGet = res as ReservationGet
-            console.log(res.reservationPrice);
-            console.log(this.reservationGet.reservationPrice);
+            this.getRoomById(this.reservationGet.roomId);
           },
           err => {
             this.toast.error("Reservation Id not found");
@@ -141,7 +145,7 @@ export class CheckoutComponent implements OnInit {
   }
   payMoMo() {
     const orderInfo = this.room.name;
-    const amount = Math.round(this.reservationGet.reservationPrice).toString()
+    const amount = Math.round(this.reservationGet.reservationPrice).toString();
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -173,7 +177,7 @@ export class CheckoutComponent implements OnInit {
   payVnPay() {
     // this.amountNum1 = this.reservationGet.ReservationPrice
     this.orderInfoString = this.room.name;
-
+    this.amountNum1 = Math.round(this.reservationGet.reservationPrice);
     this.http
       .post<any>(environment.BASE_URL_API + '/user/vn-pay/create', {
         amount: this.amountNum1,
@@ -191,6 +195,7 @@ export class CheckoutComponent implements OnInit {
         }
       );
   }
+
   OnSubmit() {
     if (this.bookForm.invalid) {
       return;

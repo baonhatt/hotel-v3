@@ -54,14 +54,16 @@ export class ListingComponent implements OnInit {
   selectedPersonCount: number = 1;
   displayPrice = false;
   roomTypeName: RoomType[] = [];
-  searchData:any;
-  peopleNumberOptions:any;
+  peopleNumberOptions: any;
+  checkInDate: any;
+  checkOutDate: any;
+  peopleNumber: any;
+  roomTypeId: any;
 
   constructor(
     private roomService: ApiService,
     private router: Router,
     private http: HttpClient,
-    private auth: AuthService,
     private apiService: ApiService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -83,28 +85,29 @@ export class ListingComponent implements OnInit {
       this.roomTypeName = data.roomTypes;
       this.serviceAttachs = data.serviceAttachs;
     });
-    var searchLocal = JSON.parse(localStorage.getItem("searchReservation")!);
-    this.searchData = searchLocal as SearchRoom;
-    this.searchData.checkIn = new Date(this.searchData.checkIn);
-    this.searchData.checkOut = new Date(this.searchData.checkOut);
-    // this.searchData.checkIn = new Date((this.searchData.checkIn).setHours(this.searchData.checkIn.getHours() - 7));
-    // this.searchData.checkOut = new Date((this.searchData.checkOut).setHours(this.searchData.checkOut.getHours() - 7));
 
-    this.checkIn.setValue(this.searchData.checkIn.toISOString());
+    this.checkInDate = new Date(new Date(this.route.snapshot.paramMap.get('checkIn')!).setHours(7,0,0));
+    this.checkOutDate = new Date(new Date(this.route.snapshot.paramMap.get('checkOut')!).setHours(7,0,0));
+    this.peopleNumber = this.route.snapshot.paramMap.get('person');
+    this.roomTypeId = this.route.snapshot.paramMap.get('roomTypeId');
+    this.getRoomSearch();
 
-    this.checkOut.setValue(this.searchData.checkOut.toISOString());
+    this.checkIn.setValue(this.checkInDate.toISOString());
 
-    this.peopleNumberOptions = Array.from({length: this.maxPerson}, (v, k) => k+1);
-    this.roomSearchForm.controls["peopleNumber"].setValue(this.searchData.peopleNumber);
-    this.roomSearchForm.controls["roomTypeId"].setValue(this.searchData.typeRoomId);
+    this.checkOut.setValue(this.checkOutDate.toISOString());
 
-    const bookingData = localStorage.getItem('bookingData');
-    if (bookingData !== null && bookingData !== undefined) {
-      const parsedData = JSON.parse(bookingData);
-      this.filteredRooms = parsedData;
-    } else {
-      console.log('Không tìm thấy dữ liệu trong localStorage');
-    }
+    this.peopleNumberOptions = Array.from(
+      { length: this.maxPerson },
+      (v, k) => k + 1
+    );
+    console.log(this.peopleNumber);
+
+    this.roomSearchForm.controls['peopleNumber'].setValue(
+      Number.parseInt(this.peopleNumber)
+    );
+    this.roomSearchForm.controls['roomTypeId'].setValue(
+      Number.parseInt(this.roomTypeId)
+    );
     this.sortMaxPersonArrayDescending();
   }
   getFullRooms() {
@@ -142,10 +145,31 @@ export class ListingComponent implements OnInit {
     });
   }
 
-  getRoomDetail(id:string) {
+  getRoomDetail(id: string) {
     this.roomService.getRoomDetail(id).subscribe((res: any) => {
-      localStorage.setItem("bookedRoom", JSON.stringify(res));
+      localStorage.setItem('bookedRoom', JSON.stringify(res));
     });
+  }
+
+  getRoomSearch() {
+    var payLoad = {
+      checkIn: this.checkInDate,
+      checkOut: this.checkOutDate,
+      price: 0,
+      typeRoomId: this.roomTypeId == '' ? 0 : this.roomTypeId,
+      star: 0,
+      peopleNumber: this.peopleNumber == '' ? 0 : this.peopleNumber,
+    };
+    this.http
+      .post<Room[]>(`https://webhotel.click/user/room/get-all-by`, payLoad)
+      .subscribe(
+        (res) => {
+          this.filteredRooms = res;
+        },
+        (_err) => {
+          this.toast.error(_err.message);
+        }
+      );
   }
 
   routePage() {
@@ -180,12 +204,13 @@ export class ListingComponent implements OnInit {
       return;
     }
     var checkInDate = new Date(checkInValue);
-    checkInDate = new Date(checkInDate.setHours(7,0,0));
+    checkInDate = new Date(checkInDate.setHours(7, 0, 0));
     var checkOutDate = new Date(checkOutValue);
-    checkOutDate = new Date(checkOutDate.setHours(7,0,0));
-    const numberOfNights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
+    checkOutDate = new Date(checkOutDate.setHours(7, 0, 0));
+    const numberOfNights = Math.ceil(
+      (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24)
+    );
     const numDays = numberOfNights;
-
     var payLoad = {
       checkIn: checkInDate.toISOString(),
       checkOut: checkOutDate.toISOString(),
@@ -194,9 +219,6 @@ export class ListingComponent implements OnInit {
       star: 0,
       peopleNumber: peopleNumber == '' ? 0 : peopleNumber,
     };
-    console.log(payLoad);
-
-
     if (numDays > 0) {
       this.deleteData;
       this.http
@@ -204,7 +226,7 @@ export class ListingComponent implements OnInit {
         .subscribe(
           (res) => {
             this.filteredRooms = res;
-            localStorage.setItem("searchReservation", JSON.stringify(payLoad));
+            this.router.navigate( ['/room-listing', checkInDate.toISOString(), checkOutDate.toISOString(), this.roomSearchForm.controls["peopleNumber"].value, this.roomSearchForm.controls["roomTypeId"].value]);
           },
           (_err) => {
             console.log(_err);
@@ -241,20 +263,17 @@ export class ListingComponent implements OnInit {
     payLoad.phoneNumber = userProfileLocal.phoneNumber;
     payLoad.address = userProfileLocal.address;
     this.http
-      .post<any>(
-        `${environment.BASE_URL_API}/user/reservation/create`,
-        payLoad
-      )
+      .post<any>(`${environment.BASE_URL_API}/user/reservation/create`, payLoad)
       .subscribe(
         (res) => {
           this.toast.success(res.message);
           this.getRoomDetail(idRoom);
           var resultReservation = {
-            startDate : checkInDate,
-            endDate : checkOutDate,
+            startDate: checkInDate,
+            endDate: checkOutDate,
             numberOfDay: numberOfNights,
-            roomId : idRoom,
-          }
+            roomId: idRoom,
+          };
           const dataToSave = JSON.stringify(resultReservation);
           localStorage.setItem('resultReservation', dataToSave);
           this.router.navigate(['/checkout', res.reservationId]);

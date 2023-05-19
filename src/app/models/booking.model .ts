@@ -1,7 +1,7 @@
 export class Booking {
   startDate!: Date
   endDate!: Date
-  roomId!: number
+  roomId!: string
   name!: string
   email!: string
   phoneNumber!: string

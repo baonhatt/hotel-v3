@@ -78,6 +78,7 @@ export class HomepageComponent implements OnInit {
       this.serviceAttachs = data.serviceAttachs;
       this.maxPersonArray = Array.from({length: this.maxPerson}, (v, k) => k+1);
       this.roomSearchForm.controls["peopleNumber"].setValue(0);
+      this.roomSearchForm.controls["roomTypeId"].setValue(0);
     });
 
     this.apiService.getRoomOnSale().subscribe(
@@ -96,59 +97,26 @@ export class HomepageComponent implements OnInit {
       }
       this.blogtoDisplay = this.blogs;
     });
-
   }
-
   navigateToPage(url: string) {
     window.location.href = url;
     window.scrollTo(0, 0);
   }
-
-
-
   onSubmit() {
-    const roomTypeId = this.roomSearchForm.value.roomTypeId;
-    const peopleNumber = this.roomSearchForm.value.peopleNumber;
-    const checkInValue = this.checkIn.value
-    const checkOutValue = this.checkOut.value;
+    const checkInValue = new Date(this.checkIn.value!)
+    const checkOutValue = new Date(this.checkOut.value!)
+    const now = new Date(new Date().setHours(0,0,0));
 
-    if (!checkInValue || !checkOutValue) {
-      // Handle error when check-in or check-out values are not set
-      return;
+    if(checkInValue < now || checkOutValue < now || checkOutValue <= checkInValue) {
+      this.toast.error("Time cannot be less than current date");
+    }else{
+      var checkInDate = new Date(checkInValue);
+      checkInDate = new Date(checkInDate.setHours(7,0,0));
+      var checkOutDate = new Date(checkOutValue);
+      checkOutDate = new Date(checkOutDate.setHours(7,0,0));
+      const numberOfNights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
+      this.router.navigate( ['/room-listing', checkInDate.toISOString(), checkOutDate.toISOString(), this.roomSearchForm.controls["peopleNumber"].value, this.roomSearchForm.controls["roomTypeId"].value]);
     }
-
-    var checkInDate = new Date(checkInValue);
-    checkInDate = new Date(checkInDate.setHours(7,0,0));
-
-    var checkOutDate = new Date(checkOutValue);
-    checkOutDate = new Date(checkOutDate.setHours(7,0,0));
-
-    const numberOfNights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
-    const numDays = numberOfNights
-
-    var payLoad = {
-      checkIn: checkInDate,
-      checkOut: checkOutDate,
-      price: 0,
-      typeRoomId: roomTypeId == "" ? 0 : roomTypeId,
-      star: 0,
-      peopleNumber: peopleNumber == "" ? 0 : peopleNumber,
-    }
-    localStorage.setItem('searchReservation', JSON.stringify(payLoad));
-    this.http.post<Room[]>(`https://webhotel.click/user/room/get-all-by`, payLoad).subscribe(res => {
-      this.filteredRooms = res;
-      const dataToSave = JSON.stringify(this.filteredRooms);
-      localStorage.setItem('bookingData', dataToSave);
-      this.result = res.length
-      // // this.router.navigate(['/room-listing'], { queryParams: { rooms: JSON.stringify(this.filteredRooms) } });
-      if(numDays > 0){
-        this.router.navigate(['/room-listing']);
-      }else{
-        this.toast.error("You have to select to Checkout day!")
-      }
-    }, _err => {
-      console.log(_err);
-    })
   }
 
 }

@@ -97,7 +97,7 @@
                 <span class="banner-location-single-contents-subtitle"> Room Type </span>
                 <mat-form-field appearance="fill">
                   <mat-select formControlName="roomTypeId">
-                    <mat-option value="" disabled selected>Select room type</mat-option>
+                    <mat-option [value]= "0" disabled selected>Select room type</mat-option>
                     <mat-option *ngFor="let roomType of roomTypeName" value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
                   </mat-select>
                 </mat-form-field>
