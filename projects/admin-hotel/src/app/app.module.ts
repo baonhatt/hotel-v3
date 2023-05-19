@@ -38,6 +38,7 @@ import { VndCurrencyPipe } from 'src/app/_shared/currency/vnd-currency.pipe';
 import { BlogComponent } from './pages/blog/blog.component';
 import { RoomTypeServiceComponent } from './pages/room-type-service/room-type-service.component';
 import { FilterPipe } from './_shared/filter.pipe';
+import { BookingFilterPipe } from './_shared/booking/booking-filter.pipe';
 @NgModule({
   declarations: [
     FilterPipe,
@@ -60,7 +61,8 @@ import { FilterPipe } from './_shared/filter.pipe';
     VndCurrencyPipe,
     BlogComponent,
     RoomTypeServiceComponent,
-    FilterPipe
+    FilterPipe,
+    BookingFilterPipe
   ],
   imports: [
     FormsModule,

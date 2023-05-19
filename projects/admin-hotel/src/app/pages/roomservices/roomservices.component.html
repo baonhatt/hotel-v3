@@ -12,10 +12,10 @@
                 <ol class="breadcrumb m-0">
                   <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
                   <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
-                  <li class="breadcrumb-item active">Type Service</li>
+                  <li class="breadcrumb-item active">Attached Service</li>
                 </ol>
               </div>
-              <h4 class="page-title">Type Service</h4>
+              <h4 class="page-title">Attached Service</h4>
             </div>
           </div>
         </div>
@@ -42,7 +42,7 @@
                         <th>Action<th>
                         </tr>
                     </thead>
-                    <tbody *ngFor="let item of roomType, let i = index" class="align-middle text-center">
+                    <tbody *ngFor="let item of roomType ; let i = index" class="align-middle text-center">
                       <tr>
                         <td>
                           <div class="form-check">
@@ -54,7 +54,7 @@
                         <td>{{item.description}}</td>
                         <td>{{item.icon}}</td>
                         <td>
-                          <a href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#modal-detail2">
+                          <a href="javascript:void(0);"  href="javascript:void(0);" class="action-icon" data-bs-toggle="modal" data-bs-target="#modal-detail2">
                             <i class=" mdi mdi-update"></i></a>
                             <a class="action-icon" (click)="deleteService(item.id)" ><i class="mdi mdi-delete"></i></a>
                         </td>

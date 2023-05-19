@@ -6637,7 +6637,8 @@ fieldset:disabled .btn {
 
 .modal.show .modal-dialog {
   -webkit-transform: none;
-  transform: none
+  transform: none;
+  margin-top: 10rem;
 }
 
 .modal.modal-static .modal-dialog {

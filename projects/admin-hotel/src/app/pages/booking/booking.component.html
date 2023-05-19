@@ -31,15 +31,22 @@
                                             <div class="col-auto">
                                                 <label for="inputPassword2" class="visually-hidden">Search</label>
                                                 <input type="search" [(ngModel)]="searchBooking"
-                                                    placeholder="Search rooms..." class="form-control" name="searchBooking"
-                                                    id="inputPassword2">
+                                                    placeholder="Search booking..." class="form-control" name="searchBooking"
+                                                    id="inputPassword2"  >
                                             </div>
 
+                                            <div class="col-auto">
+                                                <button type="submit" class="btn btn-primary" (click)="searchBookings()">Search</button>
+                                            </div>
+                                            <div class="col-auto">
+                                                <button type="button" class="btn btn-secondary" (click)="clearSearch()">Clear</button>
+                                              </div>
                                         </div>
                                     </div>
                                     <div class="col-xl-4">
                                         <div class="text-xl-end mt-xl-0 mt-2">
-                                            <button type="button" class="btn btn-danger mb-2 me-2"><i
+                                            <button data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop2" class="btn btn-danger mb-2" type="button" class="btn btn-danger mb-2 me-2"><i
                                                     class="mdi mdi-basket me-1"></i> Add New
                                                 Order</button>
                                             <button type="button" class="btn btn-light mb-2">Export</button>
@@ -59,6 +66,7 @@
                                                             for="customCheck1">&nbsp;</label>
                                                     </div>
                                                 </th>
+                                                <th>Booking ID</th>
                                                 <th>Room Number</th>
                                                 <th>Amount</th>
                                                 <th>Number Days</th>
@@ -73,7 +81,7 @@
                                             </tr>
                                         </thead>
                                         <tbody
-                                            *ngFor="let item of reservationGetAll | filter: searchBooking ; let i = index"
+                                            *ngFor="let item of reservationGetAll | filter: searchBooking; let i = index "
                                             class="align-middle text-center">
                                             <tr >
                                                 <td>
@@ -84,7 +92,10 @@
                                                             for="customCheck2">&nbsp;</label>
                                                     </div>
                                                 </td>
-                                                <td><span class="text-body fw-bold">{{item.roomNumber}}</span> </td>
+                                                <td><span class="text-body fw-bold">{{item.id}}</span> </td>
+                                                <td>
+                                                    {{item.roomNumber}}
+                                                </td>
                                                 <td>
                                                     {{item.roomPrice}}
                                                 </td>
@@ -245,6 +256,177 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- CREATE BOOKING -->
+
+
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add room</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="  page-wrapper">
+                    <div class="content container-fluid">
+                        <div class="page-header">
+                            <div class="row align-items-center">
+
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-lg-12">
+                                <form [formGroup]="bookingForm">
+                                    <div class="row formtype mb-3">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="mb-1">Room Number</label>
+                                                <input type="text" class="form-control" formControlName="RoomNumber"
+                                                    [ngClass]="{ 'is-invalid': submitted && f['RoomNumber'].errors }" />
+                                                <div *ngIf="submitted && f['RoomNumber'].errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="f['RoomNumber'].errors['required']">RoomNumber is
+                                                        required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="mb-1">Room Name</label>
+                                                <input type="text" class="form-control" formControlName="Name"
+                                                    [ngClass]="{ 'is-invalid': submitted && f['Name'].errors }" />
+                                                <div *ngIf="submitted && f['Name'].errors" class="invalid-feedback">
+                                                    <div *ngIf="f['Name'].errors['required']">Room name is required
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="mb-1">Active</label>
+                                                <select class="form-select mr-sm-2" formControlName="IsActive"
+                                                    id="IsActive" name="IsActive">
+                                                    <option [ngValue]="true">Active</option>
+                                                    <option [ngValue]="false">Closed</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row formtype mb-3">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="mb-1">Simple Bed</label>
+                                                <input type="text" class="form-control"
+                                                    formControlName="NumberOfSimpleBed"
+                                                    [ngClass]="{ 'is-invalid': submitted && f['NumberOfSimpleBed'].errors }" />
+                                                <div *ngIf="submitted && f['NumberOfSimpleBed'].errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="f['NumberOfSimpleBed'].errors['required']">
+                                                        NumberOfSimpleBed is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="mb-1">Double Bed</label>
+                                                <input type="text" class="form-control"
+                                                    formControlName="NumberOfDoubleBed"
+                                                    [ngClass]="{ 'is-invalid': submitted && f['NumberOfDoubleBed'].errors }" />
+                                                <div *ngIf="submitted && f['NumberOfDoubleBed'].errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="f['NumberOfDoubleBed'].errors['required']">
+                                                        NumberOfDoubleBed is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="mb-1">RoomTypeId</label>
+                                                <select class="form-select mr-sm-2" id="RoomTypeId"
+                                                    formControlName="RoomTypeId">
+                                                    <option>Select</option>
+                                                    <option *ngFor="let roomType of roomTypes" value="{{roomType.id}}">
+                                                        {{roomType.typeName}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row formtype mb-3">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="mb-1">People Number</label>
+                                                <input type="text" class="form-control" formControlName="PeopleNumber"
+                                                    [ngClass]="{ 'is-invalid': submitted && f['PeopleNumber'].errors }" />
+                                                <div *ngIf="submitted && f['PeopleNumber'].errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="f['PeopleNumber'].errors['required']">PeopleNumber is
+                                                        required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="mb-1">CurrentPrice</label>
+                                                <input type="text" formControlName="CurrentPrice" class="form-control"
+                                                    id="CurrentPrice"
+                                                    [ngClass]="{ 'is-invalid': submitted && f['CurrentPrice'].errors }" />
+                                                <div *ngIf="submitted && f['CurrentPrice'].errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="f['CurrentPrice'].errors['required']">CurrentPrice is
+                                                        required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="mb-1">File Upload</label>
+                                                <div class="form-group mb-3">
+                                                    <input type="file" id="formFile" class="form-control"
+                                                        formControlName="RoomPicture" name="RoomPicture"
+                                                        accept=".png, .jpg" #file (change)="uploadFile(file.files)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row formtype mb-3">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="mb-1">File Upload</label>
+                                                <div class="form-group mb-3">
+                                                    <input type="file" id="formFile" class="form-control"
+                                                        formControlName="RoomPictures" name="RoomPictures"
+                                                        accept=".png, .jpg" multiple #file
+                                                        (change)="uploadFileDetail(file.files)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="mb-1">Description</label>
+                                                <textarea class="form-control" rows="5" id="comment" name="text"
+                                                    formControlName="Description"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div> -->
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    >Close</button>
             </div>
         </div>
     </div>

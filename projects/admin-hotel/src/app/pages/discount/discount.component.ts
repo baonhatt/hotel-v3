@@ -17,7 +17,8 @@ export class DiscountComponent {
   discountId!: number;
   id!: number;
   roomType!: Discount[];
-
+  roomTypeResult!: Discount[];
+  searchTerm: string = '';
   serviceForm!: FormGroup;
   constructor(private api: ApiService, private fb: FormBuilder, private toast: ToastrService){
     this.serviceForm = this.fb.group({
@@ -34,6 +35,7 @@ export class DiscountComponent {
   ngOnInit(): void {
     this.api.getAllDiscount().subscribe(res => {
       this.roomType = res
+      this.roomTypeResult = res
       console.log(res);
 
     })
@@ -58,6 +60,23 @@ export class DiscountComponent {
 
 
   }
+
+  searchBookings() {
+    // Chuyển đổi từ khóa tìm kiếm thành chữ thường
+    const searchTerm = this.searchTerm.toLowerCase();
+    // Lọc các đặt phòng dựa trên từ khóa tìm kiếm
+    this.roomType = this.roomType.filter((item) =>
+        item.discountCode.toLowerCase().includes(searchTerm) ||
+        item.name.toLowerCase().includes(searchTerm)
+
+    );
+    this.searchTerm = ''
+
+}
+clearSearch() {
+     this.roomType = this.roomTypeResult
+}
+
   getId(id: number){
     this.discountId = id
 

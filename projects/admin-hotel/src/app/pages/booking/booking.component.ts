@@ -3,6 +3,8 @@ import { DateFilterFn } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { timeout } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ApiService } from 'src/app/_service/api.service';
 
 @Component({
   selector: 'app-booking',
@@ -11,11 +13,29 @@ import { timeout } from 'rxjs';
 })
 export class BookingComponent implements OnInit{
   reservationGetAll! : ReservationModel[];
+  reservationFilter! : ReservationModel[];
   searchBooking: string = '' ;
   reservationGetById! : ReservationModel;
-  constructor(private http: HttpClient){}
+  bookingForm!: FormGroup
+  constructor(private http: HttpClient, private fb: FormBuilder, private api: ApiService){
+
+    this.bookingForm = this.fb.group({
+        startDate: new Date().toISOString(),
+        endDate: new Date().toISOString(),
+        roomId: [''],
+        numberOfDay: [''],
+        email: [''],
+        name: [''],
+        phoneNumber: [''],
+        address: [''],
+        paymentMethod: ['momo'],
+    })
+  }
   ngOnInit(): void {
     this.GetReservationAll();
+    if(this.searchBooking !== ''){
+        this.GetReservationAll()
+    }
   }
   GetReservationAll()
   {
@@ -23,6 +43,7 @@ export class BookingComponent implements OnInit{
     .subscribe(
       (res: any)=>{
         this.reservationGetAll = res;
+        this.reservationFilter = res;
       },
       (err) => {
         console.log(err);
@@ -42,6 +63,23 @@ export class BookingComponent implements OnInit{
         console.log(err);
       }
     )
+  }
+
+  searchBookings() {
+    // Chuyển đổi từ khóa tìm kiếm thành chữ thường
+    const searchTerm = this.searchBooking.toLowerCase();
+    // Lọc các đặt phòng dựa trên từ khóa tìm kiếm
+    this.reservationGetAll = this.reservationGetAll.filter((item) =>
+    item.roomNumber.toLowerCase().includes(searchTerm)  ||
+    item.name.toLowerCase().includes(searchTerm) ||
+    item.id.toLowerCase().includes(searchTerm) 
+    );
+    this.searchBooking = '';
+    
+  }
+  clearSearch() {
+    this.searchBooking = ''; // Xóa từ khóa tìm kiếm
+    this.reservationGetAll = this.reservationFilter
   }
 }
 

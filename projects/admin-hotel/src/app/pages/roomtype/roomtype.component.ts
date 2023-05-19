@@ -17,27 +17,44 @@ export class RoomtypeComponent implements OnInit{
   id!: number;
   roomType!: roomType[];
   roomTypes!: any[];
-  nameType!: string;
+  nameRoomType!: string;
   nameTypeForm!: FormGroup;
   roomTypeId!: string;
   selectedIds: string[] = [];
-  searchBooking: string = ''
+  searchRoomType: string = '';
   constructor(private api: ApiService, private fb: FormBuilder, private toast: ToastrService){
     this.nameTypeForm = this.fb.group({
       TypeName : ['']
     })
   }
   ngOnInit(): void {
-    this.getAll()
-
+    this.api.getAllRoomType().subscribe( res => {
+        this.roomType = res;
+        this.roomTypes = res;
+      })
   }
 
   getAll(){
-    return this.api.getAllRoomType().subscribe( res => {
-      this.roomType = res;
-      this.roomTypes = res;
-    })
+    this.api.getAllRoomType().subscribe( res => {
+        this.roomType = res;
+        this.roomTypes = res;
+      })
   }
+  searchBookings() {
+    // Chuyển đổi từ khóa tìm kiếm thành chữ thường
+    const searchTerm = this.searchRoomType.toLowerCase();
+    // Lọc các đặt phòng dựa trên từ khóa tìm kiếm
+    this.roomType = this.roomType.filter((item) =>
+    item.typeName.toLowerCase().includes(searchTerm) 
+ 
+    );
+   this.searchRoomType = ''
+    
+  }
+  clearSearch() {
+    this.roomType = this.roomTypes
+  }
+ 
   createRoomType(nameTypeForm: FormGroup){
     // const nameType = this.nameTypeForm?.get('nameType')?.value;
     return this.api.createRoomType(nameTypeForm.value).subscribe( res=>{
@@ -47,13 +64,13 @@ export class RoomtypeComponent implements OnInit{
       this.toast.error(err)
     })
   }
-  getRoomTypeIdByNameType(nameType: string): number {
-    const roomType = this.roomTypes.find(room => room.nameType === nameType);
-    this.nameType = nameType
-    return roomType ? roomType.id : null;
+  fetchModal(){
+    this.nameTypeForm = this.fb.group({
+        TypeName : [this.nameRoomType]
+    })
   }
   update( nameTypeForm: FormGroup){
-
+       
       this.api.updateRoomTypeName(this.roomTypeId, nameTypeForm.value)
         .subscribe(
           () => {
@@ -67,8 +84,11 @@ export class RoomtypeComponent implements OnInit{
         );
 
   }
-  toggleSelection(itemId: string) {
+
+  toggleSelection(itemId: string, nametypeRoom: string) {
     this.roomTypeId = itemId;
+    this.nameRoomType = nametypeRoom
+    this.fetchModal()
   }
 
   deleteType(id: number){
