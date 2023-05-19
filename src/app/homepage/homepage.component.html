@@ -81,15 +81,8 @@
                 <span class="banner-location-single-contents-subtitle"> Person </span>
                 <mat-form-field appearance="fill">
                   <mat-select formControlName="peopleNumber">
-                    <mat-option value="" disabled selected>Select people number</mat-option>
-                    <mat-option value="1">1</mat-option>
-                    <mat-option value="2">2</mat-option>
-                    <mat-option value="3">3</mat-option>
-                    <mat-option value="4">4</mat-option>
-                    <mat-option value="5">5</mat-option>
-                    <mat-option value="6">6</mat-option>
-                    <!-- <mat-option *ngFor="let number of peopleNumberOptions" [value]="peopleNumberOptions">{{number}}</mat-option> -->
-                    <!-- <mat-option *ngFor="let i of maxPersonArray" [value]="maxPersonArray.length + 1 - i">{{maxPersonArray.length + 1 - i}}</mat-option> -->
+                    <mat-option [value] = "0" disabled selected>Select people number</mat-option>
+                    <mat-option *ngFor="let i of maxPersonArray" [value]="i">{{i}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>

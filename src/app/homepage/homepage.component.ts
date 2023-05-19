@@ -33,7 +33,6 @@ export class HomepageComponent implements OnInit {
   numNights!: number;
   filteredRooms!: Room[];
   discountRoom!: Room[];
-  private apiRooms = 'https://webhotel.click/user/room/get-all';
   blogs: Blog[];
   roomtoDisplay!: Room[];
   blogtoDisplay!: Blog[];
@@ -43,9 +42,9 @@ export class HomepageComponent implements OnInit {
   selectedServiceAttach = '';
   roomTypeName: RoomType[] = [];
   serviceAttachs = [];
-  peopleNumberOptions = [1, 2, 3, 4, 5, 6, 7, 8];
   roomSearchForm!: FormGroup;
   peopleNumber: number = 1;
+  maxPersonArray:any;
 
   date = new FormControl(new Date());
   checkIn = new FormControl(new Date().toISOString());
@@ -77,6 +76,8 @@ export class HomepageComponent implements OnInit {
       this.maxPrice = data.maxPrice;
       this.roomTypeName = data.roomTypes;
       this.serviceAttachs = data.serviceAttachs;
+      this.maxPersonArray = Array.from({length: this.maxPerson}, (v, k) => k+1);
+      this.roomSearchForm.controls["peopleNumber"].setValue(0);
     });
 
     this.apiService.getRoomOnSale().subscribe(
@@ -89,11 +90,6 @@ export class HomepageComponent implements OnInit {
       }
     );
 
-    // this.apiService.getRooms().subscribe(data => {
-    //   this.rooms = data;
-    // });
-    this.sortMaxPersonArrayDescending();
-    // $.getScript('assets/js/main.js');
     this.apiService.getBlogs().subscribe((res: any) => {
       for (let b of res) {
         this.blogs.unshift(b);
@@ -101,16 +97,6 @@ export class HomepageComponent implements OnInit {
       this.blogtoDisplay = this.blogs;
     });
 
-  }
-
-
-
-  sortMaxPersonArrayDescending() {
-    this.maxPersonArray.sort((a, b) => a - b);
-  }
-
-  get maxPersonArray(): number[] {
-    return Array.from({ length: this.maxPerson }, (_, i) => this.maxPerson - i);
   }
 
   navigateToPage(url: string) {
@@ -121,13 +107,8 @@ export class HomepageComponent implements OnInit {
 
 
   onSubmit() {
-    const datePipe = new DatePipe('en-US');
-
     const roomTypeId = this.roomSearchForm.value.roomTypeId;
     const peopleNumber = this.roomSearchForm.value.peopleNumber;
-    console.log(this.checkIn);
-    console.log(this.checkOut);
-
     const checkInValue = this.checkIn.value
     const checkOutValue = this.checkOut.value;
 
@@ -136,47 +117,33 @@ export class HomepageComponent implements OnInit {
       return;
     }
 
-    const checkInDate = new Date(checkInValue);
-    const checkOutDate = new Date(checkOutValue);
+    var checkInDate = new Date(checkInValue);
+    checkInDate = new Date(checkInDate.setHours(7,0,0));
 
-    const formattedCheckInDate = datePipe.transform(checkInDate, 'yyyy-MM-dd');
-    const formattedCheckOutDate = datePipe.transform(checkOutDate, 'yyyy-MM-dd');
+    var checkOutDate = new Date(checkOutValue);
+    checkOutDate = new Date(checkOutDate.setHours(7,0,0));
+
     const numberOfNights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
     const numDays = numberOfNights
 
     var payLoad = {
-      checkIn: this.checkIn.value,
-      checkOut: this.checkOut.value,
+      checkIn: checkInDate,
+      checkOut: checkOutDate,
       price: 0,
       typeRoomId: roomTypeId == "" ? 0 : roomTypeId,
       star: 0,
       peopleNumber: peopleNumber == "" ? 0 : peopleNumber,
     }
-
+    localStorage.setItem('searchReservation', JSON.stringify(payLoad));
     this.http.post<Room[]>(`https://webhotel.click/user/room/get-all-by`, payLoad).subscribe(res => {
       this.filteredRooms = res;
-      // Truyền kết quả tìm kiếm dưới dạng query parameter
-
-
       const dataToSave = JSON.stringify(this.filteredRooms);
       localStorage.setItem('bookingData', dataToSave);
-      // const bin = JSON.stringify(this.filteredRooms)
-      // console.log(JSON.parse(bin));
-
       this.result = res.length
-      // alert(this.result)
-      this.filteredRooms.forEach(room => {
-
-        this.numNights = numDays
-      });
-
       // // this.router.navigate(['/room-listing'], { queryParams: { rooms: JSON.stringify(this.filteredRooms) } });
       if(numDays > 0){
-
-        // const encodedRooms = encodeURIComponent(JSON.stringify(this.filteredRooms));
         this.router.navigate(['/room-listing']);
       }else{
-
         this.toast.error("You have to select to Checkout day!")
       }
     }, _err => {

@@ -31,23 +31,23 @@
                 <tbody>
                   <tr>
                     <th>Room name:</th>
-                    <td>{{rooms.name}}</td>
+                    <td>{{room.name}}</td>
                   </tr>
                   <tr>
                     <th>Room number:</th>
-                    <td>{{rooms.roomNumber}}</td>
+                    <td>{{room.roomNumber}}</td>
                   </tr>
                   <tr>
                     <th>Price:</th>
                     <td>
-                      <span *ngIf="rooms.discountPrice != null; else currentPrice">{{rooms.discountPrice}}</span>
+                      <span *ngIf="room.discountPrice != null; else currentPrice">{{room.discountPrice}}</span>
                     </td>
-                    <ng-template #currentPrice>{{rooms.currentPrice}}</ng-template>
+                    <ng-template #currentPrice>{{room.currentPrice}}</ng-template>
                   </tr>
                   <tr>
                     <th>Service attachs:</th>
                     <td>
-                      <span *ngFor="let item of rooms.serviceAttachs; let i = index; let length = count">
+                      <span *ngFor="let item of room.serviceAttachs; let i = index; let length = count">
                         <span *ngIf="i == length - 1; else serviceAttach">{{item.name}}</span>
                         <ng-template #serviceAttach>{{item.name}}, </ng-template>
                       </span>
@@ -55,7 +55,7 @@
                   </tr>
                   <tr>
                     <th>Room type:</th>
-                    <td>{{rooms.roomTypeName}}</td>
+                    <td>{{room.roomTypeName}}</td>
                   </tr>
                 </tbody>
 
@@ -76,24 +76,6 @@
                     <div class="single-input mt-4">
                       <label class="label-title"> Email Address </label>
                       <input class="form--control" type="text" formControlName="email" placeholder="Type Email" required>
-                    </div>
-                  </div>
-                  <div class="input-flex-item">
-                    <div class="single-input mt-4">
-                      <label class="label-title"> Start Date </label>
-                      <input class="form--control" type="date" formControlName="startDate" [formControl]="checkIn" [(ngModel)]="startDate"
-                        id="requestdate" placeholder="Type First Name">
-                    </div>
-                    <div class="single-input mt-4">
-                      <label class="label-title"> Leave Date </label>
-                      <input class="form--control" type="date" formControlName="endDate" [formControl]="checkOut" [(ngModel)]="endDate"
-                        placeholder="Type Last Name">
-                    </div>
-                  </div>
-                  <div class="input-flex-item">
-                    <div class="single-input mt-4">
-                      <label class="label-title"> Number of day </label>
-                      <input class="form--control" readonly="true" type="text" formControlName="numberOfDay"  [(ngModel)]="numberOfDay" placeholder="Number of day">
                     </div>
                   </div>
                   <div class="input-flex-item">
@@ -126,36 +108,34 @@
           </div>
         </div>
       </div>
-      <div class="col-xl-4 col-lg-5" *ngIf="rooms != undefined">
+      <div class="col-xl-4 col-lg-5" *ngIf="room != undefined">
         <div class="sticky-top">
           <div class="checkout-widget checkout-widget-padding widget bg-white radius-10">
             <div class="checkout-sidebar">
               <h4 class="checkout-sidebar-title"> Booking Details </h4>
               <div class="checkout-sidebar-contents">
                 <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
-                  <li class="list"> <span class="regular"> Room name </span> <span class="strong" > {{rooms.name}}
+                  <li class="list"> <span class="regular"> Room name </span> <span class="strong" > {{room.name}}
                     </span>
                   </li>
-                  <li class="list"> <span class="regular"> Room number </span> <span class="strong" > {{rooms.roomNumber}}
+                  <li class="list"> <span class="regular"> Room number </span> <span class="strong" > {{room.roomNumber}}
                     </span>
                   </li>
-                  <li class="list"> <span class="regular"> Room type </span> <span class="strong" > {{rooms.roomTypeName}}
+                  <li class="list"> <span class="regular"> Room type </span> <span class="strong" > {{room.roomTypeName}}
                     </span>
                   </li>
                   <li class="list"> <span class="regular"> Service attachs </span>  <span
-                    *ngFor="let item of rooms.serviceAttachs; let i = index; let length = count">
+                    *ngFor="let item of room.serviceAttachs; let i = index; let length = count">
                     <span class="strong" *ngIf="i == length - 1; else serviceAttach">{{item.name}}</span>
                     <ng-template s #serviceAttach>{{item.name}}, </ng-template>
                   </span>
                   </li>
-
-
-                  <li class="list"> <span class="regular"> Checking In </span> <span class="strong strongdate" [innerHTML]="startDate">
+                  <li class="list"> <span class="regular"> Checking In </span> <span class="strong strongdate" [innerHTML]="resultReservation.startDate | date:'yyyy/MM/dd'">
                     </span> </li>
-                  <li class="list"> <span class="regular"> Checking Out </span> <span class="strong strongdate" [innerHTML]="endDate">
+                  <li class="list"> <span class="regular"> Checking Out </span> <span class="strong strongdate" [innerHTML]="resultReservation.endDate | date:'yyyy/MM/dd'">
                     </span> </li>
 
-                  <li class="list"> <span class="regular"> Total Stay </span> <span class="strong"> <span [innerHTML]="numberOfDay + 1  "></span> Days, <span [innerHTML]="numberOfDay"></span> Nights
+                  <li class="list"> <span class="regular"> Total Stay </span> <span class="strong"> <span [innerHTML]="numberOfDay + 1  "></span> Days, <span [innerHTML]="resultReservation.numberOfDay"></span> Nights
                     </span> </li>
 
 
@@ -169,15 +149,15 @@
               <div class="checkout-sidebar-contents">
                 <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
                   <li class="list"> <span class="regular"> Charge </span> <span class="strong">
-                    {{rooms.currentPrice * numberOfDay | vndCurrency }} </span> </li>
+                    {{room.currentPrice * resultReservation.numberOfDay | vndCurrency }} </span> </li>
                   <li class="list"> <span class="regular"> Discount </span> <span class="strong">
                       -$8 </span> </li>
                   <li class="list"> <span class="regular"> Vat </span> <span class="strong">
-                      (+5%) {{(rooms.currentPrice * numberOfDay)*0.05| vndCurrency }} </span> </li>
+                      (+5%) {{(room.currentPrice * resultReservation.numberOfDay)*0.05| vndCurrency }} </span> </li>
                 </ul>
                 <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
                     <li class="list"> <span class="regular"> Total </span> <span class="strong color-one fs-20">
-                      {{(rooms.currentPrice * numberOfDay)
+                      {{(room.currentPrice * resultReservation.numberOfDay)
                         *1.05 | vndCurrency }}
                     </span> </li>
                 </ul>

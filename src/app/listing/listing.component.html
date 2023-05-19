@@ -61,15 +61,9 @@
                 <span class="banner-location-single-contents-subtitle"> Person </span>
                 <mat-form-field appearance="fill">
                   <mat-select formControlName="peopleNumber">
-                    <mat-option value="" disabled selected>Select people number</mat-option>
-                    <mat-option value="1">1</mat-option>
-                    <mat-option value="2">2</mat-option>
-                    <mat-option value="3">3</mat-option>
-                    <mat-option value="4">4</mat-option>
-                    <mat-option value="5">5</mat-option>
-                    <mat-option value="6">6</mat-option>
-                    <!-- <mat-option *ngFor="let number of peopleNumberOptions" [value]="peopleNumberOptions">{{number}}</mat-option> -->
-                    <!-- <mat-option *ngFor="let i of maxPersonArray" [value]="maxPersonArray.length + 1 - i">{{maxPersonArray.length + 1 - i}}</mat-option> -->
+                    <mat-option [value] = "0" disabled selected>Select people number</mat-option>
+                    <!-- <mat-option *ngFor="let number of peopleNumberOptions" [value]="number">{{number}}</mat-option> -->
+                    <mat-option *ngFor="let i of maxPersonArray" [value]="maxPersonArray.length + 1 - i">{{maxPersonArray.length + 1 - i}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -84,19 +78,17 @@
                 <span class="banner-location-single-contents-subtitle"> Room Type </span>
                 <mat-form-field appearance="fill">
                   <mat-select formControlName="roomTypeId">
-                    <mat-option value="" disabled selected>Select room type</mat-option>
+                    <mat-option [value] = "0" disabled selected>Select room type</mat-option>
                     <mat-option *ngFor="let roomType of roomTypeName" value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
                   </mat-select>
                 </mat-form-field>
-                <!-- <input type="text" formControlName="roomTypeName"> -->
-
               </div>
             </div>
           </div>
           <div class="banner-location-single-search">
             <div class="search-suggestions-wrapper flex">
-              <button type="submit"  class="search-click-icon"  for="control-modal">
-                  <i class="las la-search"></i>
+              <button type="submit" class="search-click-icon" for="control-modal">
+                <i class="las la-search"></i>
               </button>
             </div>
             <div class="search-suggestion-overlay"></div>
@@ -120,7 +112,8 @@
             <div class="single-shop-left-title open">
               <h5 class="title"> Prices </h5>
               <div class="single-shop-left-inner mt-4">
-                <form class="price-range-slider" method="post" data-start-min="0" data-start-max="10000000" data-min="0" data-max="10000000" data-step="5">
+                <form class="price-range-slider" method="post" data-start-min="0" data-start-max="10000000" data-min="0"
+                  data-max="10000000" data-step="5">
                   <div class="ui-range-slider"></div>
                   <div class="ui-range-slider-footer">
                     <div class="ui-range-values">
@@ -231,12 +224,13 @@
                         <span class="hotel-view-contents-review"> <i class="las la-star"></i>{{room.starSum}}<span
                             class="hotel-view-contents-review-count"> ({{room.starAmount}}) </span> </span>
                         <div class="btn-wrapper">
-                          <a routerLink="/checkout/{{room.id}}" class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
+                          <a (click)="bookingRoom(room.id)" class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
                         </div>
                       </div>
                       <h3 class="hotel-view-contents-title"> <a routerLink="/room-detail"> {{room.name}} </a> </h3>
                       <div class="hotel-view-contents-location mt-2">
-                        <span class="hotel-view-contents-location-icon"> <i class="las la-map-marker-alt"></i> {{room.roomTypeName }} </span>
+                        <span class="hotel-view-contents-location-icon"> <i class="las la-map-marker-alt"></i> {{room.roomTypeName
+                          }} </span>
                         <br>
                         <!-- <span class="hotel-view-contents-location-para"> {{room.roomNumber}}
                         </span> -->
@@ -256,7 +250,8 @@
                     <div class="hotel-view-contents-bottom">
                       <div class="hotel-view-contents-bottom-flex">
                         <div class="hotel-view-contents-bottom-contents d-flex flex-wrap gap-4 gap-sm-1">
-                          <h4 class="hotel-view-contents-bottom-title"  > {{ room.currentPrice | vndCurrency }}<span>/ {{1}} Night</span> </h4>
+                          <h4 class="hotel-view-contents-bottom-title"> {{ room.currentPrice | vndCurrency }}<span>/ {{1}}
+                              Night</span> </h4>
                           <br>
                         </div>
                       </div>
@@ -295,12 +290,10 @@
                 </ul> -->
 
                 <div class="clearfix"></div>
-                <pagination-controls class="pagination-wrapper"
-                previousLabel="Prev"
-                nextLabel="Next"
-                (pageChange)="onTableDataChange($event)">
+                <pagination-controls class="pagination-wrapper" previousLabel="Prev" nextLabel="Next"
+                  (pageChange)="onTableDataChange($event)">
 
-              </pagination-controls>
+                </pagination-controls>
               </div>
             </div>
           </div>

@@ -1,10 +1,10 @@
 export class Booking {
-  roomId!: number
-  name!: string
   startDate!: Date
   endDate!: Date
-  imgTitle!: string
+  roomId!: number
+  name!: string
+  email!: string
+  phoneNumber!: string
   address!: string
   numberOfDay!: number
-  phoneNumber!: string
 }

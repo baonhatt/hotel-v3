@@ -12,6 +12,8 @@ import { differenceInDays } from 'date-fns';
 import { DatePipe } from '@angular/common';
 import { userProfile } from '../models/userProfile.model';
 import { UserService } from '../_service/user.service';
+import {formatDate} from '@angular/common';
+import { ReservationGet } from '../models/reservationGet.model';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -21,7 +23,7 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('momoRadio') momoRadio!: ElementRef;
   @ViewChild('vnpayRadio') vnpayRadio!: ElementRef;
   paymentFailed!: any;
-  rooms!: Room;
+  room!: Room;
   bookForm!: FormGroup;
   dateForm!: FormGroup;
   startDate!: Date;
@@ -29,12 +31,15 @@ export class CheckoutComponent implements OnInit {
   numdayDisplay!: number;
   endDate!: Date;
   numDays!: number;
-  roomId!: any;
   amountNum1!: number;
   orderInfoString!: string;
   checkIn = new FormControl(new Date().toISOString());
   checkOut = new FormControl(new Date().toISOString());
   userInfo!: userProfile;
+  reservationId!: any;
+  resultReservation:any;
+  reservationGet!:ReservationGet;
+  priceRoom:any;
   get f() {
     return this.bookForm.controls;
   }
@@ -48,27 +53,29 @@ export class CheckoutComponent implements OnInit {
     private toast: ToastrService,
     private userProfile: UserService
   ) {
-    this.bookForm = this.fb.group({
-      startDate: [''],
-      checkOut: [''],
-    });
+
   }
 
   ngOnInit(): void {
     this.paymentFailed = false;
-    this.roomId = this.route.snapshot.paramMap.get('id');
+    this.reservationId = this.route.snapshot.paramMap.get('id');
+
+    this.getReservationByID(this.reservationId);
+
+    var roomLocal = JSON.parse(localStorage.getItem("bookedRoom")!);
+    this.room = roomLocal as Room;
+    this.priceRoom = this.room.discountPrice == 0?this.room.currentPrice:this.room.discountPrice;
+    this.resultReservation = JSON.parse(localStorage.getItem("resultReservation")!);
+    this.resultReservation.startDate = new Date(new Date(this.resultReservation.startDate).setHours(0,0,0)).toLocaleString();
+    this.resultReservation.endDate = new Date(new Date(this.resultReservation.endDate).setHours(0,0,0)).toLocaleString();
+
     this.bookForm = this.fb.group({
-      startDate: new Date().toISOString(),
-      endDate: new Date().toISOString(),
-      roomId: [this.roomId],
-      numberOfDay: [''],
       email: [''],
       name: [''],
       phoneNumber: [''],
       address: [''],
       paymentMethod: ['momo'],
     });
-    this.getRoomById();
     this.userProfile.getUserProfile().subscribe((res) => {
       this.bookForm.patchValue({
         name: res.userName,
@@ -77,40 +84,22 @@ export class CheckoutComponent implements OnInit {
         address: res.address,
       });
     });
-    // Lắng nghe sự thay đổi của startDate và endDate
-    this.bookForm.get('startDate')?.valueChanges.subscribe(() => {
-      this.calculateNumberOfDays();
-    });
-
-    this.bookForm.get('endDate')?.valueChanges.subscribe(() => {
-      this.calculateNumberOfDays();
-    });
   }
 
-  calculateNumberOfDays() {
-    const startDateControl = this.bookForm.get('startDate');
-    const endDateControl = this.bookForm.get('endDate');
-    if (startDateControl && endDateControl) {
-      const startDateValue = startDateControl.value;
-      const endDateValue = endDateControl.value;
-
-      if (startDateValue && endDateValue) {
-        const startDate = new Date(startDateValue);
-        const endDate = new Date(endDateValue);
-        const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-        const numberOfDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        this.numdayDisplay = numberOfDays;
-        const abc = this.bookForm.get('numberOfDay')?.setValue(numberOfDays);
-        console.log(this.numdayDisplay);
-      }
-    }
-  }
-
-  getRoomById() {
-    this.apiService.getRoomDetail(this.roomId).subscribe((res) => {
-      this.rooms = res;
-      console.log(res);
-    });
+  getReservationByID(id:any)
+  {
+    this.http
+      .get<any>(
+        `${environment.BASE_URL_API}/user/reservation/get-by-id?id=${this.reservationId}`).subscribe(
+          res => {
+            this.reservationGet = res as ReservationGet
+            console.log(res.reservationPrice);
+            console.log(this.reservationGet.reservationPrice);
+          },
+          err => {
+            this.toast.error("Reservation Id not found");
+          }
+        )
   }
 
   methodPay() {
@@ -122,18 +111,23 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  bookingRoom(bookForm: FormGroup) {
+  confirmInfoBookingRoom() {
+    var payLoad = {
+      name: this.bookForm.controls["name"].value,
+      email: this.bookForm.controls["email"].value,
+      phoneNumber: this.bookForm.controls["phoneNumber"].value,
+      address: this.bookForm.controls["address"].value
+    }
     this.http
       .post<any>(
-        `${environment.BASE_URL_API}/user/reservation/create`,
-        this.bookForm.value
+        `${environment.BASE_URL_API}/user/reservation/edit-info?id=${this.reservationId}`,
+        payLoad
       )
       .subscribe(
         (res) => {
           this.methodPay();
-          this.toast.success(res.message);
-          const dataToSave = JSON.stringify(res);
-          localStorage.setItem('bookingData', dataToSave)
+          this.toast.success("Please payment");
+          localStorage.setItem('reservationId', this.reservationId)
         },
         (_err) => {
           const wrongtime = _err.error.title;
@@ -146,20 +140,19 @@ export class CheckoutComponent implements OnInit {
       );
   }
   payMoMo() {
-    const orderInfo = this.rooms.name;
-    const amount = this.rooms.currentPrice;
-    const orderInfoString = orderInfo.toString();
-    let amountNum1 = amount * this.numdayDisplay;
+    const orderInfo = this.room.name;
+    const amount = Math.round(this.reservationGet.reservationPrice).toString()
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
     });
 
+    var payLoad = { orderInfo: orderInfo, amount: amount}
+
     this.http
       .post<any>(
-        environment.QR_MOMO,
-        { orderInfo: orderInfoString, amount: amountNum1.toString() },
-        { headers }
+        environment.QR_MOMO,payLoad,{ headers }
       )
       .subscribe(
         (response) => {
@@ -178,8 +171,8 @@ export class CheckoutComponent implements OnInit {
   }
 
   payVnPay() {
-    this.amountNum1 = this.rooms.currentPrice * this.numdayDisplay;
-    this.orderInfoString = this.rooms.name;
+    // this.amountNum1 = this.reservationGet.ReservationPrice
+    this.orderInfoString = this.room.name;
 
     this.http
       .post<any>(environment.BASE_URL_API + '/user/vn-pay/create', {
@@ -203,7 +196,6 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
-    this.bookingRoom(this.bookForm.value);
-    console.log(this.roomId);
+    this.confirmInfoBookingRoom();
   }
 }
