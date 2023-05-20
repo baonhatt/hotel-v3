@@ -39,9 +39,11 @@ import { BlogComponent } from './pages/blog/blog.component';
 import { RoomTypeServiceComponent } from './pages/room-type-service/room-type-service.component';
 import { FilterPipe } from './_shared/filter.pipe';
 import { BookingFilterPipe } from './_shared/booking/booking-filter.pipe';
+import { RevenueComponent } from './components/revenue/revenue.component';
 @NgModule({
   declarations: [
     FilterPipe,
+    RevenueComponent,
     BellNotifComponent,
     AppComponent,
     HeaderComponent,
