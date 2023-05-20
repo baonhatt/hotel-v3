@@ -29,7 +29,6 @@ export class AuthGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    const id = Number(route.paramMap.get('id'));
 
     $.getScript('assets/js/main.js');
 

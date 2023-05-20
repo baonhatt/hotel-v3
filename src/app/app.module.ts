@@ -74,7 +74,8 @@ import { ConfirmRegisterComponent } from './confirm-register/confirm-register.co
     ToastrModule.forRoot({
       timeOut : 5000,
       progressBar: true,
-      preventDuplicates: true
+      preventDuplicates: true,
+      positionClass: 'toast-top-left'
     }),
     BrowserAnimationsModule,
     FormsModule,

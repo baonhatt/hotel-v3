@@ -26,46 +26,12 @@
           <div class="checkout-single bg-white radius-10">
             <h4 class="checkout-title"> Booking Information </h4>
             <div class="checkout-contents mt-3">
-              <!-- <h5 class="mt-3 mb-3">Room Information</h5> -->
-              <!-- <table class="table table-bordered">
-                <tbody>
-                  <tr>
-                    <th>Room name:</th>
-                    <td>{{room.name}}</td>
-                  </tr>
-                  <tr>
-                    <th>Room number:</th>
-                    <td>{{room.roomNumber}}</td>
-                  </tr>
-                  <tr>
-                    <th>Price:</th>
-                    <td>
-                      <span *ngIf="room.discountPrice != null; else currentPrice">{{room.discountPrice}}</span>
-                    </td>
-                    <ng-template #currentPrice>{{room.currentPrice}}</ng-template>
-                  </tr>
-                  <tr>
-                    <th>Service attachs:</th>
-                    <td>
-                      <span *ngFor="let item of room.serviceAttachs; let i = index; let length = count">
-                        <span *ngIf="i == length - 1; else serviceAttach">{{item.name}}</span>
-                        <ng-template #serviceAttach>{{item.name}}, </ng-template>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Room type:</th>
-                    <td>{{room.roomTypeName}}</td>
-                  </tr>
-                </tbody>
-
-              </table> -->
               <div class="checkout-form custom-form">
                 <form action="" [formGroup]="bookForm" (ngSubmit)="OnSubmit()">
                   <div class="input-flex-item">
                     <div class="single-input mt-4">
                       <label class="label-title"> Name </label>
-                      <input class="form--control" type="text"  formControlName="name" placeholder="Type Name">
+                      <input class="form--control" type="text" formControlName="name" placeholder="Type Name">
                     </div>
                     <div class="single-input mt-4">
                       <label class="label-title"> Phone Number </label>
@@ -87,12 +53,16 @@
                   <div class="single-input mt-2">
                     <div class="custom-radio custom-radio-inline">
                       <div class="custom-radio-single active">
-                        <input class="radio-input" type="radio" formControlName="paymentMethod" value="momo" id="momoRadio"  name="paymentMethod" checked="checked">
-                        <label for="momoRadio"> <img src="../../assets/img/logo-momo-inkythuatso/logo-momo-png-1.png" alt="card" style="width: 50px;">Pay with MOMO</label>
+                        <input class="radio-input" type="radio" formControlName="paymentMethod" value="momo" id="momoRadio"
+                          name="paymentMethod" checked="checked">
+                        <label for="momoRadio"> <img src="../../assets/img/logo-momo-inkythuatso/logo-momo-png-1.png" alt="card"
+                            style="width: 50px;">Pay with MOMO</label>
                       </div>
                       <div class="custom-radio-single">
-                        <input class="radio-input" type="radio"  name="paymentMethod" formControlName="paymentMethod" value="vnpay" id="vnpayRadio">
-                        <label for="vnpayRadio"> <img src="../../assets/img/vnpay-logo-inkythuatso/vnpay-logo-inkythuatso-01.png" alt="Paypal" style="width: 50px;">VN Pay</label>
+                        <input class="radio-input" type="radio" name="paymentMethod" formControlName="paymentMethod" value="vnpay"
+                          id="vnpayRadio">
+                        <label for="vnpayRadio"> <img src="../../assets/img/vnpay-logo-inkythuatso/vnpay-logo-inkythuatso-01.png"
+                            alt="Paypal" style="width: 50px;">VN Pay</label>
                       </div>
                     </div>
                   </div>
@@ -115,27 +85,34 @@
               <h4 class="checkout-sidebar-title"> Booking Details </h4>
               <div class="checkout-sidebar-contents">
                 <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
-                  <li class="list"> <span class="regular"> Room name </span> <span class="strong" > {{room.name}}
+                  <li class="list"> <span class="regular"> Room name </span> <span class="strong"> {{room.name}}
                     </span>
                   </li>
-                  <li class="list"> <span class="regular"> Room number </span> <span class="strong" > {{room.roomNumber}}
+                  <li class="list"> <span class="regular"> Room number </span> <span class="strong"> {{room.roomNumber}}
                     </span>
                   </li>
-                  <li class="list"> <span class="regular"> Room type </span> <span class="strong" > {{room.roomTypeName}}
+                  <li class="list"> <span class="regular"> Room type </span> <span class="strong"> {{room.roomTypeName}}
                     </span>
                   </li>
-                  <li class="list"> <span class="regular"> Service attachs </span>  <span
-                    *ngFor="let item of room.serviceAttachs; let i = index; let length = count">
-                    <span class="strong" *ngIf="i == length - 1; else serviceAttach">{{item.name}}</span>
-                    <ng-template s #serviceAttach>{{item.name}}, </ng-template>
-                  </span>
+                  <li class="list"> <span class="regular"> Room Price </span> <span class="strong">
+                      {{(room.discountPrice==0?room.currentPrice:room.discountPrice) | vndCurrency}}
+                    </span>
                   </li>
-                  <li class="list"> <span class="regular"> Checking In </span> <span class="strong strongdate" [innerHTML]="resultReservation.startDate | date:'yyyy/MM/dd'">
+                  <li class="list"> <span class="regular me-4"> Service attachs </span>
+                    <span *ngFor="let item of room.serviceAttachs; let i = index; let length = count">
+                      <span class="strong">{{item.name}}</span>
+                    </span>
+                  </li>
+                  <li class="list" style="border-top: 1px solid var(--input-color); padding-top:20px;"> <span class="regular"> Checking In </span> <span class="strong strongdate"
+                      [innerHTML]="resultReservation.startDate | date:'yyyy/MM/dd'">
                     </span> </li>
-                  <li class="list"> <span class="regular"> Checking Out </span> <span class="strong strongdate" [innerHTML]="resultReservation.endDate | date:'yyyy/MM/dd'">
+                  <li class="list"> <span class="regular"> Checking Out </span> <span class="strong strongdate"
+                      [innerHTML]="resultReservation.endDate | date:'yyyy/MM/dd'">
                     </span> </li>
 
-                  <li class="list"> <span class="regular"> Total Stay </span> <span class="strong"> <span [innerHTML]="numberOfDay + 1  "></span> Days, <span [innerHTML]="resultReservation.numberOfDay"></span> Nights
+                  <li class="list"> <span class="regular"> Total Stay </span> <span class="strong"> <span
+                        [innerHTML]="reservationGet.numberOfDay + 1  "></span> Days, <span
+                        [innerHTML]="reservationGet.numberOfDay"></span> Nights
                     </span> </li>
 
 
@@ -149,16 +126,16 @@
               <div class="checkout-sidebar-contents">
                 <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
                   <li class="list"> <span class="regular"> Charge </span> <span class="strong">
-                    {{room.currentPrice * resultReservation.numberOfDay | vndCurrency }} </span> </li>
+                      {{room.currentPrice * resultReservation.numberOfDay | vndCurrency }} </span> </li>
                   <li class="list"> <span class="regular"> Discount </span> <span class="strong">
-                      -$8 </span> </li>
+                      -0 </span> </li>
                   <li class="list"> <span class="regular"> Vat </span> <span class="strong">
                       (+5%) {{(room.currentPrice * resultReservation.numberOfDay)*0.05| vndCurrency }} </span> </li>
                 </ul>
                 <ul class="checkout-flex-list list-style-none checkout-border-top pt-3 mt-3">
-                    <li class="list"> <span class="regular"> Total </span> <span class="strong color-one fs-20">
+                  <li class="list"> <span class="regular"> Total </span> <span class="strong color-one fs-20">
                       {{(room.currentPrice * resultReservation.numberOfDay)
-                        *1.05 | vndCurrency }}
+                      *1.05 | vndCurrency }}
                     </span> </li>
                 </ul>
               </div>

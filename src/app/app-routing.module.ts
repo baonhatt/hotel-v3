@@ -159,7 +159,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'room-listing',
+    path: 'room-listing/:checkIn/:checkOut/:person/:roomTypeId',
     component: ListingComponent,
     data: {
       requiredAuth: false
