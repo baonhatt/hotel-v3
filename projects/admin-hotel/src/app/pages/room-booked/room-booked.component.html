@@ -1,0 +1,95 @@
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+  
+    <div class="content-page">
+      <div class="content">
+        <app-header></app-header>
+          <div class="content">
+           
+            <div class="container-fluid">
+                        
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Projects</a></li>
+                                            <li class="breadcrumb-item active">Booking</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Room is booking</h4>
+                                </div>
+                            </div>
+                        </div>     
+                        <!-- end page title --> 
+
+                        <!-- end row-->
+                        
+                        <div class="row">
+                            <div class="col-lg-6 col-xxl-3">
+                                
+                            </div> <!-- end col -->
+                            
+                        </div>
+                        <!-- end row-->
+                        
+                        <div class="row" >
+                            
+                            <div class="col-md-6 col-xxl-3" *ngFor="let item of roombooked; let i = index;">
+                                <!-- project card -->
+                                <div class="card d-block">
+                                    <!-- project-thumbnail -->
+                                    <img class="card-img-top" src="assets/images/projects/project-2.jpg" alt="project image cap">
+                                    <div class="card-img-overlay">
+                                        <div class="badge bg-success p-1">Booking</div>
+                                    </div>
+
+                                    <div class="card-body position-relative">
+                                        <!-- project title-->
+                                        <h4 class="mt-0">
+                                            <a href="apps-projects-details.html" class="text-title">Landing page design - Home</a>
+                                        </h4>
+
+                                        <!-- project detail-->
+                                        <p class="mb-3">
+                                            <span class="pe-2 text-nowrap">
+                                                <i class="mdi mdi-format-list-bulleted-type"></i>
+                                                <b>11</b> Tasks
+                                            </span>
+                                            <span class="text-nowrap">
+                                                <i class="mdi mdi-comment-multiple-outline"></i>
+                                                <b>254</b> Comments
+                                            </span>
+                                        </p>
+                                        <div class="mb-3" id="tooltip-container5">
+                                            <a href="javascript:void(0);" data-bs-container="#tooltip-container5" data-bs-toggle="tooltip" data-bs-placement="top" title="Mat Helme" class="d-inline-block">
+                                                <img src="assets/images/users/avatar-10.jpg" class="rounded-circle avatar-xs" alt="friend">
+                                            </a>
+                                            
+                                            <a href="javascript:void(0);" class="d-inline-block text-muted fw-bold ms-2">
+                                                {{item.name}}
+                                            </a>
+                                        </div>
+
+                                        <!-- project progress-->
+                                        <p class="mb-2 fw-bold">{{item.endDate | date:'fullDate'}} <span class="float-end">100%</span></p>
+                                        <div class="progress progress-sm">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                            </div><!-- /.progress-bar -->
+                                        </div><!-- /.progress -->
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+                            
+                          
+                        </div>
+                        <!-- end row-->
+                        
+                    </div> <!-- container -->
+                    
+                    
+      </div>
+    </div>
+  

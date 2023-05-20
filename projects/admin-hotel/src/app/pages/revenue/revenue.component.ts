@@ -4,11 +4,11 @@ import { Staff } from '../../models/staff.model';
 import { Observable } from 'rxjs';
 import { ReservationModel } from '../booking/booking.component';
 @Component({
-  selector: 'app-layoutpage',
-  templateUrl: './layoutpage.component.html',
-  styleUrls: ['./layoutpage.component.css']
+  selector: 'app-revenue',
+  templateUrl: './revenue.component.html',
+  styleUrls: ['./revenue.component.css']
 })
-export class LayoutpageComponent implements OnInit{
+export class RevenueComponent  implements OnInit{
     numStaff: Staff[] = [];
     numAccount!: number;
     numbBookings!: number;

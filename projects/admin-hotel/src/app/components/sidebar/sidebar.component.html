@@ -3,10 +3,10 @@
   <!-- LOGO -->
   <a href="index.html" class="logo text-center logo-light">
       <span class="logo-lg">
-          <img src="assets/images/logo.png" alt="" height="16">
+          <img src="assets/images/logo.png" alt="" height="26">
       </span>
       <span class="logo-sm">
-          <img src="assets/images/logo_sm.png" alt="" height="16">
+          <img src="assets/images/logo_sm.png" alt="" height="26">
       </span>
   </a>
 
@@ -28,7 +28,7 @@
           <li class="side-nav-title side-nav-item">Navigation</li>
 
           <li class="side-nav-item">
-              <a data-bs-toggle="collapse" routerLink="/dashboard" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+              <a data-bs-toggle="collapse"  routerLinkActive="active" routerLink="/dashboard" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
                   <i class="uil-home-alt"></i>
                   <span class="badge bg-success float-end">4</span>
                   <span> Dashboards </span>
@@ -38,23 +38,23 @@
 
           <li class="side-nav-title side-nav-item">Options</li>
 
-          <li class="side-nav-item">
+          <li class="side-nav-item" routerLinkActive="active">
               <a routerLink="/room" class="side-nav-link">
                   <i class="uil-calender"></i>
                   <span> Rooms </span>
               </a>
           </li>
           
-          <li class="side-nav-item">
+          <li class="side-nav-item" routerLinkActive="active">
               <a routerLink="/booking" class="side-nav-link">
                   <i class="uil-comments-alt"></i>
-                  <span> Booking </span>
+                  <span> Reservations </span>
               </a>
           </li>
-          <li class="side-nav-item">
+          <li class="side-nav-item" routerLinkActive="active">
               <a routerLink="/blog" class="side-nav-link">
                   <i class="uil-comments-alt"></i>
-                  <span> Blog </span>
+                  <span> Blogs </span>
               </a>
           </li>
 
@@ -76,7 +76,7 @@
                         <a  routerLink="/roomservice">Room Service</a>
                       </li>
                       <li routerLinkActive="active">
-                          <a  routerLink="/payment">Payments</a>
+                          <a  routerLink="/customer">Customer</a>
                       </li>
                       <li>
                         <a  routerLink="/revenue">Revenue</a>

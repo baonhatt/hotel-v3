@@ -1,89 +1,71 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ViewChild } from "@angular/core";
+import { Chart } from 'angular-highcharts';
 
-import {
-    ApexAxisChartSeries,
-    ApexChart,
-    ApexXAxis,
-    ApexDataLabels,
-    ApexTooltip,
-    ApexStroke
-  } from "ng-apexcharts";
-  
-  export type ChartOptions = {
-    series: ApexAxisChartSeries;
-    chart: ApexChart;
-    xaxis: ApexXAxis;
-    stroke: ApexStroke;
-    tooltip: ApexTooltip;
-    dataLabels: ApexDataLabels;
-  };
-  
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
-export class ChartComponent {
-    @ViewChild("chart") chart!: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
-
-  constructor() {
-    this.chartOptions = {
-        
-        series: [
-        {
-          name: "series1",
-          data: [31, 40, 28, 51, 42, 109, 100]
+export class ChartComponent implements OnInit{
+ 
+    chart = new Chart({
+        chart: {
+          type: 'line',
+          height: 325
         },
-        {
-          name: "series2",
-          data: [11, 32, 45, 32, 34, 52, 41]
+        title: {
+          text: 'Beyond Hotel Statics'
+        },
+        xAxis: {
+          categories: [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec'
+          ]
+        },
+        yAxis: {
+          title: {
+            text: 'Revenue in VND'
+          }
+        },
+        series: [
+          
+          {
+            name: 'Revenue',
+            type: 'line',
+            color: '#727cf5',
+            data: [
+              2000000, 3000000, 1000000, 4000000, 4000000, 230000, 5030000, 6000000, 5000000, 2300000, 4200000, 5200000
+            ]
+          },
+          {
+            name: 'Service',
+            type: 'line',
+            color: '#ed9e20',
+            data: [
+                200030, 30303, 10303, 40303, 40303, 23030, 503030, 60303, 50303, 230300, 420300, 520300
+            ]
+          },
+        ],
+        credits: {
+          enabled: false
         }
-      ],
-      chart: {
-        height: 350,
-        type: "area"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "smooth"
-      },
-      xaxis: {
-        type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z"
-        ]
-      },
-      tooltip: {
-        x: {
-          format: "dd/MM/yy HH:mm"
-        }
+      })
+    
+      constructor() { }
+    
+      ngOnInit(): void {
       }
-    };
-  }
-
-  public generateData(baseval: any, count: any, yrange: any) {
-    var i = 0;
-    var series = [];
-    while (i < count) {
-      var x = Math.floor(Math.random() * (750 - 1 + 1)) + 1;
-      var y =
-        Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
-      var z = Math.floor(Math.random() * (75 - 15 + 1)) + 15;
-
-      series.push([x, y, z]);
-      baseval += 86400000;
-      i++;
+    
     }
-    return series;
-  }
-}
+    

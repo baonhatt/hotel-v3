@@ -15,8 +15,8 @@ export class FilterPipe implements PipeTransform {
           // Thực hiện các điều kiện lọc tùy thuộc vào cấu trúc của dữ liệu phòng
           return item.name.toLowerCase().includes(searchTerm) ||
           item.roomTypeName.toLowerCase().includes(searchTerm) ||
-          item.roomNumber.toLowerCase().includes(searchTerm) ||
-          item.discountCode.toLowerCase().includes(searchTerm) 
+          item.roomNumber.toLowerCase().includes(searchTerm) 
+        //   item.discountCode.toLowerCase().includes(searchTerm) 
                  
         });
       }

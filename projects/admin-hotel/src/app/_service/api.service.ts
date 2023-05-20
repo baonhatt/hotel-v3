@@ -12,6 +12,7 @@ import { Staff } from '../models/staff.model';
 import { ServiceAttach } from '../models/serviceAttach.model';
 import { Discount } from '../models/discount.model';
 import { RoomTypeService, ServiceAttachDetail } from '../models/roomtypeservice.model';
+import { ReservationModel } from '../pages/booking/booking.component';
 
 @Injectable({
   providedIn: 'root'
@@ -120,8 +121,12 @@ export class ApiService {
     return this.http.get<Blog>(`${this.apiBlog}/${id}`).pipe();
   }
 
+ /////////////////////////////////////////////////////////////////////////////////////// Booking API
 
 
+ getAllReservation(): Observable<ReservationModel[]>{
+    return this.http.get<ReservationModel[]>(environment.BASE_URL_API + '/v2/admin/reservation/get-all')
+ }
 
  /////////////////////////////////////////////////////////////////////////////////////// User API
 
@@ -130,7 +135,7 @@ export class ApiService {
     return this.user
   }
 
-  getallUser(){
+  getallUser(): Observable<Staff[]>{
     return this.http.get<Staff[]>(environment.BASE_URL_API + '/v2/admin/account/get-all');
   }
 

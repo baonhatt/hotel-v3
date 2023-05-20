@@ -39,11 +39,14 @@ import { BlogComponent } from './pages/blog/blog.component';
 import { RoomTypeServiceComponent } from './pages/room-type-service/room-type-service.component';
 import { FilterPipe } from './_shared/filter.pipe';
 import { BookingFilterPipe } from './_shared/booking/booking-filter.pipe';
-import { RevenueComponent } from './components/revenue/revenue.component';
+import { ChartModule } from 'angular-highcharts';
+import { ChartComponent } from './components/chart/chart.component';
+import { RoomBookedComponent } from './pages/room-booked/room-booked.component';
+import { RevenueComponent } from './pages/revenue/revenue.component';
 @NgModule({
   declarations: [
+    ChartComponent,
     FilterPipe,
-    RevenueComponent,
     BellNotifComponent,
     AppComponent,
     HeaderComponent,
@@ -64,9 +67,12 @@ import { RevenueComponent } from './components/revenue/revenue.component';
     BlogComponent,
     RoomTypeServiceComponent,
     FilterPipe,
-    BookingFilterPipe
+    BookingFilterPipe,
+    RoomBookedComponent,
+    RevenueComponent
   ],
   imports: [
+    ChartModule,
     FormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
