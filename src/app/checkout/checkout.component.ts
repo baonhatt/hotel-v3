@@ -37,7 +37,6 @@ export class CheckoutComponent implements OnInit {
   checkOut = new FormControl(new Date().toISOString());
   userInfo!: userProfile;
   reservationId!: any;
-  resultReservation:any;
   reservationGet!:ReservationGet;
   priceRoom:any;
   get f() {
@@ -57,20 +56,16 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.paymentFailed = false;
     this.reservationId = this.route.snapshot.paramMap.get('id');
 
     this.getReservationByID(this.reservationId);
-
-    this.resultReservation = JSON.parse(localStorage.getItem("resultReservation")!);
-    this.resultReservation.startDate = new Date(new Date(this.resultReservation.startDate).setHours(0,0,0)).toLocaleString();
-    this.resultReservation.endDate = new Date(new Date(this.resultReservation.endDate).setHours(0,0,0)).toLocaleString();
 
     this.bookForm = this.fb.group({
       email: [''],
       name: [''],
       phoneNumber: [''],
       address: [''],
+      numberOfPeople: [''],
       paymentMethod: ['momo'],
     });
     this.userProfile.getUserProfile().subscribe((res) => {
@@ -78,7 +73,7 @@ export class CheckoutComponent implements OnInit {
         name: res.userName,
         email: res.email,
         phoneNumber: res.phoneNumber,
-        address: res.address,
+        address: res.address
       });
     });
   }
@@ -98,6 +93,9 @@ export class CheckoutComponent implements OnInit {
         `${environment.BASE_URL_API}/user/reservation/get-by-id?id=${this.reservationId}`).subscribe(
           res => {
             this.reservationGet = res as ReservationGet
+            console.log(this.reservationGet);
+
+            this.bookForm.controls["numberOfPeople"].setValue(res.numberOfPeople)
             this.getRoomById(this.reservationGet.roomId);
           },
           err => {
@@ -120,7 +118,8 @@ export class CheckoutComponent implements OnInit {
       name: this.bookForm.controls["name"].value,
       email: this.bookForm.controls["email"].value,
       phoneNumber: this.bookForm.controls["phoneNumber"].value,
-      address: this.bookForm.controls["address"].value
+      address: this.bookForm.controls["address"].value,
+      numberOfPeople: this.bookForm.controls["numberOfPeople"].value,
     }
     this.http
       .post<any>(
@@ -171,16 +170,14 @@ export class CheckoutComponent implements OnInit {
           );
         }
       );
-    console.log(orderInfo, amount);
   }
 
   payVnPay() {
-    // this.amountNum1 = this.reservationGet.ReservationPrice
     this.orderInfoString = this.room.name;
-    this.amountNum1 = Math.round(this.reservationGet.reservationPrice);
+    const amount = Math.round(this.reservationGet.reservationPrice).toString();
     this.http
       .post<any>(environment.BASE_URL_API + '/user/vn-pay/create', {
-        amount: this.amountNum1,
+        amount: amount,
         orderDescription: this.orderInfoString,
         name: 'Customer',
       })

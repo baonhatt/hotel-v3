@@ -55,6 +55,14 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'room-detail/:id/:checkIn/:checkOut',
+    component: RoomDetailComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'room-detail/:id',
     component: RoomDetailComponent,
     data: {

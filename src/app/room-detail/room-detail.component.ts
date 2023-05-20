@@ -5,7 +5,7 @@ import { ApiService } from '../_service/api.service';
 import { ViewportScroller } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../pages/modal/modal/modal.component';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { SearchRoom } from '../models/searchRoom.model';
 import { userProfile } from '../models/userProfile.model';
 import { Booking } from '../models/booking.model ';
@@ -28,23 +28,28 @@ export class RoomDetailComponent implements OnInit {
   showDiscount: number = 0;
   discount!: number
   rating = 0;
-  searchData:any;
-  constructor(private route: ActivatedRoute, private router: Router, private apiService: ApiService, private viewPort: ViewportScroller, private dialogref: MatDialog, private http: HttpClient,private toastr: ToastrService){
+  checkIn:any = this.route.snapshot.paramMap.get("checkIn");
+  checkOut:any = this.route.snapshot.paramMap.get("checkOut");
+  formReservation!:FormGroup;
 
-
+  constructor(private route: ActivatedRoute, private router: Router, private apiService: ApiService, private viewPort: ViewportScroller, private dialogref: MatDialog, private http: HttpClient,private toastr: ToastrService, private fb: FormBuilder){
+    this.formReservation = this.fb.group({
+      checkIn : new Date().toISOString(),
+      checkOut : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
+      numberOfPeople : "",
+    });
   }
-  isHomePageLoaded = false;
+
   ngOnInit() {
+    if(this.checkIn != undefined || this.checkOut != undefined){
+      this.formReservation.controls["checkIn"].setValue(this.checkIn);
+      this.formReservation.controls["checkOut"].setValue(this.checkOut);
+    }
+    this.formReservation.controls["numberOfPeople"].setValue(0);
     window.scrollTo(0, 0);
     this.roomId = this.route.snapshot.paramMap.get('id')
     this.viewPort.scrollToPosition([0, 0]);
     this.getRoomById();
-    const dataToSave = JSON.stringify(this.roomId);
-    localStorage.setItem('star', dataToSave);
-    var searchLocal = JSON.parse(localStorage.getItem("searchReservation")!);
-    this.searchData = searchLocal as SearchRoom;
-    this.searchData.checkIn = new Date(this.searchData.checkIn);
-    this.searchData.checkOut = new Date(this.searchData.checkOut);
   }
 
   openDialog(){
@@ -63,8 +68,9 @@ export class RoomDetailComponent implements OnInit {
   }
 
   bookingRoom() {
-    const checkInValue = this.searchData.checkIn;
-    const checkOutValue = this.searchData.checkOut;
+    const checkInValue = new Date(this.formReservation.controls["checkIn"].value).setHours(7,0,0);
+    const checkOutValue = new Date(this.formReservation.controls["checkOut"].value).setHours(7,0,0);
+
     if (!checkInValue || !checkOutValue) {
       return;
     }
@@ -79,30 +85,22 @@ export class RoomDetailComponent implements OnInit {
       userProfileLocal = JSON.parse(result) as userProfile;
     }
     var payLoad = new Booking();
-    payLoad.startDate = checkInDate;
-    payLoad.endDate = checkOutDate;
+    payLoad.startDate = new Date(checkInValue)
+    payLoad.endDate = new Date(checkOutValue)
     payLoad.roomId = this.room.id;
     payLoad.numberOfDay = numberOfNights;
+    payLoad.numberOfPeople = Number.parseInt(this.formReservation.controls["numberOfPeople"].value);
     payLoad.name = userProfileLocal.userName;
     payLoad.email = userProfileLocal.email;
     payLoad.phoneNumber = userProfileLocal.phoneNumber;
     payLoad.address = userProfileLocal.address;
     this.http
       .post<any>(
-        `${environment.BASE_URL_API}/user/reservation/create`,
-        payLoad
+        `${environment.BASE_URL_API}/user/reservation/create`,payLoad
       )
       .subscribe(
         (res) => {
           this.toastr.success(res.message);
-          var resultReservation = {
-            startDate : checkInDate,
-            endDate : checkOutDate,
-            numberOfDay: numberOfNights,
-            roomId : this.room.id,
-          }
-          const dataToSave = JSON.stringify(resultReservation);
-          localStorage.setItem('resultReservation', dataToSave);
           this.router.navigate(['/checkout', res.reservationId]);
         },
         (_err) => {
