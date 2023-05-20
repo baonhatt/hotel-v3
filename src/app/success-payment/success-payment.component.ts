@@ -15,12 +15,12 @@ import { catchError, of, throwError } from 'rxjs';
 })
 export class SuccessPaymentComponent implements OnInit {
   urlParams = new URLSearchParams(window.location.search);
-  resultCode = this.urlParams.get('resultCode');
-  message = this.urlParams.get('message');
-  orderType = this.urlParams.get('orderType');
-  orderInfo = this.urlParams.get('orderInfo');
-  payType = this.urlParams.get('payType');
-  amount = this.urlParams.get('amount');
+  resultCode: any;
+  message: any;
+  orderType: any;
+  orderInfo: any;
+  payType: any;
+  amount: any;
   vnp_ResponseCode = this.urlParams.get('vnp_ResponseCode');
   invoiceForm!: FormGroup;
   reservationId!: any;
@@ -33,6 +33,21 @@ export class SuccessPaymentComponent implements OnInit {
     private checkout: CheckoutComponent
   ) {}
   ngOnInit(): void {
+    if (this.urlParams.toString().indexOf('vnp') >= 0) {
+      this.resultCode = this.urlParams.get('vnp_ResponseCode');
+      this.message = this.urlParams.get('vnp_TransactionNo');
+      this.orderType = this.urlParams.get('vnp_BankCode');
+      this.orderInfo = this.urlParams.get('vnp_OrderInfo');
+      this.payType = this.urlParams.get('vnp_CardType');
+      this.amount = this.urlParams.get('vnp_Amount');
+    } else {
+      this.resultCode = this.urlParams.get('resultCode');
+      this.message = this.urlParams.get('message');
+      this.orderType = this.urlParams.get('orderType');
+      this.orderInfo = this.urlParams.get('orderInfo');
+      this.payType = this.urlParams.get('payType');
+      this.amount = this.urlParams.get('amount');
+    }
     // Get value of bookingForm is stored in checkout component
     this.reservationId = localStorage.getItem('reservationId');
     // Form Invoice
@@ -45,14 +60,14 @@ export class SuccessPaymentComponent implements OnInit {
       message: this.message,
       reservationId: this.reservationId,
     });
-    if (this.resultCode == '0') {
+    if (this.resultCode == '0' || this.resultCode == '00') {
       this.http
         .post<any>(
           `${environment.BASE_URL_API}/user/invoid/create`,
           this.invoiceForm.value
         )
         .pipe(
-          catchError(err => {
+          catchError((err) => {
             return throwError(err);
           })
         )
@@ -61,18 +76,16 @@ export class SuccessPaymentComponent implements OnInit {
             this.toast.success(respon.success.message);
           },
           (_err) => {
-            if(_err.status != undefined){
-              this.router.navigate(["/home"]);
-              this.toast.error("Payment has been successful, please check your booking history")
-            }else{
+            if (_err.status != undefined) {
+              this.router.navigate(['/home']);
+              this.toast.warning(
+                'Payment has been successful, please check your booking history'
+              );
+            } else {
               this.toast.error(_err.message);
             }
           }
-        )
+        );
     }
-    // this.vnp_ResponseCode = '0';
-  }
-  goBackToProFile() {
-    this.router.navigate(['/paymentdetail']);
   }
 }

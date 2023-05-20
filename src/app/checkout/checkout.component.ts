@@ -173,12 +173,11 @@ export class CheckoutComponent implements OnInit {
   }
 
   payVnPay() {
-    // this.amountNum1 = this.reservationGet.ReservationPrice
     this.orderInfoString = this.room.name;
-    this.amountNum1 = Math.round(this.reservationGet.reservationPrice);
+    const amount = Math.round(this.reservationGet.reservationPrice).toString();
     this.http
       .post<any>(environment.BASE_URL_API + '/user/vn-pay/create', {
-        amount: this.amountNum1,
+        amount: amount,
         orderDescription: this.orderInfoString,
         name: 'Customer',
       })
