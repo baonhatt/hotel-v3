@@ -79,7 +79,7 @@
                 <mat-form-field appearance="fill">
                   <mat-select formControlName="roomTypeId">
                     <mat-option [value]= "0" disabled selected>Select room type</mat-option>
-                    <mat-option *ngFor="let roomType of roomTypeName" value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
+                    <mat-option *ngFor="let roomType of roomTypeName" [value]="roomType.id">{{roomType.typeName}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -213,7 +213,7 @@
             ; let i = index;">
               <div class="hotel-view bg-white radius-20">
                 <div class="hotel-view-flex">
-                  <a routerLink="/room-detail/{{room.id}}" class="hotel-view-thumb hotel-view-list-thumb bg-image">
+                  <a routerLink="/room-detail/{{room.id}}/{{checkInDateString}}/{{checkOutDateString}}" class="hotel-view-thumb hotel-view-list-thumb bg-image">
                     <img [src]="room.roomPicture" style="height: 100%;
                     object-fit: cover;">
                   </a>

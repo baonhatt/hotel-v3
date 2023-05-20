@@ -28,35 +28,23 @@ interface RoomType {
   styleUrls: ['./listing.component.scss'],
 })
 export class ListingComponent implements OnInit {
-  rooms: Room[] = [];
-  room!: Room;
   results!: number;
-  pageOfItems!: Array<any>;
-  currentPrice!: number;
-  numDays!: number;
-  numNights!: number;
-  roomSearchs: Room[] = [];
   page: number = 1;
   count: number = 0;
   filteredRooms!: Room[];
   tableSize: number = 5;
   tableSizes: any = [3, 6, 9, 12];
-  roomtoDisplay!: Room[];
   maxPerson!: any;
-  datasearch!: number[];
   maxPrice = 0;
-  selectedRoomType = '';
-  selectedServiceAttach = '';
   roomTypes: RoomType[] = [];
   serviceAttachs = [];
   roomSearchForm!: FormGroup;
-  array!: number[];
-  selectedPersonCount: number = 1;
-  displayPrice = false;
   roomTypeName: RoomType[] = [];
   peopleNumberOptions: any;
   checkInDate: any;
   checkOutDate: any;
+  checkInDateString: any;
+  checkOutDateString: any;
   peopleNumber: any;
   roomTypeId: any;
 
@@ -91,6 +79,8 @@ export class ListingComponent implements OnInit {
     this.peopleNumber = this.route.snapshot.paramMap.get('person');
     this.roomTypeId = this.route.snapshot.paramMap.get('roomTypeId');
     this.getRoomSearch();
+    this.checkInDateString = this.checkInDate.toISOString();
+    this.checkOutDateString = this.checkOutDate.toISOString();
 
     this.checkIn.setValue(this.checkInDate.toISOString());
 
@@ -100,7 +90,6 @@ export class ListingComponent implements OnInit {
       { length: this.maxPerson },
       (v, k) => k + 1
     );
-    console.log(this.peopleNumber);
 
     this.roomSearchForm.controls['peopleNumber'].setValue(
       Number.parseInt(this.peopleNumber)
@@ -209,7 +198,12 @@ export class ListingComponent implements OnInit {
     checkOutDate = new Date(checkOutDate.setHours(7, 0, 0));
     const numberOfNights = Math.ceil(
       (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24)
-    );
+    );4
+    this.checkInDateString = checkInDate.toISOString();
+    this.checkOutDateString = checkOutDate.toISOString();
+    console.log(this.checkInDateString);
+    console.log(this.checkOutDateString);
+
     const numDays = numberOfNights;
     var payLoad = {
       checkIn: checkInDate.toISOString(),
@@ -262,20 +256,13 @@ export class ListingComponent implements OnInit {
     payLoad.email = userProfileLocal.email;
     payLoad.phoneNumber = userProfileLocal.phoneNumber;
     payLoad.address = userProfileLocal.address;
+    console.log(payLoad);
+
     this.http
       .post<any>(`${environment.BASE_URL_API}/user/reservation/create`, payLoad)
       .subscribe(
         (res) => {
           this.toast.success(res.message);
-          this.getRoomDetail(idRoom);
-          var resultReservation = {
-            startDate: checkInDate,
-            endDate: checkOutDate,
-            numberOfDay: numberOfNights,
-            roomId: idRoom,
-          };
-          const dataToSave = JSON.stringify(resultReservation);
-          localStorage.setItem('resultReservation', dataToSave);
           this.router.navigate(['/checkout', res.reservationId]);
         },
         (_err) => {
