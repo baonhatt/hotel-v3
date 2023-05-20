@@ -15,6 +15,7 @@ import { BlogComponent } from './pages/blog/blog.component';
 import { RoomTypeServiceComponent } from './pages/room-type-service/room-type-service.component';
 import { RevenueComponent } from './pages/revenue/revenue.component';
 import { RoomBookedComponent } from './pages/room-booked/room-booked.component';
+import { InvoiceComponent } from './pages/invoice/invoice.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
@@ -94,6 +95,14 @@ const routes: Routes = [
   {
     path: 'customer',
     component: CustomerComponent,
+    data: {
+      requiredAuth: true,
+    },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'invoice',
+    component: InvoiceComponent,
     data: {
       requiredAuth: true,
     },

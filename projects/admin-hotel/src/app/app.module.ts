@@ -43,6 +43,8 @@ import { ChartModule } from 'angular-highcharts';
 import { ChartComponent } from './components/chart/chart.component';
 import { RoomBookedComponent } from './pages/room-booked/room-booked.component';
 import { RevenueComponent } from './pages/revenue/revenue.component';
+import { InvoiceComponent } from './pages/invoice/invoice.component';
+import { DatePipe } from '@angular/common';
 @NgModule({
   declarations: [
     ChartComponent,
@@ -69,7 +71,8 @@ import { RevenueComponent } from './pages/revenue/revenue.component';
     FilterPipe,
     BookingFilterPipe,
     RoomBookedComponent,
-    RevenueComponent
+    RevenueComponent,
+    InvoiceComponent,
   ],
   imports: [
     ChartModule,
@@ -107,7 +110,8 @@ import { RevenueComponent } from './pages/revenue/revenue.component';
       {
         provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
       }
-    ]
+    ],
+    [DatePipe]
   ],
   bootstrap: [AppComponent],
 })

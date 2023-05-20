@@ -2,10 +2,9 @@ import { Component, OnInit, PipeTransform } from '@angular/core';
 import { DateFilterFn } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
-import { timeout } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from 'src/app/_service/api.service';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-invoice',
   templateUrl: './invoice.component.html',
@@ -16,8 +15,9 @@ export class InvoiceComponent {
     reservationFilter! : ReservationModel[];
     searchBooking: string = '' ;
     reservationGetById! : ReservationModel;
-    bookingForm!: FormGroup
-    constructor(private http: HttpClient, private fb: FormBuilder, private api: ApiService){
+    bookingForm!: FormGroup;
+    datePayment!: Date
+    constructor(private http: HttpClient, private fb: FormBuilder, private datePipe: DatePipe){
   
       this.bookingForm = this.fb.group({
           startDate: new Date().toISOString(),
@@ -42,8 +42,14 @@ export class InvoiceComponent {
       this.http.get<ReservationModel[]>(environment.BASE_URL_API+"/v2/admin/reservation/get-all")
       .subscribe(
         (res: any)=>{
-          this.reservationGetAll = res;
-          this.reservationFilter = res;
+            this.reservationGetAll = res;
+            this.reservationFilter = res;
+            // if (res.reservationPayment.createdAt !== null) {
+            //     this.datePayment = this.datePipe.transform(res.reservationPayment.createdAt, 'dd/MM/yyyy');
+            //   } else {
+            //     // Xử lý khi giá trị là null
+            //   }
+            alert(this.datePayment)
         },
         (err) => {
           console.log(err);
@@ -57,7 +63,6 @@ export class InvoiceComponent {
         (res)=>{
           this.reservationGetById = res;
           console.log(this.reservationGetById);
-  
         },
         (err) => {
           console.log(err);
