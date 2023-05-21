@@ -42,6 +42,7 @@ import { ChartModule } from 'angular-highcharts';
 import { ChartComponent } from './components/chart/chart.component';
 import { RoomBookedComponent } from './pages/room-booked/room-booked.component';
 import { RevenueComponent } from './pages/revenue/revenue.component';
+<<<<<<< HEAD
 import { ReservationComponent } from './pages/reservation/reservation.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
@@ -52,6 +53,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+=======
+import { InvoiceComponent } from './pages/invoice/invoice.component';
+import { DatePipe } from '@angular/common';
+>>>>>>> c60ec8b3855e9b193d1d81861ba1bb3c2ff409aa
 @NgModule({
   declarations: [
     ChartComponent,
@@ -78,7 +83,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     BookingFilterPipe,
     RoomBookedComponent,
     RevenueComponent,
+<<<<<<< HEAD
     ReservationComponent
+=======
+    InvoiceComponent,
+>>>>>>> c60ec8b3855e9b193d1d81861ba1bb3c2ff409aa
   ],
   imports: [
     ChartModule,
@@ -130,7 +139,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
       {
         provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
       }
-    ]
+    ],
+    [DatePipe]
   ],
   bootstrap: [AppComponent],
 })
