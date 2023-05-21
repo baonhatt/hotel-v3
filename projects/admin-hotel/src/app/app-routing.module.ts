@@ -14,12 +14,8 @@ import { BlogComponent } from './pages/blog/blog.component';
 import { RoomTypeServiceComponent } from './pages/room-type-service/room-type-service.component';
 import { RevenueComponent } from './pages/revenue/revenue.component';
 import { RoomBookedComponent } from './pages/room-booked/room-booked.component';
-<<<<<<< HEAD
-import { Reservation } from './_service/reservation.service';
 import { ReservationComponent } from './pages/reservation/reservation.component';
-=======
 import { InvoiceComponent } from './pages/invoice/invoice.component';
->>>>>>> c60ec8b3855e9b193d1d81861ba1bb3c2ff409aa
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
