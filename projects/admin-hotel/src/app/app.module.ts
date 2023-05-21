@@ -13,7 +13,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { BookingComponent } from './pages/booking/booking.component';
-import { AddbookingComponent } from './components/booking/addbooking/addbooking.component';
 import { LoginAdminComponent } from './pages/login-admin/login-admin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgToastModule } from 'ng-angular-popup';
@@ -43,6 +42,16 @@ import { ChartModule } from 'angular-highcharts';
 import { ChartComponent } from './components/chart/chart.component';
 import { RoomBookedComponent } from './pages/room-booked/room-booked.component';
 import { RevenueComponent } from './pages/revenue/revenue.component';
+import { ReservationComponent } from './pages/reservation/reservation.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { InvoiceComponent } from './pages/invoice/invoice.component';
 import { DatePipe } from '@angular/common';
 @NgModule({
@@ -57,7 +66,6 @@ import { DatePipe } from '@angular/common';
     BookingComponent,
     CustomerComponent,
     RoomComponent,
-    AddbookingComponent,
     LoginAdminComponent,
     PageErrorComponent,
     EmployeeComponent,
@@ -72,6 +80,7 @@ import { DatePipe } from '@angular/common';
     BookingFilterPipe,
     RoomBookedComponent,
     RevenueComponent,
+    ReservationComponent,
     InvoiceComponent,
   ],
   imports: [
@@ -83,6 +92,20 @@ import { DatePipe } from '@angular/common';
     NgToastModule,
     BrowserModule,
     AppRoutingModule,
+    MatDialogModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatSlideToggleModule,
+    MatIconModule,
+    MatNativeDateModule,
+    MatDialogModule,
+    MatButtonToggleModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
     MatSidenavModule,
     MatToolbarModule,
     MatMenuModule,

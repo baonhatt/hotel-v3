@@ -50,8 +50,13 @@ export class ApiService {
     // const url = `http://localhost:3000/rooms/${id}`;
     return this.http.get<Room>(url);
   }
+  
   searchRoom(query: string): Observable<any>{
     return this.http.get<Room[]>(`${environment.BASE_URL_API}/api/Room/getAllBy${query}`)
+  }
+
+  DataAddToSearch(): Observable<any>{
+    return this.http.get<any>(environment.BASE_URL_API + '/user/search-room')
   }
 
   getRoomTypeId(): Observable<Search[]>{
@@ -92,6 +97,10 @@ export class ApiService {
   deleteRoomType(id: number): Observable<any>{
 
     return this.http.get(`https://webhotel.click/v2/admin/room-type/delete?id=${id}`,)
+  }
+  getRoomBySearch(dataSearch : any): Observable<Room>{
+    const url = `${environment.BASE_URL_API}/user/room/get-by-all`;
+    return this.http.post<Room>(url, dataSearch);
   }
 
  /////////////////////////////////////////////////////////////////////////////////////// Type service
