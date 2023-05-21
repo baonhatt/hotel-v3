@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../_service/api.service';
 import { ReservationModel } from '../booking/booking.component';
 import { ServiceAttach } from '../../models/serviceAttach.model';
+import { Room } from '../../models/room.model';
 
 @Component({
     selector: 'app-room-booked',
@@ -12,7 +13,7 @@ export class RoomBookedComponent implements OnInit {
 
     roombooked!: ReservationModel[];
     roomId!: any
-    attachService: ServiceAttach[] = []
+    attachService!: Room[]
     constructor(private api: ApiService) {
 
     }
@@ -24,6 +25,8 @@ export class RoomBookedComponent implements OnInit {
             this.roombooked = res;
 
             this.filterExpiredReservations();
+
+           
         })
        
     }

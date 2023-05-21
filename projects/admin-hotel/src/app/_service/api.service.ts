@@ -187,4 +187,12 @@ export class ApiService {
 
         return this.http.get(environment.BASE_URL_API + `/v2/admin/service-attach-detail/delete?id=${id}`);
     }
+    createAttachService(roomTypeId: number, serviceAttachId: number){
+        const data = {
+            roomTypeId: roomTypeId,
+            serviceAttachId: serviceAttachId
+        }
+        return this.http.post(environment.BASE_URL_API + 's/v2/admin/service-attach-detail/create', data)
+    }
+
 }

@@ -7,6 +7,7 @@ export class Staff {
    address!: string
    cmnd!: number
    image!: string
+   phoneNumber!: number
    createdAt!: Date
    emailConfirmed!: string
    lockoutEnabled!: string

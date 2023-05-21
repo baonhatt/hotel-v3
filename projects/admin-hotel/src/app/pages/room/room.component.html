@@ -72,11 +72,12 @@
                                                 <th>Simple bed</th>
                                                 <th>Double bed</th>
                                                 <th>People number</th>
+                                                <th>Attached service</th>
                                                 <th>Status</th>
                                                 <th style="width: 135px;">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody *ngFor="let room of rooms | filter: searchTerm  sortBy: 'roomTypeName'; let i = index;"
+                                        <tbody *ngFor="let room of rooms | filter: searchTerm  sortBy: 'roomTypeName'; let i = index;"  (click)="toggleSelection(room.roomTypeId.toString())"
                                             class="align-middle">
                                             <tr *ngIf="room">
                                                 <td>
@@ -115,6 +116,14 @@
                                                 </td>
                                                 <td>
                                                     {{room.peopleNumber}}
+                                                </td>
+                                                <td >
+                                                    <li  *ngFor="let service of room?.serviceAttachs">
+                                                        {{service.name}}
+                                                    </li>
+                                                    <span data-bs-toggle="modal"
+                                                    data-bs-target="#addService"
+                                                     class="badge bg-warning"> + Add more</span>
                                                 </td>
                                                 <td>
                                                     <div *ngIf="room.isActive; else inactiveBadge">
@@ -492,6 +501,40 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" (click)="updateRoom(roomForm)" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="resetModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="addService" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Update room</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="resetModal()"></button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" [formGroup]="roomForm">
+                    <div class="row mb-3">
+                        <label for="inputEmail3" class="col-3 col-form-label">Name service</label>
+                        <select [(ngModel)]="selectedServiceId" formControlName="serviceAttachId">
+                            <option *ngFor="let service of services" [value]="service.id">{{ service.name }}</option>
+                          </select>
+                    </div>
+                   
+                   
+                 
+                    <button type="submit" (click)="addService()" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+           
+            <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                     (click)="resetModal()">Close</button>
             </div>

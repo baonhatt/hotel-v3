@@ -8,6 +8,10 @@ export class RoomTypeService {
   picture!: string
   priceDiscount!: number
 }
+export class RoomAttachService {
+  roomTypeId!: number
+  serviceAttachId!: number
+}
 
 export class addRoom {
   roomNumber!: string
