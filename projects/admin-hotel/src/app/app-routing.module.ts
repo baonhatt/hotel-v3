@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutpageComponent } from './pages/layoutpage/layoutpage.component';
 import { BookingComponent } from './pages/booking/booking.component';
-import { AddbookingComponent } from './components/booking/addbooking/addbooking.component';
 import { LoginAdminComponent } from './pages/login-admin/login-admin.component';
 import { AuthGuard } from './_helper/http.guard';
 import { PageErrorComponent } from './pages/page-error/page-error.component';
@@ -15,6 +14,8 @@ import { BlogComponent } from './pages/blog/blog.component';
 import { RoomTypeServiceComponent } from './pages/room-type-service/room-type-service.component';
 import { RevenueComponent } from './pages/revenue/revenue.component';
 import { RoomBookedComponent } from './pages/room-booked/room-booked.component';
+import { Reservation } from './_service/reservation.service';
+import { ReservationComponent } from './pages/reservation/reservation.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
@@ -118,6 +119,14 @@ const routes: Routes = [
   {
     path: 'discount',
     component: DiscountComponent,
+    data: {
+      requiredAuth: true,
+    },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'reservation',
+    component: ReservationComponent,
     data: {
       requiredAuth: true,
     },
