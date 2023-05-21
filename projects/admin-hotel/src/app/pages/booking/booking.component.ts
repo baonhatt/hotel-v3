@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment.development';
 import { timeout } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from 'src/app/_service/api.service';
+import { ServiceAttach } from '../../models/serviceAttach.model';
 
 @Component({
   selector: 'app-booking',
@@ -100,6 +101,7 @@ export class ReservationModel
   userName!: string;
   status!: boolean;
   reservationPayment!: ReservationPaymentModel;
+  serviceAttachs!: ServiceAttach
 }
 
 export class ReservationPaymentModel

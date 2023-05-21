@@ -44,12 +44,7 @@ export class InvoiceComponent {
         (res: any)=>{
             this.reservationGetAll = res;
             this.reservationFilter = res;
-            // if (res.reservationPayment.createdAt !== null) {
-            //     this.datePayment = this.datePipe.transform(res.reservationPayment.createdAt, 'dd/MM/yyyy');
-            //   } else {
-            //     // Xử lý khi giá trị là null
-            //   }
-            alert(this.datePayment)
+           
         },
         (err) => {
           console.log(err);

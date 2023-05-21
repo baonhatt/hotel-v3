@@ -46,7 +46,7 @@ export class ApiService {
   }
 
   getRoomDetail(id: string): Observable<Room>{
-    const url = `${environment.BASE_URL_API}/user/room/get-by-id?id=${id}`;
+    const url = `https://webhotel.click/v2/admin/room/get-by-id?id=${id}`;
     // const url = `http://localhost:3000/rooms/${id}`;
     return this.http.get<Room>(url);
   }
