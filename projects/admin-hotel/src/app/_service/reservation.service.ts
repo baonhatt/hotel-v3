@@ -8,7 +8,7 @@ import { StatusResponse } from "../models/statusResponse.model";
 @Injectable({
     providedIn: "root",
 })
-export class Reservation {
+export class ReservationApi {
     constructor(private http: HttpClient) {}
 
     reservationCreate(
@@ -18,20 +18,12 @@ export class Reservation {
             environment.BASE_URL_API + "/v2/admin/reservation/create",
             reservationCreate
         );
-    }
+    } 
 
-    checkTimeReservation(
-        dataCheck: any
-    ): Observable<StatusResponse> {
-        return this.http.post<StatusResponse>(
-            environment.BASE_URL_API + "/v2/admin/reservation/create",
-            dataCheck
+    getReservationByID(reservationId: any): Observable<ReservationResponse> {
+        return this.http.get<ReservationResponse>(
+            `${environment.BASE_URL_API}/v2/admin/reservation/get-by-id?id=${reservationId}`
         );
-    }
-
-    getRoomBySearch(dataSearch: any): Observable<Room[]> {
-        const url = `${environment.BASE_URL_API}/user/room/get-all-by`;
-        return this.http.post<Room[]>(url, dataSearch);
     }
 }
 
@@ -40,3 +32,17 @@ export class ReservationCreateResponse {
     statusCode!: number;
     message!: string;
 }
+
+export class ReservationResponse {
+    id!: string;  
+    startDate!: Date;  
+    numberOfDay!: number;  
+    endDate!: Date;  
+    roomPrice!: number;  
+    reservationPrice!: number;  
+    name!: string;  
+    email!: string;  
+    phoneNumber!: string;  
+    address!: string;  
+    roomId!: string;
+  }

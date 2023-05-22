@@ -92,9 +92,7 @@ export class CheckoutComponent implements OnInit {
       .get<any>(
         `${environment.BASE_URL_API}/user/reservation/get-by-id?id=${this.reservationId}`).subscribe(
           res => {
-            this.reservationGet = res as ReservationGet
-            console.log(this.reservationGet);
-
+            this.reservationGet = res as ReservationGet;
             this.bookForm.controls["numberOfPeople"].setValue(res.numberOfPeople)
             this.getRoomById(this.reservationGet.roomId);
           },
