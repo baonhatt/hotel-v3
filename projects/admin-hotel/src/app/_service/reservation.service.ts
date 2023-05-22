@@ -37,6 +37,7 @@ export class ReservationResponse {
     id!: string;  
     startDate!: Date;  
     numberOfDay!: number;  
+    numberOfPeople!: number;
     endDate!: Date;  
     roomPrice!: number;  
     reservationPrice!: number;  

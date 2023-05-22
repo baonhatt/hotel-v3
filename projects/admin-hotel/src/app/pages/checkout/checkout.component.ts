@@ -30,7 +30,8 @@ export class CheckoutComponent implements OnInit {
             name: [""],
             email: [""],
             phoneNumber: [""],
-            address: [""]
+            address: [""],
+            numberOfPeople: [""]
         });
     }
     //variable
@@ -45,7 +46,7 @@ export class CheckoutComponent implements OnInit {
 
     //Hàm này call khi ấn nút checkout
     invoiceCreate() {
-        this.payment.invoiceCreate(this.checkoutForm).subscribe(
+        this.payment.invoiceCreate(this.checkoutForm.value).subscribe(
             (res) => {
                 this.toastr.success(res.message);
             },

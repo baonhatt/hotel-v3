@@ -44,12 +44,12 @@
                                                 <p class="text-muted mb-4">Fill the form below in order to
                                                     send you the order's invoice.</p>
 
-                                                <form [formGroup]="checkoutForm" (ngSubmit)="invoiceCreate()">
+                                                <form [formGroup]="checkoutForm" >
                                                     <div class="row">
                                                         <div class="col-md-6">
                                                             <div class="mb-3">
                                                                 <label for="billing-first-name" class="form-label">First Name</label>
-                                                                <input class="form-control" formControlName="name" type="text" placeholder="Enter your first name" id="billing-first-name">
+                                                                <input class="form-control" formControlName="name" type="text" placeholder="Enter your first name" >
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -78,7 +78,8 @@
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="mb-3">
-                                                                
+                                                                <label for="billing-phone" class="form-label">Number of People <span class="text-danger">*</span></label>
+                                                                <input class="form-control" formControlName="numberOfDay" type="text" placeholder="(xx) xxx xxxx xxx" id="billing-phone">
                                                             </div>
 
                                                             <div class="mb-3 mt-3">
@@ -95,8 +96,8 @@
                                                         </div> <!-- end col -->
                                                         <div class="col-sm-6">
                                                             <div class="text-sm-end">
-                                                                <a (click)="invoiceCreate()" class="btn btn-danger">
-                                                                    <i class="mdi mdi-truck-fast me-1"></i> Checkout </a>
+                                                                <button type="submit" (click)="invoiceCreate()"  class="btn btn-danger">
+                                                                    Checkout </button>
                                                             </div>
                                                         </div> <!-- end col -->
                                                     </div> <!-- end row -->
