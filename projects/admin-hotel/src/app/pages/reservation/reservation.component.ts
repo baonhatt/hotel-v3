@@ -76,7 +76,7 @@ export class ReservationComponent implements OnInit {
         
         this.reservation.reservationCreate(this.formReservation.value).subscribe(
             (res) => {
-                this.router.navigate(['/checkout', res.reservationId]);                
+                this.router.navigate(['/checkout', res.reservationId, idRoom]);                
             },
             (err) => {
                 alert(err.message);

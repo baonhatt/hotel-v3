@@ -143,7 +143,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'checkout/:reservationId',
+    path: 'checkout/:reservationId/:roomId',
     component: CheckoutComponent,
     data: {
       requiredAuth: true,

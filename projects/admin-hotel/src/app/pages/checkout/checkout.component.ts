@@ -36,12 +36,14 @@ export class CheckoutComponent implements OnInit {
     }
     //variable
     reservationId: any = this.route.snapshot.paramMap.get("reservationId");
+    roomId: any = this.route.snapshot.paramMap.get("roomId");
     reservationResponse: ReservationResponse = new ReservationResponse();
     roomResponse: Room = new Room();
     //function
     ngOnInit(): void {
-        this.checkoutForm.controls["reservationId"] = this.reservationId;
-        this.getReservationByID(this.reservationId);
+        this.checkoutForm.controls["reservationId"].setValue(this.reservationId);        
+        this.getReservationById(this.reservationId);
+        this.getRoomById(this.roomId);
     }
 
     //Hàm này call khi ấn nút checkout
@@ -57,22 +59,26 @@ export class CheckoutComponent implements OnInit {
     }
 
     //hàm này lấy reservation đã tạo tạm và phòng để đổ dữ liệu
-    getReservationByID(reservationId: any) {
+    getReservationById(reservationId: any) {
         this.reservation.getReservationByID(reservationId).subscribe(
             (res) => {
-                this.reservationResponse = res;
-                this.room.getRoomById(this.reservationResponse.roomId).subscribe(
-                    res=>{
-                        this.roomResponse = res;
-                    },
-                    err=>{
-                        this.toastr.error(err.message);
-                    }
-                )
+                this.reservationResponse = res;              
             },
             (err) => {
                 this.toastr.error(err.message);
             }
         );
+    }
+
+    getRoomById(roomId: any)
+    {
+        this.room.getRoomById(roomId).subscribe(
+            res=>{
+                this.roomResponse = res;
+            },
+            err=>{
+                this.toastr.error(err.message);
+            }
+        )
     }
 }
