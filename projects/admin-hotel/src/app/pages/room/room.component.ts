@@ -15,6 +15,7 @@ import { ApiService } from '../../_service/api.service';
 import { RoomTypeService, ServiceAttachDetail } from '../../models/roomtypeservice.model';
 import { Pipe, PipeTransform } from '@angular/core';
 import { ServiceAttach } from '../../models/serviceAttach.model';
+import { NgToastService } from 'ng-angular-popup';
 
 interface RoomType {
     id: number;
@@ -58,7 +59,8 @@ export class RoomComponent implements OnInit {
         private api: ApiService,
         private fb: FormBuilder,
         private http: HttpClient,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private toast: ToastrService
     ) {
         this.rooms = [];
         this.room = {
@@ -373,7 +375,7 @@ export class RoomComponent implements OnInit {
         });
     }
     onServiceSelectionChange(e:  any): void {
-        const selectedServiceId: number = parseInt(e.target.value, 10);
+        const selectedServiceId: number = parseInt(e.target.value[0], 10);
         this.serviceAttachId2 = selectedServiceId
     }
     toggleSelection(roomtypeId: number) {
@@ -388,7 +390,7 @@ export class RoomComponent implements OnInit {
            this.toastr.success("Add Successfully!")
            this.getAllService()
         }, error => {
-            console.error('Failed to add service:', error);
+            this.toast.error('Failed to add service:',error.error.message);
         });
     }
 }

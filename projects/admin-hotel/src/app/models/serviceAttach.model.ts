@@ -3,9 +3,18 @@ export class ServiceAttach {
   name!: string
   icon!: string
   description!: string
+  priceDiscount!: number
 }
 export class OrderService {
   amount!: number
-  serviceRoomId!: number
-  reservationId!: number
+  serviceRoomId!: string
+  reservationId!: string
+}
+export class OrderServiceAdmin {
+    id!: number;
+    serviceName!: string
+    price!: number
+    amount!: number
+    creatorEmail!: string
+    reservationId!: string
 }

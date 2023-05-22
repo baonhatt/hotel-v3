@@ -9,7 +9,7 @@ import { User } from './user.model';
 import { Data } from '@angular/router';
 import { Search } from 'src/app/models/search.model';
 import { Staff } from '../models/staff.model';
-import { OrderService, ServiceAttach } from '../models/serviceAttach.model';
+import { OrderService, OrderServiceAdmin, ServiceAttach } from '../models/serviceAttach.model';
 import { Discount } from '../models/discount.model';
 import { RoomTypeService, ServiceAttachDetail } from '../models/roomtypeservice.model';
 import { ReservationModel } from '../pages/booking/booking.component';
@@ -202,8 +202,8 @@ export class ApiService {
     createOrderService(data: OrderService){
         return this.http.post<any>(environment.BASE_URL_API + '/v2/admin/order-service/create', data)
     }
-    getAllOrderService(): Observable<OrderService[]>{
-        return this.http.get<OrderService[]>(environment.BASE_URL_API + '/v2/admin/order-service/create')
+    getAllOrderService(): Observable<OrderServiceAdmin[]>{
+        return this.http.get<OrderServiceAdmin[]>(environment.BASE_URL_API + '/v2/admin/order-service/create')
     }
 
      /////////////////////////////////////////////////////////////////////////////////////// Reservation API
