@@ -77,7 +77,7 @@ export class SuccessPaymentComponent implements OnInit {
           },
           (_err) => {
             if (_err.status != undefined) {
-              this.router.navigate(['/home']);
+              // this.router.navigate(['/home']);
               this.toast.warning(
                 'Payment has been successful, please check your booking history'
               );

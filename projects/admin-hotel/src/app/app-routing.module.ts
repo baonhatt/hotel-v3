@@ -16,6 +16,7 @@ import { RevenueComponent } from './pages/revenue/revenue.component';
 import { RoomBookedComponent } from './pages/room-booked/room-booked.component';
 import { ReservationComponent } from './pages/reservation/reservation.component';
 import { InvoiceComponent } from './pages/invoice/invoice.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
@@ -135,6 +136,14 @@ const routes: Routes = [
   {
     path: 'reservation',
     component: ReservationComponent,
+    data: {
+      requiredAuth: true,
+    },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'checkout/:reservationId',
+    component: CheckoutComponent,
     data: {
       requiredAuth: true,
     },

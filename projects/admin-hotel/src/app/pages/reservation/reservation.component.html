@@ -35,9 +35,9 @@
                                         <div class="col-3">
                                             <label for="example-email" class="form-label">CheckOut</label>
                                             <mat-form-field appearance="fill">
-                                                <input matInput [matDatepicker]="picker2" formControlName="checkOut">
-                                                <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-                                                <mat-datepicker #picker2></mat-datepicker>
+                                                <input matInput [matDatepicker]="picker3" formControlName="checkOut">
+                                                <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker3></mat-datepicker>
                                             </mat-form-field>
                                         </div>
                                         <div class="col-3">
@@ -57,6 +57,9 @@
                                                   <mat-option *ngFor="let roomType of dataSearch.roomTypes" value="{{roomType.id}}">{{roomType.typeName}}</mat-option>
                                                 </mat-select>
                                               </mat-form-field>
+                                        </div>
+                                        <div class="col-2">
+                                            <button type="button" class="btn btn-outline-primary" (click)="getRoomByDateSearch()">Search</button>
                                         </div>
                                     </div>
                                 </form>
@@ -129,7 +132,8 @@
                                                     </ng-template>
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary btn-rounded">Book</button>
+
+                                                    <button type="button" class="btn btn-primary btn-rounded" (click)="reservationCreat(room.id)" disabled = {{checkSearchData}}>Book</button>
                                                 </td>
                                             </tr>
                                         </tbody>
