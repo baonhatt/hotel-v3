@@ -53,7 +53,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { InvoiceComponent } from './pages/invoice/invoice.component';
-import { DatePipe,CommonModule } from '@angular/common';
+import { DatePipe, CommonModule } from '@angular/common';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 @NgModule({
   declarations: [
     ChartComponent,
@@ -82,6 +83,7 @@ import { DatePipe,CommonModule } from '@angular/common';
     RevenueComponent,
     ReservationComponent,
     InvoiceComponent,
+    CheckoutComponent,
   ],
   imports: [
     CommonModule ,

@@ -256,7 +256,6 @@ export class ListingComponent implements OnInit {
     payLoad.email = userProfileLocal.email;
     payLoad.phoneNumber = userProfileLocal.phoneNumber;
     payLoad.address = userProfileLocal.address;
-    console.log(payLoad);
 
     this.http
       .post<any>(`${environment.BASE_URL_API}/user/reservation/create`, payLoad)

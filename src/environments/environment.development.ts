@@ -8,3 +8,4 @@ export const environment = {
   accessToken: 'pJnp8KyAqAWRsXB0-m0p0ULvJnQRYHxB-QIRkK1AUPw',
   createContent: 'https://app.contentful.com/spaces/e76861lm8t6b/home'
 };
+
