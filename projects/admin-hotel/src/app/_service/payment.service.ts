@@ -7,19 +7,17 @@ import { StatusResponse } from "../models/statusResponse.model";
 @Injectable({
     providedIn: "root",
 })
-export class Payment {
+export class PaymentApi {
     constructor(private http: HttpClient) {}
-    paymentCreate(paymentCreate: PaymentCreateModel) : Observable<StatusResponse>{
-        return this.http.post<StatusResponse>(environment.BASE_URL_API + "/user/invoid/create", paymentCreate);
+
+    invoiceCreate(invoiceCreate: any): Observable<StatusResponse> {
+        return this.http.post<StatusResponse>(
+            environment.BASE_URL_API + "/v2/admin/invoice/create",
+            invoiceCreate
+        );
     }
+
+    
 }
 
-export class PaymentCreateModel {
-    priceTotal!: number;
-    orderInfo!: string;
-    orderType!: string;
-    payType!: string;
-    status!: number;
-    message!: string;
-    reservationId!: string;
-}
+

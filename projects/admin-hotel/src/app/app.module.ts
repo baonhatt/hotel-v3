@@ -55,6 +55,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { InvoiceComponent } from './pages/invoice/invoice.component';
 import { DatePipe, CommonModule } from '@angular/common';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { CheckoutDetailComponent } from './pages/checkout-detail/checkout-detail.component';
 @NgModule({
   declarations: [
     ChartComponent,
@@ -84,6 +85,7 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
     ReservationComponent,
     InvoiceComponent,
     CheckoutComponent,
+    CheckoutDetailComponent,
   ],
   imports: [
     CommonModule ,

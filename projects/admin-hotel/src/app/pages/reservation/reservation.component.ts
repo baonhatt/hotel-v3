@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Room } from "../../models/room.model";
 import { ApiService } from "../../_service/api.service";
-import { Payment } from "../../_service/payment.service";
-import { Reservation } from "../../_service/reservation.service";
+import { PaymentApi } from "../../_service/payment.service";
+import { ReservationApi } from "../../_service/reservation.service";
+import { RoomApi } from "../../_service/room.service";
 
 @Component({
     selector: "app-reservation",
@@ -23,11 +24,12 @@ export class ReservationComponent implements OnInit {
     };
     checkSearchData:any;
     constructor(
-        private reservation: Reservation,
-        private payment: Payment,
+        private reservation: ReservationApi,
+        private payment: PaymentApi,
         private fb: FormBuilder,
         private roomService: ApiService,
         private router: Router,
+        private room: RoomApi,
     ) {
         this.formReservation = this.fb.group({
             startDate: [],
@@ -49,10 +51,9 @@ export class ReservationComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.checkSearchData = "disabled";
+        this.checkSearchData = true;
         this.getRooms();
         this.getDataAddSearch();
-        // this.reservationCreat(this.formReservation);
     }
 
     reservationCreat(idRoom:any) {
@@ -102,7 +103,8 @@ export class ReservationComponent implements OnInit {
         });
     }
 
-    getRoomByDateSearch() {
+    getRoomByDateSearch() {       
+        this.checkSearchData = false;
         var payLoad = {
             checkIn: this.formSearch.controls["checkIn"].value,
             checkOut: this.formSearch.controls["checkOut"].value,
@@ -111,9 +113,8 @@ export class ReservationComponent implements OnInit {
             star: 0,
             peopleNumber: this.formSearch.controls["peopleNumber"].value,
         };
-        this.reservation.getRoomBySearch(payLoad).subscribe(
+        this.room.getRoomBySearch(payLoad).subscribe(
             (res) => {
-                this.checkSearchData = true;
                 this.rooms = res;
             },
             (err) => {

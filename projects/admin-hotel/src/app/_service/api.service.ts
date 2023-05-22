@@ -205,4 +205,10 @@ export class ApiService {
     getAllOrderService(): Observable<OrderService[]>{
         return this.http.get<OrderService[]>(environment.BASE_URL_API + '/v2/admin/order-service/create')
     }
+
+     /////////////////////////////////////////////////////////////////////////////////////// Reservation API
+
+     getReservationID(id: string):  Observable<ReservationModel[]>{
+        return this.http.get<ReservationModel[]>(environment.BASE_URL_API + `/v2/admin/reservation/get-by-id?id=${id}`)
+     }
 }
