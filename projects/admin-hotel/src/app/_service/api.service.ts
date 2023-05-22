@@ -9,7 +9,7 @@ import { User } from './user.model';
 import { Data } from '@angular/router';
 import { Search } from 'src/app/models/search.model';
 import { Staff } from '../models/staff.model';
-import { ServiceAttach } from '../models/serviceAttach.model';
+import { OrderService, ServiceAttach } from '../models/serviceAttach.model';
 import { Discount } from '../models/discount.model';
 import { RoomTypeService, ServiceAttachDetail } from '../models/roomtypeservice.model';
 import { ReservationModel } from '../pages/booking/booking.component';
@@ -187,12 +187,22 @@ export class ApiService {
 
         return this.http.get(environment.BASE_URL_API + `/v2/admin/service-attach-detail/delete?id=${id}`);
     }
-    createAttachService(roomTypeId: number, serviceAttachId: number){
+    createAttachService(roomTypeId: number, serviceAttachId2: number): Observable<any>{
         const data = {
             roomTypeId: roomTypeId,
-            serviceAttachId: serviceAttachId
+            serviceAttachId: serviceAttachId2
         }
-        return this.http.post(environment.BASE_URL_API + 's/v2/admin/service-attach-detail/create', data)
+        return this.http.post(environment.BASE_URL_API + '/v2/admin/service-attach-detail/create', data)
     }
+    deleteAttachServiceDetail(id: string){
+        return this.http.get(environment.BASE_URL_API + `/v2/admin/service-attach-detail/delete?id=${id}`);
+    }
+ /////////////////////////////////////////////////////////////////////////////////////// OrderService API
 
+    createOrderService(data: OrderService){
+        return this.http.post<any>(environment.BASE_URL_API + '/v2/admin/order-service/create', data)
+    }
+    getAllOrderService(): Observable<OrderService[]>{
+        return this.http.get<OrderService[]>(environment.BASE_URL_API + '/v2/admin/order-service/create')
+    }
 }

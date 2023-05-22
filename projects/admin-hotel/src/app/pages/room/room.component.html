@@ -77,7 +77,7 @@
                                                 <th style="width: 135px;">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody *ngFor="let room of rooms | filter: searchTerm  sortBy: 'roomTypeName'; let i = index;"  (click)="toggleSelection(room.roomTypeId.toString())"
+                                        <tbody *ngFor="let room of rooms | filter: searchTerm ; let i = index;"  (click)="toggleSelection(room.roomTypeId.toString())"
                                             class="align-middle">
                                             <tr *ngIf="room">
                                                 <td>
@@ -520,17 +520,18 @@
                     (click)="resetModal()"></button>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" [formGroup]="roomForm">
-                    <div class="row mb-3">
+                <form class="form-group" [formGroup]="roomForm">
+                    <div class="col-9 mb-3">
                         <label for="inputEmail3" class="col-3 col-form-label">Name service</label>
-                        <select [(ngModel)]="selectedServiceId" formControlName="serviceAttachId">
+                        <br>
+                        <select class="form-select mr-sm-2"  (change)="onServiceSelectionChange($event)">
                             <option *ngFor="let service of services" [value]="service.id">{{ service.name }}</option>
                           </select>
                     </div>
                    
                    
                  
-                    <button type="submit" (click)="addService()" class="btn btn-primary">Update</button>
+                    <button type="submit" (click)="addService($event)" class="btn btn-primary">Update</button>
                 </form>
             </div>
            

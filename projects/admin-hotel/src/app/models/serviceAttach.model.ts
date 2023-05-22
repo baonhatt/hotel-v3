@@ -4,3 +4,8 @@ export class ServiceAttach {
   icon!: string
   description!: string
 }
+export class OrderService {
+  amount!: number
+  serviceRoomId!: number
+  reservationId!: number
+}

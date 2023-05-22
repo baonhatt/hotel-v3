@@ -22,17 +22,16 @@ interface RoomType {
     maxPerson: number;
 }
 export class Service {
-    id!: number;
-    name!: string;
-  }
+    serviceAttachId!: number;
+}
 @Component({
     selector: 'app-room',
     templateUrl: './room.component.html',
     styleUrls: ['./room.component.css'],
 })
 export class RoomComponent implements OnInit {
-    serviceAttachId!: number;
-    services!: Service[]
+    serviceAttachId2!: number;
+    services!: ServiceAttach[]
     selectedServiceId!: number;
     image: any;
     images: any;
@@ -367,30 +366,29 @@ export class RoomComponent implements OnInit {
     getAllService() {
         this.api.getAllService().subscribe((res: any) => {
             this.services = res;
-            this.serviceAttachId = res.id
-            console.log(this.roomService);
-        })
-    }
+            console.log(res);
+            
+           
 
+        });
+    }
+    onServiceSelectionChange(e:  any): void {
+        const selectedServiceId: number = parseInt(e.target.value, 10);
+        this.serviceAttachId2 = selectedServiceId
+    }
     toggleSelection(roomtypeId: number) {
         this.roomTypeId = roomtypeId;
     }
 
-    addService() {
-        if (this.selectedServiceId) {
-            const serviceAttachId = this.selectedServiceId;
-            const roomTypeId = this.roomTypeId
-      
-            const request = {
-              roomTypeId: roomTypeId,
-              serviceAttachId: serviceAttachId
-            };
-      
-            this.api.createAttachService(roomTypeId, serviceAttachId).subscribe(response => {
-              console.log('Service added successfully');
-            }, error => {
-              console.error('Failed to add service:', error);
-            });
-          }
-        }
+    addService(e: any) {
+        const serviceAttachId = this.serviceAttachId2 || 0;
+        this.api.createAttachService(this.roomTypeId, serviceAttachId).subscribe(response => {
+            console.log(response);
+
+           this.toastr.success("Add Successfully!")
+           this.getAllService()
+        }, error => {
+            console.error('Failed to add service:', error);
+        });
+    }
 }
