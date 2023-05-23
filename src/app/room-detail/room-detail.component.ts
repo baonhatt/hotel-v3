@@ -50,6 +50,8 @@ export class RoomDetailComponent implements OnInit {
     this.roomId = this.route.snapshot.paramMap.get('id')
     this.viewPort.scrollToPosition([0, 0]);
     this.getRoomById();
+    localStorage.setItem('roomId', JSON.stringify(this.roomId));
+
   }
 
   openDialog(){

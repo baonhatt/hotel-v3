@@ -3,6 +3,7 @@ import { ApiService } from '../../_service/api.service';
 import { Staff } from '../../models/staff.model';
 import { Observable } from 'rxjs';
 import { ReservationModel } from '../booking/booking.component';
+import { Revenue, RevenueComponent } from '../../models/revenue.model';
 @Component({
   selector: 'app-layoutpage',
   templateUrl: './layoutpage.component.html',
@@ -13,16 +14,17 @@ export class LayoutpageComponent implements OnInit{
     numAccount!: number;
     numbBookings!: number;
     revenueTotal!: number;
+    revenueData!: Revenue
+
   constructor(private api: ApiService){}
   ngOnInit(): void {
 
     $.getScript('assets/js/pages/demo.dashboard.js');
     this.api.getallUser().subscribe( res =>{
       this.numStaff = res
-      console.log(this.numStaff)
 
     })
-
+    this.fetchRevenue()
    this.countAccounts()
    this.acountBooking()
    this.getRevenue()
@@ -35,6 +37,21 @@ export class LayoutpageComponent implements OnInit{
   reload(){
     window.location.reload()
   }
+
+  fetchRevenue(){
+    this.api.getRevenue()
+    .subscribe((data: any) => {
+      this.revenueData = data;
+      console.log(this.revenueData); 
+    });
+  }
+
+
+
+
+
+
+
 
   getRevenue() {
     this.api.getAllReservation().subscribe((reservations: ReservationModel[]) => {

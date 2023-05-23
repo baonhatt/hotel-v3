@@ -39,6 +39,10 @@ export class RoomservicesComponent {
       this.roomType = res;
     })
   }
+  
+  toggleSelection(itemId: number) {
+    this.id = itemId;
+}
   createRoomType(serviceForm: FormGroup){
     // const service = this.serviceForm?.get('service')?.value;
     return this.api.createService(serviceForm.value).subscribe( res=>{

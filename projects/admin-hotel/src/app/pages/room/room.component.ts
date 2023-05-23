@@ -16,6 +16,7 @@ import { RoomTypeService, ServiceAttachDetail } from '../../models/roomtypeservi
 import { Pipe, PipeTransform } from '@angular/core';
 import { ServiceAttach } from '../../models/serviceAttach.model';
 import { NgToastService } from 'ng-angular-popup';
+import { Discount } from '../../models/discount.model';
 
 interface RoomType {
     id: number;
@@ -32,6 +33,8 @@ export class Service {
 })
 export class RoomComponent implements OnInit {
     serviceAttachId2!: number;
+    serviceAttachId3!: number;
+    discount!: Discount[];
     services!: ServiceAttach[]
     selectedServiceId!: number;
     image: any;
@@ -49,7 +52,10 @@ export class RoomComponent implements OnInit {
     typeId!: number;
     roomForm!: FormGroup;
     roomTypes: RoomType[] = [];
-    serviceAttach!: string
+    serviceAttach!: string;
+    serviceCount: number = 0;
+    showAll: boolean = false;
+    getroomId!: string;
     get f() {
         return this.roomForm.controls;
     }
@@ -88,6 +94,8 @@ export class RoomComponent implements OnInit {
             NumberOfSimpleBed: ['1', [Validators.required]],
             NumberOfDoubleBed: ['1', [Validators.required]],
             RoomTypeId: ['1', [Validators.required]],
+            roomId: [''],
+            discountId: ['']
         });
     }
 
@@ -100,7 +108,8 @@ export class RoomComponent implements OnInit {
         // });
         this.getRooms();
         this.getRoomtype();
-        this.getAllService()
+        this.getAllDiscountType2()
+        this.getAllService();
     }
     uploadFileDetail = (event: any) => {
         let files = event.target.files;
@@ -368,18 +377,20 @@ export class RoomComponent implements OnInit {
     getAllService() {
         this.api.getAllService().subscribe((res: any) => {
             this.services = res;
-            console.log(res);
             
            
 
         });
     }
     onServiceSelectionChange(e:  any): void {
-        const selectedServiceId: number = parseInt(e.target.value[0], 10);
-        this.serviceAttachId2 = selectedServiceId
+        const selectedDiscountId: number = parseInt(e.target.value, 10);
+        this.serviceAttachId2 = selectedDiscountId
+       
+
     }
-    toggleSelection(roomtypeId: number) {
+    toggleSelection(roomtypeId: number, roomId: string) {
         this.roomTypeId = roomtypeId;
+        this.getroomId = roomId
     }
 
     addService(e: any) {
@@ -392,5 +403,37 @@ export class RoomComponent implements OnInit {
         }, error => {
             this.toast.error('Failed to add service:',error.error.message);
         });
+    }
+
+    showAllServices() {
+        // this.serviceCount = this.services..length;
+        alert(this.serviceCount)
+        this.showAll = true;
+      }
+      countDisplayedServices(roomIndex: number): number {
+        const room = this.rooms[roomIndex];
+        if (room && room.serviceAttachs) {
+          return room.serviceAttachs.length;
+        }
+        return 0;
+      }
+      getAllDiscountType2() {
+        this.api.getAllDiscount().subscribe((res: any) => {
+            this.discount = res
+            console.log(res);
+
+        })
+    }
+      addDiscountRoom(roomForm: FormGroup): void{
+     console.log(this.getroomId);
+     console.log(this.serviceAttachId2);
+     
+        
+      
+        this.api.createDiscountForRoom(this.getroomId, this.serviceAttachId2).subscribe(res=>{
+            this.toast.success(res.message);
+        },err=>{
+            this.toast.error(err.error.message);
+        })
     }
 }

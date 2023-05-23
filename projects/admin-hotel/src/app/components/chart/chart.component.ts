@@ -35,7 +35,7 @@ export class ChartComponent implements OnInit{
         },
         yAxis: {
           title: {
-            text: 'Revenue in VND'
+            text: 'VND'
           }
         },
         series: [

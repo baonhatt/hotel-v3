@@ -314,18 +314,18 @@
             <div class="details-sidebar">
               <div class="details-sidebar-dropdown custom-form">
                 <form action="#" [formGroup]="formReservation">
-                  <div class="single-input">
-                    <label class="details-sidebar-dropdown-title"> Check In </label>
-                    <mat-form-field appearance="fill">
-                      <input  matInput [matDatepicker]="picker2" formControlName="checkIn">
+                  <div class="single-input mt-3">
+                    <label class="details-sidebar-dropdown-title col-3"> Check In </label>
+                    <mat-form-field style="margin-left: 1px; "  appearance="fill">
+                      <input  matInput [matDatepicker]="picker2" style="border-radius: 20px;" formControlName="checkIn">
                       <mat-datepicker-toggle matIconSuffix  [for]="picker2"></mat-datepicker-toggle>
                       <mat-datepicker #picker2></mat-datepicker>
                     </mat-form-field>
                   </div>
                   <div class="single-input mt-3">
-                    <label class="details-sidebar-dropdown-title"> Check Out </label>
+                    <label class="details-sidebar-dropdown-title col-3"> Check Out </label>
                     <mat-form-field appearance="fill">
-                      <input  matInput [matDatepicker]="picker3" formControlName="checkOut">
+                      <input style="  margin-left: 16px;"  matInput [matDatepicker]="picker3" formControlName="checkOut">
                       <mat-datepicker-toggle matIconSuffix  [for]="picker3"></mat-datepicker-toggle>
                       <mat-datepicker #picker3></mat-datepicker>
                     </mat-form-field>

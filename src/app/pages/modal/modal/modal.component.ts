@@ -11,7 +11,7 @@ import { ApiService } from 'src/app/_service/api.service';
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit{
-  id!: any;
+  id!: string;
   rateForm!: FormGroup;
   constructor (private api: ApiService, private toast: ToastrService, private fb: FormBuilder, private route: ActivatedRoute){}
   ngOnInit(): void {
@@ -19,7 +19,7 @@ export class ModalComponent implements OnInit{
       rating: [''] // FormControl cho rating
     });
 
-    const bookingData = localStorage.getItem('star');
+    const bookingData = localStorage?.getItem('roomId')
     const bookingDataString = bookingData !== null ? bookingData.toString() : '';
     const bookingDataWithoutQuotes = bookingDataString.replace(/"/g, '');
     this.id = (bookingDataWithoutQuotes);
@@ -28,6 +28,7 @@ export class ModalComponent implements OnInit{
 
 
   }
+
   onSubmit(){
     const ratingControl = this.rateForm.get('rating');
 

@@ -13,6 +13,7 @@ import { OrderService, OrderServiceAdmin, ServiceAttach } from '../models/servic
 import { Discount } from '../models/discount.model';
 import { RoomTypeService, ServiceAttachDetail } from '../models/roomtypeservice.model';
 import { ReservationModel } from '../pages/booking/booking.component';
+import { Revenue } from '../models/revenue.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,20 @@ export class ApiService {
   private baseUrl1 = 'http://localhost:3000/rooms';
 
  /////////////////////////////////////////////////////////////////////////////////////// Room API
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   getRooms() {
     return this.http.get<Room[]>(environment.BASE_URL_API + '/v2/admin/room/get-all');
 
@@ -84,6 +99,11 @@ export class ApiService {
 
      }
 
+
+
+
+
+
  /////////////////////////////////////////////////////////////////////////////////////// Room Type
   getAllRoomType(): Observable<roomType[]>{
     return this.http.get<roomType[]>(environment.BASE_URL_API + '/v2/admin/room-type/get-all');
@@ -103,7 +123,17 @@ export class ApiService {
     return this.http.post<Room>(url, dataSearch);
   }
 
+  
  /////////////////////////////////////////////////////////////////////////////////////// Type service
+
+
+
+
+
+
+
+
+
   getAllService(): Observable<ServiceAttach[]>{
     return this.http.get<ServiceAttach[]>(environment.BASE_URL_API + '/v2/admin/service-attach/get-all');
   }
@@ -121,6 +151,9 @@ export class ApiService {
 
 
  /////////////////////////////////////////////////////////////////////////////////////// Blog API
+
+
+
 
 
   getBlogs(){
@@ -151,6 +184,11 @@ export class ApiService {
 
  /////////////////////////////////////////////////////////////////////////////////////// Discount API
 
+
+
+
+
+
   getAllDiscount(): Observable<Discount[]>{
     return this.http.get<Discount[]>(environment.BASE_URL_API + '/v2/admin/discount/get-all');
   }
@@ -167,7 +205,23 @@ export class ApiService {
   getDiscountId(id: number): Observable<Discount>{
     return this.http.get<Discount>(environment.BASE_URL_API + `/v2/admin/discount/get-by-id?id=${id}`);
   }
-  
+  getAllDiscountType(): Observable<Discount[]>{
+    return this.http.get<Discount[]>(environment.BASE_URL_API + '/v2/admin/discount-type/get-all');
+  }
+  createDiscountForRoom(roomId: string, discountId: number): Observable<any>{
+    const data = {
+        roomId: roomId,
+        discountId: discountId
+    }
+    return this.http.post<any>(environment.BASE_URL_API + '/v2/admin/discount-room-detail/create', data);
+  }
+
+
+
+
+
+
+
 
  /////////////////////////////////////////////////////////////////////////////////////// Room Type Service API
   
@@ -177,6 +231,14 @@ export class ApiService {
     createRoomTypeService(data: RoomTypeService){
        return this.http.post(environment.BASE_URL_API + '/v2/admin/service-room/create', data);
     }
+
+
+
+
+
+
+
+
 
  /////////////////////////////////////////////////////////////////////////////////////// ServiceAttachDetailAdmin API
 
@@ -196,7 +258,12 @@ export class ApiService {
     }
     deleteAttachServiceDetail(id: string){
         return this.http.get(environment.BASE_URL_API + `/v2/admin/service-attach-detail/delete?id=${id}`);
+        
     }
+
+
+
+
  /////////////////////////////////////////////////////////////////////////////////////// OrderService API
 
     createOrderService(data: OrderService){
@@ -206,9 +273,18 @@ export class ApiService {
         return this.http.get<OrderServiceAdmin[]>(environment.BASE_URL_API + '/v2/admin/order-service/create')
     }
 
-     /////////////////////////////////////////////////////////////////////////////////////// Reservation API
+
+
+    
+/////////////////////////////////////////////////////////////////////////////////////// Reservation API
 
      getReservationID(id: string):  Observable<ReservationModel[]>{
         return this.http.get<ReservationModel[]>(environment.BASE_URL_API + `/v2/admin/reservation/get-by-id?id=${id}`)
      }
+
+/////////////////////////////////////////////////////////////////////////////////////// Revenue API
+
+    getRevenue(): Observable<any[]> {
+    return this.http.get<any[]>(environment.BASE_URL_API + '/v2/admin/revenue/get-sum');
+  }
 }

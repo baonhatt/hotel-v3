@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Renderer2,ElementRef } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AuthService } from '../_service/auth.service';
 import { ApiService } from '../_service/api.service';
@@ -58,6 +58,8 @@ export class HomepageComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {
     this.rooms = [],
       this.roomtoDisplay = this.roomtoDisplay;
@@ -98,6 +100,8 @@ export class HomepageComponent implements OnInit {
       this.blogtoDisplay = this.blogs;
     });
   }
+
+
   navigateToPage(url: string) {
     window.location.href = url;
     window.scrollTo(0, 0);

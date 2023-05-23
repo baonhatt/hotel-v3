@@ -18,6 +18,7 @@ export class RoomBookedComponent implements OnInit {
     services!: RoomTypeService[]
     serviceForm!: FormGroup
     serviceRoomId!: number 
+    roomLength!: number
     constructor(private api: ApiService,
         private fb: FormBuilder,
         private toast: ToastrService
@@ -48,11 +49,13 @@ export class RoomBookedComponent implements OnInit {
     filterExpiredReservations(): void {
         const currentDate = new Date();
         this.roombooked = this.roombooked.filter(roombooked => {
+            this.roomLength = this.roombooked.length
             const checkoutDate = new Date(roombooked.endDate);
             if (checkoutDate >= currentDate) {
 
                 return true;
             }
+            this.roomLength = 0
             return false;
         });
     }

@@ -46,7 +46,7 @@
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#staticBackdrop" class="btn btn-danger mb-2"><i
                                                     class="mdi mdi-plus-circle me-2" (click)="loadModal()"></i> Add
-                                                Products</button>
+                                                New Room</button>
 
                                         </div>
                                     </div><!-- end col-->
@@ -77,7 +77,7 @@
                                                 <th style="width: 135px;">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody *ngFor="let room of rooms | filter: searchTerm ; let i = index;"  (click)="toggleSelection(room.roomTypeId.toString())"
+                                        <tbody *ngFor="let room of rooms | filter: searchTerm ; let i = index;" (click)="toggleSelection(room.roomTypeId.toString(), room.id)"
                                             class="align-middle">
                                             <tr *ngIf="room">
                                                 <td>
@@ -118,12 +118,25 @@
                                                     {{room.peopleNumber}}
                                                 </td>
                                                 <td >
-                                                    <li  *ngFor="let service of room?.serviceAttachs">
-                                                        {{service.name}}
-                                                    </li>
-                                                    <span data-bs-toggle="modal"
-                                                    data-bs-target="#addService"
-                                                     class="badge bg-warning"> + Add more</span>
+
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                           {{ countDisplayedServices(i) }} Services
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                           
+                                                            <li class="dropdown-item" *ngFor="let service of room?.serviceAttachs; let i = index">
+                                                                {{service.name}}
+                                                            </li>
+                                                            <li class="dropdown-item">
+
+                                                                <span data-bs-toggle="modal"
+                                                            data-bs-target="#addService"
+                                                            class="badge bg-warning"> + Add more</span>
+                                                            </li>
+                                                        </div>
+                                                        
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div *ngIf="room.isActive; else inactiveBadge">
@@ -136,8 +149,9 @@
                                                 </td>
 
                                                 <td class="table-action">
-                                                    <a href="javascript:void(0);" class="action-icon"><i
-                                                            class="mdi mdi-eye"></i></a>
+                                                    <a data-bs-toggle="modal" 
+                                                    data-bs-target="#staticBackdrop3" class="action-icon"><i
+                                                            class="uil uil-dollar-alt"></i></a>
                                                     <a href="javascript:void(0);" data-bs-toggle="modal"
                                                         data-bs-target="#editRoom" class="action-icon"
                                                         (click)="loadModalUpdate(room.id)"> <i
@@ -520,6 +534,7 @@
                     (click)="resetModal()"></button>
             </div>
             <div class="modal-body">
+              
                 <form class="form-group" [formGroup]="roomForm">
                     <div class="col-9 mb-3">
                         <label for="inputEmail3" class="col-3 col-form-label">Name service</label>
@@ -528,13 +543,48 @@
                             <option *ngFor="let service of services" [value]="service.id">{{ service.name }}</option>
                           </select>
                     </div>
-                   
-                   
+
                  
                     <button type="submit" (click)="addService($event)" class="btn btn-primary">Update</button>
                 </form>
             </div>
            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="resetModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- add Room Discount -->
+<div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Discount room</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="resetModal()"></button>
+            </div>
+            <div class="modal-body">
+              
+                <form class="form-group" [formGroup]="roomForm">
+                    <div class="col-9 mb-3">
+                        <label for="inputEmail3" class="col-3 col-form-label">Add Discount</label>
+                        <br>
+                        <select class="form-select mr-sm-2"  (change)="onServiceSelectionChange($event)">
+                            <option value="">Discount code</option>
+                            <option *ngFor="let service of discount" [value]="service.id">{{ service.name }}</option>
+                          </select>
+                    </div>
+
+                 
+                    <button type="submit" (click)="addDiscountRoom(roomForm)" class="btn btn-primary">Add </button>
+                </form>
+            </div>
+            
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                     (click)="resetModal()">Close</button>

@@ -48,7 +48,7 @@
                         <th>Action<th>
                         </tr>
                     </thead>
-                    <tbody *ngFor="let item of roomType ; let i = index" class="align-middle text-center">
+                    <tbody *ngFor="let item of roomType ; let i = index" (click)="toggleSelection(item.id)" class="align-middle text-center">
                       <tr>
                         <td>
                           <div class="form-check">
@@ -134,13 +134,13 @@
               </div>
           </div>
           <div class="row mb-3">
-              <label for="inputEmail3" class="col-3 col-form-label">Name room type</label>
+              <label for="inputEmail3" class="col-3 col-form-label">Icon</label>
               <div class="col-9">
                   <input type="email" formControlName="icon" class="form-control" id="inputEmail3" placeholder="Name room type">
               </div>
           </div>
           <div class="row mb-3">
-              <label for="inputEmail3" class="col-3 col-form-label">Icon name</label>
+              <label for="inputEmail3" class="col-3 col-form-label">Description</label>
               <div class="col-9">
                   <input type="email" formControlName="description" class="form-control" id="inputEmail3" placeholder="Icon">
               </div>

@@ -56,6 +56,9 @@ import { InvoiceComponent } from './pages/invoice/invoice.component';
 import { DatePipe, CommonModule } from '@angular/common';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { CheckoutDetailComponent } from './pages/checkout-detail/checkout-detail.component';
+import { ApiService } from './_service/api.service';
+import { PieChartComponent } from './components/chart/pie-chart/pie-chart.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 @NgModule({
   declarations: [
     ChartComponent,
@@ -86,8 +89,10 @@ import { CheckoutDetailComponent } from './pages/checkout-detail/checkout-detail
     InvoiceComponent,
     CheckoutComponent,
     CheckoutDetailComponent,
+    PieChartComponent,
   ],
   imports: [
+    NgApexchartsModule,
     CommonModule ,
     ChartModule,
     FormsModule,
@@ -139,9 +144,12 @@ import { CheckoutDetailComponent } from './pages/checkout-detail/checkout-detail
         provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
       }
     ],
-    [DatePipe]
+    [DatePipe],
+    [ApiService]
+
   ],
   bootstrap: [AppComponent],
+  
 })
 export class AppModule { }
 

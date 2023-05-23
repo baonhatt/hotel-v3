@@ -44,7 +44,7 @@
                   </div>
                   <div class="col-xl-4">
                     <div class="text-xl-end mt-xl-0 mt-2">
-                      <button type="button" data-bs-toggle="modal" data-bs-target="#modal-detail" class="btn btn-danger mb-2 me-2"><i class="mdi mdi-basket me-1"></i> Add New</button>
+                      <button type="button" data-bs-toggle="modal" (click)="clearModal()" data-bs-target="#modal-detail" class="btn btn-danger mb-2 me-2"><i class="mdi mdi-basket me-1"></i> Add New</button>
                     </div>
                   </div><!-- end col-->
                 </div>
@@ -174,10 +174,13 @@
               </div>
           </div>
           <div class="row mb-3">
-              <label for="inputEmail3" class="col-3 col-form-label">Discount Type ID</label>
+              <label for="inputEmail3" class="col-3 col-form-label">Discount Type </label>
               <div class="col-9">
-                  <input type="number" formControlName="discountTypeId" class="form-control" id="description" placeholder="">
-              </div>
+                  <!-- <input type="number" formControlName="discountTypeId" class="form-control" id="description" placeholder=""> -->
+                  <select class="form-select mr-sm-2"  (change)="onServiceSelectionChange($event)">
+                      <option *ngFor="let service of discount" [value]="service.id">{{ service.name }}</option>
+                    </select>
+                </div>
           </div>
           <div class="row md-4">
               <label for="inputEmail3" class="col-3 col-form-label">Permament</label>
@@ -247,9 +250,11 @@
               </div>
           </div>
           <div class="row mb-3">
-              <label for="inputEmail3" class="col-3 col-form-label">Discount Type ID</label>
+              <label for="inputEmail3" class="col-3 col-form-label">Discount Type</label>
               <div class="col-9">
-                  <input type="number" formControlName="discountTypeId" class="form-control" id="description" placeholder="">
+                <select class="form-select mr-sm-2"  (change)="onServiceSelectionChange($event)">
+                    <option *ngFor="let service of discount" [value]="service.id">{{ service.name }}</option>
+                  </select>
               </div>
           </div>
           <div class="row md-4">
