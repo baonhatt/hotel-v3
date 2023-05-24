@@ -240,8 +240,8 @@ export class ApiService {
         return this.http.get(environment.BASE_URL_API + `/v2/admin/service-room/delete?id=${id}`);
     }
 
-    updateRoomTypeService(data: string,id: number): Observable<any>{
-        return this.http.post(environment.BASE_URL_API + `/v2/admin/service-room/delete?id=${id}`,data);
+    updateRoomTypeService(data: RoomTypeService,id: number): Observable<any>{
+        return this.http.post(environment.BASE_URL_API + `/v2/admin/service-room/update?id=${id}`,data);
     }
 
 

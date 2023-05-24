@@ -35,12 +35,22 @@ export class AuthService implements OnInit{
     };
     return this.http.post<any>(environment.BASE_URL_API + '/user/login', body).pipe(
       tap({
-          next: (response) => {
-            let token = response as TokenModel;
-            var claims = JSON.stringify(this.jwtService.decodeToken(token.accessToken));
-            var userInfo = JSON.parse(claims.replaceAll("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/","")) as User;
-            this.userAuth.next(userInfo);
-          },
+        next: (response) => {
+          let token = response as TokenModel;
+          var claims = JSON.stringify(this.jwtService.decodeToken(token.accessToken));
+          claims = claims.replaceAll(
+              'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/',
+              ''
+          );
+          claims = claims.replaceAll(
+              'http://schemas.microsoft.com/ws/2008/06/identity/claims/',
+              ''
+          );
+
+          var userInfo = JSON.parse(claims) as User;
+          this.userAuth.next(userInfo);
+
+      },
           error: (err) => {
             this.toast.error(err.error.message);
           },

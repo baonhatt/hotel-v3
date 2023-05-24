@@ -85,12 +85,14 @@ export class RoomTypeServiceComponent {
     toggleSelection(id: number){
         this.id = id
     }
+
+    fetchModal(){}
     
     updateRoomType(serviceForm2: FormGroup){
         this.api.updateRoomTypeService(serviceForm2.value, this.id).subscribe( res => {
             console.log(res);
-            this.toast.success(res.success.message)
-            
+            this.toast.success(res.message)
+            this.getAll()
         },err=>{
             this.toast.error(err.message)
         })
