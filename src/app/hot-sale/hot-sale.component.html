@@ -1,0 +1,94 @@
+<div class="section-title center-text margin-title">
+  <h2 class="title"> Hot sales room ! </h2>
+  <div class="section-title-line"> </div>
+</div>
+<!--
+<div class="container-sale">
+  <div class="discount-container">
+    <div class="hot-sale-sticker"><span>Hot Sale Month!</span></div>
+    <div class="row width-container" *ngFor="let room of discountRoom">
+      <div class="single-blog">
+        <div style="margin-top: 12px" class="hotel-view bg-white radius-20">
+          <div class="hotel-view-flex">
+            <a routerLink="/room-detail/{{room.id}}" style="padding: 10px; "
+              class="hotel-view-thumb hotel-view-list-thumb img bg-image">
+              <img [src]="room.roomPicture" style="height: 100%;
+              object-fit: cover;">
+            </a>
+            <div class="hotel-view-contents">
+              <h3 class="hotel-view-contents-title"> <a routerLink="/room-detail/{{room.id}}"> {{room.name}} </a> </h3>
+              <div class="hotel-view-contents-header">
+                <div
+                  class="hotel-view-contents-header-flex d-flex flex-wrap gap-3 align-items-center justify-content-between">
+                  <span class="hotel-view-contents-review"> <i class="las la-star"></i>{{room.starSum}}<span
+                      class="hotel-view-contents-review-count"> ({{room.starAmount}}) </span> </span>
+
+                </div>
+
+              </div>
+              <div class="hotel-view-contents-middle">
+                <div class="hotel-view-contents-flex">
+                  <div class="hotel-view-contents-icon d-flex gap-1" *ngFor="let serviceAttach of room.serviceAttachs">
+                    <span> <i [ngClass]="serviceAttach.icon"></i> </span>
+                    <p class="hotel-view-contents-icon-title flex-fill"> {{serviceAttach.name}} </p>
+                  </div>
+
+                </div>
+              </div>
+              <div class="hotel-view-contents-bottom">
+                <div class="hotel-view-contents-bottom-flex">
+                  <div class="hotel-view-contents-bottom-contents d-flex flex-wrap  ">
+                    <h4 class="hotel-view-contents-bottom-title"> {{room.discountPrice | vndCurrency}}<sub>/Night</sub>
+                    </h4>
+
+                  </div>
+                </div>
+                <h4 class="hotel-view-contents-bottom-title discountprice"> {{room.currentPrice |
+                  vndCurrency}}<sub>/Night</sub> </h4>
+              </div>
+              <div class="btn-wrapper">
+                <a routerLink="/checkout/{{room.id}}" class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div> -->
+
+
+
+
+
+<div class="container">
+  <div class="row-sale">
+  <div class="employee-container"  *ngFor="let room of discountRoom" >
+        <div class="employee">
+          <span *ngIf="room!=undefined" class="hotel-view-contents-review  star-sale"> <i class="las la-star"></i> {{room.starSum}}
+            <span class="hotel-view-contents-review-count" > (380) </span> </span>
+          <div class="employee-image">
+            <a routerLink="/room-detail/{{room.id}}">
+              <img [src]="room.roomPicture" class="img-fluid d-block m-auto" alt="employee-image">
+            </a>
+            </div>
+          <div class="employee-details">
+            <div class="employee-name">
+              <h1 class="text-center">{{room.roomTypeName}}<br><span class="employee-role">{{room.discountPrice | vndCurrency}}</span></h1>
+              </div>
+            <div class="employee-social-link">
+                <ul>
+                  <li><i class="las la-parking" aria-hidden="true"></i></li>
+                  <li><i class="fas la-wifi" aria-hidden="true"></i></li>
+                  <li><i class="fas la-swimming-pool" aria-hidden="true"></i></li>
+                  <li><i class="fas fa-coffee" aria-hidden="true"></i></li>
+                  <li><i class="fas la-dumbbell" aria-hidden="true"></i></li>
+              </ul>
+          </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+</div>

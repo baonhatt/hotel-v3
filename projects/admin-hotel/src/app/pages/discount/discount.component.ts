@@ -17,6 +17,7 @@ export class DiscountComponent {
     discount!: Discount[];
     discountId!: number;
     id!: number;
+    discountLength!: number;  
     roomType!: Discount[];
     roomTypeResult!: Discount[];
     searchTerm: string = '';
@@ -40,6 +41,7 @@ export class DiscountComponent {
             this.roomTypeResult = res
             console.log(res);
 
+            this.filterExpiredDiscounts()
         })
         this.getAllDiscountType()
 
@@ -140,5 +142,19 @@ export class DiscountComponent {
 
         })
     }
+    filterExpiredDiscounts(): void {
+        const currentDate = new Date();
+        this.roomType = this.roomType.filter(roomType => {
+            this.discountLength = this.roomType.length
+            const checkoutDate = new Date(roomType.endAt);
+            if (checkoutDate >= currentDate) {
+
+                return true;
+            }
+            this.discountLength = 0
+            return false;
+        });
+    }
+
    
 }

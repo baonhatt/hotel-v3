@@ -170,4 +170,6 @@ export class AuthService implements OnInit{
   {
     return this.http.get<userProfile>(`${environment.BASE_URL_API}/user/user-profile/get`);
   }
+
+  
 }
