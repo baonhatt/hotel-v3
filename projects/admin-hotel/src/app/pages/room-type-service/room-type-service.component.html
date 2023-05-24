@@ -72,7 +72,7 @@
                                                 <th>
                                             </tr>
                                         </thead>
-                                        <tbody *ngFor="let item of roomType  | filter: searchTerm; let i = index  "
+                                        <tbody *ngFor="let item of roomType  | filter: searchTerm; let i = index "  (click)="toggleSelection(item.id)"
                                             class="align-middle text-center">
                                             <tr>
                                                 <td>
@@ -92,7 +92,7 @@
                                                     <a href="javascript:void(0);" class="action-icon"
                                                         data-bs-toggle="modal" data-bs-target="#modal-detail2">
                                                         <i class=" mdi mdi-update"></i></a>
-                                                    <a class="action-icon"><i class="mdi mdi-delete"></i></a>
+                                                    <a (click)="deleteService(item.id)" class="action-icon"><i class="mdi mdi-delete"></i></a>
                                                 </td>
                                         </tbody>
                                     </table>
@@ -163,7 +163,7 @@
     <div class="modal-dialog modal-top modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="topModalLabel">Add room service type</h4>
+                <h4 class="modal-title" id="topModalLabel">Update room service type</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
             <div class="modal-body">
@@ -205,7 +205,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button (click)="createRoomType(serviceForm2)" type="submit" class="btn btn-info">Add </button>
+                <button (click)="updateRoomType(serviceForm2)" type="submit" class="btn btn-info">Add </button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
             </div>
         </div>

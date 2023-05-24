@@ -59,6 +59,8 @@ import { CheckoutDetailComponent } from './pages/checkout-detail/checkout-detail
 import { ApiService } from './_service/api.service';
 import { PieChartComponent } from './components/chart/pie-chart/pie-chart.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { BarChartComponent } from './components/chart/bar-chart/bar-chart.component';
+import { HighchartsChartModule } from 'highcharts-angular';
 @NgModule({
   declarations: [
     ChartComponent,
@@ -90,6 +92,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     CheckoutComponent,
     CheckoutDetailComponent,
     PieChartComponent,
+    BarChartComponent,
   ],
   imports: [
     NgApexchartsModule,
@@ -122,6 +125,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MatIconModule,
     MatDividerModule,
     MatListModule,
+    HighchartsChartModule,
     JwtModule.forRoot({
       jwtOptionsProvider:{
         provide:JWT_OPTIONS,

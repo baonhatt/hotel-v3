@@ -82,6 +82,19 @@ export class RoomTypeServiceComponent {
                 }
             );
     }
+    toggleSelection(id: number){
+        this.id = id
+    }
+    
+    updateRoomType(serviceForm2: FormGroup){
+        this.api.updateRoomTypeService(serviceForm2.value, this.id).subscribe( res => {
+            console.log(res);
+            this.toast.success(res.success.message)
+            
+        },err=>{
+            this.toast.error(err.message)
+        })
+    }
     uploadFileDetail = (event: any) => {
         let files = event.target.files;
         if (files.length === 0) {
@@ -101,7 +114,15 @@ export class RoomTypeServiceComponent {
         }
     };
 
+    deleteService(id: number){
 
+        this.api.deleteRoomTypeService(id).subscribe(res=>{
+          this.toast.success("Delete successfully!");
+          this.getAll()
+        },err =>{
+          this.toast.error(err.message);
+        })
+      }
    
 
 }

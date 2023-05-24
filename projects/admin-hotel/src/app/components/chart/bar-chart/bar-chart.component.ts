@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ViewChild } from "@angular/core";
+import { ApiService } from '../../../_service/api.service';
 import { Chart } from 'angular-highcharts';
-import { ApiService } from '../../_service/api.service';
-import { RevenueYear } from '../../models/revenue.model';
 
 @Component({
-  selector: 'app-chart',
-  templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.css']
+    selector: 'app-bar-chart',
+    templateUrl: './bar-chart.component.html',
+    styleUrls: ['./bar-chart.component.css']
 })
-export class ChartComponent implements OnInit{
+export class BarChartComponent implements OnInit {
     chart!: any
     constructor(private api: ApiService){}
     revenueYear!: any[]
@@ -18,7 +16,7 @@ export class ChartComponent implements OnInit{
    
       ngOnInit(): void {
 
-        this.api.getRevenueByYear().subscribe((res)=>{
+        this.api.getRevenueByMonth().subscribe((res)=>{
            this.revenueYear = res
             console.log(res);
             
@@ -29,11 +27,11 @@ export class ChartComponent implements OnInit{
               height: 325
             },
             title: {
-              text: 'Beyond Hotel Statics Year'
+              text: 'Beyond Hotel Statics Month'
             },
             xAxis: {
               
-                categories: this.revenueYear.map(item => monthNames[item.month - 1])
+                categories: this.revenueYear.map(item => item.day )
             },
             yAxis: {
               title: {
@@ -53,7 +51,7 @@ export class ChartComponent implements OnInit{
               {
                 name: 'Revenue',
                 type: 'line',
-                color: '#3986DD',
+                color: '#ed9e20',
                 data: 
                    this.revenueYear.map(item => item.revenue)
                 
@@ -76,16 +74,3 @@ export class ChartComponent implements OnInit{
       }
     
     }
-    
-    // 'Jan',
-    // 'Feb',
-    // 'Mar',
-    // 'Apr',
-    // 'May',
-    // 'Jun',
-    // 'Jul',
-    // 'Aug',
-    // 'Sep',
-    // 'Oct',
-    // 'Nov',
-    // 'Dec'

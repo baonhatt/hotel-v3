@@ -13,7 +13,7 @@ import { OrderService, OrderServiceAdmin, ServiceAttach } from '../models/servic
 import { Discount } from '../models/discount.model';
 import { RoomTypeService, ServiceAttachDetail } from '../models/roomtypeservice.model';
 import { ReservationModel } from '../pages/booking/booking.component';
-import { Revenue } from '../models/revenue.model';
+import { Revenue, RevenueYear } from '../models/revenue.model';
 
 @Injectable({
   providedIn: 'root'
@@ -232,8 +232,13 @@ export class ApiService {
        return this.http.post(environment.BASE_URL_API + '/v2/admin/service-room/create', data);
     }
 
+    deleteRoomTypeService(id: number){
+        return this.http.get(environment.BASE_URL_API + `/v2/admin/service-room/delete?id=${id}`);
+    }
 
-
+    updateRoomTypeService(data: string,id: number): Observable<any>{
+        return this.http.post(environment.BASE_URL_API + `/v2/admin/service-room/delete?id=${id}`,data);
+    }
 
 
 
@@ -286,5 +291,11 @@ export class ApiService {
 
     getRevenue(): Observable<any[]> {
     return this.http.get<any[]>(environment.BASE_URL_API + '/v2/admin/revenue/get-sum');
+  }
+    getRevenueByYear(): Observable<any[]> {
+    return this.http.get<any[]>(environment.BASE_URL_API + '/v2/admin/revenue/revenue-by-year');
+  }
+    getRevenueByMonth(): Observable<any[]> {
+    return this.http.get<any[]>(environment.BASE_URL_API + '/v2/admin/revenue/revenue-by-month');
   }
 }

@@ -7,3 +7,7 @@ export interface RevenueComponent {
     sumReservation: number;
     sumRevenue: number;
 }
+export interface RevenueYear {
+    month: number;
+    revenue: number;
+}

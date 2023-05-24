@@ -187,18 +187,13 @@
                             </div>
                         </div>
 
-                        <div class="dash-item-overlay d-none d-md-block" dir="ltr">
-                            <h5>Today's Earning: {{1200000 |vndCurrency}}</h5>
-                            
-                            <a href="javascript: void(0);" class="btn btn-outline-primary">View Detail 
-                                <i class="mdi mdi-arrow-right ms-2"></i>
-                            </a>
-                        </div>
-                        <div dir="ltr">
-                            <div id="revenue-chart" class="apex-charts mt-3" data-colors="#727cf5,#0acf97"></div>
-                        </div>
-                    </div> <!-- end card-body-->
+                        
+                    </div>
                 </div> <!-- end card-->
+                <div class="card-body">
+
+                    <app-bar-chart></app-bar-chart>
+                </div>
             </div> <!-- end col-->
 
             <div class="col-lg-4">
