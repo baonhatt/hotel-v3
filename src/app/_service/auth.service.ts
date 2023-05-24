@@ -110,11 +110,11 @@ export class AuthService implements OnInit{
     if (token) {
       var tokenModel = JSON.parse(token) as TokenModel;
       var claims = JSON.stringify(this.jwtService.decodeToken(tokenModel.accessToken));
-      claims.replaceAll(
+      claims = claims.replaceAll(
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/',
         ''
       );
-      claims.replaceAll(
+      claims = claims.replaceAll(
         'http://schemas.microsoft.com/ws/2008/06/identity/claims/',
         ''
       );
@@ -186,4 +186,6 @@ export class AuthService implements OnInit{
   {
     return this.http.get<userProfile>(`${environment.BASE_URL_API}/user/user-profile/get`);
   }
+
+  
 }

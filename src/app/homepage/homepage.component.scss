@@ -79,9 +79,18 @@ img.animation{
   margin-left: 2rem;
 }
 .discount-container{
-  display: grid;
-  place-items: center;
+  display: flex;
+
+  align-items: center;
+  position: absolute;
   margin-bottom: 3rem;
+}
+.container-sale{
+  width: 100%;
+  height: 500px;
+}
+.discount-containe .single-blog {
+  margin: 0 2rem;
 }
 
 
