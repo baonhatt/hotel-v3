@@ -108,100 +108,6 @@
         }
       }
     },
-    "adminhotel": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "projects/adminhotel",
-      "sourceRoot": "projects/adminhotel/src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/adminhotel",
-            "index": "projects/adminhotel/src/index.html",
-            "main": "projects/adminhotel/src/main.ts",
-            "polyfills": ["zone.js"],
-            "tsConfig": "projects/adminhotel/tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "projects/adminhotel/src/favicon.ico",
-              "projects/adminhotel/src/assets"
-            ],
-            "styles": [
-              "projects/adminhotel/src/styles.scss",
-              "node_modules/ngx-toastr/toastr.css"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
-                }
-              ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "production": {
-              "browserTarget": "adminhotel:build:production"
-            },
-            "development": {
-              "browserTarget": "adminhotel:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "adminhotel:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "projects/adminhotel/tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "projects/adminhotel/src/favicon.ico",
-              "projects/adminhotel/src/assets"
-            ],
-            "styles": [
-              "projects/adminhotel/src/styles.scss",
-              "node_modules/ngx-toastr/toastr.css"
-            ],
-            "scripts": []
-          }
-        }
-      }
-    },
     "admin-hotel": {
       "projectType": "application",
       "schematics": {},
@@ -219,7 +125,8 @@
             "tsConfig": "projects/admin-hotel/tsconfig.app.json",
             "assets": [
               "projects/admin-hotel/src/favicon.ico",
-              "projects/admin-hotel/src/assets"
+              "projects/admin-hotel/src/assets",
+              "projects/admin-hotel/src/web.config"
             ],
             "styles": [
               "projects/admin-hotel/src/styles.scss",
@@ -232,13 +139,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "5mb"
                 }
               ],
               "outputHashing": "all"
