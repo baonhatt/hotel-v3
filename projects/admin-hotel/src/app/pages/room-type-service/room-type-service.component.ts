@@ -24,7 +24,7 @@ export class RoomTypeServiceComponent {
     constructor(private api: ApiService, private http: HttpClient, private fb: FormBuilder, private toast: ToastrService) {
         this.serviceForm2 = this.fb.group({
             name: [''],
-            picture: [''],
+            picture: ['image'],
             amount: [''],
             price: [''],
         })

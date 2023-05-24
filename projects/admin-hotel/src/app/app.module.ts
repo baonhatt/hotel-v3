@@ -61,6 +61,8 @@ import { PieChartComponent } from './components/chart/pie-chart/pie-chart.compon
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { BarChartComponent } from './components/chart/bar-chart/bar-chart.component';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { SalaryComponent } from './pages/salary/salary.component';
+import { RoleComponent } from './pages/role/role.component';
 @NgModule({
   declarations: [
     ChartComponent,
@@ -93,6 +95,8 @@ import { HighchartsChartModule } from 'highcharts-angular';
     CheckoutDetailComponent,
     PieChartComponent,
     BarChartComponent,
+    SalaryComponent,
+    RoleComponent,
   ],
   imports: [
     NgApexchartsModule,

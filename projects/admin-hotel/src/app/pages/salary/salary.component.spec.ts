@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MutualpageComponent } from './mutualpage.component';
+import { SalaryComponent } from './salary.component';
 
-describe('MutualpageComponent', () => {
-  let component: MutualpageComponent;
-  let fixture: ComponentFixture<MutualpageComponent>;
+describe('SalaryComponent', () => {
+  let component: SalaryComponent;
+  let fixture: ComponentFixture<SalaryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MutualpageComponent ]
+      declarations: [ SalaryComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MutualpageComponent);
+    fixture = TestBed.createComponent(SalaryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

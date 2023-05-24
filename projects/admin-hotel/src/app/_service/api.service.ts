@@ -14,6 +14,7 @@ import { Discount } from '../models/discount.model';
 import { RoomTypeService, ServiceAttachDetail } from '../models/roomtypeservice.model';
 import { ReservationModel } from '../pages/booking/booking.component';
 import { Revenue, RevenueYear } from '../models/revenue.model';
+import { Salary } from '../models/salary';
 
 @Injectable({
   providedIn: 'root'
@@ -178,7 +179,10 @@ export class ApiService {
   }
 
   getallUser(): Observable<Staff[]>{
-    return this.http.get<Staff[]>(environment.BASE_URL_API + '/v2/admin/account/get-all');
+    return this.http.get<Staff[]>(environment.BASE_URL_API + '/v2/admin/account/get-user');
+  }
+  getallEmployee(): Observable<Staff[]>{
+    return this.http.get<Staff[]>(environment.BASE_URL_API + '/v2/admin/account/get-employee');
   }
 
 
@@ -298,4 +302,19 @@ export class ApiService {
     getRevenueByMonth(): Observable<any[]> {
     return this.http.get<any[]>(environment.BASE_URL_API + '/v2/admin/revenue/revenue-by-month');
   }
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////// Salary API
+
+  getAllSalary(): Observable<Salary[]>{
+    return this.http.get<Salary[]>(environment.BASE_URL_API + '/v2/admin/salary/get-all')
+  }
+
+
+
+
 }

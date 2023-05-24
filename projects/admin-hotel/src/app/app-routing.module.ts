@@ -17,6 +17,9 @@ import { RoomBookedComponent } from './pages/room-booked/room-booked.component';
 import { ReservationComponent } from './pages/reservation/reservation.component';
 import { InvoiceComponent } from './pages/invoice/invoice.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { SalaryComponent } from './pages/salary/salary.component';
+import { EmployeeComponent } from './pages/employee/employee.component';
+import { RoleComponent } from './pages/role/role.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
@@ -62,6 +65,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'salary',
+    component: SalaryComponent,
+    data: {
+      requiredAuth: true,
+    },
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'blog',
     component: BlogComponent,
     data: {
@@ -96,6 +107,22 @@ const routes: Routes = [
   {
     path: 'customer',
     component: CustomerComponent,
+    data: {
+      requiredAuth: true,
+    },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'role',
+    component: RoleComponent,
+    data: {
+      requiredAuth: true,
+    },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'employee',
+    component: EmployeeComponent,
     data: {
       requiredAuth: true,
     },
