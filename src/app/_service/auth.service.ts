@@ -100,7 +100,15 @@ export class AuthService implements OnInit{
     if (token) {
       var tokenModel = JSON.parse(token) as TokenModel;
       var claims = JSON.stringify(this.jwtService.decodeToken(tokenModel.accessToken));
-      var userInfo = JSON.parse(claims.replaceAll("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/","")) as User;
+      claims.replaceAll(
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/',
+        ''
+      );
+      claims.replaceAll(
+        'http://schemas.microsoft.com/ws/2008/06/identity/claims/',
+        ''
+      );
+      var userInfo = JSON.parse(claims) as User;
       return userInfo.name;
     }
     return null;

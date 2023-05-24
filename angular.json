@@ -23,12 +23,13 @@
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": ["src/favicon.ico", "src/assets", "src/web.config"],
             "styles": ["src/styles.scss", "node_modules/ngx-toastr/toastr.css"],
             "scripts": []
           },
           "configurations": {
-            "production": { "optimization": {
+            "production": {
+              "optimization": {
                 "scripts": true,
                 "styles": {
                   "minify": true,
@@ -124,9 +125,7 @@
             "outputPath": "dist/adminhotel",
             "index": "projects/adminhotel/src/index.html",
             "main": "projects/adminhotel/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/adminhotel/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -187,10 +186,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/adminhotel/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -219,9 +215,7 @@
             "outputPath": "dist/admin-hotel",
             "index": "projects/admin-hotel/src/index.html",
             "main": "projects/admin-hotel/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/admin-hotel/tsconfig.app.json",
             "assets": [
               "projects/admin-hotel/src/favicon.ico",
@@ -281,10 +275,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/admin-hotel/tsconfig.spec.json",
             "assets": [
               "projects/admin-hotel/src/favicon.ico",
@@ -293,7 +284,6 @@
             "styles": [
               "projects/admin-hotel/src/styles.scss",
               "node_modules/ngx-toastr/toastr.css"
-
             ],
             "scripts": []
           }
