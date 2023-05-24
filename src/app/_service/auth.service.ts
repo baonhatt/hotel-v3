@@ -24,7 +24,6 @@ export class AuthService implements OnInit{
   jwtService: JwtHelperService = new JwtHelperService();
   constructor(private http: HttpClient, private router: Router, private storage: StorageService, private jwtHelper: JwtHelperService, private toast: ToastrService) { }
   ngOnInit(): void {
-    this.loadPage()
   }
   userAuth = new BehaviorSubject<User | null>(null);
   userProfile = new BehaviorSubject<userProfile | null>(null);
@@ -62,22 +61,7 @@ export class AuthService implements OnInit{
       }),
     );
   }
-  reloadOnNavigation() {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        window.location.reload();
-      });
-  }
-  loadPage(){
-    if(!sessionStorage.getItem('isPageReloaded')){
-      sessionStorage.setItem('isPageReloaded','true');
-      window.location.reload()
-    } else {
-      sessionStorage.removeItem('isPageReloaded');
-    }
 
-  }
   refreshToken(login: TokenModel) {
     return this.http.post<TokenModel>(
       environment.BASE_URL_API + '/api/Token/Refresh',
@@ -110,16 +94,16 @@ export class AuthService implements OnInit{
     if (token) {
       var tokenModel = JSON.parse(token) as TokenModel;
       var claims = JSON.stringify(this.jwtService.decodeToken(tokenModel.accessToken));
-      claims.replaceAll(
+      claims = claims.replaceAll(
         'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/',
         ''
       );
-      claims.replaceAll(
+      claims = claims.replaceAll(
         'http://schemas.microsoft.com/ws/2008/06/identity/claims/',
         ''
       );
       var userInfo = JSON.parse(claims) as User;
-      return userInfo.name;
+      return userInfo;
     }
     return null;
   }

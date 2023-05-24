@@ -32,9 +32,6 @@ export class RevenueComponent  implements OnInit{
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
   }
-  reload(){
-    window.location.reload()
-  }
 
   getRevenue() {
     this.api.getAllReservation().subscribe((reservations: ReservationModel[]) => {

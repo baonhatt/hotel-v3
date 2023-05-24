@@ -30,7 +30,12 @@ export class AuthGuard implements CanActivate {
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
 
-    $.getScript('assets/js/main.js');
+      // $.getScript('/assets/js/main.js');
+      var script = document.createElement('script');
+      document.head.appendChild(script);
+      script.type = 'text/javascript';
+      script.src = '/assets/js/main.js';
+      script.onload;
 
     var token = this.storage.isLoggedIn();
     if (token) {

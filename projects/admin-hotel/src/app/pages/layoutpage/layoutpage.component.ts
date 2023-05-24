@@ -34,9 +34,6 @@ export class LayoutpageComponent implements OnInit{
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
   }
-  reload(){
-    window.location.reload()
-  }
 
   fetchRevenue(){
     this.api.getRevenue()

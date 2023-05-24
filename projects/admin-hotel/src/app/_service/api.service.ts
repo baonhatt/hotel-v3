@@ -30,20 +30,6 @@ export class ApiService {
   private baseUrl1 = 'http://localhost:3000/rooms';
 
  /////////////////////////////////////////////////////////////////////////////////////// Room API
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   getRooms() {
     return this.http.get<Room[]>(environment.BASE_URL_API + '/v2/admin/room/get-all');
 

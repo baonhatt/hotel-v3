@@ -34,7 +34,6 @@
         <div class="single-right-content">
           <div class="navbar-right-flex">
 
-
             <div *ngIf="isLoggedIn(); then loggedInUser; else loginButton"></div>
             <ng-template #loggedInUser>
               <app-bell-notif></app-bell-notif>
@@ -45,7 +44,7 @@
                       <img class="profile-img" src="{{userProfile.image}}" alt="img">
                     </div>
                     <div class="navbar-author-name">
-                      <h6 class="navbar-author-name-title">{{ getLoggedInUser() }} </h6>
+                      <h6 class="navbar-author-name-title">{{ getLoggedInUser().name }} </h6>
                     </div>
                   </div>
                   <div class="navbar-author-wrapper">

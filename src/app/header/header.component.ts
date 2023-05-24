@@ -33,15 +33,18 @@ export class HeaderComponent {
       localStorage.setItem('user_profile', JSON.stringify(this.userProfile));
     })
   }
+
   isLoggedIn() {
-    if(this.auth.isLoggedIn() && localStorage.getItem('user_profile') != ""){
+    if (this.auth.isLoggedIn()) {
       return true;
     }
     return false;
   }
-  getUser(){
-    return this.apiServe.getUser()
-  }
+  // getUser() {
+  //   console.log(2);
+
+  //   return this.apiServe.getUser()
+  // }
   getLoggedInUser() {
     return this.auth.getLoggedInUser();
   }
