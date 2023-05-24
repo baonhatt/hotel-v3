@@ -40,13 +40,24 @@ export class AuthService implements OnInit{
             var claims = JSON.stringify(this.jwtService.decodeToken(token.accessToken));
             var userInfo = JSON.parse(claims.replaceAll("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/","")) as User;
             this.userAuth.next(userInfo);
+            var roleInfo = claims.replaceAll(
+                'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/',
+                ''
+              );
+              claims.replaceAll(
+                'http://schemas.microsoft.com/ws/2008/06/identity/claims/',
+                ''
+              );
+              var userInfo = JSON.parse(claims) as User;
+              return userInfo.name;
           },
           error: (err) => {
-            this.toast.error(err.error.message);
+            console.log(err);
+            
           },
       }),
       catchError((error) => {
-        return throwError(error.message);
+        return throwError(error.error.message);
       }),
     );
   }

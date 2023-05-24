@@ -296,11 +296,11 @@ export class ApiService {
     getRevenue(): Observable<any[]> {
     return this.http.get<any[]>(environment.BASE_URL_API + '/v2/admin/revenue/get-sum');
   }
-    getRevenueByYear(): Observable<any[]> {
-    return this.http.get<any[]>(environment.BASE_URL_API + '/v2/admin/revenue/revenue-by-year');
+    getRevenueByYear(year: number): Observable<any[]> {
+    return this.http.get<any[]>(environment.BASE_URL_API + `/v2/admin/revenue/revenue-by-year?year=${year}`);
   }
-    getRevenueByMonth(): Observable<any[]> {
-    return this.http.get<any[]>(environment.BASE_URL_API + '/v2/admin/revenue/revenue-by-month');
+    getRevenueByMonth(month: number, year: number): Observable<any[]> {
+    return this.http.get<any[]>(environment.BASE_URL_API + `/v2/admin/revenue/revenue-by-month?month=${month}&year=${year}`);
   }
 
 

@@ -71,9 +71,11 @@ export class LoginAdminComponent implements OnInit {
             localStorage.setItem('user_profile', JSON.stringify(res));
             this.toast.success('Login successfull');
           },
-          (err) => {}
+          
         );
         this.route.navigate(['dashboard']);
+      },err =>{
+        this.toast.error(" Something was wrong!")
       }
     );
   }

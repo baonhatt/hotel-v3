@@ -11,12 +11,14 @@ export class BarChartComponent implements OnInit {
     chart!: any
     constructor(private api: ApiService){}
     revenueYear!: any[]
-    
+    currentYear!: number;
+    currentMonth!: number;
     
    
       ngOnInit(): void {
-
-        this.api.getRevenueByMonth().subscribe((res)=>{
+        this.currentYear = new Date().getFullYear();
+        this.currentMonth = new Date().getMonth() + 1;
+        this.api.getRevenueByMonth(this.currentMonth, this.currentYear).subscribe((res)=>{
            this.revenueYear = res
             console.log(res);
             

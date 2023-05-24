@@ -13,12 +13,12 @@ export class ChartComponent implements OnInit{
     chart!: any
     constructor(private api: ApiService){}
     revenueYear!: any[]
-    
+    currentYear!: number;
     
    
       ngOnInit(): void {
-
-        this.api.getRevenueByYear().subscribe((res)=>{
+        this.currentYear = new Date().getFullYear();
+        this.api.getRevenueByYear(this.currentYear).subscribe((res)=>{
            this.revenueYear = res
             console.log(res);
             

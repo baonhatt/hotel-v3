@@ -105,7 +105,7 @@
                       <li>
                         <a routerLink="/salary">Salary</a>
                       </li>
-                      <li>
+                      <li *ngIf="hasSalaryManagementPermission()">
                         <a routerLink="/role">Roles</a>
                       </li>
                   </ul>

@@ -117,6 +117,7 @@ const routes: Routes = [
     component: RoleComponent,
     data: {
       requiredAuth: true,
+      requiredAdmin: true,
     },
     canActivate: [AuthGuard],
   },
