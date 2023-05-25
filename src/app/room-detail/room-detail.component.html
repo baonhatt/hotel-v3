@@ -188,10 +188,9 @@
             </div>
             <div class="hotel-view-contents" *ngIf="room!=undefined">
               <div class="hotel-view-contents-header">
-                <span *ngIf="room!=undefined" class="hotel-view-contents-review"> <i class="las la-star"></i>
-                  {{room.starSum}}
+                <span *ngIf="room!=undefined" class="hotel-view-contents-review"> <i class="las la-star"></i> {{room.starSum}}
                   <span class="hotel-view-contents-review-count"> (380) </span> </span>
-                <h3 *ngIf="room!=undefined" class="hotel-view-contents-title"> {{room.name}} </h3>
+                <h3 *ngIf="room!=undefined" class="hotel-view-contents-title"> {{room.roomTypeName}} </h3>
                 <div class="hotel-view-contents-location mt-2">
                 </div>
               </div>
@@ -209,8 +208,7 @@
                   <div class="hotel-view-contents-bottom-contents">
                     <h4 class="hotel-view-contents-bottom-title"> {{room.discountPrice == 0 ? room.currentPrice :
                       room.discountPrice | vndCurrency}} <sub>/Night</sub> </h4>
-                    <p class="hotel-view-contents-bottom-para"> ({{room.peopleNumber}} Persons,
-                      {{room.numberOfSimpleBed}} Beds, 1
+                    <p class="hotel-view-contents-bottom-para"> ({{room.peopleNumber}} Persons, {{room.numberOfSimpleBed}} Beds, 1
                       Nights) </p>
                   </div>
                   <div class="btn-wrapper">
@@ -235,38 +233,10 @@
               <div id="reviews" class="tab-content-item">
                 <div class="review-tab-contents">
                   <div class="review-tab-contents-single">
-                    <div class="rating-wrap">
-                      <div class="ratings">
-                        <span class="hide-rating"></span>
-                        <span class="show-rating"></span>
-                      </div>
-                      <p> <span class="total-ratings">(167)</span></p>
-                    </div>
-                    <p class="about-review-para mt-3"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a
-                      egestas leo. Aliquam ut ante lobortis tellus cursus pellentesque. Praesent feugiat tellus quis
-                      aliquet </p>
                     <div class="review-tab-contents-author mt-4">
-                      <h4 class="review-tab-contents-author-name"> Sandra M. Hurt </h4>
-                      <p class="review-tab-contents-author-para mt-2"> TrustPilot </p>
-                    </div>
-                  </div>
-                  <div class="review-tab-contents-single">
-                    <div class="rating-wrap">
-                      <div class="ratings">
-                        <span class="hide-rating"></span>
-                        <span class="show-rating"></span>
-                      </div>
-                      <p> <span class="total-ratings">(236)</span></p>
-                    </div>
-                    <p class="about-review-para mt-3"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a
-                      egestas leo. Aliquam ut ante lobortis tellus cursus pellentesque. Praesent feugiat tellus quis
-                      aliquet </p>
-                    <div class="review-tab-contents-author mt-4">
-
                       <div class="single-reservation-btn">
                         <a class="btn btn-primary" (click)="openDialog()" class="dash-btn btn-small-2"> Rate Now </a>
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -297,10 +267,9 @@
                 <form action="#" [formGroup]="formReservation">
                   <div class="single-input mt-3">
                     <label class="details-sidebar-dropdown-title col-3"> Check In </label>
-                    <mat-form-field style="margin-left: 1px; " appearance="fill">
-                      <input matInput [matDatepicker]="picker2" style="border-radius: 20px; margin-left: 16px;"
-                        formControlName="checkIn">
-                      <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-form-field style="margin-left: 1px; "  appearance="fill">
+                      <input  matInput [matDatepicker]="picker2" style="border-radius: 20px;" formControlName="checkIn">
+                      <mat-datepicker-toggle matIconSuffix  [for]="picker2"></mat-datepicker-toggle>
                       <mat-datepicker #picker2></mat-datepicker>
                     </mat-form-field>
                   </div>
@@ -316,22 +285,15 @@
                     <div class="details-sidebar-quantity-flex">
                       <div class="details-sidebar-quantity-item">
                         <label class="details-sidebar-dropdown-title"> Guest </label>
-                        <input class="form--control form-control input" min="0" placeholder="Guest"
-                          [(ngModel)]="numberOfPeople" tabindex="0" max="9" type="number" style="padding: 14px 16px;"
-                          formControlName="numberOfPeople"
-                          [ngClass]="{ 'is-invalid':  f['numberOfPeople'].errors }" required="">
-
-                          <div *ngIf="f['numberOfPeople'].errors" class="invalid-feedback">
-                            <div *ngIf="f['numberOfPeople'].errors['required']">People is required</div>
-
+                          <input
+                          class="form--control form-control input" placeholder="Guest" tabindex="0" type="text" style="padding: 14px 16px;" formControlName="numberOfPeople">
                       </div>
                     </div>
-                  </div>
                   </div>
                 </form>
               </div>
               <div class="btn-wrapper mt-4">
-                <a class="cmn-btn btn-bg-1 btn-small" (click)="bookingRoom()"> Go to Checkout </a>
+                <a class="cmn-btn btn-bg-1 btn-small" (click)="bookingRoom()"> Reserve now </a>
               </div>
             </div>
           </div>

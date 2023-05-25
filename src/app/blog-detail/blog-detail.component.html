@@ -47,7 +47,7 @@
                 <p class="single-blog-details-content-para mt-4" *ngFor="let item of blog.fields.longContent.content">
                   <ng-container [ngSwitch]="item.nodeType">
                     <p  class="single-blog-details-content-para mt-4">{{ item.content[0].value }}</p>
-                    
+
                   </ng-container>
                 </p>
 
@@ -99,117 +99,6 @@
                 </div>
               </div>
             </div>
-
-
-            <div class="comment-area color-two pat-50 pab-50">
-              <h3 class="details-section-title"> Comments(03) </h3>
-              <div class="row">
-                <div class="col-lg-12 mt-2">
-                  <div class="comment-show-contents">
-                    <ul class="comment-list list-style-none wow fadeInLeft" data-wow-delay=".1s">
-                      <li>
-                        <div class="blog-details-flex-content">
-                          <div class="blog-details-thumb radius-10">
-                            <img src="assets/img/blog/details-comment1.jpg" alt="">
-                          </div>
-                          <div class="blog-details-content">
-                            <div class="blog-details-content-flex">
-                              <div class="blog-details-content-item">
-                                <h5 class="blog-details-content-title"> <a href="javascript:void(0)"> Riyad Hossain
-                                  </a> </h5>
-                                <span class="blog-details-content-date"> Jun 22, 2022 </span>
-                              </div>
-                              <a href="javascript:void(0)" class="btn-replay"> <i class="las la-reply-all"></i> Reply
-                              </a>
-                            </div>
-                            <p class="blog-details-content-para"> Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Sed a egestas leo. Aliquam ut ante lobortis tellus cursus pellentesque. Praesent
-                              feugiat tellus quis aliquet </p>
-                          </div>
-                        </div>
-                        <ul class="comment-list list-style-none wow fadeInLeft" data-wow-delay=".2s">
-                          <li>
-                            <div class="blog-details-flex-content">
-                              <div class="blog-details-thumb radius-10">
-                                <img src="assets/img/blog/details-comment2.jpg" alt="">
-                              </div>
-                              <div class="blog-details-content">
-                                <div class="blog-details-content-flex">
-                                  <div class="blog-details-content-item">
-                                    <h5 class="blog-details-content-title"> <a href="javascript:void(0)"> Rajia Akter
-                                      </a> </h5>
-                                    <span class="blog-details-content-date"> Jun 23, 2022 </span>
-                                  </div>
-                                  <a href="javascript:void(0)" class="btn-replay"> <i class="las la-reply-all"></i>
-                                    Reply </a>
-                                </div>
-                                <p class="blog-details-content-para"> Lorem ipsum dolor sit amet, consectetur
-                                  adipiscing elit. Sed a egestas leo. Aliquam ut ante lobortis tellus cursus
-                                  pellentesque. Praesent feugiat tellus quis aliquet </p>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                    <ul class="comment-list list-style-none wow fadeInLeft" data-wow-delay=".3s">
-                      <li>
-                        <div class="blog-details-flex-content">
-                          <div class="blog-details-thumb radius-10">
-                            <img src="assets/img/blog/details-comment1.jpg" alt="">
-                          </div>
-                          <div class="blog-details-content">
-                            <div class="blog-details-content-flex">
-                              <div class="blog-details-content-item">
-                                <h5 class="blog-details-content-title"> <a href="javascript:void(0)"> Bryn Colon </a>
-                                </h5>
-                                <span class="blog-details-content-date"> Jun 24, 2022 </span>
-                              </div>
-                              <a href="javascript:void(0)" class="btn-replay"> <i class="las la-reply-all"></i> Reply
-                              </a>
-                            </div>
-                            <p class="blog-details-content-para"> Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Sed a egestas leo. Aliquam ut ante lobortis tellus cursus pellentesque. Praesent
-                              feugiat tellus quis aliquet </p>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                    <div class="btn-wrapper mt-4">
-                      <a href="javascript:void(0)" class="btn-see-more"> Show More </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-            <div class="comment-area color-two pat-50">
-              <h3 class="details-section-title"> Post Your Comment </h3>
-              <div class="row">
-                <div class="col-lg-12 pat-20">
-                  <div class="details-comment-content">
-                    <div class="comments-flex-item">
-                      <div class="single-commetns">
-                        <label class="comment-label"> Your Name </label>
-                        <input type="text" class="form--control radius-5" name="name" placeholder="Type Name">
-                      </div>
-                      <div class="single-commetns">
-                        <label class="comment-label"> Email Address </label>
-                        <input type="text" class="form--control radius-5" name="email" placeholder="Type Email">
-                      </div>
-                    </div>
-                    <div class="single-commetns">
-                      <label class="comment-label"> Comment </label>
-                      <textarea name="message" class="form--control radius-5 form--message"
-                        placeholder="Post Comments"></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn radius-5 mt-4"> Post Comment </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
         <div class="col-xl-4 col-lg-4">
