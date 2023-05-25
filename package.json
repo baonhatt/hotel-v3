@@ -40,6 +40,7 @@
     "i": "^0.3.7",
     "install": "^0.13.0",
     "jquery": "^3.6.4",
+    "jspdf": "^2.5.1",
     "jw-paginate": "^1.0.4",
     "mdb-angular-ui-kit": "^4.1.0",
     "ng-angular-popup": "^0.2.0",

@@ -30,7 +30,7 @@
           <li class="side-nav-item">
               <a data-bs-toggle="collapse"  routerLinkActive="active" routerLink="/dashboard" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
                   <i class="uil-home-alt"></i>
-                  <span class="badge bg-success float-end">4</span>
+                  <!-- <span class="badge bg-success float-end">4</span> -->
                   <span> Dashboards </span>
               </a>
 
@@ -47,33 +47,33 @@
           
           <li class="side-nav-item" routerLinkActive="active">
               <a routerLink="/booking" class="side-nav-link">
-                  <i class="uil-comments-alt"></i>
+                  <i class="dripicons-to-do"></i>
                   <span> Reservations </span>
               </a>
           </li>
           <li class="side-nav-item" routerLinkActive="active">
               <a routerLink="/reservation" class="side-nav-link">
-                  <i class="uil-comments-alt"></i>
+                  <i class=" dripicons-box"></i>
                   <span> Booking </span>
               </a>
           </li>
           <li class="side-nav-item" routerLinkActive="active">
               <a routerLink="/blog" class="side-nav-link">
-                  <i class="uil-comments-alt"></i>
+                  <i class="dripicons-blog"></i>
                   <span> Blogs </span>
               </a>
           </li>
           <li class="side-nav-item" routerLinkActive="active">
               <a routerLink="/room-booked" class="side-nav-link">
-                  <i class="uil-comments-alt"></i>
+                  <i class="dripicons-conversation"></i>
                   <span> Room Serving </span>
               </a>
           </li>
 
-          <li class="side-nav-item">
+          <li class="side-nav-item active">
               <a routerLinkActive="active" data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false" aria-controls="sidebarEcommerce" class="side-nav-link">
-                  <i class="uil-store"></i>
-                  <span> Management </span>
+                  <i class="dripicons-view-thumb"></i>
+                  <span> Managements</span>
                   <span class="menu-arrow"></span>
               </a>
               <div class="collapse" id="sidebarEcommerce">
@@ -90,20 +90,20 @@
                       <li routerLinkActive="active">
                           <a  routerLink="/customer">Customer</a>
                       </li>
-                      <li>
+                      <li routerLinkActive="active" >
                         <a  routerLink="/employee">Employee</a>
                       </li>
-                      <li>
+                      <li routerLinkActive="active" >
                           <a routerLink="/discount">Discount</a>
                       </li>
-                      <li>
+                      <li routerLinkActive="active" >
                         <a routerLink="/invoice">Invoice</a>
                       </li>
                       
-                      <li>
+                      <!-- <li routerLinkActive="active" >
                         <a routerLink="/salary">Salary</a>
-                      </li>
-                      <li  *ngIf="!isLocalAdmin">
+                      </li> -->
+                      <li routerLinkActive="active" *ngIf="!isLocalAdmin">
                         <a routerLink="/role">Roles</a>
                       </li>
                   </ul>

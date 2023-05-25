@@ -1,16 +1,19 @@
-import { Component, OnInit, PipeTransform } from '@angular/core';
+import { Component, ElementRef, OnInit, PipeTransform, ViewChild } from '@angular/core';
 import { DateFilterFn } from '@angular/material/datepicker';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from 'src/app/_service/api.service';
 import { DatePipe } from '@angular/common';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-invoice',
   templateUrl: './invoice.component.html',
   styleUrls: ['./invoice.component.css']
 })
 export class InvoiceComponent {
+    @ViewChild('invoice-table', { static: false }) yourTable!: ElementRef;
     reservationGetAll! : ReservationModel[];
     reservationFilter! : ReservationModel[];
     searchBooking: string = '' ;
@@ -64,6 +67,19 @@ export class InvoiceComponent {
         }
       )
     }
+    public openPDF(): void {
+        let DATA: any = document.getElementById('htmlData');
+        html2canvas(DATA).then((canvas) => {
+          let fileWidth = 208;
+          let fileHeight = (canvas.height * fileWidth) / canvas.width;
+          const FILEURI = canvas.toDataURL('image/png');
+          let PDF = new jsPDF('p', 'mm', 'a4');
+          let position = 0;
+          PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+          PDF.save('angular-demo.pdf');
+        });
+      }
+   
   
     searchBookings() {
       // Chuyển đổi từ khóa tìm kiếm thành chữ thường
@@ -81,6 +97,7 @@ export class InvoiceComponent {
       this.searchBooking = ''; // Xóa từ khóa tìm kiếm
       this.reservationGetAll = this.reservationFilter
     }
+   
   }
   
   export class ReservationModel

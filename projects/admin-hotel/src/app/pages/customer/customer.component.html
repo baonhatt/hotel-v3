@@ -11,7 +11,7 @@
                   <div class="page-title-right">
                       <ol class="breadcrumb m-0">
                           <li class="breadcrumb-item"><a href="javascript: void(0);">Beyond</a></li>
-                          <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
+                          <li class="breadcrumb-item"><a href="javascript: void(0);">Managements</a></li>
                           <li class="breadcrumb-item active">Customers</li>
                       </ol>
                   </div>
@@ -42,12 +42,7 @@
                           <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable">
                               <thead>
                                   <tr>
-                                      <th style="width: 20px;">
-                                          <div class="form-check">
-                                              <input type="checkbox" class="form-check-input" id="customCheck1">
-                                              <label class="form-check-label" for="customCheck1">&nbsp;</label>
-                                          </div>
-                                      </th>
+                                    
                                       <th>Customer</th>
                                       <th>Phone Number</th>
                                       <th>Email</th>
@@ -60,12 +55,7 @@
                               <tbody>
                                  
                                   <tr *ngFor="let item of Accounts; let i = index">
-                                      <td>
-                                          <div class="form-check">
-                                              <input type="checkbox" class="form-check-input" id="customCheck13">
-                                              <label class="form-check-label" for="customCheck13">&nbsp;</label>
-                                          </div>
-                                      </td>
+                                      
                                       <td class="table-user">
                                           <img src="{{item.image}}" alt="table-user" class="me-2 rounded-circle">
                                           <a href="javascript:void(0);" class="text-body fw-semibold">{{item.name}}</a>
