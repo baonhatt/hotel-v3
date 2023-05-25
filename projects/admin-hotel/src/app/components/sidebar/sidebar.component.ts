@@ -41,7 +41,6 @@ export class SidebarComponent implements OnInit{
                
              );
              this.roleAccount = JSON.parse(claims) as User;
-
             console.log(this.roleAccount);
 
 

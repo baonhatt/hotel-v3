@@ -11,8 +11,9 @@ export class PieChartComponent implements OnInit {
     currentYear!: number;
     revenueForRoom!: any[];
     priceRoom!: number;
-    percentRoomType!: number;
+    percentRoomType!: string;
     totalPrice!: number;
+    
     constructor(private api: ApiService) { }
 
     ngOnInit(): void {
@@ -31,7 +32,9 @@ export class PieChartComponent implements OnInit {
 
             for (let i = 0; i < res.length; i++) {
                 totalPrice += res[i].price;
-                this.totalPrice = totalPrice
+                this.totalPrice = totalPrice;
+                var percent = ((res[i].price / this.totalPrice)*100 ).toFixed(2)
+                this.percentRoomType = percent
             }
             this.chart = new Chart({
                 chart: {
@@ -50,25 +53,27 @@ export class PieChartComponent implements OnInit {
                         text: 'Revenue in %'
                     }
                 },
-                
+                tooltip: {
+                    valueSuffix: '%'
+                  },
                 series: [
                     {
                         type: 'pie',
                         data: [
                             {
                                 name: res[0].typeRoomName,
-                                y: Math.ceil((res[0].price / this.totalPrice)*100 ) ,
+                                y: Math.round((res[0].price / this.totalPrice)*100 ) ,
                                 color: '#4A5959',
                                
                             },
                             {
                                 name: res[1].typeRoomName,
-                                y: Math.ceil((res[1].price / this.totalPrice)*100),
+                                y: Math.round((res[1].price / this.totalPrice)*100),
                                 color: '#F0B82C',
                             },
                             {
                                 name: res[2].typeRoomName,
-                                y: Math.ceil((res[2].price / this.totalPrice)*100),
+                                y: Math.round((res[2].price / this.totalPrice)*100),
                                 color: '#B7C9C9',
                             },
 
