@@ -36,7 +36,7 @@ export class EditProfileComponent implements OnInit {
   }
   ngOnInit(): void {
     this.updateProfile = this.fb.group({
-      CMND: ['',  [Validators.required, Validators.pattern("[0-9 ]{20}")]],
+      CMND: ['',  [Validators.required, Validators.pattern("[0-9 ]{12}")]],
       PhoneNumber: ['',  [Validators.required, Validators.pattern("[0-9 ]{10}")]],
       Address: ['', Validators.required],
     });

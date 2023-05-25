@@ -43,7 +43,7 @@ export class HeaderComponent {
   getUser(){
     return this.apiServe.getUser()
   }
-  getLoggedInUser() {
+    getLoggedInUser() {
     return this.auth.getLoggedInUser();
   }
 

@@ -15,7 +15,6 @@ export class RevenueComponent  implements OnInit{
     revenueTotal!: number;
   constructor(private api: ApiService){}
   ngOnInit(): void {
-
     $.getScript('assets/js/pages/demo.dashboard.js');
     this.api.getallUser().subscribe( res =>{
       this.numStaff = res
@@ -31,9 +30,6 @@ export class RevenueComponent  implements OnInit{
 
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
-  }
-  reload(){
-    window.location.reload()
   }
 
   getRevenue() {

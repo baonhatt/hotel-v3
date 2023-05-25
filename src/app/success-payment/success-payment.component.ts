@@ -61,12 +61,31 @@ export class SuccessPaymentComponent implements OnInit {
       reservationId: this.reservationId,
     });
     if (this.resultCode == '0' || this.resultCode == '00') {
-      this.api.payment(this.invoiceForm.value).subscribe(res => {
-        this.toast.success(
-          'Payment has been successful, please check your booking history');
-      },err =>{
-        this.toast.error(err.message)
-      })
+      this.http
+        .post<any>(
+          `${environment.BASE_URL_API}/user/invoice/create`,
+          this.invoiceForm.value
+        )
+        .pipe(
+          catchError((err) => {
+            return throwError(err);
+          })
+        )
+        .subscribe(
+          (respon) => {
+            this.toast.success(respon.success.message);
+          },
+          (_err) => {
+            if (_err.status != undefined) {
+              this.router.navigate(['/home']);
+              this.toast.warning(
+                'Payment has been successful, please check your booking history'
+              );
+            } else {
+              this.toast.error(_err.message);
+            }
+          }
+        );
     }
   }
 }

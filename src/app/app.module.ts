@@ -59,11 +59,11 @@ import { BlogNewestComponent } from './blog-newest/blog-newest.component';
 import { ModalComponent } from './pages/modal/modal/modal.component';
 import { ConfirmRegisterComponent } from './confirm-register/confirm-register.component';
 import { HotSaleComponent } from './hot-sale/hot-sale.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
-    NgbModule,
+    // NgbModule,
     HttpClientModule,
     JwtModule.forRoot({
       jwtOptionsProvider: {
