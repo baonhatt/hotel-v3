@@ -32,7 +32,6 @@
     "@ng-bootstrap/ng-bootstrap": "^14.2.0",
     "angular-highcharts": "^15.0.1",
     "angular-validation": "^1.4.1",
-    "aos": "^2.3.4",
     "bootstrap": "^5.2.3",
     "contentful": "^10.2.0",
     "date-fns": "^2.30.0",
