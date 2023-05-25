@@ -41,7 +41,6 @@ export class ModalComponent implements OnInit{
     this.api.votingStar(ratingValue, this.id).subscribe(res =>{
       this.toast.success("ok")
     },err =>{
-      this.toast.error("fail")
     })
     }
 }

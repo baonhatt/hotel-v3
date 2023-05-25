@@ -12,11 +12,12 @@ import { Booking } from '../models/booking.model ';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { ToastrService } from 'ngx-toastr';
-MatDialog
+import { AuthService } from '../_service/auth.service';
+MatDialog;
 @Component({
   selector: 'app-room-detail',
   templateUrl: './room-detail.component.html',
-  styleUrls: ['./room-detail.component.scss']
+  styleUrls: ['./room-detail.component.scss'],
 })
 export class RoomDetailComponent implements OnInit {
   imgUrl!: string;
@@ -26,52 +27,68 @@ export class RoomDetailComponent implements OnInit {
   imageUrls: string[] = [];
   roomId!: any;
   showDiscount: number = 0;
-  discount!: number
+  discount!: number;
   rating = 0;
-  checkIn:any = this.route.snapshot.paramMap.get("checkIn");
-  checkOut:any = this.route.snapshot.paramMap.get("checkOut");
-  formReservation!:FormGroup;
+  checkIn: any = this.route.snapshot.paramMap.get('checkIn');
+  checkOut: any = this.route.snapshot.paramMap.get('checkOut');
+  formReservation!: FormGroup;
 
-  constructor(private route: ActivatedRoute, private router: Router, private apiService: ApiService, private viewPort: ViewportScroller, private dialogref: MatDialog, private http: HttpClient,private toastr: ToastrService, private fb: FormBuilder){
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private apiService: ApiService,
+    private viewPort: ViewportScroller,
+    private dialogref: MatDialog,
+    private http: HttpClient,
+    private toastr: ToastrService,
+    private fb: FormBuilder,
+    private auth: AuthService
+  ) {
     this.formReservation = this.fb.group({
-      checkIn : new Date().toISOString(),
-      checkOut : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
-      numberOfPeople : "",
+      checkIn: new Date().toISOString(),
+      checkOut: new Date(
+        new Date().setDate(new Date().getDate() + 1)
+      ).toISOString(),
+      numberOfPeople: '',
     });
   }
 
   ngOnInit() {
-    if(this.checkIn != undefined || this.checkOut != undefined){
-      this.formReservation.controls["checkIn"].setValue(this.checkIn);
-      this.formReservation.controls["checkOut"].setValue(this.checkOut);
+    if (this.checkIn != undefined || this.checkOut != undefined) {
+      this.formReservation.controls['checkIn'].setValue(this.checkIn);
+      this.formReservation.controls['checkOut'].setValue(this.checkOut);
     }
-    this.formReservation.controls["numberOfPeople"].setValue(0);
+    this.formReservation.controls['numberOfPeople'].setValue(1);
     window.scrollTo(0, 0);
-    this.roomId = this.route.snapshot.paramMap.get('id')
+    this.roomId = this.route.snapshot.paramMap.get('id');
     this.viewPort.scrollToPosition([0, 0]);
     this.getRoomById();
     localStorage.setItem('roomId', JSON.stringify(this.roomId));
-
   }
 
-  openDialog(){
-    this.dialogref.open(ModalComponent)
+  openDialog() {
+    this.dialogref.open(ModalComponent);
   }
   getRoomById(): void {
     const id = this.route.snapshot.paramMap.get('id')!;
-    this.apiService.getRoomDetail(id)
-      .subscribe(res => {
-        this.room = res
-        this.showDiscount = res.discountPrice
-        const linkArray: string[] = JSON.parse(res.roomPictures);
-        const formattedLinks: string[] = linkArray.map((link: string) => `${link}`);
-        this.imageUrls = formattedLinks
-      });
+    this.apiService.getRoomDetail(id).subscribe((res) => {
+      this.room = res;
+      this.showDiscount = res.discountPrice;
+      const linkArray: string[] = JSON.parse(res.roomPictures);
+      const formattedLinks: string[] = linkArray.map(
+        (link: string) => `${link}`
+      );
+      this.imageUrls = formattedLinks;
+    });
   }
 
   bookingRoom() {
-    const checkInValue = new Date(this.formReservation.controls["checkIn"].value).setHours(7,0,0);
-    const checkOutValue = new Date(this.formReservation.controls["checkOut"].value).setHours(7,0,0);
+    const checkInValue = new Date(
+      this.formReservation.controls['checkIn'].value
+    ).setHours(7, 0, 0);
+    const checkOutValue = new Date(
+      this.formReservation.controls['checkOut'].value
+    ).setHours(7, 0, 0);
 
     if (!checkInValue || !checkOutValue) {
       return;
@@ -82,24 +99,27 @@ export class RoomDetailComponent implements OnInit {
       (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24)
     );
     var userProfileLocal = new userProfile();
-    if (localStorage.getItem('user_profile')!.length > 0) {
-      let result = localStorage.getItem('user_profile')!;
-      userProfileLocal = JSON.parse(result) as userProfile;
+    var userProfileTemp = localStorage.getItem('user_profile');
+    if (userProfileTemp != null) {
+      if (userProfileTemp!.length > 0) {
+        let result = localStorage.getItem('user_profile')!;
+        userProfileLocal = JSON.parse(result) as userProfile;
+      }
     }
     var payLoad = new Booking();
-    payLoad.startDate = new Date(checkInValue)
-    payLoad.endDate = new Date(checkOutValue)
+    payLoad.startDate = new Date(checkInValue);
+    payLoad.endDate = new Date(checkOutValue);
     payLoad.roomId = this.room.id;
     payLoad.numberOfDay = numberOfNights;
-    payLoad.numberOfPeople = Number.parseInt(this.formReservation.controls["numberOfPeople"].value);
+    payLoad.numberOfPeople = Number.parseInt(
+      this.formReservation.controls['numberOfPeople'].value
+    );
     payLoad.name = userProfileLocal.userName;
     payLoad.email = userProfileLocal.email;
     payLoad.phoneNumber = userProfileLocal.phoneNumber;
     payLoad.address = userProfileLocal.address;
     this.http
-      .post<any>(
-        `${environment.BASE_URL_API}/user/reservation/create`,payLoad
-      )
+      .post<any>(`${environment.BASE_URL_API}/user/reservation/create`, payLoad)
       .subscribe(
         (res) => {
           this.toastr.success(res.message);
@@ -116,4 +136,3 @@ export class RoomDetailComponent implements OnInit {
       );
   }
 }
-
