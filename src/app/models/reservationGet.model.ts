@@ -4,6 +4,8 @@ export class ReservationGet {
   startDate!: Date;
 
   numberOfDay!: number;
+  
+  numberOfPeople!: number;
 
   endDate!: Date;
 
