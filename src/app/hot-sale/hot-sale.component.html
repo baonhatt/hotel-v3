@@ -66,7 +66,8 @@
   <div class="row-sale">
   <div class="employee-container"  *ngFor="let room of discountRoom" >
         <div class="employee">
-          <span *ngIf="room!=undefined" class="hotel-view-contents-review  star-sale"> <i class="las la-star"></i> {{room.starSum}}</span>
+          <span *ngIf="room!=undefined" class="hotel-view-contents-review  star-sale"> <i class="las la-star"></i> {{room.starSum}}
+            <span class="hotel-view-contents-review-count" >({{room.starAmount}})</span> </span>
           <div class="employee-image">
             <a routerLink="/room-detail/{{room.id}}">
               <img [src]="room.roomPicture" class="img-fluid d-block m-auto" alt="employee-image">
@@ -82,11 +83,12 @@
               </div>
             <div class="employee-social-link">
                 <ul>
-                  <li><i class="las la-parking" aria-hidden="true"></i></li>
-                  <li><i class="fas la-wifi" aria-hidden="true"></i></li>
-                  <li><i class="fas la-swimming-pool" aria-hidden="true"></i></li>
-                  <li><i class="fas fa-coffee" aria-hidden="true"></i></li>
-                  <li><i class="fas la-dumbbell" aria-hidden="true"></i></li>
+                  <li>
+                    <div class="btn-wrapper">
+                      <a routerLink="/checkout/{{room.id}}" class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
+                    </div>
+                  </li>
+
               </ul>
           </div>
           </div>

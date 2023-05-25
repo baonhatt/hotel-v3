@@ -53,7 +53,14 @@
                   <div class="input-flex-item">
                     <div class="single-input mt-4">
                       <label class="label-title"> Number of people </label>
-                      <input class="form--control" type="text" formControlName="numberOfPeople" placeholder="Number of people">
+                      <input class="form--control form-control input" min="0" placeholder="Guest"
+                      [(ngModel)]="numberOfPeople" tabindex="0" max="9" type="number" style="padding: 14px 16px;"
+                      formControlName="numberOfPeople"
+                      [ngClass]="{ 'is-invalid':  f['numberOfPeople'].errors }" required="">
+
+                      <div *ngIf="f['numberOfPeople'].errors" class="invalid-feedback">
+                        <div *ngIf="f['numberOfPeople'].errors['required']">People is required</div>
+                      </div>
                     </div>
                   </div>
                   <div class="single-input mt-2">

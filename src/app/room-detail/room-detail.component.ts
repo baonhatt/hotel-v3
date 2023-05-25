@@ -5,7 +5,7 @@ import { ApiService } from '../_service/api.service';
 import { ViewportScroller } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../pages/modal/modal/modal.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SearchRoom } from '../models/searchRoom.model';
 import { userProfile } from '../models/userProfile.model';
 import { Booking } from '../models/booking.model ';
@@ -29,27 +29,18 @@ export class RoomDetailComponent implements OnInit {
   showDiscount: number = 0;
   discount!: number;
   rating = 0;
-  checkIn: any = this.route.snapshot.paramMap.get('checkIn');
-  checkOut: any = this.route.snapshot.paramMap.get('checkOut');
-  formReservation!: FormGroup;
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private apiService: ApiService,
-    private viewPort: ViewportScroller,
-    private dialogref: MatDialog,
-    private http: HttpClient,
-    private toastr: ToastrService,
-    private fb: FormBuilder,
-    private auth: AuthService
-  ) {
+  numberOfPeople!: number
+  checkIn:any = this.route.snapshot.paramMap.get("checkIn");
+  checkOut:any = this.route.snapshot.paramMap.get("checkOut");
+  formReservation!:FormGroup;
+  get f(){
+    return this.formReservation.controls
+  }
+  constructor(private route: ActivatedRoute, private router: Router, private apiService: ApiService, private viewPort: ViewportScroller, private dialogref: MatDialog, private http: HttpClient,private toastr: ToastrService, private fb: FormBuilder){
     this.formReservation = this.fb.group({
-      checkIn: new Date().toISOString(),
-      checkOut: new Date(
-        new Date().setDate(new Date().getDate() + 1)
-      ).toISOString(),
-      numberOfPeople: '',
+      checkIn : new Date().toISOString(),
+      checkOut : new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
+      numberOfPeople: ['', [Validators.required, Validators.min(1)]]
     });
   }
 

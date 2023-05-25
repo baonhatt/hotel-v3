@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../_service/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
@@ -24,6 +24,7 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('vnpayRadio') vnpayRadio!: ElementRef;
   paymentFailed!: any;
   room!: Room;
+  numberOfPeople!: number;
   bookForm!: FormGroup;
   dateForm!: FormGroup;
   startDate!: Date;
@@ -65,7 +66,7 @@ export class CheckoutComponent implements OnInit {
       name: [''],
       phoneNumber: [''],
       address: [''],
-      numberOfPeople: [''],
+      numberOfPeople: ['', [Validators.required, Validators.min(1)]],
       paymentMethod: ['momo'],
     });
     this.userProfile.getUserProfile().subscribe((res) => {
