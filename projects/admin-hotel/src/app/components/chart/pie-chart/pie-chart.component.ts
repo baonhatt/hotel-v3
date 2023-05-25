@@ -58,8 +58,8 @@ export class PieChartComponent implements OnInit {
       this.chart = new Chart({
         chart: {
           type: 'pie',
-          height: 350,
-          width: 350
+          height: 500,
+          width: 500
         },
         title: {
           text: 'The best rooms type in year'

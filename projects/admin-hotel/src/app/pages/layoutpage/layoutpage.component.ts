@@ -28,7 +28,9 @@ export class LayoutpageComponent implements OnInit {
         this.getEmployeeTopBooked(2023);
         this.getServiceRoomTopBooked(2023);
     }
-
+    reload(){
+        window.location.reload()
+    }
     getSum(year: any) {
         this.dashboard.getSum(year).subscribe(
             (res) => {
