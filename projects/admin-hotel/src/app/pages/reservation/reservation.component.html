@@ -109,7 +109,7 @@
                                                 </td>
                                                 <td>{{room.roomTypeName}}</td>
                                                 <td>
-                                                    {{room.currentPrice}}
+                                                    {{room.currentPrice | vndCurrency}}
                                                 </td>
                                                 <td>
                                                     {{room.discountPrice == null?0:room.discountPrice}}
