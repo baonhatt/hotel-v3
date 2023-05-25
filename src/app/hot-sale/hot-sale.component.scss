@@ -6,6 +6,9 @@
   display: flex;
   margin-left: 148px
 }
+.discountprice{
+  text-decoration: line-through;
+}
 .employee {
   border-radius: 20px;
   width: 450px;
@@ -55,8 +58,8 @@ box-shadow: 0px 0px 31px -19px rgba(0,0,0,0.75);
 }
 .employee-social-link ul li {
   display:inline-block;
-  margin:7px;
-  background-color:#000;
+  margin:10px;
+  background-color:#1593fb;
   padding:10px;
   border-radius:50%;
   line-height:0.1;
@@ -66,6 +69,7 @@ box-shadow: 0px 0px 31px -19px rgba(0,0,0,0.75);
   font-size:15px;
   color:#fff;
   animation-name:rotate-icon;
+
 }
 
 .employee-social-link ul li:nth-child(1) {
@@ -89,6 +93,7 @@ box-shadow: 0px 0px 31px -19px rgba(0,0,0,0.75);
 
 .star-sale{
   position: absolute;
+  left: 3;
   top: 2;
   background-color: antiquewhite;
 }

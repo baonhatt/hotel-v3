@@ -75,7 +75,11 @@
             </div>
           <div class="employee-details">
             <div class="employee-name">
-              <h1 class="text-center">{{room.roomTypeName}}<br><span class="employee-role">{{room.discountPrice | vndCurrency}}</span></h1>
+              <h1 class="text-center">{{room.roomTypeName}}<br><span class="employee-role">{{room.discountPrice | vndCurrency}}</span>
+                <br>
+                <span class="employee-role discountprice">{{room.currentPrice | vndCurrency}}</span>
+              </h1>
+
               </div>
             <div class="employee-social-link">
                 <ul>
