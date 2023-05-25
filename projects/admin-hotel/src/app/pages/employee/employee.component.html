@@ -27,10 +27,25 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-4">
-                                <a data-bs-toggle="modal" data-bs-target="#modal-detail2" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Employee</a>
+                                <div class="row gy-2 gx-2 align-items-center justify-content-xl-start justify-content-between">
+                                <div class="col-auto">
+                                    <label for="inputPassword2" class="visually-hidden">Search</label>
+                                    <input type="search" [(ngModel)]="searchTerm2" class="form-control" id="inputPassword2"
+                                        placeholder="Search...">
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-primary" (click)="searchBookings2()">Search</button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-secondary" (click)="clearSearch2()">Clear</button>
+                                      </div>
+                              
+                            </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="text-sm-end">
+                                    <a data-bs-toggle="modal" data-bs-target="#modal-detail2" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Employee</a>
                                     <!-- <button type="button" class="btn btn-light mb-2 me-1">Import</button>
                                     <button type="button" class="btn btn-light mb-2">Export</button> -->
                                 </div>
@@ -41,12 +56,7 @@
                             <table class="table table-centered table-striped dt-responsive nowrap w-100" id="products-datatable">
                                 <thead>
                                     <tr>
-                                        <th style="width: 20px;">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck1">
-                                                <label class="form-check-label" for="customCheck1">&nbsp;</label>
-                                            </div>
-                                        </th>
+                                        
                                         <th>Employee</th>
                                         <th>Phone Number</th>
                                         <th>Email</th>
@@ -59,12 +69,7 @@
                                 <tbody>
                                    
                                     <tr *ngFor="let item of Accounts; let i = index">
-                                        <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck13">
-                                                <label class="form-check-label" for="customCheck13">&nbsp;</label>
-                                            </div>
-                                        </td>
+                                        
                                         <td class="table-user">
                                             <img src="{{item.image}}" alt="table-user" class="me-2 rounded-circle">
                                             <a href="javascript:void(0);" class="text-body fw-semibold">{{item.name}}</a>

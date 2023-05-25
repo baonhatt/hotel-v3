@@ -45,7 +45,8 @@ export class RoomtypeComponent implements OnInit{
     const searchTerm = this.searchRoomType.toLowerCase();
     // Lọc các đặt phòng dựa trên từ khóa tìm kiếm
     this.roomType = this.roomType.filter((item) =>
-    item.typeName.toLowerCase().includes(searchTerm) 
+    item.typeName.toLowerCase().includes(searchTerm) ||
+    item.id.toString().includes(searchTerm)
  
     );
    this.searchRoomType = ''

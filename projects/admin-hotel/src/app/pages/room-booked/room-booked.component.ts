@@ -14,11 +14,13 @@ import { RoomTypeService } from '../../models/roomtypeservice.model';
 export class RoomBookedComponent implements OnInit {
 
     roombooked!: ReservationModel[];
+    roomTypeResult!: ReservationModel[];
     reservationServiceId!: any
     services!: RoomTypeService[]
     serviceForm!: FormGroup
     serviceRoomId!: number 
     roomLength!: number
+    searchTerm: string = '';
     constructor(private api: ApiService,
         private fb: FormBuilder,
         private toast: ToastrService
@@ -35,14 +37,29 @@ export class RoomBookedComponent implements OnInit {
 
         this.api.getAllReservation().subscribe(res => {
             this.roombooked = res;
-
+            this.roomTypeResult = this.roombooked
             this.filterExpiredReservations();
 
         })
 
         this.getAllService()
     }
-   
+    searchBookings() {
+        // Chuyển đổi từ khóa tìm kiếm thành chữ thường
+        const searchTerm = this.searchTerm.toLowerCase();
+        // Lọc các đặt phòng dựa trên từ khóa tìm kiếm
+        this.roombooked = this.roombooked.filter((item) =>
+            item.name.toLowerCase().includes(searchTerm) ||
+            item.roomNumber.includes(searchTerm)
+
+        );
+        this.searchTerm = ''
+
+    }
+
+    clearSearch() {
+        this.roombooked = this.roomTypeResult
+    }
     toggleSelection(itemId: string) {
         this.reservationServiceId = itemId;
     }
