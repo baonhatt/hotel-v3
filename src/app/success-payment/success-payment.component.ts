@@ -73,7 +73,7 @@ export class SuccessPaymentComponent implements OnInit {
         )
         .subscribe(
           (respon) => {
-            this.toast.success(respon.success.message);
+            this.toast.success(respon.message);
           },
           (_err) => {
             if (_err.status != undefined) {
