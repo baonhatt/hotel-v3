@@ -82,7 +82,7 @@ export class ApiService {
   }
   ////////////////////////Payment
   payment(payment: Payment){
-    return this.http.post(environment.BASE_URL_API + '/user/invoid/create', payment );
+    return this.http.post(environment.BASE_URL_API + '/user/invoice/create', payment );
 
   }
 
@@ -108,10 +108,14 @@ export class ApiService {
   /////////////////// Roles Based
 
   addRole(name: string){
-    return this.http.post(environment.BASE_URL_API + '/v2/admin/role/create', name)
+    return this.http.post(environment.BASE_URL_API + '/v2/admin/role/create', name);
   }
 
 
-  /////////////////// Account
-  
+  /////////////////// Payment
+
+  getInfoPayment(): Observable<any[]>{
+    return this.http.get<any[]>(environment.BASE_URL_API + '/user/reservation/get-successful');
+  }
+
 }

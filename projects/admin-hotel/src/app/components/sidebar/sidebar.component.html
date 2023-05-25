@@ -103,7 +103,7 @@
                       <li>
                         <a routerLink="/salary">Salary</a>
                       </li>
-                      <li *ngIf="hasSalaryManagementPermission()">
+                      <li  *ngIf="!isLocalAdmin">
                         <a routerLink="/role">Roles</a>
                       </li>
                   </ul>

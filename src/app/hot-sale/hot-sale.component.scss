@@ -4,12 +4,14 @@
 }
 .row-sale{
   display: flex;
-  margin-left: 148px
+  justify-content: center;
+  align-items: center;
 }
 .discountprice{
   text-decoration: line-through;
 }
 .employee {
+  flex: 1;
   border-radius: 20px;
   width: 450px;
   background-color:rgb(255, 255, 255);
