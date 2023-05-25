@@ -7,9 +7,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./left-content.component.scss']
 })
 export class LeftContentComponent implements OnInit {
+
   constructor(private route: Router){}
   ngOnInit(): void {
-    $.getScript('main.js');
+
   }
   logout(): void {
     // Xóa thông tin người dùng khỏi localStorage hoặc sessionStorage khi đăng xuất
@@ -17,5 +18,8 @@ export class LeftContentComponent implements OnInit {
   }
   routepage(){
     this.route.navigate(['/paymentdetail'])
+  }
+  storeLoad(){
+   const LoadJs = localStorage.setItem('LoadJs', '1')
   }
 }

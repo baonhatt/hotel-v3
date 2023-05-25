@@ -49,7 +49,7 @@
                   </div>
                   <div class="navbar-author-wrapper">
                     <div class="navbar-author-wrapper-list">
-                      <a [routerLink]="['/user-profile']" class="navbar-author-wrapper-list-item"> My Profile </a>
+                      <a (click)="routeProfile()" class="navbar-author-wrapper-list-item"> My Profile </a>
                       <span class="navbar-author-wrapper-list-item" (click)="logout()"> Log Out </span>
                     </div>
                   </div>
