@@ -13,7 +13,6 @@ import { AuthService } from '../_service/auth.service'
 export class ForgetpasswordComponent implements OnInit {
 
   form!: FormGroup;
-  loading = false;
   submitted = false;
   email: any;
   constructor(private auth: AuthService, private formBuilder: FormBuilder, private router: Router, private toast: ToastrService) { }
@@ -30,15 +29,10 @@ export class ForgetpasswordComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
-
     this.auth.requestChangePassword(this.form.value.email, environment.BASE_URL_WEB + "/reset-password")
       .subscribe((result_resetpasswordstatus) => {
         const message = result_resetpasswordstatus.message
-
-
         this.toast.success(message);
-
       },
         (err) => {
           console.log(err);
