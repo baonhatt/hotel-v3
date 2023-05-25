@@ -63,7 +63,7 @@ export class SuccessPaymentComponent implements OnInit {
     if (this.resultCode == '0' || this.resultCode == '00') {
       this.http
         .post<any>(
-          `${environment.BASE_URL_API}/user/invoid/create`,
+          `${environment.BASE_URL_API}/user/invoice/create`,
           this.invoiceForm.value
         )
         .pipe(

@@ -288,7 +288,9 @@ export class ApiService {
     getRevenueByMonth(month: number, year: number): Observable<any[]> {
     return this.http.get<any[]>(environment.BASE_URL_API + `/v2/admin/revenue/revenue-by-month?month=${month}&year=${year}`);
   }
-
+  getRevenueForRoom(year: number): Observable<any[]> {
+    return this.http.get<any[]>(environment.BASE_URL_API + `/v2/admin/revenue/get-for-type-room?year=${year}`);
+  }
 
 
 

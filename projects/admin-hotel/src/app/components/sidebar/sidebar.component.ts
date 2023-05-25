@@ -3,56 +3,61 @@ import { PermissionService } from '../../_service/permission.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../../_service/user.model';
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit{
-  showCustomers = false;
+export class SidebarComponent implements OnInit {
+    showCustomers = false;
     roleAccount!: any
+    roleValue!: string
+    isLocalAdmin: boolean = false; 
 
-    
-    constructor(private permissionService: PermissionService, private jwt: JwtHelperService){
+    constructor(private permissionService: PermissionService, private jwt: JwtHelperService) {
 
         this.permissionService.checkRole('Admin');
         this.permissionService.checkRole('Employee');
     }
     ngOnInit(): void {
         this.getRole()
+
+        if (this.roleValue == 'Admin') {
+          this.isLocalAdmin == true
+        }
     }
 
 
-    
-    getRole(){
+
+    getRole() {
         const tokenTemp = localStorage.getItem('token_admin')
-       if(tokenTemp !== null){
-           const tokenInfo =  JSON.parse(tokenTemp)
-           const accessToken = tokenInfo.accessToken
+        if (tokenTemp !== null) {
+            const tokenInfo = JSON.parse(tokenTemp)
+            const accessToken = tokenInfo.accessToken
 
-           var claims = JSON.stringify(this.jwt.decodeToken(accessToken));
-          
+            var claims = JSON.stringify(this.jwt.decodeToken(accessToken));
+
             claims = claims.replaceAll(
-               'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/',
-               ''
-             );
+                'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/',
+                ''
+            );
             claims = claims.replaceAll(
-               'http://schemas.microsoft.com/ws/2008/06/identity/claims/',
-               ''
-               
-             );
-             this.roleAccount = JSON.parse(claims) as User;
+                'http://schemas.microsoft.com/ws/2008/06/identity/claims/',
+                ''
 
-            console.log(this.roleAccount);
+            );
+            this.roleAccount = JSON.parse(claims) as User;
+            console.log(this.roleAccount.role);
+            this.roleValue = this.roleAccount.role
 
 
-            
-
-       }
+        }
 
     }
+
+
     hasSalaryManagementPermission(): boolean {
         return this.permissionService.hasPermission('Admin');
-      }
+    }
     toggleCustomers() {
         this.showCustomers = !this.showCustomers;
     }

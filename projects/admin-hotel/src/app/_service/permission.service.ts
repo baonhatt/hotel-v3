@@ -17,9 +17,9 @@ export class PermissionService {
 
     checkRole(role: string): void {
         if (this.hasPermission(role)) {
-          console.log(`Người dùng có vai trò ${role}.`);
+        //   console.log(`Người dùng có vai trò ${role}.`);
         } else {
-          console.log(`Người dùng không có vai trò ${role}.`);
+        //   console.log(`Người dùng không có vai trò ${role}.`);
         }
       }
 }
