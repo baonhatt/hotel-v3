@@ -2,5 +2,6 @@
   height: 100%;
 }
 .highcharts-figure{
-  padding-left: 30px;
+    width: 100%;
+  /* padding-left: 30px; */
 }

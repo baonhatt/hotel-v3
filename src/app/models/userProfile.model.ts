@@ -8,4 +8,7 @@ export class userProfile {
   address!: string
   cmnd!: string
   createdAt!: Date
+  newPassword!: string
+  currentPassword!: string
+  confirmNewPassWord!: string
 }

@@ -90,7 +90,7 @@ const routes: Routes = [
     path: 'about',
     component: AboutComponent,
     data: {
-      requiredAuth: true
+      requiredAuth: false
     },
     canActivate: [AuthGuard]
   },

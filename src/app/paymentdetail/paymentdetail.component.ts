@@ -8,17 +8,23 @@ import { ApiService } from '../_service/api.service';
 })
 export class PaymentdetailComponent implements OnInit{
   paymentInfo!: any;
-
+  paymentType!: string
   constructor(
     private api: ApiService
   ){}
 
 
   ngOnInit(): void {
-    $.getScript('main.js');
+    // $.getScript('main.js');
 
     this.api.getInfoPayment().subscribe( res=>{
-      this.paymentInfo = res
+      this.paymentInfo = res;
+      console.log(res);
+
+      this.paymentType = this.paymentInfo.reservationPayment.orderType
+      console.log(this.paymentType);
+
+
     })
 
   }

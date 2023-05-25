@@ -187,5 +187,8 @@ export class AuthService implements OnInit{
     return this.http.get<userProfile>(`${environment.BASE_URL_API}/user/user-profile/get`);
   }
 
-  
+  changePass(data: userProfile){
+    return this.http.post<userProfile>(environment.BASE_URL_API + `/user/change-pass-logged-in`, data);
+  }
+
 }
