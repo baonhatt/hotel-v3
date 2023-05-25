@@ -4,6 +4,7 @@ import { ApiService } from '../_service/api.service';
 import { AuthService } from '../_service/auth.service';
 import { UserService } from '../_service/user.service';
 import { userProfile } from '../models/userProfile.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,8 +14,10 @@ import { userProfile } from '../models/userProfile.model';
 export class HeaderComponent {
 
   userProfile = new userProfile;
-  constructor(private auth: AuthService, private fb: FormBuilder, private apiServe: ApiService, private userService: UserService){}
+  constructor(private auth: AuthService, private fb: FormBuilder, private apiServe: ApiService, private route: Router, private userService: UserService){}
   ngOnInit(): void {
+
+    
     setTimeout(() => {
       if(this.auth.isLoggedIn()){
         if(localStorage.getItem('user_profile')!.length > 0)
@@ -34,6 +37,9 @@ export class HeaderComponent {
     })
   }
 
+  routeProfile(){
+    this.route.navigate(['/user-profile'])
+  }
   isLoggedIn() {
     if (this.auth.isLoggedIn()) {
       return true;
