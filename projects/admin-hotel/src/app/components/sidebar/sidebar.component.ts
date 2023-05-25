@@ -12,6 +12,7 @@ export class SidebarComponent implements OnInit {
     roleAccount!: any
     roleValue!: string
     isLocalAdmin: boolean = false; 
+    isLocalBoth: boolean = false; 
 
     constructor(private permissionService: PermissionService, private jwt: JwtHelperService) {
 
@@ -46,7 +47,7 @@ export class SidebarComponent implements OnInit {
 
             );
             this.roleAccount = JSON.parse(claims) as User;
-            console.log(this.roleAccount.role);
+            // alert(this.roleAccount.role);
             this.roleValue = this.roleAccount.role
 
 

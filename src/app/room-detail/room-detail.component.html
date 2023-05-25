@@ -192,36 +192,13 @@
                 <div class="hotel-view-contents-location mt-2">
                 </div>
               </div>
-              <div class="hotel-view-contents-middle">
-                <div class="hotel-view-contents-flex">
-                  <div class="hotel-view-contents-icon d-flex gap-1">
-                    <span> <i class="las la-parking"></i> </span>
-                    <p class="hotel-view-contents-icon-title flex-fill"> Parking </p>
+              <div class="hotel-view-contents-middle" >
+                <div class="hotel-view-contents-flex"  >
+                  <div class="hotel-view-contents-icon d-flex gap-1"*ngFor="let item of room.serviceAttachs">
+                    <span> <i class="{{item.icon}}"></i> </span>
+                    <p class="hotel-view-contents-icon-title flex-fill"> {{item.name}} </p>
                   </div>
-                  <div class="hotel-view-contents-icon d-flex gap-1">
-                    <span> <i class="las la-wifi"></i> </span>
-                    <p class="hotel-view-contents-icon-title flex-fill"> Wifi </p>
-                  </div>
-                  <div class="hotel-view-contents-icon d-flex gap-1">
-                    <span> <i class="las la-coffee"></i> </span>
-                    <p class="hotel-view-contents-icon-title flex-fill"> Breakfast </p>
-                  </div>
-                  <div class="hotel-view-contents-icon d-flex gap-1">
-                    <span> <i class="las la-quidditch"></i> </span>
-                    <p class="hotel-view-contents-icon-title flex-fill"> Room Service </p>
-                  </div>
-                  <div class="hotel-view-contents-icon d-flex gap-1">
-                    <span> <i class="las la-swimming-pool"></i> </span>
-                    <p class="hotel-view-contents-icon-title flex-fill"> Pool </p>
-                  </div>
-                  <div class="hotel-view-contents-icon d-flex gap-1">
-                    <span> <i class="las la-receipt"></i> </span>
-                    <p class="hotel-view-contents-icon-title flex-fill"> Reception </p>
-                  </div>
-                  <div class="hotel-view-contents-icon d-flex gap-1">
-                    <span> <i class="las la-dumbbell"></i> </span>
-                    <p class="hotel-view-contents-icon-title flex-fill"> Gym </p>
-                  </div>
+
                 </div>
               </div>
               <div class="hotel-view-contents-bottom">

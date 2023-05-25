@@ -35,14 +35,22 @@ export class PieChartComponent implements OnInit {
       }
       this.totalPrice = totalPrice;
     }
-  
+    randomColor(): string {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
     generateChart(): void {
       const chartData = [];
       for (let i = 0; i < this.revenueForRoom.length; i++) {
         const dataItem = {
           name: this.revenueForRoom[i].typeRoomName,
           y: Math.round((this.revenueForRoom[i].price / this.totalPrice) * 100),
-          color: '#4A5959',
+          color: this.randomColor(),
         };
         chartData.push(dataItem);
       }

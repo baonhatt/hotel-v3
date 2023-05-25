@@ -21,6 +21,7 @@ import { SalaryComponent } from './pages/salary/salary.component';
 import { EmployeeComponent } from './pages/employee/employee.component';
 import { RoleComponent } from './pages/role/role.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { SignupComponent } from './pages/signup/signup.component';
 const routes: Routes = [
     { path: "", redirectTo: "login", pathMatch: "full" },
     {
@@ -40,9 +41,22 @@ const routes: Routes = [
         canActivate: [AuthGuard],
     },
     {
+        path: "signup",
+        component: SignupComponent,
+        data: {
+            requiredAuth: false,
+        },
+        canActivate: [AuthGuard],
+    },
+    {
         path: "login",
         loadChildren: () =>
             import("../../admin/admin.module").then((m) => m.AdminModule),
+    },
+    {
+        path: "signup",
+        loadChildren: () =>
+            import("../../signup/signup.module").then((m) => m.SignupModule),
     },
     {
         path: "dashboard",

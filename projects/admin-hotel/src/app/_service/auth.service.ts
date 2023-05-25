@@ -82,6 +82,16 @@ export class AuthService implements OnInit {
             );
     }
 
+    signup(userName: string, email: string, password: string, confirmPassword: string){
+        const data = {
+            userName: userName,
+            emaill: email,
+            password: password,
+            confirmPassword: confirmPassword
+        }
+        return this.http.post(environment.BASE_URL_API + 'v2/admin/authen/register-admin', data)
+
+    }
     refreshToken(login: TokenModel) {
         return this.http.post<TokenModel>(
             environment.BASE_URL_API + "/v3/token/refresh",

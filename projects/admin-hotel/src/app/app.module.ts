@@ -64,6 +64,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { SalaryComponent } from './pages/salary/salary.component';
 import { RoleComponent } from './pages/role/role.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { SignupComponent } from './pages/signup/signup.component';
 @NgModule({
   declarations: [
     ChartComponent,
@@ -99,6 +100,7 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
     SalaryComponent,
     RoleComponent,
     UserProfileComponent,
+    SignupComponent,
   ],
   imports: [
     NgApexchartsModule,
