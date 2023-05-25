@@ -15,6 +15,7 @@ export class PaymentdetailComponent implements OnInit{
 
 
   ngOnInit(): void {
+    window.location.reload();
     // $.getScript('main.js');
 
     this.api.getInfoPayment().subscribe( res=>{
