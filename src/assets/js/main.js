@@ -1,5 +1,6 @@
 (function ($) {
   "use strict";
+  $("#main-js").remove();
   $(document).ready(function () {
     $(document).on("keyup change", "#search_form_input", function (event) {
       let input_values = $(this).val();
@@ -483,4 +484,5 @@
       ScrollTop.fadeOut(10);
     }
   });
+  $("#main-js").remove();
 })(jQuery);

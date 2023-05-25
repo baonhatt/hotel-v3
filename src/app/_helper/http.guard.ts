@@ -29,13 +29,15 @@ export class AuthGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
+    // $.getScript('/assets/js/main.js');
 
-      // $.getScript('/assets/js/main.js');
-      var script = document.createElement('script');
-      document.head.appendChild(script);
-      script.type = 'text/javascript';
-      script.src = '/assets/js/main.js';
-      script.onload;
+    var script = document.createElement('script');
+    document.head.appendChild(script);
+    script.type = 'text/javascript';
+    script.src = '/assets/js/main.js';
+    script.id = 'main-js';
+    script.onload;
+    document.head.removeChild(script);
 
     var token = this.storage.isLoggedIn();
     if (token) {
@@ -47,11 +49,10 @@ export class AuthGuard implements CanActivate {
     } else {
       if (route.data['requiredAuth'] == true) {
         this.router.navigate(['/login']);
-        this.toastr.warning("Please login to perform this function!");
+        this.toastr.warning('Please login to perform this function!');
         return false;
       }
       return true;
     }
-
   }
 }
