@@ -20,180 +20,191 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { SalaryComponent } from './pages/salary/salary.component';
 import { EmployeeComponent } from './pages/employee/employee.component';
 import { RoleComponent } from './pages/role/role.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  {
-    path: 'login',
-    component: LoginAdminComponent,
-    data: {
-      requiredAuth: false,
+    { path: "", redirectTo: "login", pathMatch: "full" },
+    {
+        path: "login",
+        component: LoginAdminComponent,
+        data: {
+            requiredAuth: false,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'dashboard',
-    component: LayoutpageComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "dashboard",
+        component: LayoutpageComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'login',
-    loadChildren: () =>
-      import('../../admin/admin.module').then((m) => m.AdminModule),
-  },
-  {
-    path: 'dashboard',
-    loadChildren: () =>
-      import('../../dashboard/dashboard.module').then((m) => m.DashboardModule),
-  },
-  {
-    path: 'room',
-    component: RoomComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "login",
+        loadChildren: () =>
+            import("../../admin/admin.module").then((m) => m.AdminModule),
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'roomtype',
-    component: RoomtypeComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "dashboard",
+        loadChildren: () =>
+            import("../../dashboard/dashboard.module").then(
+                (m) => m.DashboardModule
+            ),
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'salary',
-    component: SalaryComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "room",
+        component: RoomComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'blog',
-    component: BlogComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "roomtype",
+        component: RoomtypeComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'roomservice',
-    component: RoomTypeServiceComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "salary",
+        component: SalaryComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'typeservice',
-    component: RoomservicesComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "blog",
+        component: BlogComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'booking',
-    component: BookingComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "roomservice",
+        component: RoomTypeServiceComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'customer',
-    component: CustomerComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "typeservice",
+        component: RoomservicesComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'role',
-    component: RoleComponent,
-    data: {
-      requiredAuth: true,
-      requiredAdmin: true,
+    {
+        path: "booking",
+        component: BookingComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'employee',
-    component: EmployeeComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "customer",
+        component: CustomerComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'invoice',
-    component: InvoiceComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "role",
+        component: RoleComponent,
+        data: {
+            requiredAuth: true,
+            requiredAdmin: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
- 
-  {
-    path: 'room-booked',
-    component: RoomBookedComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "employee",
+        component: EmployeeComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'revenue',
-    component: RevenueComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "invoice",
+        component: InvoiceComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'discount',
-    component: DiscountComponent,
-    data: {
-      requiredAuth: true,
+
+    {
+        path: "room-booked",
+        component: RoomBookedComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'reservation',
-    component: ReservationComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "revenue",
+        component: RevenueComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'checkout/:reservationId/:roomId',
-    component: CheckoutComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "discount",
+        component: DiscountComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'checkout-detail/reservationId',
-    component: CheckoutComponent,
-    data: {
-      requiredAuth: true,
+    {
+        path: "reservation",
+        component: ReservationComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
-  {
-    path: '**',
-    component: PageErrorComponent,
-    data: {
-      requiredAuth: false,
+    {
+        path: "checkout/:reservationId/:roomId",
+        component: CheckoutComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
     },
-    canActivate: [AuthGuard],
-  },
+    {
+        path: "checkout-detail/reservationId",
+        component: CheckoutComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "user-profile",
+        component: UserProfileComponent,
+        data: {
+            requiredAuth: true,
+        },
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "**",
+        component: PageErrorComponent,
+        data: {
+            requiredAuth: false,
+        },
+        canActivate: [AuthGuard],
+    },
 ];
 
 @NgModule({

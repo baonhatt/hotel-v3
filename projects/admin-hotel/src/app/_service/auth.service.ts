@@ -111,7 +111,7 @@ export class AuthService implements OnInit {
     }
 
     getLoggedInUser(): any {
-        var token = localStorage.getItem("token");
+        var token = localStorage.getItem("token_admin");
         if (token) {
             var tokenModel = JSON.parse(token) as TokenModel;
             var claims = JSON.stringify(
@@ -126,13 +126,14 @@ export class AuthService implements OnInit {
                 ""
             );
             var userInfo = JSON.parse(claims) as User;
+            
             return userInfo;
         }
         return null;
     }
 
     checkAccessTokenAndRefresh(): any {
-        const localStorageTokens = localStorage.getItem("token");
+        const localStorageTokens = localStorage.getItem("token_admin");
         if (localStorageTokens) {
             var token = JSON.parse(localStorageTokens) as TokenModel;
             var isTokenExpired = this.jwtHelper.isTokenExpired(

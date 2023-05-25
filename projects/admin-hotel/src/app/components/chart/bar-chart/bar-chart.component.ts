@@ -19,9 +19,7 @@ export class BarChartComponent implements OnInit {
         this.currentYear = new Date().getFullYear();
         this.currentMonth = new Date().getMonth() + 1;
         this.api.getRevenueByMonth(this.currentMonth, this.currentYear).subscribe((res)=>{
-           this.revenueYear = res
-            console.log(res);
-            
+           this.revenueYear = res            
            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
            this.chart = new Chart({
             chart: {
