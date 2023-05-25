@@ -22,14 +22,14 @@ export class ReservationComponent implements OnInit {
         roomTypes: "",
         serviceAttachs: "",
     };
-    checkSearchData:any;
+    checkSearchData: any;
     constructor(
         private reservation: ReservationApi,
         private payment: PaymentApi,
         private fb: FormBuilder,
         private roomService: ApiService,
         private router: Router,
-        private room: RoomApi,
+        private room: RoomApi
     ) {
         this.formReservation = this.fb.group({
             startDate: [],
@@ -56,15 +56,27 @@ export class ReservationComponent implements OnInit {
         this.getDataAddSearch();
     }
 
-    reservationCreat(idRoom:any) {
-        const checkInDate = new Date(this.formSearch.controls["checkIn"].value);
-        const checkOutDate = new Date(this.formSearch.controls["checkOut"].value);
+    reservationCreate(idRoom: any) {
+        const checkInDate = new Date(
+            new Date(this.formSearch.controls["checkIn"].value).setHours(
+                new Date(this.formSearch.controls["checkIn"].value).getHours() +
+                    7
+            )
+        );
+        const checkOutDate = new Date(
+            new Date(this.formSearch.controls["checkOut"].value).setHours(
+                new Date(
+                    this.formSearch.controls["checkOut"].value
+                ).getHours() + 7
+            )
+        );
         const numberOfNights = Math.ceil(
-          (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24)
+            (checkOutDate.getTime() - checkInDate.getTime()) /
+                (1000 * 60 * 60 * 24)
         );
         this.formReservation.patchValue({
-            startDate: this.formSearch.controls["checkIn"].value,
-            endDate: this.formSearch.controls["checkOut"].value,
+            startDate: checkInDate,
+            endDate: checkOutDate,
             roomId: idRoom,
             numberOfDay: numberOfNights,
             numberOfPeople: 1,
@@ -73,15 +85,21 @@ export class ReservationComponent implements OnInit {
             phoneNumber: "",
             address: "",
         });
-        
-        this.reservation.reservationCreate(this.formReservation.value).subscribe(
-            (res) => {
-                this.router.navigate(['/checkout', res.reservationId, idRoom]);                
-            },
-            (err) => {
-                alert(err.message);
-            }
-        );
+
+        this.reservation
+            .reservationCreate(this.formReservation.value)
+            .subscribe(
+                (res) => {
+                    this.router.navigate([
+                        "/checkout",
+                        res.reservationId,
+                        idRoom,
+                    ]);
+                },
+                (err) => {
+                    alert(err.message);
+                }
+            );
     }
 
     getDataAddSearch() {
@@ -99,11 +117,11 @@ export class ReservationComponent implements OnInit {
 
     getRooms() {
         this.roomService.getRooms().subscribe((res: any) => {
-            this.rooms = res;            
+            this.rooms = res;
         });
     }
 
-    getRoomByDateSearch() {       
+    getRoomByDateSearch() {
         this.checkSearchData = false;
         var payLoad = {
             checkIn: this.formSearch.controls["checkIn"].value,

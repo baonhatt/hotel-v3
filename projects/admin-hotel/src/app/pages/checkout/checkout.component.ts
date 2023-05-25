@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { Room } from "../../models/room.model";
 import { PaymentApi } from "../../_service/payment.service";
@@ -20,6 +20,7 @@ export class CheckoutComponent implements OnInit {
         private payment: PaymentApi,
         private toastr: ToastrService,
         private route: ActivatedRoute,
+        private router: Router,
         private reservation: ReservationApi,
         private room: RoomApi,
         private fb: FormBuilder,
@@ -51,6 +52,7 @@ export class CheckoutComponent implements OnInit {
         this.payment.invoiceCreate(this.checkoutForm.value).subscribe(
             (res) => {
                 this.toastr.success(res.message);
+                this.router.navigate(['/reservation']);
             },
             (err) => {
                 this.toastr.error(err.message);
