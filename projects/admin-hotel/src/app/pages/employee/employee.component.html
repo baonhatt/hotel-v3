@@ -27,13 +27,12 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-sm-4">
-                                <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Employee</a>
+                                <a data-bs-toggle="modal" data-bs-target="#modal-detail2" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Employee</a>
                             </div>
                             <div class="col-sm-8">
                                 <div class="text-sm-end">
-                                    <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog"></i></button>
-                                    <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                                    <button type="button" class="btn btn-light mb-2">Export</button>
+                                    <!-- <button type="button" class="btn btn-light mb-2 me-1">Import</button>
+                                    <button type="button" class="btn btn-light mb-2">Export</button> -->
                                 </div>
                             </div><!-- end col-->
                         </div>
@@ -111,3 +110,18 @@
     </div>
   </div>
   
+
+  <!-- Modal create employee -->
+<div id="modal-detail2" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-top modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="topModalLabel">Create an employee</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+        </div>
+        <div class="modal-body">
+            <app-signup></app-signup>
+        </div>
+      </div>
+    </div>
+  </div>
