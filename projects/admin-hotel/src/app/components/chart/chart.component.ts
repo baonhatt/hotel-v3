@@ -40,6 +40,9 @@ export class ChartComponent implements OnInit{
                 text: 'VND'
               }
             },
+            tooltip: {
+                valueSuffix: ' VND'
+              },
             series: [
               
             //   {

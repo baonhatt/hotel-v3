@@ -189,7 +189,7 @@
             <div class="hotel-view-contents" *ngIf="room!=undefined">
               <div class="hotel-view-contents-header">
                 <span *ngIf="room!=undefined" class="hotel-view-contents-review"> <i class="las la-star"></i> {{room.starSum}}
-                  <span class="hotel-view-contents-review-count"> (380) </span> </span>
+                  <span class="hotel-view-contents-review-count"> ({{room.starAmount}} votings) </span> </span>
                 <h3 *ngIf="room!=undefined" class="hotel-view-contents-title"> {{room.roomTypeName}} </h3>
                 <div class="hotel-view-contents-location mt-2">
                 </div>

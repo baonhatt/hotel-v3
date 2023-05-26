@@ -86,7 +86,7 @@ export class AuthGuard implements CanActivate {
             );
             this.roleAccount = JSON.parse(claims) as User;
 
-            console.log(this.roleAccount);
+            localStorage.setItem('Roletype', this.roleAccount.role.toString())
 
 
 

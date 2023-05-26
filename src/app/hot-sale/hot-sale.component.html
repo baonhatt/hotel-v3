@@ -8,11 +8,9 @@ data-aos-anchor-placement="top-bottom">
   <div class="row-sale">
   <div class="employee-container"  *ngFor="let room of discountRoom" >
         <div class="employee" >
-          <div class="sale">
-            <p>hotel</p>
-          </div>
+
           <div *ngIf="room!=undefined" class="hotel-view-contents-review star-sale"> <i class="las la-star"></i> {{room.starSum}}
-            <span class="hotel-view-contents-review-count" >({{room.starAmount}})</span> </div>
+            <span class="hotel-view-contents-review-count" > ({{room.starAmount}})</span> </div>
           <div class="employee-image">
             <a routerLink="/room-detail/{{room.id}}">
               <img [src]="room.roomPicture" class="img-fluid d-block m-auto" alt="employee-image">

@@ -42,7 +42,7 @@ const routes: Routes = [
     path: 'signup',
     component: SignupComponent,
     data: {
-      requiredAuth: true
+      requiredAuth: false
     },
     canActivate: [AuthGuard]
   },

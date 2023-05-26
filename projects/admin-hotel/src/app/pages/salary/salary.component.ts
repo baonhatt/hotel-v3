@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { ApiService } from '../../_service/api.service';
 import { Salary } from '../../models/salary';
-import { PermissionService } from '../../_service/permission.service';
 @Component({
   selector: 'app-salary',
   templateUrl: './salary.component.html',
