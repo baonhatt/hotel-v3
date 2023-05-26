@@ -61,7 +61,7 @@
                                                 
                                                 <th>Booking ID</th>
                                                 <th>Room Number</th>
-                                                <th>Amount</th>
+                                                <th>Room Price</th>
                                                 <th>Number Days</th>
                                                 <th>Reservation Price</th>
                                                 <th>UserName</th>
@@ -83,7 +83,7 @@
                                                     {{item.roomNumber}}
                                                 </td>
                                                 <td>
-                                                    {{item.roomPrice}}
+                                                    {{item.roomPrice | vndCurrency}}
                                                 </td>
                                                 <td>
                                                     {{item.numberOfDay}}
