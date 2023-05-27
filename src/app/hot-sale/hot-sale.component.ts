@@ -8,6 +8,7 @@ import { Room } from '../models/room.model';
 })
 export class HotSaleComponent implements OnInit{
   discountRoom!: Room[];
+  isAnimating: boolean = false;
   slideAnimation: string = '';
   currentIndex: number = 0;
   startIndex: number = 0;
@@ -33,21 +34,54 @@ export class HotSaleComponent implements OnInit{
 
   }
   nextProduct(): void {
+    if (this.isAnimating) {
+      return;
+    }
+
     this.currentIndex++;
     if (this.currentIndex > this.endIndex) {
       this.startIndex++;
       this.endIndex++;
     }
-    this.slideAnimation = 'slide-next'; // Áp dụng hiệu ứng slide khi chuyển qua phần tử tiếp theo
+
+    // Kiểm tra và giới hạn giá trị hiển thị
+    if (this.endIndex >= this.discountRoom.length) {
+      this.endIndex = this.discountRoom.length - 1;
+      this.startIndex = this.endIndex - 1;
+    }
+
+    this.slideAnimation = 'slide-next';
+    this.isAnimating = true;
+
+    setTimeout(() => {
+      this.slideAnimation = '';
+      this.isAnimating = false;
+    }, 500);
   }
 
   previousProduct(): void {
+    if (this.isAnimating) {
+      return;
+    }
+
     this.currentIndex--;
     if (this.currentIndex < this.startIndex) {
       this.startIndex--;
       this.endIndex--;
     }
-    this.slideAnimation = 'slide-previous'; // Áp dụng hiệu ứng slide khi chuyển qua phần tử trước đó
-  }
 
+    // Kiểm tra và giới hạn giá trị hiển thị
+    if (this.startIndex < 0) {
+      this.startIndex = 0;
+      this.endIndex = this.startIndex + 1;
+    }
+
+    this.slideAnimation = 'slide-previous';
+    this.isAnimating = true;
+
+    setTimeout(() => {
+      this.slideAnimation = '';
+      this.isAnimating = false;
+    }, 500);
+  }
 }
