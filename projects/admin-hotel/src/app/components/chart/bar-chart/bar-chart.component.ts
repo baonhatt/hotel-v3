@@ -38,6 +38,9 @@ export class BarChartComponent implements OnInit {
                 text: 'VND'
               }
             },
+            tooltip: {
+                valueSuffix: ' VND'
+              },
             series: [
               
             //   {

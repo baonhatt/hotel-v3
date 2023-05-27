@@ -78,32 +78,32 @@
               </a>
               <div class="collapse" id="sidebarEcommerce">
                   <ul class="side-nav-second-level" >
-                      <li routerLinkActive="active">
+                      <li routerLinkActive="active" *ngIf="roleValue == 'Admin'">
                           <a  routerLink="/roomtype">Room Type</a>
                       </li>
-                      <li routerLinkActive="active">
+                      <li routerLinkActive="active" *ngIf="roleValue == 'Admin'">
                           <a  routerLink="/typeservice"> Attached Service</a>
                       </li>
-                      <li routerLinkActive="active">
+                      <li routerLinkActive="active" >
                         <a  routerLink="/roomservice">Room Service</a>
                       </li>
                       <li routerLinkActive="active">
                           <a  routerLink="/customer">Customer</a>
                       </li>
-                      <li routerLinkActive="active" >
+                      <li routerLinkActive="active" *ngIf="roleValue == 'Admin'" >
                         <a  routerLink="/employee">Employee</a>
                       </li>
-                      <li routerLinkActive="active" >
+                      <li routerLinkActive="active"  *ngIf="roleValue == 'Admin'" >
                           <a routerLink="/discount">Discount</a>
                       </li>
                       <li routerLinkActive="active" >
                         <a routerLink="/invoice">Invoice</a>
                       </li>
                       
-                      <!-- <li routerLinkActive="active" >
+                      <li routerLinkActive="active" *ngIf="roleValue == 'Admin'" >
                         <a routerLink="/salary">Salary</a>
-                      </li> -->
-                      <li routerLinkActive="active" *ngIf="!isLocalAdmin">
+                      </li>
+                      <li routerLinkActive="active" *ngIf="roleValue == 'Admin'">
                         <a routerLink="/role">Roles</a>
                       </li>
                   </ul>

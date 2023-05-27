@@ -51,7 +51,7 @@ export class AuthService implements OnInit{
 
       },
           error: (err) => {
-            this.toast.error(err.error.message);
+            this.toast.error(err.message);
           },
       }),
       catchError((error) => {

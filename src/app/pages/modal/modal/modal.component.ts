@@ -39,7 +39,7 @@ export class ModalComponent implements OnInit{
       const starrating = ratingValue.replace(/"/g, '');
       // Tạo request body từ giá trị ratingValue
     this.api.votingStar(ratingValue, this.id).subscribe(res =>{
-      this.toast.success("ok")
+      this.toast.success("Rating Successfully!")
     },err =>{
     })
     }

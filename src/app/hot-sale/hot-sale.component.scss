@@ -138,3 +138,61 @@
   background-color: antiquewhite;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
+
+
+// slider animation
+
+
+button.hot-sale-btn{
+
+  /* CSS */
+    background-image: linear-gradient(#37d4ec, #0d70ea);
+    border: 0;
+    font-size: 2rem;
+    box-shadow: rgba(0, 0, 0, .3) 0 5px 15px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-family: Montserrat,sans-serif;
+    font-size: .9em;
+    margin: 5px;
+    padding: 10px 18;
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+
+.slide-next {
+  animation: slideNext 0.5s ease forwards;
+}
+
+.slide-previous {
+  animation: slidePrevious 0.5s ease forwards;
+}
+
+@keyframes slideNext {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slidePrevious {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
