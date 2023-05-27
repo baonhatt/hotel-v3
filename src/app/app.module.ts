@@ -146,7 +146,6 @@ import { HotSaleComponent } from './hot-sale/hot-sale.component';
     ModalComponent,
     ConfirmRegisterComponent,
     HotSaleComponent,
-
   ],
 
   providers:
