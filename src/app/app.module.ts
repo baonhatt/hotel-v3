@@ -80,6 +80,7 @@ import { HotSaleComponent } from './hot-sale/hot-sale.component';
       preventDuplicates: true,
       positionClass: 'toast-top-left'
     }),
+
     BrowserAnimationsModule,
     FormsModule,
     ToastrModule,
