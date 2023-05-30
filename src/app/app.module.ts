@@ -36,7 +36,6 @@ import { AboutComponent } from './about/about.component';
 import { LeftContentComponent } from './client/dashboard/left-content/left-content.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { BellNotifComponent } from './bell-notif/bell-notif.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -138,7 +137,6 @@ import { HotSaleComponent } from './hot-sale/hot-sale.component';
     AboutComponent,
     LeftContentComponent,
     SearchResultComponent,
-    BellNotifComponent,
     SuccessPaymentComponent,
     PaymentdetailComponent,
     VndCurrencyPipe,

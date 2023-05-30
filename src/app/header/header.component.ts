@@ -9,36 +9,36 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-
-  userProfile = new userProfile;
-  constructor(private auth: AuthService, private fb: FormBuilder, private apiServe: ApiService, private route: Router, private userService: UserService){}
+  userProfile = new userProfile();
+  constructor(
+    private auth: AuthService,
+    private fb: FormBuilder,
+    private apiServe: ApiService,
+    private route: Router,
+    private userService: UserService
+  ) {}
   ngOnInit(): void {
-
-
-    setTimeout(() => {
-      if(this.auth.isLoggedIn()){
-        if(localStorage.getItem('user_profile')!.length > 0)
-        {
-          let result = localStorage.getItem('user_profile')!;
-          this.userProfile = JSON.parse(result) as userProfile;
-        }else{
-          this.getUserProfile();
-        }
+    if (this.auth.isLoggedIn()) {
+      if (localStorage.getItem('user_profile')!.length > 0) {
+        let result = localStorage.getItem('user_profile')!;
+        this.userProfile = JSON.parse(result) as userProfile;
+      } else {
+        this.getUserProfile();
       }
-    }, 800);
+    }
   }
-  getUserProfile() : any{
+  getUserProfile(): any {
     this.userService.getUserProfile().subscribe((res) => {
       this.userProfile = res;
       localStorage.setItem('user_profile', JSON.stringify(this.userProfile));
-    })
+    });
   }
 
-  routeProfile(){
-    this.route.navigate(['/user-profile'])
+  routeProfile() {
+    this.route.navigate(['/user-profile']);
   }
   isLoggedIn() {
     if (this.auth.isLoggedIn()) {
@@ -59,5 +59,4 @@ export class HeaderComponent {
     localStorage.removeItem('token');
     localStorage.removeItem('user_profile');
   }
-
 }

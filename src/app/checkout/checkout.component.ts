@@ -1,5 +1,10 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { AuthService } from '../_service/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
@@ -53,14 +58,11 @@ export class CheckoutComponent implements OnInit {
     private apiService: ApiService,
     private toast: ToastrService,
     private userProfile: UserService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.reservationId = this.route.snapshot.paramMap.get('id');
-   this.roomsaleID = localStorage.getItem('roomId');
-
+    this.getReservationByID(this.reservationId);
 
     this.bookForm = this.fb.group({
       email: [''],
@@ -75,34 +77,36 @@ export class CheckoutComponent implements OnInit {
         name: res.userName,
         email: res.email,
         phoneNumber: res.phoneNumber,
-        address: res.address
+        address: res.address,
       });
     });
-
-
   }
 
   getRoomById(id: any): void {
-    this.apiService.getRoomDetail(id)
-      .subscribe(res => {
-        this.room = res;
-        this.priceRoom = this.room.discountPrice == 0 ? this.room.currentPrice : this.room.discountPrice;
-      });
+    this.apiService.getRoomDetail(id).subscribe((res) => {
+      this.room = res;
+      this.priceRoom =
+        this.room.discountPrice == 0
+          ? this.room.currentPrice
+          : this.room.discountPrice;
+    });
   }
 
   getReservationByID(id: any) {
     this.http
       .get<any>(
-        `${environment.BASE_URL_API}/user/reservation/get-by-id?id=${this.reservationId}`).subscribe(
-          res => {
-            this.reservationGet = res as ReservationGet;
-            this.bookForm.controls["numberOfPeople"].setValue(res.numberOfPeople)
-            this.getRoomById(this.reservationGet.roomId);
-          },
-          err => {
-            this.toast.error("Reservation Id not found");
-          }
-        )
+        `${environment.BASE_URL_API}/user/reservation/get-by-id?id=${this.reservationId}`
+      )
+      .subscribe(
+        (res) => {
+          this.reservationGet = res as ReservationGet;
+          this.bookForm.controls['numberOfPeople'].setValue(res.numberOfPeople);
+          this.getRoomById(this.reservationGet.roomId);
+        },
+        (err) => {
+          this.toast.error('Reservation Id not found');
+        }
+      );
   }
 
   methodPay() {
@@ -116,12 +120,12 @@ export class CheckoutComponent implements OnInit {
 
   confirmInfoBookingRoom() {
     var payLoad = {
-      name: this.bookForm.controls["name"].value,
-      email: this.bookForm.controls["email"].value,
-      phoneNumber: this.bookForm.controls["phoneNumber"].value,
-      address: this.bookForm.controls["address"].value,
-      numberOfPeople: this.bookForm.controls["numberOfPeople"].value,
-    }
+      name: this.bookForm.controls['name'].value,
+      email: this.bookForm.controls['email'].value,
+      phoneNumber: this.bookForm.controls['phoneNumber'].value,
+      address: this.bookForm.controls['address'].value,
+      numberOfPeople: this.bookForm.controls['numberOfPeople'].value,
+    };
     this.http
       .post<any>(
         `${environment.BASE_URL_API}/user/reservation/edit-info?id=${this.reservationId}`,
@@ -130,8 +134,7 @@ export class CheckoutComponent implements OnInit {
       .subscribe(
         (res) => {
           this.methodPay();
-          this.toast.success("Please payment");
-          localStorage.setItem('reservationId', this.reservationId)
+          localStorage.setItem('reservationId', this.reservationId);
         },
         (_err) => {
           const wrongtime = _err.error.title;
@@ -152,25 +155,21 @@ export class CheckoutComponent implements OnInit {
       'Access-Control-Allow-Origin': '*',
     });
 
-    var payLoad = { orderInfo: orderInfo, amount: amount }
+    var payLoad = { orderInfo: orderInfo, amount: amount };
 
-    this.http
-      .post<any>(
-        environment.QR_MOMO, payLoad, { headers }
-      )
-      .subscribe(
-        (response) => {
-          const redirectUrl = response['payUrl'];
-          if (redirectUrl) {
-            window.location.href = redirectUrl;
-          }
-        },
-        (_err) => {
-          this.toast.error(
-            ' The maximum transaction only 50.000.000 đ, please switch to another method.'
-          );
+    this.http.post<any>(environment.QR_MOMO, payLoad, { headers }).subscribe(
+      (response) => {
+        const redirectUrl = response['payUrl'];
+        if (redirectUrl) {
+          window.location.href = redirectUrl;
         }
-      );
+      },
+      (_err) => {
+        this.toast.error(
+          ' The maximum transaction only 50.000.000 đ, please switch to another method.'
+        );
+      }
+    );
   }
 
   payVnPay() {

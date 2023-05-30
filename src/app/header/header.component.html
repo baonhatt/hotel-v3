@@ -17,11 +17,11 @@
       </div>
       <div class="collapse navbar-collapse" id="hotel_booking_menu">
         <ul class="navbar-nav">
-          <li class=" current-menu-item " ><a  routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+          <li class=" current-menu-item "><a routerLinkActive="active" [routerLinkActiveOptions]="{exact:
             true}" routerLink="/home">Home</a></li>
-          <li><a  routerLinkActive="active" routerLink="/about"> About </a></li>
+          <li><a routerLinkActive="active" routerLink="/about"> About </a></li>
 
-          <li><a routerLinkActive="active" routerLink="/blogs" >Blog</a></li>
+          <li><a routerLinkActive="active" routerLink="/blogs">Blog</a></li>
 
 
           <li><a routerLinkActive="active" routerLink="/contact"> Contact Us </a></li>
@@ -36,7 +36,6 @@
 
             <div *ngIf="isLoggedIn(); then loggedInUser; else loginButton"></div>
             <ng-template #loggedInUser>
-              <app-bell-notif></app-bell-notif>
               <span>
                 <div class="navbar-author">
                   <div class="navbar-author-flex">
@@ -62,7 +61,7 @@
                 <a routerLink="/login"> Log In </a>
               </div>
               <div class="btn-wrapper">
-                <a routerLink="/signup"  class="cmn-btn btn-bg-1 radius-10"> Sign Up </a>
+                <a routerLink="/signup" class="cmn-btn btn-bg-1 radius-10"> Sign Up </a>
               </div>
             </ng-template>
 
