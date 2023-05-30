@@ -12,7 +12,7 @@ import { differenceInDays } from 'date-fns';
 import { DatePipe } from '@angular/common';
 import { userProfile } from '../models/userProfile.model';
 import { UserService } from '../_service/user.service';
-import {formatDate} from '@angular/common';
+import { formatDate } from '@angular/common';
 import { ReservationGet } from '../models/reservationGet.model';
 @Component({
   selector: 'app-checkout',
@@ -38,8 +38,9 @@ export class CheckoutComponent implements OnInit {
   checkOut = new FormControl(new Date().toISOString());
   userInfo!: userProfile;
   reservationId!: any;
-  reservationGet!:ReservationGet;
-  priceRoom:any;
+  reservationGet!: ReservationGet;
+  priceRoom: any;
+  roomsaleID!: any;
   get f() {
     return this.bookForm.controls;
   }
@@ -58,8 +59,8 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.reservationId = this.route.snapshot.paramMap.get('id');
+   this.roomsaleID = localStorage.getItem('roomId');
 
-    this.getReservationByID(this.reservationId);
 
     this.bookForm = this.fb.group({
       email: [''],
@@ -77,18 +78,19 @@ export class CheckoutComponent implements OnInit {
         address: res.address
       });
     });
+
+
   }
 
-  getRoomById(id:any): void {
+  getRoomById(id: any): void {
     this.apiService.getRoomDetail(id)
       .subscribe(res => {
         this.room = res;
-        this.priceRoom = this.room.discountPrice == 0?this.room.currentPrice:this.room.discountPrice;
+        this.priceRoom = this.room.discountPrice == 0 ? this.room.currentPrice : this.room.discountPrice;
       });
   }
 
-  getReservationByID(id:any)
-  {
+  getReservationByID(id: any) {
     this.http
       .get<any>(
         `${environment.BASE_URL_API}/user/reservation/get-by-id?id=${this.reservationId}`).subscribe(
@@ -150,11 +152,11 @@ export class CheckoutComponent implements OnInit {
       'Access-Control-Allow-Origin': '*',
     });
 
-    var payLoad = { orderInfo: orderInfo, amount: amount}
+    var payLoad = { orderInfo: orderInfo, amount: amount }
 
     this.http
       .post<any>(
-        environment.QR_MOMO,payLoad,{ headers }
+        environment.QR_MOMO, payLoad, { headers }
       )
       .subscribe(
         (response) => {

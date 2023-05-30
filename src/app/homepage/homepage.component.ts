@@ -45,7 +45,7 @@ export class HomepageComponent implements OnInit {
   roomSearchForm!: FormGroup;
   peopleNumber: number = 1;
   maxPersonArray:any;
-
+  roomId!: string;
   date = new FormControl(new Date());
   checkIn = new FormControl(new Date().toISOString());
   checkOut = new FormControl(new Date().toISOString());
@@ -100,6 +100,7 @@ export class HomepageComponent implements OnInit {
       this.blogtoDisplay = this.blogs;
     });
   }
+
 
 
   navigateToPage(url: string) {

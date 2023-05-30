@@ -13,6 +13,7 @@ export class HotSaleComponent implements OnInit{
   currentIndex: number = 0;
   startIndex: number = 0;
   endIndex: number = 1;
+  roomId!: string;
   constructor(
     private api: ApiService
   ){
@@ -83,5 +84,8 @@ export class HotSaleComponent implements OnInit{
       this.slideAnimation = '';
       this.isAnimating = false;
     }, 500);
+  }
+  getRoomId(id: string){
+    const idtemp = id
   }
 }
