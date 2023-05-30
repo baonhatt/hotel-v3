@@ -74,8 +74,12 @@ export class ListingComponent implements OnInit {
       this.serviceAttachs = data.serviceAttachs;
     });
 
-    this.checkInDate = new Date(new Date(this.route.snapshot.paramMap.get('checkIn')!).setHours(7,0,0));
-    this.checkOutDate = new Date(new Date(this.route.snapshot.paramMap.get('checkOut')!).setHours(7,0,0));
+    this.checkInDate = new Date(
+      new Date(this.route.snapshot.paramMap.get('checkIn')!).setHours(7, 0, 0)
+    );
+    this.checkOutDate = new Date(
+      new Date(this.route.snapshot.paramMap.get('checkOut')!).setHours(7, 0, 0)
+    );
     this.peopleNumber = this.route.snapshot.paramMap.get('person');
     this.roomTypeId = this.route.snapshot.paramMap.get('roomTypeId');
     this.getRoomSearch();
@@ -150,7 +154,7 @@ export class ListingComponent implements OnInit {
       peopleNumber: this.peopleNumber == '' ? 0 : this.peopleNumber,
     };
     this.http
-      .post<Room[]>(`https://webhotel.click/user/room/get-all-by`, payLoad)
+      .post<Room[]>(environment.BASE_URL_API + `/user/room/get-all-by`, payLoad)
       .subscribe(
         (res) => {
           this.filteredRooms = res;
@@ -198,7 +202,8 @@ export class ListingComponent implements OnInit {
     checkOutDate = new Date(checkOutDate.setHours(7, 0, 0));
     const numberOfNights = Math.ceil(
       (checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24)
-    );4
+    );
+    4;
     this.checkInDateString = checkInDate.toISOString();
     this.checkOutDateString = checkOutDate.toISOString();
     console.log(this.checkInDateString);
@@ -216,11 +221,20 @@ export class ListingComponent implements OnInit {
     if (numDays > 0) {
       this.deleteData;
       this.http
-        .post<Room[]>(`https://webhotel.click/user/room/get-all-by`, payLoad)
+        .post<Room[]>(
+          environment.BASE_URL_API + `/user/room/get-all-by`,
+          payLoad
+        )
         .subscribe(
           (res) => {
             this.filteredRooms = res;
-            this.router.navigate( ['/room-listing', checkInDate.toISOString(), checkOutDate.toISOString(), this.roomSearchForm.controls["peopleNumber"].value, this.roomSearchForm.controls["roomTypeId"].value]);
+            this.router.navigate([
+              '/room-listing',
+              checkInDate.toISOString(),
+              checkOutDate.toISOString(),
+              this.roomSearchForm.controls['peopleNumber'].value,
+              this.roomSearchForm.controls['roomTypeId'].value,
+            ]);
           },
           (_err) => {
             console.log(_err);

@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { Room, addRoom, roomType } from "../models/room.model";
 import { AuthService } from "./auth.service";
-import { environment } from "src/environments/environment.development";
 import { Blog } from "../models/blog.model";
 import { User } from "./user.model";
 import { Data } from "@angular/router";
@@ -22,6 +21,7 @@ import {
 import { ReservationModel } from "../pages/booking/booking.component";
 import { Revenue, RevenueYear } from "../models/revenue.model";
 import { Salary } from "../models/salary";
+import { environment } from "../environments/environment.development";
 
 @Injectable({
     providedIn: "root",
@@ -32,9 +32,7 @@ export class ApiService {
     room!: addRoom;
     blog: any;
     private roomData: { [roomNumber: string]: any } = {};
-    apiRoom = "https://webhotel.click/user/room/get-all";
-    apiBlog = "http://localhost:3000/blog";
-    private baseUrl1 = "http://localhost:3000/rooms";
+    apiRoom = environment.BASE_URL_API + "/user/room/get-all";
 
     /////////////////////////////////////////////////////////////////////////////////////// Room API
     getRooms() {
@@ -45,25 +43,26 @@ export class ApiService {
 
     postRoom(room: addRoom) {
         return this.http.post<any>(
-            "https://webhotel.click/v2/admin/room/create",
+            environment.BASE_URL_API + "/v2/admin/room/create",
             room
         );
     }
     deleteRoom(id: string): Observable<any> {
         return this.http.get(
-            `https://webhotel.click/v2/admin/room/delete/?id=${id}`
+            environment.BASE_URL_API + `/v2/admin/room/delete/?id=${id}`
         );
         // return this.http.delete(`http://localhost:3000/rooms/${id}`);
     }
 
     updateRoom(id: string): Observable<any> {
         return this.http.get(
-            `https://webhotel.click/v2/admin/room/update/?id=${id}`
+            environment.BASE_URL_API + `/v2/admin/room/update/?id=${id}`
         );
     }
 
     getRoomDetail(id: string): Observable<Room> {
-        const url = `https://webhotel.click/v2/admin/room/get-by-id?id=${id}`;
+        const url =
+            environment.BASE_URL_API + `/v2/admin/room/get-by-id?id=${id}`;
         // const url = `http://localhost:3000/rooms/${id}`;
         return this.http.get<Room>(url);
     }
@@ -122,13 +121,14 @@ export class ApiService {
     }
     updateRoomTypeName(roomTypeId: string, data: string): Observable<any> {
         return this.http.post(
-            `https://webhotel.click/v2/admin/room-type/update?id=${roomTypeId}`,
+            environment.BASE_URL_API +
+                `/v2/admin/room-type/update?id=${roomTypeId}`,
             data
         );
     }
     deleteRoomType(id: number): Observable<any> {
         return this.http.get(
-            `https://webhotel.click/v2/admin/room-type/delete?id=${id}`
+            environment.BASE_URL_API + `/v2/admin/room-type/delete?id=${id}`
         );
     }
     getRoomBySearch(dataSearch: any): Observable<Room> {
@@ -164,13 +164,6 @@ export class ApiService {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////// Blog API
-
-    getBlogs() {
-        return this.http.get<Blog[]>(this.apiBlog);
-    }
-    getBlogDetail(id: number): Observable<Blog> {
-        return this.http.get<Blog>(`${this.apiBlog}/${id}`).pipe();
-    }
 
     /////////////////////////////////////////////////////////////////////////////////////// Booking API
 
@@ -349,14 +342,6 @@ export class ApiService {
         return this.http.get<any[]>(
             environment.BASE_URL_API +
                 `/v2/admin/revenue/get-for-type-room?year=${year}`
-        );
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////// Salary API
-
-    getAllSalary(): Observable<Salary[]> {
-        return this.http.get<Salary[]>(
-            environment.BASE_URL_API + "/v2/admin/salary/get-all"
         );
     }
 }

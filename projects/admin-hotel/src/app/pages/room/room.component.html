@@ -292,11 +292,11 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label class="mb-1">File Upload</label>
+                                                <label class="mb-1">Image</label>
                                                 <div class="form-group mb-3">
                                                     <input type="file" id="formFile" class="form-control"
                                                         formControlName="RoomPicture" name="RoomPicture"
-                                                        accept=".png, .jpg" #file (change)="uploadFile(file.files)">
+                                                        accept=".png, .jpg" (change)="uploadFile($event)">
                                                 </div>
                                             </div>
                                         </div>
@@ -308,8 +308,8 @@
                                                 <div class="form-group mb-3">
                                                     <input type="file" id="formFile" class="form-control"
                                                         formControlName="RoomPictures" name="RoomPictures"
-                                                        accept=".png, .jpg" multiple #file
-                                                        (change)="uploadFileDetail(file.files)">
+                                                        accept=".png, .jpg" multiple
+                                                        (change)="uploadFileDetail($event)">
                                                 </div>
                                             </div>
                                         </div>

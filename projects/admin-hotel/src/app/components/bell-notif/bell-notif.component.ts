@@ -57,14 +57,11 @@ export class BellNotifComponent implements OnInit {
       hubConnection.on('ReceiveNotification', (res) => {
         this.count_nof = res.count;
         this.items_nof = res.items;
-        console.log(this.count_nof);
-        console.log(this.items_nof);
-
       });
     }
   }
   async checkAndRefreshToken(): Promise<void> {
-    const localStorageTokens = localStorage.getItem('token');
+    const localStorageTokens = localStorage.getItem('token_admin');
     if (localStorageTokens) {
       var token = JSON.parse(localStorageTokens) as TokenModel;
       var isTokenExpired = this.jwtHelper.isTokenExpired(token.accessToken);
@@ -78,11 +75,15 @@ export class BellNotifComponent implements OnInit {
     const res$ = await this.authService
       .refreshToken(token)
       .toPromise()
-      .then((res) => {
-        localStorage.setItem('token', JSON.stringify(res));
+        .then((res) => {
+          console.log(1);
+          
+        localStorage.setItem('token_admin', JSON.stringify(res));
       })
-      .catch((error) => {
-        localStorage.removeItem('token');
+        .catch((error) => {
+          console.log(2);
+          
+        localStorage.removeItem('token_admin');
         localStorage.removeItem('user_profile');
         this.toastr.error('Login session has expired, please login again');
         this.route.navigate(['login']);

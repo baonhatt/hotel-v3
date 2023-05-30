@@ -6,15 +6,15 @@ import { Room, Roomsearch } from '../models/room.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SearchService {
-
   public filteredRoomsSubject = new BehaviorSubject<Room[]>([]);
   filteredRooms = this.filteredRoomsSubject.asObservable();
 
-  private apiRooms = 'https://webhotel.click/user/room/get-all';
-  constructor(private http: HttpClient) { }
+  private apiRooms =
+    environment.BASE_URL_API + '/user/room/get-all';
+  constructor(private http: HttpClient) {}
 
   private searchResults: Room[] = [];
 
@@ -23,7 +23,6 @@ export class SearchService {
   }
 
   getSearchResults(): Room[] {
-    
     return this.searchResults;
   }
 }

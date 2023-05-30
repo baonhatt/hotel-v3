@@ -12,110 +12,146 @@ import { Payment } from '../models/payment.models';
 import { Invoice } from '../models/invoice.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-  constructor(private http: HttpClient ,private auth: AuthService) {}
+  constructor(private http: HttpClient, private auth: AuthService) {}
   user: any;
   room: any;
   blog: any;
-  apiRooms = 'https://webhotel.click/user/room/get-all';
-  apiBlog = 'https://webhotel.click/user/blog/get-all';
+  apiRooms = environment.BASE_URL_API + '/user/room/get-all';
+  apiBlog =
+    environment.BASE_URL_API + '/user/blog/get-all';
   apiRoomm = 'http://localhost:3000/rooms';
   getRooms() {
     // return this.http.get<Room[]>(environment.BASE_URL_API + '/user/room/get-all');
-    return this.http.get<Room[]>(environment.BASE_URL_API + 'user/room/get-all');
+    return this.http.get<Room[]>(
+      environment.BASE_URL_API + 'user/room/get-all'
+    );
   }
 
-  getRoomDetail(id: string): Observable<Room>{
+  getRoomDetail(id: string): Observable<Room> {
     const url = `${environment.BASE_URL_API}/user/room/get-by-id?id=${id}`;
     // const url = `${this.baseUrl1}/${id}`;
     return this.http.get<Room>(url);
   }
 
-  getRoomBySearch(dataSearch : any): Observable<Room>{
+  getRoomBySearch(dataSearch: any): Observable<Room> {
     const url = `${environment.BASE_URL_API}/user/room/get-by-all`;
     return this.http.post<Room>(url, dataSearch);
   }
 
-  getRoomOnSale(){
-    return this.http.get<Room[]>(environment.BASE_URL_API + '/user/room/get-top-on-sale');
+  getRoomOnSale() {
+    return this.http.get<Room[]>(
+      environment.BASE_URL_API + '/user/room/get-top-on-sale'
+    );
   }
   postRoom(_room: Room) {
-    return this.http.post<Room>(environment.BASE_URL_API + '/user/room/get-by-id', _room);
+    return this.http.post<Room>(
+      environment.BASE_URL_API + '/user/room/get-by-id',
+      _room
+    );
   }
 
   deleteRoom(id: string) {
-    return this.http.delete(environment.BASE_URL_API + '/user/room/delete-by-id' + id);
+    return this.http.delete(
+      environment.BASE_URL_API + '/user/room/delete-by-id' + id
+    );
   }
-  searchRoom(): Observable<Search[]>{
-    return this.http.get<Search[]>(environment.BASE_URL_API + '/user/search-room')
+  searchRoom(): Observable<Search[]> {
+    return this.http.get<Search[]>(
+      environment.BASE_URL_API + '/user/search-room'
+    );
   }
 
-  bookRoom(startDate: Data, enDate: Data, roomId: string, numberOfDays: number): Observable<any>{
-
+  bookRoom(
+    startDate: Data,
+    enDate: Data,
+    roomId: string,
+    numberOfDays: number
+  ): Observable<any> {
     const data = {
       start_date: startDate,
       end_date: enDate,
       room_id: roomId,
-      number_of_days: numberOfDays
+      number_of_days: numberOfDays,
     };
     return this.http.post(environment.BASE_URL_API + '', data);
-
   }
 
   //Blog Api
-  getBlogs(){
-    return this.http.get<Blog[]>(environment.BASE_URL_API + '/user/blog/get-all');
+  getBlogs() {
+    return this.http.get<Blog[]>(
+      environment.BASE_URL_API + '/user/blog/get-all'
+    );
   }
 
-  getBlogDetail(id: number): Observable<Blog>{
-    return this.http.get<Blog>(`${environment.BASE_URL_API}/user/blog/get-by-id?id=${id}`)
+  getBlogDetail(id: number): Observable<Blog> {
+    return this.http.get<Blog>(
+      `${environment.BASE_URL_API}/user/blog/get-by-id?id=${id}`
+    );
   }
-  getNewestBlog(){
-    return this.http.get<Blog[]>(environment.BASE_URL_API + '/user/blog/get-top-new');
+  getNewestBlog() {
+    return this.http.get<Blog[]>(
+      environment.BASE_URL_API + '/user/blog/get-top-new'
+    );
   }
   // Api User
   getUser() {
-    this.user = this.auth.userProfile
-    return this.user
+    this.user = this.auth.userProfile;
+    return this.user;
   }
   ////////////////////////Payment
-  payment(payment: Payment){
-    return this.http.post(environment.BASE_URL_API + '/user/invoice/create', payment );
-
+  payment(payment: Payment) {
+    return this.http.post(
+      environment.BASE_URL_API + '/user/invoice/create',
+      payment
+    );
   }
 
-  vnpay(amount: number, orderDescription: string, name: string){
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json, text/plain', 'Access-Control-Allow-Origin': '*' });
+  vnpay(amount: number, orderDescription: string, name: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json, text/plain',
+      'Access-Control-Allow-Origin': '*',
+    });
 
-    return this.http.post(environment.BASE_URL_API + '/user/vn-pay/create', {amount, orderDescription, name},{headers});
+    return this.http.post(
+      environment.BASE_URL_API + '/user/vn-pay/create',
+      { amount, orderDescription, name },
+      { headers }
+    );
   }
-  successPayment(){
-    return this.http.get(environment.BASE_URL_API + '/user/reservation/get-successful');
+  successPayment() {
+    return this.http.get(
+      environment.BASE_URL_API + '/user/reservation/get-successful'
+    );
   }
   /////////////////////////// Voting
-  votingStar(stars: number, roomid: string){
-
+  votingStar(stars: number, roomid: string) {
     const data = {
       number: stars,
-      roomId: roomid
-    }
-    return this.http.post(environment.BASE_URL_API + '/user/room-star/create', data);
+      roomId: roomid,
+    };
+    return this.http.post(
+      environment.BASE_URL_API + '/user/room-star/create',
+      data
+    );
   }
-
 
   /////////////////// Roles Based
 
-  addRole(name: string){
-    return this.http.post(environment.BASE_URL_API + '/v2/admin/role/create', name);
+  addRole(name: string) {
+    return this.http.post(
+      environment.BASE_URL_API + '/v2/admin/role/create',
+      name
+    );
   }
-
 
   /////////////////// Payment
 
-  getInfoPayment(): Observable<any[]>{
-    return this.http.get<any[]>(environment.BASE_URL_API + '/user/reservation/get-successful');
+  getInfoPayment(): Observable<any[]> {
+    return this.http.get<any[]>(
+      environment.BASE_URL_API + '/user/reservation/get-successful'
+    );
   }
-
 }

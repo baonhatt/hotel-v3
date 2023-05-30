@@ -37,15 +37,6 @@ export class SalaryComponent {
    
     ngOnInit(): void {
      
-     this.api.getAllSalary().subscribe(res=>{
-        this.salaryGetAll = res
-
-        this.reservationFilter  = this.salaryGetAll      
-        console.log(res);
-        
-     },err=>{
-
-     })
     }
     
     GetReservationById(id : string)

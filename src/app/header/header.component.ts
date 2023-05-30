@@ -17,7 +17,7 @@ export class HeaderComponent {
   constructor(private auth: AuthService, private fb: FormBuilder, private apiServe: ApiService, private route: Router, private userService: UserService){}
   ngOnInit(): void {
 
-    
+
     setTimeout(() => {
       if(this.auth.isLoggedIn()){
         if(localStorage.getItem('user_profile')!.length > 0)
@@ -28,7 +28,7 @@ export class HeaderComponent {
           this.getUserProfile();
         }
       }
-    }, 500);
+    }, 800);
   }
   getUserProfile() : any{
     this.userService.getUserProfile().subscribe((res) => {

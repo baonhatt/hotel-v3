@@ -17,6 +17,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ServiceAttach } from '../../models/serviceAttach.model';
 import { NgToastService } from 'ng-angular-popup';
 import { Discount } from '../../models/discount.model';
+import { environment } from 'src/environments/environment.development';
 
 interface RoomType {
     id: number;
@@ -134,22 +135,24 @@ export class RoomComponent implements OnInit {
 
     uploadFile = (event: any) => {
         let files = event.target.files;
+        
         if (files.length === 0) {
             return;
         }
         if (files.length === 1) {
             this.image = files;
-            var mimeType = files[0].type;
-            if (mimeType.match(/image\/*/) == null) {
-                this.message = 'Only images are supported.';
-                return;
-            }
-            var reader = new FileReader();
-            this.imagePath = files;
-            reader.readAsDataURL(files[0]);
-            reader.onload = (_event) => {
-                this.imgURL = reader.result;
-            };
+            console.log(this.image);
+            // var mimeType = files[0].type;
+            // if (mimeType.match(/image\/*/) == null) {
+            //     this.message = 'Only images are supported.';
+            //     return;
+            // }
+            // var reader = new FileReader();
+            // this.imagePath = files;
+            // reader.readAsDataURL(files[0]);
+            // reader.onload = (_event) => {
+            //     this.imgURL = reader.result;
+            // };
         }
     };
     getRoomtype(): Promise<number> {
@@ -204,13 +207,16 @@ export class RoomComponent implements OnInit {
         );
         formData.append('RoomTypeId', _roomForm.controls['RoomTypeId'].value);
         this.http
-            .post<any>(`https://webhotel.click/v2/admin/room/create`, formData)
+            .post<any>(
+                environment.BASE_URL_API + `/v2/admin/room/create`,
+                formData
+            )
             .subscribe(
                 (res) => {
-                    $('#addRoom').attr('data-bs-dismiss', 'modal');
+                    $("#addRoom").attr("data-bs-dismiss", "modal");
                     this.getRooms();
                     this.loadModal();
-                    $('#staticBackdrop').modal('toggle');
+                    $("#staticBackdrop").modal("toggle");
                     this.toastr.success(res.message);
                 },
                 (_err) => {
@@ -334,12 +340,12 @@ export class RoomComponent implements OnInit {
 
         this.http
             .post<any>(
-                `https://webhotel.click/v2/admin/room/update?id=${this.RoomId}`,
+                environment.BASE_URL_API + `/v2/admin/room/update?id=${this.RoomId}`,
                 formData
             )
             .subscribe(
                 (res) => {
-                    $('#editRoom').modal('toggle');
+                    $("#editRoom").modal("toggle");
                     this.getRooms();
                     // this.loadModal(this.roomForm.value);
                     this.toastr.success(res.message);

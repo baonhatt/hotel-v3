@@ -65,6 +65,7 @@ import { SalaryComponent } from './pages/salary/salary.component';
 import { RoleComponent } from './pages/role/role.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { environment } from 'src/environments/environment.development';
 @NgModule({
   declarations: [
     ChartComponent,
@@ -167,17 +168,17 @@ export class AppModule { }
 
 export function jwtOptionsFactor(storage:StorageService){
   return {
-    tokenGetter:() => {
-      console.log("Đã add authen");
+      tokenGetter: () => {
+          console.log("Đã add authen");
 
-      return storage.getAccessToken();
-    },
-    allowedDomains:["https://webhotel.click"],
-    disallowedRoutes:[
-      "https://webhotel.click/user/login",
-      "https://webhotel.click/user/token/refresh"
-    ],
-    skipWhenExpired: false,
-  }
+          return storage.getAccessToken();
+      },
+      allowedDomains: [environment.BASE_URL_API],
+      disallowedRoutes: [
+          environment.BASE_URL_API + "/user/login",
+          environment.BASE_URL_API + "/user/token/refresh",
+      ],
+      skipWhenExpired: false,
+  };
 }
 

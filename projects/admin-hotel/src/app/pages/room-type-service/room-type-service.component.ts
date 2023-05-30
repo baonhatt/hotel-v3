@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ServiceAttach } from '../../models/serviceAttach.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RoomTypeService } from '../../models/roomtypeservice.model';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
     selector: 'app-room-type-service',
@@ -70,15 +71,21 @@ export class RoomTypeServiceComponent {
             amount: serviceForm2.controls['amount'].value,
             picture: serviceForm2.controls['picture'].value
         };
-        this.http.post<any>('https://webhotel.click/v2/admin/service-room/create', requestData, httpOptions)
+        this.http
+            .post<any>(
+                environment.BASE_URL_API +
+                    "/v2/admin/service-room/create",
+                requestData,
+                httpOptions
+            )
             .subscribe(
-                response => {
+                (response) => {
                     console.log(response);
-                    this.toast.success(" Add successfully!")
+                    this.toast.success(" Add successfully!");
                 },
-                error => {
+                (error) => {
                     console.error(error);
-                    this.toast.error(error.error.message)
+                    this.toast.error(error.error.message);
                 }
             );
     }
