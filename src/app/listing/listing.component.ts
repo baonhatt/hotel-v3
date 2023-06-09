@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment.development';
 import { Booking } from '../models/booking.model ';
 import { userProfile } from '../models/userProfile.model';
 import { SearchRoom } from '../models/searchRoom.model';
+import { window } from 'rxjs';
 const today = new Date();
 const month = today.getMonth();
 const year = today.getFullYear();
@@ -67,6 +68,10 @@ export class ListingComponent implements OnInit {
   checkIn = new FormControl(new Date().toISOString());
   checkOut = new FormControl(new Date().toISOString());
   ngOnInit(): void {
+    if (localStorage.getItem('loadPage') == 'true') {
+      location.reload();
+      localStorage.removeItem('loadPage');
+    }
     this.apiService.searchRoom().subscribe((data: any) => {
       this.maxPerson = data.maxPerson;
       this.maxPrice = data.maxPrice;
@@ -185,7 +190,24 @@ export class ListingComponent implements OnInit {
       queryParamsHandling: 'merge',
     });
   }
+
+  clear()
+  {
+    this.roomSearchForm.controls['peopleNumber'].setValue(0);
+    this.roomSearchForm.controls['roomTypeId'].setValue(0);
+    $('.price_search').val(10000000);
+    $('.max_price').html('10000000');
+    $('.noUi-origin.noUi-background').attr('style', 'left: 100%');
+    $('.single-shop-left .item.active').removeClass('active');
+  }
+
   onSubmit() {
+    var star = 0;
+    var starTemp = $('.single-shop-left .item.active').data('value');
+    if (starTemp != undefined) {
+      star = starTemp;
+    }
+
     const roomTypeId = this.roomSearchForm.value.roomTypeId;
     const peopleNumber = this.roomSearchForm.value.peopleNumber;
 
@@ -206,18 +228,21 @@ export class ListingComponent implements OnInit {
     4;
     this.checkInDateString = checkInDate.toISOString();
     this.checkOutDateString = checkOutDate.toISOString();
-    console.log(this.checkInDateString);
-    console.log(this.checkOutDateString);
+
+    var price = $('.price_search').val();
 
     const numDays = numberOfNights;
     var payLoad = {
       checkIn: checkInDate.toISOString(),
       checkOut: checkOutDate.toISOString(),
-      price: 0,
+      price: price,
       typeRoomId: roomTypeId == '' ? 0 : roomTypeId,
-      star: 0,
+      star: star,
       peopleNumber: peopleNumber == '' ? 0 : peopleNumber,
     };
+    console.log(payLoad);
+
+
     if (numDays > 0) {
       this.deleteData;
       this.http

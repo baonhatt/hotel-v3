@@ -18,9 +18,9 @@
 
 <div class="responsive-overlay"></div>
 <section class="hotel-list-area section-bg-2 pat-100 pab-100">
-  <div class="container">
-    <div class="banner-location bg-white radius-10">
-      <form [formGroup]="roomSearchForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="roomSearchForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+      <div class="banner-location bg-white radius-10">
         <div class="banner-location-flex">
 
           <div class="banner-location-single">
@@ -61,9 +61,10 @@
                 <span class="banner-location-single-contents-subtitle"> Person </span>
                 <mat-form-field appearance="fill">
                   <mat-select formControlName="peopleNumber">
-                    <mat-option [value] = "0" disabled selected>Select people number</mat-option>
+                    <mat-option [value]="0" disabled selected>Select people number</mat-option>
                     <!-- <mat-option *ngFor="let number of peopleNumberOptions" [value]="number">{{number}}</mat-option> -->
-                    <mat-option *ngFor="let i of maxPersonArray" [value]="maxPersonArray.length + 1 - i">{{maxPersonArray.length + 1 - i}}</mat-option>
+                    <mat-option *ngFor="let i of maxPersonArray" [value]="maxPersonArray.length + 1 - i">{{maxPersonArray.length +
+                      1 - i}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -78,7 +79,7 @@
                 <span class="banner-location-single-contents-subtitle"> Room Type </span>
                 <mat-form-field appearance="fill">
                   <mat-select formControlName="roomTypeId">
-                    <mat-option [value]= "0" disabled selected>Select room type</mat-option>
+                    <mat-option [value]="0" disabled selected>Select room type</mat-option>
                     <mat-option *ngFor="let roomType of roomTypeName" [value]="roomType.id">{{roomType.typeName}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -97,175 +98,165 @@
         <!-- <button (click)="getRoom()" class="search-click-icon"  for="control-modal">
           <i class="fa fa-refresh" aria-hidden="true"></i>
         </button> -->
-      </form>
-    </div>
-    <div class="shop-contents-wrapper mt-5">
-      <div class="shop-icon">
-        <div class="shop-icon-sidebar">
-          <i class="las la-bars"></i>
-        </div>
+
       </div>
-      <div class="shop-sidebar-content">
-        <div class="shop-close-content">
-          <div class="shop-close-content-icon"> <i class="las la-times"></i> </div>
-          <div class="single-shop-left bg-white radius-10">
-            <div class="single-shop-left-title open">
-              <h5 class="title"> Prices </h5>
-              <div class="single-shop-left-inner mt-4">
-                <form class="price-range-slider" method="post" data-start-min="0" data-start-max="10000000" data-min="0"
-                  data-max="10000000" data-step="5">
-                  <div class="ui-range-slider"></div>
-                  <div class="ui-range-slider-footer">
-                    <div class="ui-range-values">
-                      <span class="ui-price-title"> Price: </span>
-                      <div class="ui-range-value-min"><span class="min_price">0</span> VND
-                        <input type="hidden" value="100">
-                      </div> -
-                      <div class="ui-range-value-max"><span class="max_price">9950</span> VND
-                        <input type="hidden" value="9950">
+      <div class="shop-contents-wrapper mt-5">
+        <div class="shop-icon">
+          <div class="shop-icon-sidebar">
+            <i class="las la-bars"></i>
+          </div>
+        </div>
+        <div class="shop-sidebar-content">
+          <div class="shop-close-content">
+            <div class="shop-close-content-icon"> <i class="las la-times"></i> </div>
+            <div class="single-shop-left bg-white radius-10">
+              <div class="single-shop-left-title open">
+                <h5 class="title"> Prices </h5>
+                <div class="single-shop-left-inner mt-4">
+                  <form class="price-range-slider" method="post" data-start-min="0" data-start-max="10000000" data-min="0"
+                    data-max="10000000" data-step="5">
+                    <div class="ui-range-slider"></div>
+                    <div class="ui-range-slider-footer">
+                      <div class="ui-range-values">
+                        <span class="ui-price-title"> Price: </span>
+                        <div class="ui-range-value-min"><span class="min_price">0</span> VND
+                          <input type="hidden" value="0">
+                        </div> -
+                        <div class="ui-range-value-max"><span class="max_price">10000000</span> VND
+                          <input type="hidden" value="10000000" class="price_search">
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </form>
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="single-shop-left bg-white radius-10 mt-4">
-            <div class="single-shop-left-title open">
-              <h5 class="title"> Amenities </h5>
-              <div class="single-shop-left-inner margin-top-15">
-                <ul class="single-shop-left-list active-list list-style-none">
-                  <li class="item-search">
-                    <input type="text" class="form--control" placeholder="Search Amenities">
-                    <div class="item-search-icon"> <i class="las la-search"></i> </div>
-                  </li>
-                  <li class="item"> <a href="javascript:void(0)"> Parking </a> </li>
-                  <li class="item active"> <a href="javascript:void(0)"> Room Service </a> </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="single-shop-left bg-white radius-10 mt-4">
-            <div class="single-shop-left-title open">
-              <h5 class="title"> Filter By Rating </h5>
-              <div class="single-shop-left-inner">
-                <ul class="single-shop-left-filter-list active-list mt-3">
-                  <li class="item active">
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                  </li>
-                  <li class="item">
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
-                  </li>
-                  <li class="item">
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
-                  </li>
-                  <li class="item">
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
-                  </li>
-                  <li class="item">
-                    <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
-                    <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
-                  </li>
-                </ul>
+            <div class="single-shop-left bg-white radius-10 mt-4">
+              <div class="single-shop-left-title open">
+                <h5 class="title"> Filter By Rating </h5>
+                <div class="single-shop-left-inner">
+                  <ul class="single-shop-left-filter-list active-list mt-3">
+                    <li class="item" data-value="5">
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                    </li>
+                    <li class="item" data-value="4">
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
+                    </li>
+                    <li class="item" data-value="3">
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
+                    </li>
+                    <li class="item" data-value="2">
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
+                    </li>
+                    <li class="item" data-value="1">
+                      <a href="javascript:void(0)"> <i class="las la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
+                      <a href="javascript:void(0)"> <i class="lar la-star"></i> </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="shop-grid-contents">
-        <div class="grid-list-contents">
-          <div class="grid-list-contents-flex">
-            <p class="grid-list-contents-para"> Showing {{results}} results </p>
+        <div class="shop-grid-contents">
+          <div class="grid-list-contents">
+            <div class="grid-list-contents-flex">
+              <p class="grid-list-contents-para"> Showing {{results}} results </p>
+              <div class="btn-wrapper">
+                <a (click)="clear()" class="cmn-btn btn-bg-1 btn-small"> Clear </a>
+              </div>
+            </div>
           </div>
-        </div>
 
 
-        <!-- Search result -->
+          <!-- Search result -->
 
 
-        <div id="tab-list" class="tab-content-item active mt-4">
-          <div class="row gy-4">
-            <div class="col-12" *ngFor="let room of filteredRooms | paginate
+          <div id="tab-list" class="tab-content-item active mt-4">
+            <div class="row gy-4">
+              <div class="col-12" *ngFor="let room of filteredRooms | paginate
             : {
                 itemsPerPage: tableSize,
                 currentPage: page,
                 totalItems: count
               }
             ; let i = index;">
-              <div class="hotel-view bg-white radius-20">
-                <div class="hotel-view-flex">
-                  <a routerLink="/room-detail/{{room.id}}/{{checkInDateString}}/{{checkOutDateString}}" class="hotel-view-thumb hotel-view-list-thumb bg-image">
-                    <img [src]="room.roomPicture" style="height: 100%;
+                <div class="hotel-view bg-white radius-20">
+                  <div class="hotel-view-flex">
+                    <a routerLink="/room-detail/{{room.id}}/{{checkInDateString}}/{{checkOutDateString}}"
+                      class="hotel-view-thumb hotel-view-list-thumb bg-image">
+                      <img [src]="room.roomPicture" style="height: 100%;
                     object-fit: cover;">
-                  </a>
-                  <div class="hotel-view-contents">
-                    <div class="hotel-view-contents-header">
-                      <div
-                        class="hotel-view-contents-header-flex d-flex flex-wrap gap-3 align-items-center justify-content-between">
-                        <span class="hotel-view-contents-review"> <i class="las la-star"></i>{{room.starSum}}<span
-                            class="hotel-view-contents-review-count"> ({{room.starAmount}}) </span> </span>
-                        <div class="btn-wrapper">
-                          <a (click)="bookingRoom(room.id)" class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
+                    </a>
+                    <div class="hotel-view-contents">
+                      <div class="hotel-view-contents-header">
+                        <div
+                          class="hotel-view-contents-header-flex d-flex flex-wrap gap-3 align-items-center justify-content-between">
+                          <span class="hotel-view-contents-review"> <i class="las la-star"></i>{{room.starSum}}<span
+                              class="hotel-view-contents-review-count"> ({{room.starAmount}}) </span> </span>
+                          <div class="btn-wrapper">
+                            <a (click)="bookingRoom(room.id)" class="cmn-btn btn-bg-1 btn-small"> Reserve Now </a>
+                          </div>
                         </div>
-                      </div>
-                      <h3 class="hotel-view-contents-title"> <a routerLink="/room-detail"> {{room.name}} </a> </h3>
-                      <div class="hotel-view-contents-location mt-2">
-                        <span class="hotel-view-contents-location-icon"> <i class="las la-map-marker-alt"></i> {{room.roomTypeName
-                          }} </span>
-                        <br>
-                        <!-- <span class="hotel-view-contents-location-para"> {{room.roomNumber}}
+                        <h3 class="hotel-view-contents-title"> <a routerLink="/room-detail"> {{room.name}} </a> </h3>
+                        <div class="hotel-view-contents-location mt-2">
+                          <span class="hotel-view-contents-location-icon"> <i class="las la-map-marker-alt"></i>
+                            {{room.roomTypeName
+                            }} </span>
+                          <br>
+                          <!-- <span class="hotel-view-contents-location-para"> {{room.roomNumber}}
                         </span> -->
-                      </div>
-                    </div>
-                    <div class="hotel-view-contents-middle">
-                      <div class="hotel-view-contents-flex">
-                        <div class="hotel-view-contents-icon d-flex gap-1" *ngFor="let serviceAttach of room.serviceAttachs">
-                          <span> <i [ngClass]="serviceAttach.icon"></i> </span>
-                          <p class="hotel-view-contents-icon-title flex-fill"> {{serviceAttach.name}} </p>
                         </div>
-                        <!-- <div class="hotel-view-contents-icon d-flex gap-1">
+                      </div>
+                      <div class="hotel-view-contents-middle">
+                        <div class="hotel-view-contents-flex">
+                          <div class="hotel-view-contents-icon d-flex gap-1" *ngFor="let serviceAttach of room.serviceAttachs">
+                            <span> <i [ngClass]="serviceAttach.icon"></i> </span>
+                            <p class="hotel-view-contents-icon-title flex-fill"> {{serviceAttach.name}} </p>
+                          </div>
+                          <!-- <div class="hotel-view-contents-icon d-flex gap-1">
                           <a class="hotel-view-contents-icon-more" href="javascript:void(0)"> +8 More </a>
                         </div> -->
-                      </div>
-                    </div>
-                    <div class="hotel-view-contents-bottom">
-                      <div class="hotel-view-contents-bottom-flex">
-                        <div class="hotel-view-contents-bottom-contents d-flex flex-wrap gap-4 gap-sm-1">
-                          <h4 class="hotel-view-contents-bottom-title"> {{ room.currentPrice | vndCurrency }}<span>/ {{1}}
-                              Night</span> </h4>
-                          <br>
                         </div>
                       </div>
-                      <p class="hotel-view-contents-bottom-para"> <br> ({{1}} Nights, {{room.peopleNumber}} Persons) </p>
+                      <div class="hotel-view-contents-bottom">
+                        <div class="hotel-view-contents-bottom-flex">
+                          <div class="hotel-view-contents-bottom-contents d-flex flex-wrap gap-4 gap-sm-1">
+                            <h4 class="hotel-view-contents-bottom-title"> {{ room.currentPrice | vndCurrency }}<span>/ {{1}}
+                                Night</span> </h4>
+                            <br>
+                          </div>
+                        </div>
+                        <p class="hotel-view-contents-bottom-para"> <br> ({{1}} Nights, {{room.peopleNumber}} Persons) </p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row mt-5">
-            <div class="col">
-              <div class="pagination-wrapper">
-                <!-- <ul class="pagination-list list-style-none">
+            <div class="row mt-5">
+              <div class="col">
+                <div class="pagination-wrapper">
+                  <!-- <ul class="pagination-list list-style-none">
                   <li class="pagination-list-item-prev">
                     <a href="javascript:void(0)" class="pagination-list-item-button"> Prev </a>
                   </li>
@@ -289,20 +280,21 @@
                   </li>
                 </ul> -->
 
-                <div class="clearfix"></div>
-                <pagination-controls class="pagination-wrapper" previousLabel="Prev" nextLabel="Next"
-                  (pageChange)="onTableDataChange($event)">
+                  <div class="clearfix"></div>
+                  <pagination-controls class="pagination-wrapper" previousLabel="Prev" nextLabel="Next"
+                    (pageChange)="onTableDataChange($event)">
 
-                </pagination-controls>
+                  </pagination-controls>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- End search result -->
+          <!-- End search result -->
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </section>
 <div class="back-to-top">
   <span class="back-top"> <i class="las la-angle-up"></i> </span>

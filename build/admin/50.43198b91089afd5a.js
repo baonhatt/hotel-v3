@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkadmin_hotel=self.webpackChunkadmin_hotel||[]).push([[50],{3050:(s,o,n)=>{n.r(o),n.d(o,{AdminModule:()=>m});var t=n(6895),_=(n(6462),n(8562),n(4650));let m=(()=>{class a{}return a.\u0275fac=function(e){return new(e||a)},a.\u0275mod=_.oAB({type:a}),a.\u0275inj=_.cJS({imports:[t.ez]}),a})()}}]);

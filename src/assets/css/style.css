@@ -7231,7 +7231,7 @@ a.lazyloads  {
   z-index: 1;
 }
 .footer-area-one {
-  
+
 }
 
 .footer-padding {
@@ -13823,4 +13823,8 @@ blockquote .blockquote-contents-title {
 .disabled {
   pointer-events: none;
   opacity: 0.5;
+}
+
+.noUi-handle.noUi-handle-lower{
+  display:none !important;
 }

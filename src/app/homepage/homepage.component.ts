@@ -48,7 +48,7 @@ export class HomepageComponent implements OnInit {
   roomId!: string;
   date = new FormControl(new Date());
   checkIn = new FormControl(new Date().toISOString());
-  checkOut = new FormControl(new Date().toISOString());
+  checkOut = new FormControl(new Date(new Date().setDate(new Date().getDate() + 1)).toISOString());
 
 
   constructor(
@@ -120,6 +120,7 @@ export class HomepageComponent implements OnInit {
       var checkOutDate = new Date(checkOutValue);
       checkOutDate = new Date(checkOutDate.setHours(7,0,0));
       const numberOfNights = Math.ceil((checkOutDate.getTime() - checkInDate.getTime()) / (1000 * 60 * 60 * 24));
+      localStorage.setItem('loadPage', 'true');
       this.router.navigate( ['/room-listing', checkInDate.toISOString(), checkOutDate.toISOString(), this.roomSearchForm.controls["peopleNumber"].value, this.roomSearchForm.controls["roomTypeId"].value]);
     }
   }
